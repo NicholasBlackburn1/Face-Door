@@ -1,4 +1,0 @@
-"""
-Starts Whole Program
-"""
-
