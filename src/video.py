@@ -82,13 +82,49 @@ while True:
         left *= 4
         
        
-
+    
+           
+        if(name == "ethan's Mom" or name == "nicks Mom" or "ethansgrandpa"):
+                # Draw a box around the face
+            cv2.rectangle(frame, (left, top), (right, bottom), (255,0,0 ), 2)
+            
+            font = cv2.FONT_HERSHEY_DUPLEX
+            
+            cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, "Known Person..", (0,430), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, "Parent", (0,450), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, name, (0,470), font, .5, (255, 255, 255), 1)
+            
+             ## Distance info
+            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+            
+            
+        if(name == "Nicholas Blackburn" or name == "Ethan Wagner"):
         # Draw a box around the face
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255,0 ), 2)
+            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255,0 ), 2)
         
-        font = cv2.FONT_HERSHEY_DUPLEX
+            font = cv2.FONT_HERSHEY_DUPLEX
         
-        cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, "Known Person..", (0,430), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, "Co owner", (0,450), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, name, (0,470), font, .5, (255, 255, 255), 1)
+           
+            ## Distance info
+            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
+            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+            
+        else:
+           font = cv2.FONT_HERSHEY_DUPLEX
+           cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255 ), 2)
+           cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+           cv2.putText(frame, "Unknown Person sound Alarm...", (0,475), font, .5, (255, 255, 255), 1)
+           
+           ## Distance info
+           cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
+           cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+            
         
 
     # Display the resulting image
