@@ -6,7 +6,6 @@ import os
 # testing 
 video_capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 
-
 image = ["ethan.jpg","nick.jpg","ethansmom.jpg","NicksMom.jpg","ethansgrandpa.jpg"]
 known_face_names = ["Ethan Wagner", "Nicholas Blackburn","nicks Mom"]   #"ethan's Mom", "nicks Mom", "Ethan Grandpa"]
 
