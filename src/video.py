@@ -6,24 +6,25 @@ import numpy as np
 video_capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 
 image = ["ethan.jpg","nick.jpg","ethansmom.jpg","nicksmom.jpg","ethansgrandpa.jpg"]
-known_face_names = ["Ethan Wagner", "Nicholas Blackburn","ethan's Mom", "nicks Mom", "Ethan Grandpa"]
+known_face_names = ["Ethan Wagner", "Nicholas Blackburn"]   #"ethan's Mom", "nicks Mom", "Ethan Grandpa"]
 
-unknownimage = ["unknown.jpg"]
+Ethan = face_recognition.load_image_file("ethan.jpg")
+Nicholas = face_recognition.load_image_file("nick.jpg")
 
-Ethan = face_recognition.load_image_file(image[0])
-Nicholas = face_recognition.load_image_file(image[1])
+
+
+
+EthanEncode = face_recognition.face_encodings(Ethan)[0]
+NicholasEncode = face_recognition.face_encodings(Nicholas)[0]
+
+
 #EthansMom = face_recognition.load_image_file(image[2])
 #NicksMom = face_recognition.load_image_file(image[3])
 
-face_names = [known_face_names.index(0),known_face_names.index(1),known_face_names.index(2),known_face_names.index(3)]
 
 known_face_encodings = [
-    Ethan, Nicholas, #EthansMom, NicksMom
+    EthanEncode, NicholasEncode, #EthansMom, NicksMom
 ]
-
-
-unknown_image = face_recognition.load_image_file(unknownimage)
-
 
 
 
@@ -33,14 +34,13 @@ face_encodings = []
 face_names = []
 
 process_this_frame = True
-video_capture = cv2.VideoCapture(0)
 
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
     # Resize frame of video to 1/4 size for faster face recognition processing
-    small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+    small_frame = cv2.resize(frame,(0, 0),fx=0.25, fy=0.25)
 
     # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
     rgb_small_frame = small_frame[:, :, ::-1]
@@ -80,14 +80,16 @@ while True:
         right *= 4
         bottom *= 4
         left *= 4
+        
+       
 
         # Draw a box around the face
-        cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
-
-        # Draw a label with a name below the face
-        cv2.rectangle(frame, (left, bottom - 35), (right, bottom), (0, 0, 255), cv2.FILLED)
+        cv2.rectangle(frame, (left, top), (right, bottom), (0, 255,0 ), 2)
+        
         font = cv2.FONT_HERSHEY_DUPLEX
-        cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)
+        
+        cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+        
 
     # Display the resulting image
     cv2.imshow('Video', frame)
