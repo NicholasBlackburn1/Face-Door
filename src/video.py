@@ -6,26 +6,25 @@ import os
 # testing 
 video_capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 
-image = ["ethan.jpg","nick.jpg","ethansmom.jpg","NicksMom.jpg","ethansgrandpa.jpg"]
+
 known_face_names = ["Ethan Wagner", "Nicholas Blackburn","nicks Mom"]   #"ethan's Mom", "nicks Mom", "Ethan Grandpa"]
 
 Ethan = face_recognition.load_image_file(os.path.dirname(__file__)+"/ethan.jpg")
 Nicholas = face_recognition.load_image_file(os.path.dirname(__file__)+"/nick.jpg")
-
-
 Nicksmom = face_recognition.load_image_file(os.path.dirname(__file__)+"/NicksMom.jpg")
+EthansMom = face_recognition.load_image_file(os.path.dirname(__file__)+"/ethansMom.jpg")
+
 
 
 
 EthanEncode = face_recognition.face_encodings(Ethan)[0]
 NicholasEncode = face_recognition.face_encodings(Nicholas)[0]
 NicksMom = face_recognition.face_encodings(Nicksmom)[0]
-
-#EthansMom = face_recognition.load_image_file(image[2])
+Ethansmom = face_recognition.face_encodings(EthansMom)[0]
 
 
 known_face_encodings = [
-    EthanEncode, NicholasEncode, NicksMom
+    EthanEncode, NicholasEncode, NicksMom, Ethansmom
 ]
 
 
