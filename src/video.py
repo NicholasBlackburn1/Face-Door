@@ -1,29 +1,31 @@
 import cv2
 import face_recognition
 import numpy as np
+import os
 
 # testing 
 video_capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 
-image = ["ethan.jpg","nick.jpg","ethansmom.jpg","nicksmom.jpg","ethansgrandpa.jpg"]
-known_face_names = ["Ethan Wagner", "Nicholas Blackburn"]   #"ethan's Mom", "nicks Mom", "Ethan Grandpa"]
+image = ["ethan.jpg","nick.jpg","ethansmom.jpg","NicksMom.jpg","ethansgrandpa.jpg"]
+known_face_names = ["Ethan Wagner", "Nicholas Blackburn","nicks Mom"]   #"ethan's Mom", "nicks Mom", "Ethan Grandpa"]
 
-Ethan = face_recognition.load_image_file("ethan.jpg")
-Nicholas = face_recognition.load_image_file("nick.jpg")
+Ethan = face_recognition.load_image_file(os.path.dirname(__file__)+"/ethan.jpg")
+Nicholas = face_recognition.load_image_file(os.path.dirname(__file__)+"/nick.jpg")
 
+
+Nicksmom = face_recognition.load_image_file(os.path.dirname(__file__)+"/NicksMom.jpg")
 
 
 
 EthanEncode = face_recognition.face_encodings(Ethan)[0]
 NicholasEncode = face_recognition.face_encodings(Nicholas)[0]
-
+NicksMom = face_recognition.face_encodings(Nicksmom)[0]
 
 #EthansMom = face_recognition.load_image_file(image[2])
-#NicksMom = face_recognition.load_image_file(image[3])
 
 
 known_face_encodings = [
-    EthanEncode, NicholasEncode, #EthansMom, NicksMom
+    EthanEncode, NicholasEncode, NicksMom
 ]
 
 
@@ -82,50 +84,45 @@ while True:
         left *= 4
         
        
-    
-           
-        if(name == "ethan's Mom" or name == "nicks Mom" or "ethansgrandpa"):
-                # Draw a box around the face
-            cv2.rectangle(frame, (left, top), (right, bottom), (255,0,0 ), 2)
-            
-            font = cv2.FONT_HERSHEY_DUPLEX
-            
-            cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, "Known Person..", (0,430), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, "Parent", (0,450), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, name, (0,470), font, .5, (255, 255, 255), 1)
-            
-             ## Distance info
-            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-            
-            
         if(name == "Nicholas Blackburn" or name == "Ethan Wagner"):
-        # Draw a box around the face
-            cv2.rectangle(frame, (left, top), (right, bottom), (0, 255,0 ), 2)
-        
-            font = cv2.FONT_HERSHEY_DUPLEX
-        
-            cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, "Known Person..", (0,430), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, "Co owner", (0,450), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, name, (0,470), font, .5, (255, 255, 255), 1)
-           
-            ## Distance info
-            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
-            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+                # Draw a box around the face
+                cv2.rectangle(frame, (left, top), (right, bottom), (0, 255,0 ), 2)
             
-        else:
+                font = cv2.FONT_HERSHEY_DUPLEX
+            
+                cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, "Known Person..", (0,430), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, "Owner", (0,450), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, name, (0,470), font, .5, (255, 255, 255), 1)
+            
+                ## Distance info
+                cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+                
+        elif(name == "ethan's Mom" or name == "nicks Mom" or name == "ethansgrandpa" and not name == "Unknown" ):
+                # Draw a box around the face
+                cv2.rectangle(frame, (left, top), (right, bottom), (255,0,0 ), 2)
+                    
+                font = cv2.FONT_HERSHEY_DUPLEX
+                    
+                cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, "Known Person..", (0,430), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, "Parent", (0,450), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, name, (0,470), font, .5, (255, 255, 255), 1)
+                    
+                    ## Distance info
+                cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
+                cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+                    
+        elif(name == "Unknown"):
            font = cv2.FONT_HERSHEY_DUPLEX
            cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255 ), 2)
            cv2.putText(frame, name, (left,top), font, .5, (255, 255, 255), 1)
            cv2.putText(frame, "Unknown Person sound Alarm...", (0,475), font, .5, (255, 255, 255), 1)
-           
            ## Distance info
            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
             
-        
 
     # Display the resulting image
     cv2.imshow('Video', frame)
