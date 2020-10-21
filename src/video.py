@@ -2,10 +2,16 @@ import cv2
 import face_recognition
 import numpy as np
 import os
-import doorcontrol as control
-from doorcontrol import doorControl
-# testing 
-video_capture = cv2.VideoCapture(0, cv2.CAP_V4L)
+import uvicorn
+from vidgear.gears.asyncio import WebGear
+
+
+
+video_capture = cv2.VideoCapture(0)
+# Define the codec and create VideoWriter object
+fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
+out = cv2.VideoWriter('output.avi',fourcc, 5.0, (640,480))
+#initialize WebGear app with suitable video file (for e.g `foo.mp4`) 
 
 
 known_face_names = ["Ethan Wagner", "Nicholas Blackburn","nicks Mom"]   #"ethan's Mom", "nicks Mom", "Ethan Grandpa"]
@@ -98,7 +104,7 @@ while True:
                 ## Distance info
                 cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
                 cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-                control.doorControl()
+            
                 
         elif(name == "ethan's Mom" or name == "nicks Mom" or name == "ethansgrandpa" and not name == "Unknown" ):
                 # Draw a box around the face
@@ -114,8 +120,7 @@ while True:
                     ## Distance info
                 cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
                 cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-                control.doorControl()
-                    
+               
         elif(name == "Unknown"):
            font = cv2.FONT_HERSHEY_DUPLEX
            cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255 ), 2)
@@ -124,15 +129,19 @@ while True:
            ## Distance info
            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-           control.alarmControl()
+    
+    out.write(frame)
+
 
     # Display the resulting image
-    cv2.imshow('Video', frame)
+   # cv2.imshow('Video', frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
 # Release handle to the webcam
+out.release()
+
 video_capture.release()
 cv2.destroyAllWindows()
