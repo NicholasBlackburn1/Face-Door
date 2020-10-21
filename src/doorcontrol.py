@@ -1,21 +1,30 @@
-import gpiozero
-from gpiozero.pins.data import GPIO11, GPIO4
 
-door = gpiozero.LED(GPIO4)
-alarm = gpiozero.LED(GPIO11)
+import RPI.GPIO as gpio
+
+gpio.setmode(gpio.RPI)
+gpio.setup(door_pin,gpio.OUT)
+gpio.setup(alarm_pin,gpio.OUT)
+
+door_pin =  4
+alarm_pin = 13
 
 def setup():
     #sets up pins 
-    door.on()
-    print("door state" + door.values())
-    alarm.on()
-    print("alarm state" + alarm.values())
+    gpio.output(door_pin, gpio.HIGH)
+    gpio.output(alarm_pin, gpio.HIGH)
         
         
-def doorControl(): 
-    door.toggle()
-    print("doorState" + door.values())
+def doorClose(): 
+    gpio.output(door_pin, gpio.LOW)
+    
+def doorOpen(): 
+    gpio.output(door_pin, gpio.HIGH)
 
-def alarmControl():
-    alarm.toggle()
-    print("alarm State"+ alarm.values())
+
+def alarmOn():
+    gpio.output(alarm_pin, gpio.LOW)
+    
+def alarmOff():
+    gpio.output(alarm_pin, gpio.HIGH)
+    
+    

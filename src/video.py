@@ -2,11 +2,9 @@ import cv2
 import face_recognition
 import numpy as np
 import os
-import uvicorn
-from vidgear.gears.asyncio import WebGear
+#from doorcontrol import doorcontrol 
 
-
-
+#doorcontrol.setup()
 video_capture = cv2.VideoCapture(0)
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
@@ -104,7 +102,8 @@ while True:
                 ## Distance info
                 cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
                 cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-            
+              #  doorcontrol.doorOpen()
+              #  doorcontrol.alarmOff()
                 
         elif(name == "ethan's Mom" or name == "nicks Mom" or name == "ethansgrandpa" and not name == "Unknown" ):
                 # Draw a box around the face
@@ -120,7 +119,8 @@ while True:
                     ## Distance info
                 cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
                 cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-               
+               # doorcontrol.doorOpen()
+               # doorcontrol.alarmOff()
         elif(name == "Unknown"):
            font = cv2.FONT_HERSHEY_DUPLEX
            cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255 ), 2)
@@ -129,8 +129,10 @@ while True:
            ## Distance info
            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+          # doorcontrol.doorClose()
+          # doorcontrol.alarmOn()
+           
     
-    out.write(frame)
     # Display the resulting image
     cv2.imshow('Video', frame)
 
