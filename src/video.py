@@ -2,7 +2,8 @@ import cv2
 import face_recognition
 import numpy as np
 import os
-
+import doorcontrol as control
+from doorcontrol import doorControl
 # testing 
 video_capture = cv2.VideoCapture(0, cv2.CAP_V4L)
 
@@ -97,6 +98,7 @@ while True:
                 ## Distance info
                 cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
                 cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+                control.doorControl()
                 
         elif(name == "ethan's Mom" or name == "nicks Mom" or name == "ethansgrandpa" and not name == "Unknown" ):
                 # Draw a box around the face
@@ -112,6 +114,7 @@ while True:
                     ## Distance info
                 cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
                 cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
+                control.doorControl()
                     
         elif(name == "Unknown"):
            font = cv2.FONT_HERSHEY_DUPLEX
@@ -121,7 +124,7 @@ while True:
            ## Distance info
            cv2.putText(frame, "T&B"+ str(top) +","+str(bottom), (474,430), font, .5, (255, 255, 255), 1)
            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
-            
+           control.alarmControl()
 
     # Display the resulting image
     cv2.imshow('Video', frame)
