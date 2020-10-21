@@ -131,10 +131,8 @@ while True:
            cv2.putText(frame, "L&R" + str(left) + "," +str(right), (474,450), font, .5, (255, 255, 255), 1)
     
     out.write(frame)
-
-
     # Display the resulting image
-   # cv2.imshow('Video', frame)
+    cv2.imshow('Video', frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord('q'):
