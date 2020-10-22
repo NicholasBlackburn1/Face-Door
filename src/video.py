@@ -10,6 +10,7 @@ import numpy as np
 import os
 from notify_run import Notify
 from datetime import datetime
+import time
 from numpy.core.arrayprint import DatetimeFormat
 
 notify = Notify()
@@ -73,14 +74,14 @@ while True:
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
     # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-    rgb_small_frame = small_frame[:, :, ::-1]
+    rgbframe = small_frame[:, :, ::-1]
 
     # Only process every other frame of video to save time
     if process_this_frame:
         # Find all the faces and face encodings in the current frame of video
-        face_locations = face_recognition.face_locations(rgb_small_frame)
+        face_locations = face_recognition.face_locations(rgbframe)
         face_encodings = face_recognition.face_encodings(
-            rgb_small_frame, face_locations
+            rgbframe, face_locations
         )
 
         face_names = []
@@ -148,9 +149,10 @@ while True:
                 (255, 255, 255),
                 1,
             )
+            
             cv2.imwrite(imagePath + imagename + ".jpg", frame)
-            thread = threading.Thread(target=notify.send(message="Letting in" + name))
-
+            time.sleep(1.5)
+            thread = threading.Thread(target=notify.send(message="Letting in" + name ))
             thread.start()
             thread.join()
 
@@ -194,15 +196,14 @@ while True:
                 (255, 255, 255),
                 1,
             )
+            cv2.imwrite(imagePath + "parens" + imagename + ".jpg", frame)
+            time.sleep(1.5)
             thread = threading.Thread(target=notify.send(message="Letting in" + name))
             thread.start()
             thread.join()
-            cv2.imwrite(imagePath + "parens" + imagename + ".jpg", frame)
             # doorcontrol.doorOpen()
             # doorcontrol.alarmOff()
-        elif name == "UnKnown" and name ==  "Nicholas Blackburn" or name =="Ethan Wagner":
-            print("more than one peron is visible there is Unknown people with Known people Alarm is overrided allow people to go in ") 
-        
+     
         elif name == "Unknown":
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -237,6 +238,7 @@ while True:
             )
             cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
             out.write(frame)
+            time.sleep(1.5)
             thread = threading.Thread(
                 target=notify.send(message="Unknown Person Sound Alarm")
             )
@@ -247,7 +249,7 @@ while True:
         # doorcontrol.alarmOn()
 
     # Display the resulting image
-    # cv2.imshow("Video", frame)
+   # cv2.imshow("Video", frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord("q"):
