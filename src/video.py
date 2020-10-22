@@ -151,8 +151,8 @@ while True:
             )
             
             cv2.imwrite(imagePath + imagename + ".jpg", frame)
-            time.sleep(1.5)
-            thread = threading.Thread(target=notify.send(message="Letting in" + name ))
+            time.sleep(2.5)
+            thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
             thread.start()
             thread.join()
 
@@ -197,8 +197,8 @@ while True:
                 1,
             )
             cv2.imwrite(imagePath + "parens" + imagename + ".jpg", frame)
-            time.sleep(1.5)
-            thread = threading.Thread(target=notify.send(message="Letting in" + name))
+            time.sleep(2.5)
+            thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
             thread.start()
             thread.join()
             # doorcontrol.doorOpen()
@@ -238,18 +238,19 @@ while True:
             )
             cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
             out.write(frame)
-            time.sleep(1.5)
+            time.sleep(2.5)
             thread = threading.Thread(
                 target=notify.send(message="Unknown Person Sound Alarm")
             )
             thread.start()
             thread.join()
+            time.sleep(5)
             out.release()
         # doorcontrol.doorClose()
         # doorcontrol.alarmOn()
 
     # Display the resulting image
-   # cv2.imshow("Video", frame)
+    #cv2.imshow("Video", frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -258,4 +259,3 @@ while True:
 # Release handle to the webcam
 out.release()
 video_capture.release()
-cv2.destroyAllWindows()
