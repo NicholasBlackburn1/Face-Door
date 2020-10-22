@@ -35,7 +35,8 @@ known_face_names = [
     "Ethan Wagner",
     "Nicholas Blackburn",
     "nicks Mom",
-]  # "ethan's Mom", "nicks Mom", "Ethan Grandpa"]
+    "Ethans mom"
+]  #Ethan Grandpa"]
 
 Ethan = face_recognition.load_image_file(os.path.dirname(__file__) + "/ethan.jpg")
 Nicholas = face_recognition.load_image_file(os.path.dirname(__file__) + "/nick.jpg")
