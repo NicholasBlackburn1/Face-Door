@@ -6,10 +6,13 @@ import face_recognition
 import numpy as np
 import os
 from notify_run import Notify
-import time 
-
+from datetime import datetime
+from numpy.core.arrayprint import DatetimeFormat 
 
 notify = Notify()
+
+imagename=datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+imagePath  = "/mnt/user/"
 
 thread = threading.Thread(target=notify.send("Opencv Startinging..."))
 thread.start()
@@ -139,10 +142,12 @@ while True:
                 (255, 255, 255),
                 1,
             )          
-          
+            cv2.imwrite(imagePath+imagename+".jpg", frame)
             thread = threading.Thread(target=notify.send(message="Letting in"+name))
+           
             thread.start()
             thread.join()
+        
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
 
@@ -185,6 +190,7 @@ while True:
             thread = threading.Thread(target=notify.send(message="Letting in"+name))
             thread.start()
             thread.join()
+            cv2.imwrite(imagePath+"parens"+imagename+".jpg", frame)
             # doorcontrol.doorOpen()
             # doorcontrol.alarmOff()
            
@@ -223,6 +229,7 @@ while True:
             thread = threading.Thread(target=notify.send(message="Unknown Person Sound Alarm"))
             thread.start()
             thread.join()
+            cv2.imwrite(imagePath+"unKnownPerson"+ imagename+".jpg", frame)
         # doorcontrol.doorClose()
         # doorcontrol.alarmOn()
      
