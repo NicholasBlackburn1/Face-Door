@@ -1,3 +1,6 @@
+"""
+This is the main (Bulk) possessing done in my opencv Program
+"""
 from os.path import join
 import threading
 from PIL.Image import NONE
@@ -7,22 +10,24 @@ import numpy as np
 import os
 from notify_run import Notify
 from datetime import datetime
-from numpy.core.arrayprint import DatetimeFormat 
+from numpy.core.arrayprint import DatetimeFormat
 
 notify = Notify()
 
-imagename=datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
-imagePath  = "/mnt/user/"
+imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+imagePath = "/mnt/user/"
 
 thread = threading.Thread(target=notify.send("Opencv Startinging..."))
 thread.start()
 thread.join()
 # doorcontrol.setup()
+
+# TODO: Change this into the ipcamera Stream.
 video_capture = cv2.VideoCapture(0)
-video_capture.set(cv2.CAP_PROP_FPS, 5);
+video_capture.set(cv2.CAP_PROP_FPS, 5)
 # Define the codec and create VideoWriter object
 fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
-out = cv2.VideoWriter("output.avi", fourcc, 5.0, (640, 480))
+out = cv2.VideoWriter(imagePath + imagename + ".avi", fourcc, 5.0, (640, 480))
 # initialize WebGear app with suitable video file (for e.g `foo.mp4`)
 
 
@@ -141,21 +146,22 @@ while True:
                 0.5,
                 (255, 255, 255),
                 1,
-            )          
-            cv2.imwrite(imagePath+imagename+".jpg", frame)
-            thread = threading.Thread(target=notify.send(message="Letting in"+name))
-           
+            )
+            cv2.imwrite(imagePath + imagename + ".jpg", frame)
+            thread = threading.Thread(target=notify.send(message="Letting in" + name))
+
             thread.start()
             thread.join()
-        
+
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
 
-        elif(
+        elif (
             name == "ethan's Mom"
             or name == "nicks Mom"
             or name == "ethansgrandpa"
-            and not name == "Unknown"):
+            and not name == "Unknown"
+        ):
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
 
@@ -187,13 +193,13 @@ while True:
                 (255, 255, 255),
                 1,
             )
-            thread = threading.Thread(target=notify.send(message="Letting in"+name))
+            thread = threading.Thread(target=notify.send(message="Letting in" + name))
             thread.start()
             thread.join()
-            cv2.imwrite(imagePath+"parens"+imagename+".jpg", frame)
+            cv2.imwrite(imagePath + "parens" + imagename + ".jpg", frame)
             # doorcontrol.doorOpen()
             # doorcontrol.alarmOff()
-           
+
         elif name == "Unknown":
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -226,16 +232,18 @@ while True:
                 (255, 255, 255),
                 1,
             )
-            thread = threading.Thread(target=notify.send(message="Unknown Person Sound Alarm"))
+            thread = threading.Thread(
+                target=notify.send(message="Unknown Person Sound Alarm")
+            )
             thread.start()
             thread.join()
-            cv2.imwrite(imagePath+"unKnownPerson"+ imagename+".jpg", frame)
+            cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
+            out.write(frame)
         # doorcontrol.doorClose()
         # doorcontrol.alarmOn()
-     
 
     # Display the resulting image
-    #cv2.imshow("Video", frame)
+    # cv2.imshow("Video", frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -243,10 +251,5 @@ while True:
 
 # Release handle to the webcam
 out.release()
-
 video_capture.release()
 cv2.destroyAllWindows()
-
-
-
-
