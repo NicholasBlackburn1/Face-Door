@@ -15,10 +15,10 @@ def setup():
         
         
 def doorClose(): 
-    gpio.output(door_pin, gpio.LOW)
+    gpio.output(door_pin, gpio.HIGH)
     
 def doorOpen(): 
-    gpio.output(door_pin, gpio.HIGH)
+    gpio.output(door_pin, gpio.LOW)
 
 
 def alarmOn():
