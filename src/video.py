@@ -200,7 +200,9 @@ while True:
             cv2.imwrite(imagePath + "parens" + imagename + ".jpg", frame)
             # doorcontrol.doorOpen()
             # doorcontrol.alarmOff()
-
+        elif name == "UnKnown" and name ==  "Nicholas Blackburn" or name =="Ethan Wagner":
+            print("more than one peron is visible there is Unknown people with Known people Alarm is overrided allow people to go in ") 
+        
         elif name == "Unknown":
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -233,13 +235,14 @@ while True:
                 (255, 255, 255),
                 1,
             )
+            cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
+            out.write(frame)
             thread = threading.Thread(
                 target=notify.send(message="Unknown Person Sound Alarm")
             )
             thread.start()
             thread.join()
-            cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-            out.write(frame)
+            out.release()
         # doorcontrol.doorClose()
         # doorcontrol.alarmOn()
 
