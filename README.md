@@ -2,7 +2,7 @@
 **An Auto Unlocking Door written in python and opencv on an Pi**
 
 
-[!img-src](https://github.com/NicholasBlackburn1/Face-Door/blob/main/example1.jpg)
+![example](https://github.com/NicholasBlackburn1/Face-Door/blob/main/example1.jpg)
 
 
 ## What was my Inspiration for this project 
