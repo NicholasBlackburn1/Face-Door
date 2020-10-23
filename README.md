@@ -1,7 +1,9 @@
 # Face-Door
 **An Auto Unlocking Door written in python and opencv on an Pi**
 
-[!img](/example1.jpg)
+
+[!img-src](https://github.com/NicholasBlackburn1/Face-Door/blob/main/example1.jpg)
+
 
 ## What was my Inspiration for this project 
 This Project is for Ethan and I's Studio because we needed an security system and we really did not want to pay for one, So we decided to create one with Wireless cameras, Raspi, siren, two 600 pound electric magnetic  lock and a 8 port relay board. 
