@@ -1,4 +1,4 @@
 *.css
 env/
 templates/
-src/*.jpg
+*.jpg
