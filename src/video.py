@@ -3,6 +3,7 @@ This is the main (Bulk) possessing done in my opencv Program
 """
 from os.path import join
 import threading
+from typing import Match
 from PIL.Image import NONE
 import cv2
 import face_recognition
@@ -11,6 +12,8 @@ import os
 from notify_run import Notify
 from datetime import datetime
 import time
+
+
 
 notify = Notify()
 
@@ -25,11 +28,6 @@ thread.join()
 # TODO: Change this into the ipcamera Stream.
 video_capture = cv2.VideoCapture(0)
 video_capture.set(cv2.CAP_PROP_FPS, 5)
-# Define the codec and create VideoWriter object
-fourcc = cv2.VideoWriter_fourcc("M", "J", "P", "G")
-out = cv2.VideoWriter(imagePath + imagename + ".avi", fourcc, 5.0, (640, 480))
-# initialize WebGear app with suitable video file (for e.g `foo.mp4`)
-
 
 known_face_names = [
     "Ethan Wagner",
@@ -45,11 +43,12 @@ EthansMom = face_recognition.load_image_file(
     os.path.dirname(__file__) + "/ethansMom.jpg"
 )
 
+# defines all known faces for the system and how many times the dlib will train it self with that image
+EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=25)[0]
+NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=25)[0]
+NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=25)[0]
+Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=25)[0]
 
-EthanEncode = face_recognition.face_encodings(Ethan)[0]
-NicholasEncode = face_recognition.face_encodings(Nicholas)[0]
-NicksMom = face_recognition.face_encodings(Nicksmom)[0]
-Ethansmom = face_recognition.face_encodings(EthansMom)[0]
 
 
 known_face_encodings = [EthanEncode, NicholasEncode, NicksMom, Ethansmom]
@@ -88,7 +87,7 @@ while True:
         for face_encoding in face_encodings:
             # See if the face is a match for the known face(s)
             matches = face_recognition.compare_faces(
-                known_face_encodings, face_encoding
+                known_face_encodings, face_encoding, tolerance=0.6932
             )
             name = "Unknown"
 
@@ -108,6 +107,7 @@ while True:
             face_names.append(name)
 
     process_this_frame = not process_this_frame
+    
 
     # Display the results
     for (top, right, bottom, left), name in zip(face_locations, face_names):
@@ -116,8 +116,9 @@ while True:
         right *= 4
         bottom *= 4
         left *= 4
+       
 
-        if name == "Nicholas Blackburn" or name == "Ethan Wagner":
+        if name == "Nicholas Blackburn" or name == "Ethan Wagner" and not "Unknown":
             # Draw a box around the face
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
 
@@ -151,7 +152,7 @@ while True:
             )
             
             cv2.imwrite(imagePath + imagename + ".jpg", frame)
-            time.sleep(2.5)
+            time.sleep(1.5)
             thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
             thread.start()
             thread.join()
@@ -197,7 +198,7 @@ while True:
                 1,
             )
             cv2.imwrite(imagePath +"Parent"+imagename + ".jpg", frame)
-            time.sleep(2.5)
+            time.sleep(1.5)
             thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
             thread.start()
             thread.join()
@@ -237,18 +238,14 @@ while True:
                 1,
             )
             cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-            out.write(frame)
-            time.sleep(2.5)
+            time.sleep(1.5)
             thread = threading.Thread(
-                target=notify.send(message="Unknown Person Sound Alarm")
+                target=notify.send(message="Unknown Person Sound Alarm and dor is locked")
             )
             thread.start()
             thread.join()
-            time.sleep(5)
-            out.release()
-        # doorcontrol.doorClose()
-        # doorcontrol.alarmOn()
-
+        else:
+            print ("no one is here")
     # Display the resulting image
     #cv2.imshow("Video", frame)
 
