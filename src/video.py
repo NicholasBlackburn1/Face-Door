@@ -35,8 +35,8 @@ known_face_names = [
     "Ethan Wagner",
     "Nicholas Blackburn",
     "nicks Mom",
-    "Ethans mom",
-]  # Ethan Grandpa"]
+    "Ethans mom"
+]  #Ethan Grandpa"]
 
 Ethan = face_recognition.load_image_file(os.path.dirname(__file__) + "/ethan.jpg")
 Nicholas = face_recognition.load_image_file(os.path.dirname(__file__) + "/nick.jpg")
@@ -53,6 +53,7 @@ Ethansmom = face_recognition.face_encodings(EthansMom)[0]
 
 
 known_face_encodings = [EthanEncode, NicholasEncode, NicksMom, Ethansmom]
+
 
 
 # Initialize some variables
@@ -79,7 +80,9 @@ while True:
     if process_this_frame:
         # Find all the faces and face encodings in the current frame of video
         face_locations = face_recognition.face_locations(rgbframe)
-        face_encodings = face_recognition.face_encodings(rgbframe, face_locations)
+        face_encodings = face_recognition.face_encodings(
+            rgbframe, face_locations
+        )
 
         face_names = []
         for face_encoding in face_encodings:
@@ -146,12 +149,10 @@ while True:
                 (255, 255, 255),
                 1,
             )
-
+            
             cv2.imwrite(imagePath + imagename + ".jpg", frame)
             time.sleep(2.5)
-            thread = threading.Thread(
-                target=notify.send(message="Letting in" + " " + name)
-            )
+            thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
             thread.start()
             thread.join()
 
@@ -195,16 +196,14 @@ while True:
                 (255, 255, 255),
                 1,
             )
-            cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
+            cv2.imwrite(imagePath +"Parent"+imagename + ".jpg", frame)
             time.sleep(2.5)
-            thread = threading.Thread(
-                target=notify.send(message="Letting in" + " " + name)
-            )
+            thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
             thread.start()
             thread.join()
             # doorcontrol.doorOpen()
             # doorcontrol.alarmOff()
-
+     
         elif name == "Unknown":
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -251,7 +250,7 @@ while True:
         # doorcontrol.alarmOn()
 
     # Display the resulting image
-    # cv2.imshow("Video", frame)
+    #cv2.imshow("Video", frame)
 
     # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord("q"):
