@@ -12,11 +12,13 @@ import os
 from notify_run import Notify
 from datetime import datetime
 import time
+import logging
 
-
+logging.basicConfig(filename='cv.log',  level=logging.DEBUG)
 
 notify = Notify()
 
+logging.info("Setting up cv")
 imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 imagePath = "/mnt/user/"
 
@@ -44,10 +46,10 @@ EthansMom = face_recognition.load_image_file(
 )
 
 # defines all known faces for the system and how many times the dlib will train it self with that image
-EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=25)[0]
-NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=25)[0]
-NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=25)[0]
-Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=25)[0]
+EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=35)[0]
+NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=35)[0]
+NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=35)[0]
+Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=35)[0]
 
 
 
@@ -65,6 +67,7 @@ thread = threading.Thread(target=notify.send("Opencv Started..."))
 thread.start()
 thread.join()
 
+logging.info("Cv setup")
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -150,7 +153,7 @@ while True:
                 (255, 255, 255),
                 1,
             )
-            
+            logging.warning("letting in" + name)
             cv2.imwrite(imagePath + imagename + ".jpg", frame)
             time.sleep(1.5)
             thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
@@ -197,6 +200,7 @@ while True:
                 (255, 255, 255),
                 1,
             )
+            logging.warning("letting in" + name)
             cv2.imwrite(imagePath +"Parent"+imagename + ".jpg", frame)
             time.sleep(1.5)
             thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
@@ -237,6 +241,7 @@ while True:
                 (255, 255, 255),
                 1,
             )
+            logging.warning("not letting in" + name)
             cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
             time.sleep(1.5)
             thread = threading.Thread(
@@ -245,7 +250,7 @@ while True:
             thread.start()
             thread.join()
         else:
-            print ("no one is here")
+            logging.warning("no won is here")
     # Display the resulting image
     #cv2.imshow("Video", frame)
 
