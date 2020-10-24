@@ -12,28 +12,20 @@ import os
 from notify_run import Notify
 from datetime import datetime
 import time
-import zmq
 import logging
 
-logging.basicConfig(filename='cv.log', level=logging.DEBUG)
-enable = False
+logging.basicConfig(filename='cv.log',  level=logging.DEBUG)
 
-context = zmq.Context()
-socket = context.socket(zmq.REP)
-socket.bind("tcp://*:5000")
-logging.info("Started cv controller Waiting for Client TO send Commands....")
+notify = Notify()
 
-message = socket.recv()
-logging.debug(message)
-
-if message == b"start_opencv":
-    enable = True
-
-
-logging.info("setting up opencv")
-process_this_frame = True
+logging.info("Setting up cv")
 imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
 imagePath = "/mnt/user/"
+
+thread = threading.Thread(target=notify.send("Opencv Startinging..."))
+thread.start()
+thread.join()
+# doorcontrol.setup()
 
 # TODO: Change this into the ipcamera Stream.
 video_capture = cv2.VideoCapture(0)
@@ -69,8 +61,14 @@ known_face_encodings = [EthanEncode, NicholasEncode, NicksMom, Ethansmom]
 ace_locations = []
 face_encodings = []
 face_names = []
-logging.info("Opencv is running")
-while enable:
+
+process_this_frame = True
+thread = threading.Thread(target=notify.send("Opencv Started..."))
+thread.start()
+thread.join()
+
+logging.info("Cv setup")
+while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
 
@@ -155,11 +153,12 @@ while enable:
                 (255, 255, 255),
                 1,
             )
-            #Convert all Non opencv code to the MicroProcess     
+            logging.warning("letting in" + name)
             cv2.imwrite(imagePath + imagename + ".jpg", frame)
             time.sleep(1.5)
-            logging.warning("let in" +" "+name)
-            
+            thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
+            thread.start()
+            thread.join()
 
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
@@ -201,10 +200,12 @@ while enable:
                 (255, 255, 255),
                 1,
             )
-            # Convert to micro prosess
+            logging.warning("letting in" + name)
             cv2.imwrite(imagePath +"Parent"+imagename + ".jpg", frame)
             time.sleep(1.5)
-           
+            thread = threading.Thread(target=notify.send(message="Letting in" +" "+name ))
+            thread.start()
+            thread.join()
             # doorcontrol.doorOpen()
             # doorcontrol.alarmOff()
      
@@ -240,17 +241,21 @@ while enable:
                 (255, 255, 255),
                 1,
             )
+            logging.warning("not letting in" + name)
             cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
             time.sleep(1.5)
-            logging.warning("Dont let in" +" "+name)
+            thread = threading.Thread(
+                target=notify.send(message="Unknown Person Sound Alarm and dor is locked")
+            )
+            thread.start()
+            thread.join()
         else:
-            logging.debug("no one is here")
+            logging.warning("no won is here")
     # Display the resulting image
     #cv2.imshow("Video", frame)
 
-    # Stops Opencv useing bytes
-    if message == b"stop":
-        logging.debug(message)
+    # Hit 'q' on the keyboard to quit!
+    if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
 # Release handle to the webcam
