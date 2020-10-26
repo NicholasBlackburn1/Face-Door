@@ -1,6 +1,7 @@
 """
 This is the main (Bulk) possessing done in my opencv Program
 """
+from logging import log
 from os import wait
 from os.path import join
 
@@ -238,8 +239,10 @@ class VideoProsessing(object):
                     )
                     logging.warning("not letting in" + name)
                     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-                
                     sock.send(b"unknown")
+                else:
+                    logging.warning("no one is here")
+                    sock.send(b"none")
             # Display the resulting image
             cv2.imshow("Video", frame)
 
