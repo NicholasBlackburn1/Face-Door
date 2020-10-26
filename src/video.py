@@ -158,8 +158,6 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
                     sock.send(b"owners")
-                #  doorcontrol.doorOpen()
-                #  doorcontrol.alarmOff()
 
                 elif (
                     name == "ethan's Mom"
@@ -202,8 +200,6 @@ class VideoProsessing(object):
                     cv2.imwrite(imagePath +"Parent"+imagename + ".jpg", frame)
                     
                     sock.send(b"parents")
-                    # doorcontrol.doorOpen()
-                    # doorcontrol.alarmOff()
             
                 elif name == "Unknown":
                     font = cv2.FONT_HERSHEY_DUPLEX
