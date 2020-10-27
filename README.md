@@ -14,7 +14,8 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 ## Features 
 <li> Sends Sms ethan and sends us messages based on the person who is recognized</li>
-<li> able to be easily Started and Stopped on a Read Only os
+<li> able to be easily Started and Stopped on a Read Only os</li>
+<li> Uses realtime Facial recognition to Recognize Authorized users and the non authorized Users</li>
 
 ## Todo's 
 
