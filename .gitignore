@@ -2,8 +2,3 @@
 env/
 templates/
 src/*.jpg
-src/Config.py
-
-cv.log
-
-Client.log
