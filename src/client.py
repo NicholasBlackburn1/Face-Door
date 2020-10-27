@@ -4,7 +4,6 @@ this file is for controlling the alarm and door with the raspi this is the simpl
 Which references the opencv camera system. useing an Subscriber base tcp server and client 
  """
 
-from logging import log
 import zmq
 import time
 import smtplib
