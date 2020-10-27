@@ -1,12 +1,16 @@
-
+"""
+Controls the Door Using GPIO pins on the pi 
+"""
 import RPI.GPIO as gpio
 
 gpio.setmode(gpio.RPI)
-gpio.setup(door_pin,gpio.OUT)
-gpio.setup(alarm_pin,gpio.OUT)
 
 door_pin =  4
 alarm_pin = 13
+
+# maps the state of pins to output 
+gpio.setup(door_pin,gpio.OUT)
+gpio.setup(alarm_pin,gpio.OUT)
 
 def setup():
     #sets up pins 

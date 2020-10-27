@@ -38,7 +38,7 @@ class VideoProsessing(object):
 
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
-        video_capture.set(cv2.CAP_PROP_FPS, 10)
+        video_capture.set(cv2.CAP_PROP_FPS, 15)
 
         known_face_names = [
             "Nicholas Blackburn",
@@ -54,7 +54,7 @@ class VideoProsessing(object):
         )
 
         # defines all known faces for the system and how many times the dlib will train it self with that image
-        #EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=25)[0]
+        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=25)[0]
         NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=35)[0]
         NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=35)[0]
         Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=35)[0]
@@ -157,7 +157,9 @@ class VideoProsessing(object):
                     )
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
+                    
                     sock.send(b"owners")
+                    sock.send_string(name)
 
                 elif (
                     name == "ethan's Mom"
@@ -236,6 +238,46 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
                     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
                     sock.send(b"unknown")
+                    
+                elif (name == "ethan's Mom"
+                    or name == "nicks Mom"
+                    or name == "ethansgrandpa"
+                    or name == "Nicholas Blackburn" 
+                    or name == "Ethan Wagner"
+                    and name == "Unknown"):
+                    
+                    cv2.rectangle(frame, (left, top), (right, bottom), (255, 103, 100), 2)
+
+                    font = cv2.FONT_HERSHEY_DUPLEX
+
+                    cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(
+                        frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
+                    )
+                    cv2.putText(frame, "Group", (0, 450), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
+
+                    ## Distance info
+                    cv2.putText(
+                        frame,
+                        "T&B" + str(top) + "," + str(bottom),
+                        (474, 430),
+                        font,
+                        0.5,
+                        (255, 255, 255),
+                        1,
+                    )
+                    cv2.putText(
+                        frame,
+                        "L&R" + str(left) + "," + str(right),
+                        (474, 450),
+                        font,
+                        0.5,
+                        (255, 255, 255),
+                        1,
+                    )
+                    logging.warning("Letting in group" + name)
+                    sock.send(b"group")
                 else:
                     logging.warning("no one is here")
                     sock.send(b"none")
