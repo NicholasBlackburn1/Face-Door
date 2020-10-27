@@ -6,7 +6,8 @@ from flask import Flask
 from flask.helpers import send_file
 app = Flask(__name__)
 
-testip = '192.168.1.133'
+
+
 @app.route('/')
 def root(Location, name):
     return send_file(Location+name+".jpg")
@@ -24,4 +25,4 @@ def unknownUser(Location,fileprefix,name):
     
 
 def StartServer():
-    app.run(debug=True, host=testip)
+    app.run(debug=True, host='0.0.0.0:80')

@@ -49,12 +49,12 @@ class VideoProsessing(object):
         )
 
         # defines all known faces for the system and how many times the dlib will train it self with that image
-        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=25)[0]
+        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=35)[0]
         NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=35)[0]
         NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=35)[0]
         Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=35)[0]
 
-        known_face_encodings = [NicholasEncode, NicksMom, Ethansmom]
+        known_face_encodings = [NicholasEncode, EthanEncode, NicksMom, Ethansmom]
 
         # Initialize some variables
         face_locations = []

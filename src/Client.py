@@ -42,7 +42,6 @@ time.sleep(1)
 # runs forever to wait to reseave
 while True:
     message = client.recv()
-    info = client.recv_string()
 
     if(message == b"starting"):
         logging.warn(message)
