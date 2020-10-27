@@ -1,7 +1,6 @@
 import video
 import asyncio
 import zmq
-
 from video import VideoProsessing
 
 

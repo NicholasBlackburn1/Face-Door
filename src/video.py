@@ -18,11 +18,6 @@ import zmq
 
 class VideoProsessing(object):
     logging.basicConfig(filename='cv.log',  level=logging.DEBUG)
-   
-    
-
-    
-
 
     def ProcessVideo(self):
         
@@ -159,7 +154,6 @@ class VideoProsessing(object):
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
                     
                     sock.send(b"owners")
-                    sock.send_string(name)
 
                 elif (
                     name == "ethan's Mom"
