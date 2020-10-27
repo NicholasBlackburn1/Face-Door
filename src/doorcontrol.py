@@ -2,13 +2,13 @@
 import RPI.GPIO as gpio
 
 gpio.setmode(gpio.RPI)
-gpio.setup(door_pin,gpio.OUT)
-gpio.setup(alarm_pin,gpio.OUT)
 
 door_pin =  4
 alarm_pin = 13
-
 def setup():
+    gpio.setup(door_pin,gpio.OUT)
+    gpio.setup(alarm_pin,gpio.OUT)
+
     #sets up pins 
     gpio.output(door_pin, gpio.HIGH)
     gpio.output(alarm_pin, gpio.HIGH)
