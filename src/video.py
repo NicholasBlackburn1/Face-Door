@@ -17,7 +17,7 @@ import zmq
 
 
 class VideoProsessing(object):
-    logging.basicConfig(filename='cv.log',  level=logging.DEBUG)
+    logging.basicConfig(filename='/mnt/user/cv.log',  level=logging.DEBUG)
 
     def ProcessVideo(self):
         
