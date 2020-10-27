@@ -3,3 +3,4 @@ env/
 templates/
 src/*.jpg
 src/Config.py
+*.log
