@@ -14,6 +14,7 @@ from datetime import datetime
 import time
 import logging
 import zmq
+import Config 
 
 
 class VideoProsessing(object):
@@ -35,18 +36,19 @@ class VideoProsessing(object):
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 15)
 
+        # add names to list via order of Face encoodings
         known_face_names = [
-            "Nicholas Blackburn",
-            "nicks Mom",
-            "Ethans mom"
-        ]  #Ethan Grandpa"]
+            Config.ETHAN_WAGNER,
+            Config.NICHOLAS_BLACKBURN,
+            Config.NICOLE_BLACKBURN,
+            Config.LAURA_WAGNER
+        ]  
 
-        Ethan = face_recognition.load_image_file(os.path.dirname(__file__) + "/ethan.jpg")
-        Nicholas = face_recognition.load_image_file(os.path.dirname(__file__) + "/nick.jpg")
-        Nicksmom = face_recognition.load_image_file(os.path.dirname(__file__) + "/NicksMom.jpg")
-        EthansMom = face_recognition.load_image_file(
-            os.path.dirname(__file__) + "/ethansMom.jpg"
-        )
+        Ethan = face_recognition.load_image_file(Config.ETHAN_IMAGE)
+        Nicholas = face_recognition.load_image_file(Config.NICK_IMAGE)
+        Nicksmom = face_recognition.load_image_file(Config.NICKS_MOM_IMAGE)
+        EthansMom = face_recognition.load_image_file(Config.ETHANS_MOM_IMAGE)
+         
 
         # defines all known faces for the system and how many times the dlib will train it self with that image
         EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=35)[0]
@@ -89,7 +91,7 @@ class VideoProsessing(object):
                     matches = face_recognition.compare_faces(
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
-                    name = "Unknown"
+                    name =Config.UNRECONIZED
 
                     # # If a match was found in known_face_encodings, just use the first one.
                     # if True in matches:
@@ -118,7 +120,7 @@ class VideoProsessing(object):
                 left *= 4
             
 
-                if name == "Nicholas Blackburn" or name == "Ethan Wagner" and not "Unknown":
+                if name == Config.NICHOLAS_BLACKBURN or name == Config.ETHAN_WAGNER and notConfig.UNRECONIZED:
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
 
@@ -155,12 +157,8 @@ class VideoProsessing(object):
                     
                     sock.send(b"owners")
 
-                elif (
-                    name == "ethan's Mom"
-                    or name == "nicks Mom"
-                    or name == "ethansgrandpa"
-                    and not name == "Unknown"
-                ):
+                # Adult Section add names to here for more adults              
+                elif (name == Config.LAURA_WAGNER or name == Config.NICOLE_BLACKBURN and not name ==Config.UNRECONIZED):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
 
@@ -197,19 +195,10 @@ class VideoProsessing(object):
                     
                     sock.send(b"parents")
             
-                elif name == "Unknown":
+                elif name == Config.UNRECONIZED:
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
-                    cv2.putText(
-                        frame,
-                        "Unknown Person sound Alarm...",
-                        (0, 475),
-                        font,
-                        0.5,
-                        (255, 255, 255),
-                        1,
-                    )
                     ## Distance info
                     cv2.putText(
                         frame,
@@ -233,12 +222,11 @@ class VideoProsessing(object):
                     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
                     sock.send(b"unknown")
                     
-                elif (name == "ethan's Mom"
-                    or name == "nicks Mom"
-                    or name == "ethansgrandpa"
-                    or name == "Nicholas Blackburn" 
-                    or name == "Ethan Wagner"
-                    and name == "Unknown"):
+                elif (name == Config.NICHOLAS_BLACKBURN
+                    or name == Config.ETHAN_WAGNER
+                    or name == Config.LAURA_WAGNER
+                    or name == Config.NICOLE_BLACKBURN
+                    and name == Config.UNRECONIZED):
                     
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 103, 100), 2)
 

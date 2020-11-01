@@ -10,8 +10,12 @@ import time
 import smtplib
 import Config
 import logging
+import doorcontrol
 
 logging.basicConfig(filename='/mnt/user/Client.log',  level=logging.DEBUG)
+
+# setups pins on pi for use 
+doorcontrol.setup()
 
 context = zmq.Context()
 #  Socket to talk to server
@@ -34,10 +38,6 @@ nick = Config.NICKSPHONE
 ethans = Config.ETHANSPHONE
 
 logging.warning("Client Started")
-# test's smtp server by sending message to the cell network
-server.sendmail(name, nick and ethans, Config.NAME + " " + "Test message" +
-                "" + "from your studio security system" + "  " + Config.ENDINGMESSAGE)
-time.sleep(1)
 
 # runs forever to wait to reseave
 while True:
@@ -45,7 +45,7 @@ while True:
 
     if(message == b"starting"):
         logging.warn(message)
-        server.sendmail(name, nick, Config.NAME + " " +
+        server.sendmail(name, nick , Config.NAME + " " +
                         "Starting" + "  " + Config.ENDINGMESSAGE)
         # doorcontrol.setup()
         time.sleep(10)
