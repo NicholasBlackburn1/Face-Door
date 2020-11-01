@@ -23,3 +23,7 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 <li> get webserver to serve up the images taken by cv on a seperate thread </li>
 <li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
+
+
+## IMPORTANT INFO ABOUT FACES
+<li> images should be 400x400 but the face needs to be 3/4ths of the image. to get most accurate result via the dlib training </li>

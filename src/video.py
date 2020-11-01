@@ -14,23 +14,22 @@ from datetime import datetime
 import time
 import logging
 import zmq
-import Config 
+import Config
 
 
 class VideoProsessing(object):
-    logging.basicConfig(filename='/mnt/user/cv.log',  level=logging.DEBUG)
+    logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
 
-    def ProcessVideo(self):
-        
-        ctx=zmq.Context()
+    def ProcessVideo():
+
+        ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind("tcp://127.0.0.1:5000")
-        
+
         sock.send(b"setup")
         logging.info("Setting up cv")
-        imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p")
+        imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
         imagePath = "/mnt/user/"
-
 
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
@@ -38,23 +37,24 @@ class VideoProsessing(object):
 
         # add names to list via order of Face encoodings
         known_face_names = [
-            Config.ETHAN_WAGNER,
             Config.NICHOLAS_BLACKBURN,
+            Config.ETHAN_WAGNER,
             Config.NICOLE_BLACKBURN,
-            Config.LAURA_WAGNER
-        ]  
+            Config.LAURA_WAGNER,
+            # add more here like Config.NAMEHERE,
+        ]
 
         Ethan = face_recognition.load_image_file(Config.ETHAN_IMAGE)
         Nicholas = face_recognition.load_image_file(Config.NICK_IMAGE)
         Nicksmom = face_recognition.load_image_file(Config.NICKS_MOM_IMAGE)
         EthansMom = face_recognition.load_image_file(Config.ETHANS_MOM_IMAGE)
-         
+        # add more faces to be trained to be reconized
 
         # defines all known faces for the system and how many times the dlib will train it self with that image
-        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=35)[0]
-        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=35)[0]
-        NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=35)[0]
-        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=35)[0]
+        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=60)[0]
+        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=60)[0]
+        NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=60)[0]
+        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=60)[0]
 
         known_face_encodings = [NicholasEncode, EthanEncode, NicksMom, Ethansmom]
 
@@ -65,7 +65,7 @@ class VideoProsessing(object):
 
         process_this_frame = True
         logging.info("Cv setup")
-        
+
         sock.send(b"starting")
         while True:
             # Grab a single frame of video
@@ -91,7 +91,7 @@ class VideoProsessing(object):
                     matches = face_recognition.compare_faces(
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
-                    name =Config.UNRECONIZED
+                    name = Config.UNRECONIZED
 
                     # # If a match was found in known_face_encodings, just use the first one.
                     # if True in matches:
@@ -109,7 +109,6 @@ class VideoProsessing(object):
                     face_names.append(name)
 
             process_this_frame = not process_this_frame
-            
 
             # Display the results
             for (top, right, bottom, left), name in zip(face_locations, face_names):
@@ -118,9 +117,12 @@ class VideoProsessing(object):
                 right *= 4
                 bottom *= 4
                 left *= 4
-            
 
-                if name == Config.NICHOLAS_BLACKBURN or name == Config.ETHAN_WAGNER and notConfig.UNRECONIZED:
+                if (
+                    name == Config.NICHOLAS_BLACKBURN
+                    or name == Config.ETHAN_WAGNER
+                    and not Config.UNRECONIZED
+                ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
 
@@ -154,11 +156,15 @@ class VideoProsessing(object):
                     )
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
-                    
+
                     sock.send(b"owners")
 
-                # Adult Section add names to here for more adults              
-                elif (name == Config.LAURA_WAGNER or name == Config.NICOLE_BLACKBURN and not name ==Config.UNRECONIZED):
+                # Adult Section add names to here for more adults
+                elif (
+                    name == Config.LAURA_WAGNER
+                    or name == Config.NICOLE_BLACKBURN
+                    and not name == Config.UNRECONIZED
+                ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
 
@@ -168,7 +174,9 @@ class VideoProsessing(object):
                     cv2.putText(
                         frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
                     )
-                    cv2.putText(frame, "Parent", (0, 450), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(
+                        frame, "Parent", (0, 450), font, 0.5, (255, 255, 255), 1
+                    )
                     cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
 
                     ## Distance info
@@ -191,10 +199,10 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("letting in" + name)
-                    cv2.imwrite(imagePath +"Parent"+imagename + ".jpg", frame)
-                    
+                    cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
+
                     sock.send(b"parents")
-            
+
                 elif name == Config.UNRECONIZED:
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
@@ -221,14 +229,18 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
                     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
                     sock.send(b"unknown")
-                    
-                elif (name == Config.NICHOLAS_BLACKBURN
+
+                elif (
+                    name == Config.NICHOLAS_BLACKBURN
                     or name == Config.ETHAN_WAGNER
                     or name == Config.LAURA_WAGNER
                     or name == Config.NICOLE_BLACKBURN
-                    and name == Config.UNRECONIZED):
-                    
-                    cv2.rectangle(frame, (left, top), (right, bottom), (255, 103, 100), 2)
+                    and name == Config.UNRECONIZED
+                ):
+
+                    cv2.rectangle(
+                        frame, (left, top), (right, bottom), (255, 103, 100), 2
+                    )
 
                     font = cv2.FONT_HERSHEY_DUPLEX
 

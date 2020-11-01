@@ -1,5 +1,5 @@
 import video
 from video import VideoProsessing
 
-print("Starting image")
+print("Starting Secuserve ")
 VideoProsessing.ProcessVideo()
