@@ -50,13 +50,14 @@ class VideoProsessing(object):
         EthansMom = face_recognition.load_image_file(Config.ETHANS_MOM_IMAGE)
         # add more faces to be trained to be reconized
 
-        # defines all known faces for the system and how many times the dlib will train it self with that image
-        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=60)[0]
-        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=60)[0]
-        NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=60)[0]
-        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=60)[0]
+        # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
+        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=165)[0]
+        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=165)[0]
+        #NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=65)[0]
+        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=165)[0]
 
-        known_face_encodings = [NicholasEncode, EthanEncode, NicksMom, Ethansmom]
+        # Add names of the ecodings to thw end of list 
+        known_face_encodings = [NicholasEncode, EthanEncode, Ethansmom]
 
         # Initialize some variables
         face_locations = []
