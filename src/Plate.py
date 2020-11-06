@@ -14,6 +14,7 @@ import logging
 from datetime import datetime
 
 from zmq.sugar import frame
+#TODO: add a zmq socket for it to
 # TODO: Change this into the ipcamera Stream.
 video_capture = cv2.VideoCapture(0)
 video_capture.set(cv2.CAP_PROP_FPS, 60)
@@ -28,6 +29,7 @@ while True:
 
     edged = cv2.Canny(gray, 30, 200) 
     
+    #manage's Contor Finding and  detecting them
     contours = cv2.findContours(edged.copy(), cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     contours = imutils.grab_contours(contours)
     contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
@@ -53,12 +55,14 @@ while True:
     (bottomx, bottomy) = (np.max(x), np.max(y))
     Cropped = gray[topx:bottomx+1, topy:bottomy+1]
 
-    text = pytesseract.image_to_string(Cropped, lang='eng',sconfig='--psm 10')
+    text = pytesseract.image_to_string(Cropped,config='--psm 10')
     
+    if(text == ""):
+        print("cannot detect licence plate text")
+        
     print("Detected license plate Number is:",text)
     img = cv2.resize(img,(500,300))
     Cropped = cv2.resize(Cropped,(400,200))
-    
     
     # TODO: remove views in release
     cv2.imshow('car',img)
