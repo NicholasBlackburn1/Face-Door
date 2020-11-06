@@ -1,5 +1,5 @@
-import video
-from video import VideoProsessing
+from Plate import PlateVideoProsessing
+
 
 print("Starting Secuserve ")
-VideoProsessing.ProcessVideo()
+PlateVideoProsessing.ProcessVideo()
