@@ -17,7 +17,7 @@ from zmq.sugar import frame
 #TODO: add a zmq socket for it to
 # TODO: Change this into the ipcamera Stream.
 video_capture = cv2.VideoCapture(0)
-video_capture.set(cv2.CAP_PROP_FPS, 60)
+video_capture.set(cv2.CAP_PROP_FPS, 15)
 
 while True:
     
@@ -71,9 +71,13 @@ while True:
     cv2.imshow('mask', mask)
     cv2.imshow('gray', gray)
 
-        #cv2.imshow('output', img)
-    # Hit 'q' on the keyboard to quit!
+    print("Detected license plate Number is:",text)
+    cv2.imshow('car',frame)
+    cv2.imshow('gray', gray)
+    cv2.imshow('canny', edged)
+    #cv2.imshow('output', img)
+ # Hit 'q' on the keyboard to quit!
     if cv2.waitKey(1) & 0xFF == ord("q"):
-            break
+        break
 
-    
+   
