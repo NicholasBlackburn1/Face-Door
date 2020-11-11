@@ -28,3 +28,6 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 ## IMPORTANT INFO ABOUT FACES
 <li> images should be 400x400 but the face needs to be 3/4ths of the image. to get most accurate result via the dlib training </li>
+
+## P.S 
+### Please fork me
