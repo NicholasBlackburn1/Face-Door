@@ -1,7 +1,7 @@
-""""
+"""
 This python class controls philips hue Led 
 for visual of Security system
-""""
+"""
 from logging import log
 import Config
 import logging
