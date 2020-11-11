@@ -2,7 +2,7 @@
 
 **An Auto Unlocking Door written in python and opencv on an Pi**
 
-![example](https://github.com/NicholasBlackburn1/Face-Door/blob/main/example1.jpg)
+![example](https://github.com/NicholasBlackburn1/Face-Door/blob/main/2020_11_01-10_45_00_AM_1604245500.jpg)
 
 ## What was my Inspiration for this project
 
@@ -18,6 +18,7 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 <li> able to be easily Started and Stopped on a Read Only os</li>
 <li> Uses realtime Facial recognition to Recognize Authorized users and the non authorized Users</li>
 <li> Uses GPIO control to control 2 big Electromagnet </li>
+<li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
 
 ## Todo's
 
