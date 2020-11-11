@@ -8,16 +8,24 @@ import logging
 
 logging.basicConfig(filename="/mnt/user/hue.log", level=logging.DEBUG)
 
-def setup(brige):
+def setup(bridge):
     logging.warn("Setting up Hue")
-    
-   
-
     # If the app is not registered and the button is not pressed, press the button and call connect() (this only needs to be run a single time)
-    brige.connect()
+    bridge.connect()
 
     # Get the bridge state (This returns the full dictionary that you can explore)
-    brige.get_api()
+    bridge.get_api()
+    
+    lights = bridge.get_light_objects()
+    lights.xy = Config.HUE_STARTUP
+    
+    logging.info("Checking to see if light is on")
+    if(bridge.get_light(1, 'on')):
+         logging.info("Light is on!!!! I Work yess")
+    else:
+        logging.critical("Light is not on trueining it on")
+        # Set brightness of lamp 1 to max
+        bridge.set_light(1, 'bri', 254)
     
     
 def breakin(bridge):
