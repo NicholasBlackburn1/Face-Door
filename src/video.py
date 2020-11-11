@@ -273,12 +273,10 @@ class VideoProsessing(object):
                     )
                     logging.warning("Letting in group" + name)
                     sock.send(b"group")
-                else:
-                    logging.warning("no one is here")
-                    sock.send(b"none")
             # Display the resulting image
             cv2.imshow("Video", frame)
-
+            logging.warning("no one is here")
+            sock.send(b"none")
             # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break

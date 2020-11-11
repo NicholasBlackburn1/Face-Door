@@ -85,7 +85,7 @@ while True:
         server.sendmail(name, nick, Config.NAME + " " +" A Group of people that ethier has an owner or and Parent in it IS HERE!" + "  " + Config.ENDINGMESSAGE)
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
-        #  philipsControl.allgood(bridge)
+        philipsControl.allgood(bridge)
         time.sleep(10)
     else:
         
