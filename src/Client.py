@@ -10,14 +10,14 @@ import time
 import smtplib
 import Config
 import logging
-import doorcontrol
+#import doorcontrol
 import philipsControl
 from phue import Bridge
 
 logging.basicConfig(filename='/mnt/user/Client.log',  level=logging.DEBUG)
 
 # setups pins on pi for use 
-doorcontrol.setup()
+#doorcontrol.setup()
 
 context = zmq.Context()
 #  Socket to talk to server
@@ -39,7 +39,7 @@ name = Config.NAME
 nick = Config.NICKSPHONE
 ethans = Config.ETHANSPHONE
 
-bridge = Bridge(Config.HUE_IP)
+#bridge = Bridge(Config.HUE_IP)
 
 logging.warning("Client Started")
 
@@ -85,7 +85,7 @@ while True:
         server.sendmail(name, nick, Config.NAME + " " +" A Group of people that ethier has an owner or and Parent in it IS HERE!" + "  " + Config.ENDINGMESSAGE)
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
-        philipsControl.allgood(bridge)
+        #philipsControl.allgood(bridge)
         time.sleep(10)
     else:
         

@@ -6,7 +6,10 @@ from logging import log
 import Config
 import logging
 
+
+
 logging.basicConfig(filename="/mnt/user/hue.log", level=logging.DEBUG)
+
 
 def setup(bridge):
     logging.warn("Setting up Hue")
@@ -66,6 +69,4 @@ def lightsoff(bridge):
          bridge.set_light(1, 'bri', 0)
     else: 
         logging.warning("lights are off keeping them off")
-    
-    
     
