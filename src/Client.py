@@ -11,6 +11,8 @@ import smtplib
 import Config
 import logging
 import doorcontrol
+import philipsControl
+from phue import Bridge
 
 logging.basicConfig(filename='/mnt/user/Client.log',  level=logging.DEBUG)
 
@@ -37,6 +39,8 @@ name = Config.NAME
 nick = Config.NICKSPHONE
 ethans = Config.ETHANSPHONE
 
+bridge = Bridge(Config.HUE_IP)
+
 logging.warning("Client Started")
 
 # runs forever to wait to reseave
@@ -48,7 +52,7 @@ while True:
         server.sendmail(name, nick , Config.NAME + " " +
                         "Starting" + "  " + Config.ENDINGMESSAGE)
         # doorcontrol.setup()
-        
+        #philipsControl.setup(bridge)
         time.sleep(10)
 
     elif(message == b"owners"):
@@ -57,6 +61,7 @@ while True:
                         "" + "is at the Studio" + "  " + Config.ENDINGMESSAGE)
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
+        #  philipsControl.allgood(bridge)
         time.sleep(10)
     elif(message == b"parents"):
         logging.warn(message)
@@ -64,6 +69,8 @@ while True:
                         "Adults is at the Studio!" + "  " + Config.ENDINGMESSAGE)
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
+        #  philipsControl.allgood(bridge)
+        
         time.sleep(10)
     elif(message == b"unknown"):
         logging.warn(message)
@@ -71,17 +78,20 @@ while True:
                         " IS HERE! Sounding Alarm!" + "  " + Config.ENDINGMESSAGE)
         #  doorcontrol.doorClose()
         #  doorcontrol.alarmOn()
+        #  philipsControl.breakin(bridge)
         time.sleep(10)
     elif(message == b"group"):
         logging.warn(message)
-        server.sendmail(name, nick, Config.NAME + " " +
-                        " A Group of people that ethier has an owner or and Parent in it IS HERE!" + "  " + Config.ENDINGMESSAGE)
+        server.sendmail(name, nick, Config.NAME + " " +" A Group of people that ethier has an owner or and Parent in it IS HERE!" + "  " + Config.ENDINGMESSAGE)
         #  doorcontrol.doorOpen()
         #  doorcontrol.alarmOff()
+        #  philipsControl.allgood(bridge)
         time.sleep(10)
     else:
+        
         #  doorcontrol.doorClose()
         #  doorcontrol.alarmOff()
+        #  philipsControl.lightsoff(bridge)
         logging.critical("ERROR AS OCCURRED")
         server.sendmail(name, nick, Config.NAME + " " +
                         "Error as occured " + "  " + Config.ENDINGMESSAGE)
