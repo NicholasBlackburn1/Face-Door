@@ -48,6 +48,7 @@ while True:
         server.sendmail(name, nick , Config.NAME + " " +
                         "Starting" + "  " + Config.ENDINGMESSAGE)
         # doorcontrol.setup()
+        
         time.sleep(10)
 
     elif(message == b"owners"):
