@@ -13,7 +13,6 @@ import zmq
 import logging
 from datetime import datetime
 
-from zmq.sugar import frame
 #TODO: add a zmq socket for it to
 # TODO: Change this into the ipcamera Stream.
 video_capture = cv2.VideoCapture(0)
@@ -43,7 +42,7 @@ while True:
         crt = approx
         
     # Draws Contors
-    cv2.drawContours(img, [crt], -1, (0, 0, 255), 3)
+    cv2.drawContours(img, [crt], 0, (0, 0, 255), 3)
     mask = np.zeros(gray.shape,np.uint8)
     
     new_image = cv2.drawContours(mask,[crt],0,255,-1,)
