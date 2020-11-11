@@ -51,10 +51,10 @@ class VideoProsessing(object):
         # add more faces to be trained to be reconized
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
-        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=165)[0]
-        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=165)[0]
+        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=65)[0]
+        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=65)[0]
         #NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=65)[0]
-        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=165)[0]
+        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=65)[0]
 
         # Add names of the ecodings to thw end of list 
         known_face_encodings = [NicholasEncode, EthanEncode, Ethansmom]
@@ -250,7 +250,7 @@ class VideoProsessing(object):
                         frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(frame, "Group", (0, 450), font, 0.5, (255, 255, 255), 1)
-                    cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, "Known and Unknown People", (0, 470), font, 0.5, (255, 255, 255), 1)
 
                     ## Distance info
                     cv2.putText(
