@@ -9,7 +9,6 @@ import cv2
 import face_recognition
 import numpy as np
 import os
-from notify_run import Notify
 from datetime import datetime
 import time
 import logging
@@ -39,23 +38,20 @@ class VideoProsessing(object):
         known_face_names = [
             Config.NICHOLAS_BLACKBURN,
             Config.ETHAN_WAGNER,
-            Config.NICOLE_BLACKBURN,
             Config.LAURA_WAGNER,
             # add more here like Config.NAMEHERE,
         ]
 
         Ethan = face_recognition.load_image_file(Config.ETHAN_IMAGE)
         Nicholas = face_recognition.load_image_file(Config.NICK_IMAGE)
-        Nicksmom = face_recognition.load_image_file(Config.NICKS_MOM_IMAGE)
         EthansMom = face_recognition.load_image_file(Config.ETHANS_MOM_IMAGE)
         # add more faces to be trained to be reconized
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
-        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=65)[0]
-        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=65)[0]
-        #NicksMom = face_recognition.face_encodings(Nicksmom, num_jitters=65)[0]
-        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=65)[0]
-
+        EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
+        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=75)[0]
+        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=75)[0]
+         
         # Add names of the ecodings to thw end of list 
         known_face_encodings = [NicholasEncode, EthanEncode, Ethansmom]
 

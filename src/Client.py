@@ -91,7 +91,8 @@ while True:
         
         #  doorcontrol.doorClose()
         #  doorcontrol.alarmOff()
-        #  philipsControl.lightsoff(bridge)
+        #  philipsControl.error()
+        #  philipsControll.lightssoff()
         logging.critical("ERROR AS OCCURRED")
         server.sendmail(name, nick, Config.NAME + " " +
                         "Error as occured " + "  " + Config.ENDINGMESSAGE)
