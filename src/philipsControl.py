@@ -82,6 +82,4 @@ def error(bridge):
             if(i == 255):
                 logging.info("Light is on!!!! Shutting off")
                 bridge.set_light(1, 'bri', 0)
-                break
-            else:
-        
+                break 
