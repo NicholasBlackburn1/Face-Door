@@ -18,7 +18,7 @@ from app.base.forms import LoginForm, CreateAccountForm
 from app.base.models import User
 
 from app.base.util import verify_pass
-
+from web.webData import ownerimage
 @blueprint.route('/')
 def route_default():
     return redirect(url_for('base_blueprint.login'))
@@ -145,7 +145,7 @@ def index():
     # ownerimg - > displays current image taken of owners from opencv
     #parentimg -> displase image of parent taken from fopencv
     #unknownimg
-    return render_template('index.html',  unique_people= 10, uniquespotted= 10, authorized=2, authpre=2, unknown=1, unauthpre=.5, errors=2.53, unauthorized=3, group=5, date='14/11/20', Notifcation1='why u lion', Notifcation1_data='data for notification 1',Notifcation2='waring meltdown!',Notification2_data='data for notifcation2',Notification3='warting',Notifcation3_data='adad',Notifcation4='raspi online',Notifcation4_data='datat',temp='100.0',temppre='50',uptime ='10d/8h/40m',cpuload='100',cpuloadpre='90', ownerimg='imageplaceloder', parentimg='imagepalce',unknownimg='unknown')
+    return render_template('index.html',  unique_people= 10, uniquespotted= 10, authorized=2, authpre=2, unknown=1, unauthpre=.5, errors=2.53, unauthorized=3, group=5, date='14/11/20', Notifcation1='why u lion', Notifcation1_data='data for notification 1',Notifcation2='waring meltdown!',Notification2_data='data for notifcation2',Notification3='warting',Notifcation3_data='adad',Notifcation4='raspi online',Notifcation4_data='datat',temp='100.0',temppre='50',uptime ='10d/8h/40m',cpuload='100',cpuloadpre='90', ownerimg=ownerimage, parentimg='imagepalce',unknownimg='unknown')
 
 @login_manager.unauthorized_handler
 def unauthorized_handler():

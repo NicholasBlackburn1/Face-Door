@@ -153,13 +153,12 @@ class VideoProsessing(object):
                     )
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
-                    sock.send("%d %s" % ('image',  imagePath+ imagename + '.jpg'))
+                    sock.send_string(imagePath+imagename + '.jpg')
                     sock.send(b"owners")
 
                 # Adult Section add names to here for more adults
                 elif (
                     name == Config.LAURA_WAGNER
-                    or name == Config.NICOLE_BLACKBURN
                     and not name == Config.UNRECONIZED
                 ):
                     # Draw a box around the face
@@ -198,7 +197,7 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
                     # Sendinding image 
-                    sock.send("%d %s" % ('image',  imagePath+ "Parent"+ imagename + '.jpg'))
+                    sock.send_string('image',  imagePath+ "Parent"+ imagename + '.jpg')
                     sock.send(b"parents")
 
                 elif name == Config.UNRECONIZED:
@@ -226,7 +225,7 @@ class VideoProsessing(object):
                     )
                     logging.warning("not letting in" + name)
                     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-                    sock.send("%d %s" % ('image',  imagePath+ "unKnownPerson"+ imagename + '.jpg'))
+                    sock.send_string(imagePath+ "unKnownPerson"+ imagename + '.jpg')
                     sock.send(b"unknown")
 
                 elif (
@@ -271,7 +270,7 @@ class VideoProsessing(object):
                     logging.warning("Letting in group" + name)
                     cv2.imwrite(imagePath + "group" + imagename + ".jpg", frame)
                     # Sendinding image 
-                    sock.send("%d %s" % ('image',  imagePath+ "group"+ imagename + '.jpg'))
+                    sock.send_string(imagePath+ "group"+ imagename + '.jpg')
                     sock.send(b"group")
                     
             # Display the resulting image

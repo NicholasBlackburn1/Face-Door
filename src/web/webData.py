@@ -15,9 +15,10 @@ client.connect("tcp://127.0.0.1:5000")
 
 # Simply prints out the client object for proof of running
 logging.info(client)
-
+ownerimage = None
 while True:
     message = client.recv()
-
-    if(message == b"image"):
-        print('test')
+  
+    if(message == message.strip(b'owners')):
+        ownerimage = str(message.strip(b'b'),'utf-8')
+        print(ownerimage)
