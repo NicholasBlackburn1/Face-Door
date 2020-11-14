@@ -153,7 +153,7 @@ class VideoProsessing(object):
                     )
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
-                    sock.send_string(imagePath+imagename + '.jpg')
+                    sock.send_string(imagename + '.jpg')
                     sock.send(b"owners")
 
                 # Adult Section add names to here for more adults
@@ -197,7 +197,7 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
                     # Sendinding image 
-                    sock.send_string('image',  imagePath+ "Parent"+ imagename + '.jpg')
+                    sock.send_string("Parent"+ imagename + '.jpg')
                     sock.send(b"parents")
 
                 elif name == Config.UNRECONIZED:
@@ -225,7 +225,7 @@ class VideoProsessing(object):
                     )
                     logging.warning("not letting in" + name)
                     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-                    sock.send_string(imagePath+ "unKnownPerson"+ imagename + '.jpg')
+                    sock.send_string("unKnownPerson"+ imagename + '.jpg')
                     sock.send(b"unknown")
 
                 elif (
@@ -270,9 +270,10 @@ class VideoProsessing(object):
                     logging.warning("Letting in group" + name)
                     cv2.imwrite(imagePath + "group" + imagename + ".jpg", frame)
                     # Sendinding image 
-                    sock.send_string(imagePath+ "group"+ imagename + '.jpg')
+                    sock.send_string("group"+ imagename + '.jpg')
                     sock.send(b"group")
                     
+                    sock.send_string(imagename)
             # Display the resulting image
             cv2.imshow("Video", frame)
             logging.warning("no one is here")
