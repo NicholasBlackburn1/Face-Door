@@ -155,6 +155,7 @@ class VideoProsessing(object):
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
                     sock.send_string(imagename + '.jpg')
                     sock.send(b"owners")
+                    sock.send_string("face"+str((len(face_encodings))))
 
                 # Adult Section add names to here for more adults
                 elif (
