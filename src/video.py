@@ -15,11 +15,12 @@ import logging
 import zmq
 import Config
 from time import sleep
-
+import threading
 
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
-
+   
+                    
     def ProcessVideo():
 
         ctx = zmq.Context()
@@ -153,11 +154,10 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("letting in" + name)
-                    cv2.imwrite(imagePath + imagename + ".jpg", frame)
-                    sock.send_string(imagename + '.jpg')
-                    sock.send_string(str((len(face_encodings))))
-                    sock.send(b"owners")
                     
+                    x= threading.Thread(target=save_owner(sock,imagePath,imagename,frame,face_encodings))
+                    x.setDaemon(True)
+                    x.start()
 
                 # Adult Section add names to here for more adults
                 elif (
@@ -198,6 +198,8 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("letting in" + name)
+                    
+                    
                     cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
                     # Sendinding image 
                     sock.send_string("Parent"+ imagename + '.jpg')
@@ -227,9 +229,7 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("not letting in" + name)
-                    cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-                    sock.send_string("unKnownPerson"+ imagename + '.jpg')
-                    sock.send(b"unknown")
+                  
 
                 elif (
                     name == Config.NICHOLAS_BLACKBURN
@@ -287,3 +287,37 @@ class VideoProsessing(object):
 
         # Release handle to the webcam
         video_capture.release()
+        
+        
+         
+def send_file(sock,ImageName, logging):
+    logging.info("[SOCKET-IMAGE] sending image")
+    sock.send("Image",ImageName)
+    logging.info("[SOCKET-IMAGE] image sent\n")
+    
+def send_person_count(face_encodings, sock):
+    logging.info("[SOCKET PERSON] sending Seen Persons")
+    sock.send("Persons",len(face_encodings))
+    logging.info("[SOCKET PERSON] Sent Seen Persons")
+    
+
+
+
+def save_owner(sock, imagePath,imagename,frame):
+    cv2.imwrite(imagePath + imagename + ".jpg", frame)
+    send_file(sock(imagePath + imagename + ".jpg",logging))
+  
+    
+def save_parent(sock, imagePath,imagename,frame):
+    cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
+    sock.send_string("Parent"+ imagename + '.jpg')
+    sock.send(b"parents")
+    
+    
+def save_unknown(sock, imagePath,imagename,frame):
+    cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
+    sock.send_string("unKnownPerson"+ imagename + '.jpg')
+    sock.send(b"unknown")
+    
+
+    
