@@ -339,7 +339,7 @@ def send_timeStamp_data(sock,time):
 #sends person name to subsecriber 
 def send_person_name(sock,name):
     logging.info("[SOCKET Name] Sending person seen name")
-    sock.send("Name",name)
+    sock.send("Name",encrypt(name))
     logging.info("[SOCKET Name] Sent Person name")
     
 
