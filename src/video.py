@@ -14,6 +14,7 @@ import time
 import logging
 import zmq
 import Config
+from time import sleep
 
 
 class VideoProsessing(object):
@@ -154,8 +155,9 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
                     cv2.imwrite(imagePath + imagename + ".jpg", frame)
                     sock.send_string(imagename + '.jpg')
+                    sock.send_string(str((len(face_encodings))))
                     sock.send(b"owners")
-                    sock.send_string("face"+str((len(face_encodings))))
+                    
 
                 # Adult Section add names to here for more adults
                 elif (
@@ -273,12 +275,12 @@ class VideoProsessing(object):
                     # Sendinding image 
                     sock.send_string("group"+ imagename + '.jpg')
                     sock.send(b"group")
-                    
-                    sock.send_string(imagename)
+                    sock.send_string(imagename+ '.jpg')
             # Display the resulting image
             cv2.imshow("Video", frame)
             logging.warning("no one is here")
-            sock.send(b"none")
+            sock.send_string(str((len(face_encodings))))
+            
             # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break

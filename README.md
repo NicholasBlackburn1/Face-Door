@@ -19,6 +19,9 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 <li> Uses realtime Facial recognition to Recognize Authorized users and the non authorized Users</li>
 <li> Uses GPIO control to control 2 big Electromagnet </li>
 <li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
+<li> added an flask onepager for displaying system data to user easly and securily </li>
+
+![repo for webdash](https://github.com/NicholasBlackburn1/Face-Door-Webdash)
 
 ## Todo's
 
