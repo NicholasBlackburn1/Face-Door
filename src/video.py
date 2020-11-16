@@ -6,6 +6,7 @@ from os import wait
 from os.path import join
 
 import cv2
+from zmq.sugar import socket
 import face_recognition
 import numpy as np
 import os
@@ -16,10 +17,14 @@ import zmq
 import Config
 from time import sleep
 import threading
+import base64
+from Crypto.Cipher import AES
+from Crypto import Random
+from Crypto.Protocol.KDF import PBKDF2
 
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
-   
+
                     
     def ProcessVideo():
 
@@ -289,19 +294,54 @@ class VideoProsessing(object):
         video_capture.release()
         
         
-         
-def send_file(sock,ImageName, logging):
+        
+def get_private_key(password):
+    salt = Config.SALT
+    kdf = PBKDF2(password, salt, 64, 1000)
+    key = kdf[:32]
+    return key        
+        
+        
+def encrypt(data):
+    private_key = get_private_key(Config.ENCRYPITON_PASSWORD)
+    raw = Config.PAD(data)
+    iv = Random.new().read(Config.BLOCK_SIZE)
+    cipher = AES.new(private_key, AES.MODE_CBC, iv)
+    return base64.b64encode(iv + cipher.encrypt(raw))
+
+    
+        
+        
+# Sends a file name obver to subscribers  
+def send_file(sock,ImageName):
     logging.info("[SOCKET-IMAGE] sending image")
-    sock.send("Image",ImageName)
+    sock.send("Image",encrypt(ImageName))
     logging.info("[SOCKET-IMAGE] image sent\n")
     
+#sends Person count info to subscribers 
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
     sock.send("Persons",len(face_encodings))
     logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+#sends Person Status info to subscribers 
+def send_person_status(sock,group_status):
+    logging.info("[SOCKET STATUS] sending Person Group status")
+    sock.send("Group", encrypt(group_status))
+    logging.info("[SOCKET STATUS] Sent Person Group status")
+
+#sends TimeStamp info to subscribers 
+def send_timeStamp_data(sock,time):
+    logging.info("[SOCKET TIME] Sending Person Time Stamp Data")
+    sock.send("Time",time)
+    logging.info("[SOCKET TIME] Sent Person Time Stamp Data")
+
+#sends person name to subsecriber 
+def send_person_name(sock,name):
+    logging.info("[SOCKET Name] Sending person seen name")
+    sock.send("Name",name)
+    logging.info("[SOCKET Name] Sent Person name")
     
-
-
 
 def save_owner(sock, imagePath,imagename,frame):
     cv2.imwrite(imagePath + imagename + ".jpg", frame)
