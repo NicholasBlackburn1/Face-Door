@@ -2,7 +2,7 @@
 This is the main (Bulk) possessing done in my opencv Program
 """
 from logging import log
-from os import wait
+from os import sendfile, wait
 from os.path import join
 
 import cv2
@@ -18,9 +18,7 @@ import Config
 from time import sleep
 import threading
 import base64
-from Crypto.Cipher import AES
-from Crypto import Random
-from Crypto.Protocol.KDF import PBKDF2
+import json
 
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
@@ -159,11 +157,15 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("letting in" + name)
-                    
-                    x= threading.Thread(target=save_owner(sock,imagePath,imagename,frame,face_encodings))
-                    x.setDaemon(True)
-                    x.start()
 
+                    # sends Image and saves image to disk
+                    #save_owner(sock,imagePath,imagename,frame)                 
+                    #send_timeStamp_data(imagename,time)
+                    
+                    # sends person info
+                    send_person_name(sock,name)
+                    #send_person_status(sock,"owner")
+                    
                 # Adult Section add names to here for more adults
                 elif (
                     name == Config.LAURA_WAGNER
@@ -205,10 +207,15 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
                     
                     
-                    cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
-                    # Sendinding image 
-                    sock.send_string("Parent"+ imagename + '.jpg')
-                    sock.send(b"parents")
+                    
+                    # sends Image and saves image to disk
+                    #save_parent(sock,imagePath+"Parent"+imagename,frame)                 
+                    #send_timeStamp_data(imagename)
+                    
+                    # sends person info
+                    send_person_name(sock,name)
+                    #send_person_status(sock,"Parent")
+                    
 
                 elif name == Config.UNRECONIZED:
                     font = cv2.FONT_HERSHEY_DUPLEX
@@ -234,7 +241,13 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("not letting in" + name)
-                  
+                      
+                    # sends Image and saves image to disk
+                    #save_unknown(sock,imagePath+"Unknown"+imagename,frame)                 
+                   
+                    # sends person info
+                    send_person_name(sock,name)
+                    #send_person_status(sock,"Parent")
 
                 elif (
                     name == Config.NICHOLAS_BLACKBURN
@@ -276,15 +289,19 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("Letting in group" + name)
-                    cv2.imwrite(imagePath + "group" + imagename + ".jpg", frame)
-                    # Sendinding image 
-                    sock.send_string("group"+ imagename + '.jpg')
-                    sock.send(b"group")
-                    sock.send_string(imagename+ '.jpg')
+                     
+                    # sends Image and saves image to disk
+                    #save_owner(sock,imagePath+"group"+imagename,frame)                 
+            
+                    # sends person info
+                    #send_person_name(sock,name)
+                    #send_person_status(sock,"group")
+                    
             # Display the resulting image
             cv2.imshow("Video", frame)
             logging.warning("no one is here")
-            sock.send_string(str((len(face_encodings))))
+             
+           
             
             # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -292,71 +309,58 @@ class VideoProsessing(object):
 
         # Release handle to the webcam
         video_capture.release()
-        
-        
-        
-def get_private_key(password):
-    salt = Config.SALT
-    kdf = PBKDF2(password, salt, 64, 1000)
-    key = kdf[:32]
-    return key        
-        
-        
-def encrypt(data):
-    private_key = get_private_key(Config.ENCRYPITON_PASSWORD)
-    raw = Config.PAD(data)
-    iv = Random.new().read(Config.BLOCK_SIZE)
-    cipher = AES.new(private_key, AES.MODE_CBC, iv)
-    return base64.b64encode(iv + cipher.encrypt(raw))
 
-    
-        
-        
+
+def encode_message(topic, msg):
+    """ json encode the message and prepend the topic """
+    return topic + ' ' + json.dumps(msg)
+
+
 # Sends a file name obver to subscribers  
 def send_file(sock,ImageName):
     logging.info("[SOCKET-IMAGE] sending image")
-    sock.send("Image",encrypt(ImageName))
+    sock.send_string(encode_message(Config.IMAGE,ImageName))
     logging.info("[SOCKET-IMAGE] image sent\n")
     
 #sends Person count info to subscribers 
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send("Persons",len(face_encodings))
+    sock.send_string(encode_message(Config.FACE,len(face_encodings)))
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
 #sends Person Status info to subscribers 
 def send_person_status(sock,group_status):
     logging.info("[SOCKET STATUS] sending Person Group status")
-    sock.send("Group", encrypt(group_status))
+    sock.send_string(encode_message(Config.GROUP,group_status))
     logging.info("[SOCKET STATUS] Sent Person Group status")
 
 #sends TimeStamp info to subscribers 
 def send_timeStamp_data(sock,time):
     logging.info("[SOCKET TIME] Sending Person Time Stamp Data")
-    sock.send("Time",time)
+    sock.send_string(encode_message(Config.TIME,time))
     logging.info("[SOCKET TIME] Sent Person Time Stamp Data")
 
 #sends person name to subsecriber 
 def send_person_name(sock,name):
     logging.info("[SOCKET Name] Sending person seen name")
-    sock.send("Name",encrypt(name))
+    sock.send_string(encode_message(Config.NAME,name))
     logging.info("[SOCKET Name] Sent Person name")
     
 
 def save_owner(sock, imagePath,imagename,frame):
     cv2.imwrite(imagePath + imagename + ".jpg", frame)
-    send_file(sock(imagePath + imagename + ".jpg",logging))
+    send_file(sock,imagePath + imagename + ".jpg")
   
     
 def save_parent(sock, imagePath,imagename,frame):
     cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
-    sock.send_string("Parent"+ imagename + '.jpg')
+    sock.send("Parent"+ imagename + '.jpg')
     sock.send(b"parents")
     
     
 def save_unknown(sock, imagePath,imagename,frame):
     cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-    sock.send_string("unKnownPerson"+ imagename + '.jpg')
+    sock.send("unKnownPerson"+ imagename + '.jpg')
     sock.send(b"unknown")
     
 
