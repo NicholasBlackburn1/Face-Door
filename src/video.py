@@ -319,22 +319,19 @@ def send_file(sock,frame):
 #sends Person count info to subscribers 
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
-   
-    sock.send_string(Config.FACE+" "+len(face_encodings))
+    sock.send_string({Config.FACE:len(face_encodings)})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
 #sends Person Status info to subscribers 
 def send_person_status(sock,group_status):
     logging.info("[SOCKET STATUS] sending Person Group status")
-   
-    sock.send_string(Config.GROUP+" "+group_status)
+    sock.send_json({Config.GROUP:group_status})
     logging.info("[SOCKET STATUS] Sent Person Group status")
 
 #sends TimeStamp info to subscribers 
 def send_timeStamp_data(sock,time):
     logging.info("[SOCKET TIME] Sending Person Time Stamp Data")
-   
-    sock.send_string(Config.TIME+" "+time)
+    sock.send_json({Config.TIME:time})
     logging.info("[SOCKET TIME] Sent Person Time Stamp Data")
 
 #sends person name to subsecriber 
