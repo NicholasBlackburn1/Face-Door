@@ -159,12 +159,12 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
 
                     # sends Image and saves image to disk
-                    #save_owner(sock,imagePath,imagename,frame)                 
-                    #send_timeStamp_data(imagename,time)
+                    save_owner(sock,imagePath,imagename,frame)                 
                     
                     # sends person info
                     send_person_name(sock,name)
-                    #send_person_status(sock,"owner")
+                    send_person_status(sock,"owner")
+                    send_person_count(face_encodings,sock)
                     
                 # Adult Section add names to here for more adults
                 elif (
@@ -206,15 +206,13 @@ class VideoProsessing(object):
                     )
                     logging.warning("letting in" + name)
                     
-                    
-                    
+            
                     # sends Image and saves image to disk
-                    #save_parent(sock,imagePath+"Parent"+imagename,frame)                 
-                    #send_timeStamp_data(imagename)
-                    
+                    save_parent(sock,imagePath+"Parent"+imagename,frame)                 
+                  
                     # sends person info
                     send_person_name(sock,name)
-                    #send_person_status(sock,"Parent")
+                    send_person_status(sock,"Parent")
                     
 
                 elif name == Config.UNRECONIZED:
@@ -311,51 +309,53 @@ class VideoProsessing(object):
         video_capture.release()
 
 # Sends a file name obver to subscribers  
-def send_file(sock,frame):
+def send_file(sock,imagename):
     logging.info("[SOCKET-IMAGE] sending image")
-    sock.pyobj(frame)
+    sock.send_string("IMAGE", flags=zmq.SNDMORE)
+    sock.send_json({Config.IMAGE: imagename+".jpg"})
     logging.info("[SOCKET-IMAGE] image sent\n")
     
 #sends Person count info to subscribers 
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string({Config.FACE:len(face_encodings)})
+    sock.send_string("FACE", flags=zmq.SNDMORE)
+    sock.send_json({Config.FACE: str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
 #sends Person Status info to subscribers 
 def send_person_status(sock,group_status):
     logging.info("[SOCKET STATUS] sending Person Group status")
-    sock.send_json({Config.GROUP:group_status})
+    sock.send_string("GROUP", flags=zmq.SNDMORE)
+    sock.send_json({Config.GROUP: group_status})
     logging.info("[SOCKET STATUS] Sent Person Group status")
-
-#sends TimeStamp info to subscribers 
-def send_timeStamp_data(sock,time):
-    logging.info("[SOCKET TIME] Sending Person Time Stamp Data")
-    sock.send_json({Config.TIME:time})
-    logging.info("[SOCKET TIME] Sent Person Time Stamp Data")
-
+    
 #sends person name to subsecriber 
 def send_person_name(sock,name):
     logging.info("[SOCKET Name] Sending person seen name")
+    sock.send_string("NAME", flags=zmq.SNDMORE)
     sock.send_json({Config.NAME_TOKEN: name})
     logging.info("[SOCKET Name] Sent Person name")
     
-
-def save_owner(sock, imagePath,imagename,frame):
-    cv2.imwrite(imagePath + imagename + ".jpg", frame)
-    send_file(sock,imagePath + imagename + ".jpg")
+# saves owner images and sends Frame 
+def save_owner(sock, imagepath,imagename,frame):
+    cv2.imwrite(imagepath + imagename + ".jpg", frame)
+    send_file(sock,imagename)
   
     
 def save_parent(sock, imagePath,imagename,frame):
     cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
-    sock.send("Parent"+ imagename + '.jpg')
-    sock.send(b"parents")
+    send_file(sock,imagename)
     
     
-def save_unknown(sock, imagePath,imagename,frame):
-    cv2.imwrite(imagePath + "unKnownPerson" + imagename + ".jpg", frame)
-    sock.send("unKnownPerson"+ imagename + '.jpg')
-    sock.send(b"unknown")
     
+def save_unknown(sock, imagepath,imagename,frame):
+    cv2.imwrite(imagepath + "unKnownPerson" + imagename + ".jpg", frame)
+    send_file(sock,imagename)
 
+
+   
     
+    
+def save_group(sock, imagepath,imagename,frame):
+    cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
+    send_file(sock,imagename)
