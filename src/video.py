@@ -164,7 +164,7 @@ class VideoProsessing(object):
                     # sends person info
                     send_person_name(sock,name)
                     send_person_status(sock,"owner")
-                    send_person_count(face_encodings,sock)
+                    send_owner_count(face_encodings,sock)
                     
                 # Adult Section add names to here for more adults
                 elif (
@@ -209,10 +209,11 @@ class VideoProsessing(object):
             
                     # sends Image and saves image to disk
                     save_parent(sock,imagePath+"Parent"+imagename,frame)                 
-                  
+            
                     # sends person info
                     send_person_name(sock,name)
                     send_person_status(sock,"Parent")
+                    send_parent_count(face_encodings)
                     
 
                 elif name == Config.UNRECONIZED:
@@ -241,11 +242,13 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
                       
                     # sends Image and saves image to disk
-                    #save_unknown(sock,imagePath+"Unknown"+imagename,frame)                 
+                    save_unknown(sock,imagePath,imagename,frame)                 
                    
                     # sends person info
                     send_person_name(sock,name)
-                    #send_person_status(sock,"Parent")
+                    send_person_status(sock,"Unknown")
+                    send_unkown_count(face_encodings,sock)                    
+
 
                 elif (
                     name == Config.NICHOLAS_BLACKBURN
@@ -289,12 +292,12 @@ class VideoProsessing(object):
                     logging.warning("Letting in group" + name)
                      
                     # sends Image and saves image to disk
-                    #save_owner(sock,imagePath+"group"+imagename,frame)                 
+                    save_group(sock,imagePath+"group"+imagename,frame)                 
             
                     # sends person info
-                    #send_person_name(sock,name)
-                    #send_person_status(sock,"group")
-                    
+                    send_person_name(sock,name)
+                    send_person_status(sock,"group")
+                    send_person_count(face_encodings,sock)
             # Display the resulting image
             cv2.imshow("Video", frame)
             logging.warning("no one is here")
@@ -312,14 +315,37 @@ class VideoProsessing(object):
 def send_file(sock,imagename):
     logging.info("[SOCKET-IMAGE] sending image")
     sock.send_string("IMAGE", flags=zmq.SNDMORE)
-    sock.send_json({Config.IMAGE: imagename+".jpg"})
+    sock.send_json({Config.IMAGE:imagename+".jpg"})
     logging.info("[SOCKET-IMAGE] image sent\n")
     
 #sends Person count info to subscribers 
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
     sock.send_string("FACE", flags=zmq.SNDMORE)
-    sock.send_json({Config.FACE: str(len(face_encodings))})
+    sock.send_json({Config.FACE: str(len(face_encodings+1))})
+    logging.info("[SOCKET PERSON] Sent Seen Persons")
+    
+    #sends Person count info to subscribers 
+def send_owner_count(face_encodings, sock):
+    logging.info("[SOCKET PERSON] sending Seen Persons")
+    sock.send_string("OWNER", flags=zmq.SNDMORE)
+    sock.send_json({Config.OWNER_FACE: str(len(face_encodings))})
+    logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+    
+    #sends Person count info to subscribers 
+def send_parent_count(face_encodings, sock):
+    logging.info("[SOCKET PERSON] sending Seen Persons")
+    sock.send_string("PARENT", flags=zmq.SNDMORE)
+    sock.send_json({Config.PARENT_FACE: str(len(face_encodings))})
+    logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+    
+    #sends Person count info to subscribers 
+def send_unkown_count(face_encodings, sock):
+    logging.info("[SOCKET PERSON] sending Seen Persons")
+    sock.send_string("UNKNOWN", flags=zmq.SNDMORE)
+    sock.send_json({Config.UNKNOWN_FACE: str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
 #sends Person Status info to subscribers 
@@ -344,13 +370,13 @@ def save_owner(sock, imagepath,imagename,frame):
     
 def save_parent(sock, imagePath,imagename,frame):
     cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
-    send_file(sock,imagename)
+    send_file(sock,"Parent"+imagename)
     
     
     
 def save_unknown(sock, imagepath,imagename,frame):
     cv2.imwrite(imagepath + "unKnownPerson" + imagename + ".jpg", frame)
-    send_file(sock,imagename)
+    send_file(sock,"unKnownPerson"+imagename)
 
 
    
