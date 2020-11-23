@@ -74,8 +74,8 @@
                           <div class="card-body">
                             <div class="row">
                               <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Authorised Person seen at></h5>
-                                <span> <img src="/2020_11_01-10_45_00_AM_1604245500.jpg" alt=""></span> %</span>
+                                <h5 class="card-title text-uppercase text-muted mb-0">Authorised Person seen at <%= pictureDate %></h5>
+                                <span> <img src="/2020_11_01-10_45_00_AM_1604245500.jpg" alt=""></span> 
                               </div>
                               <div class="col-auto">
                                 <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
@@ -84,19 +84,20 @@
                               </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                              <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> None % </span>
-                              <span class="text-nowrap">People Since last month</span>
+                              <span class="text-success mr-2"><i class="fa fa-arrow-up"></i> <%= peopleTotal - peopleAuth%> % </span>
+                              <span class="text-nowrap">People Since last week</span>
                             </p>
                           </div>
                         </div>
                       </div>
+                     
                       <div class="col-xl-3 col-lg-6">
                         <div class="card card-stats mb-4 mb-xl-0">
                           <div class="card-body">
                             <div class="row">
                               <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Unknown People Seen</h5>
-                                <span class="h2 font-weight-bold mb-0">None</span>
+                                <h5 id="data" class="card-title text-uppercase text-muted mb-0">Unknown People Seen</h5>
+                                <span class="h2 font-weight-bold mb-0"><%= peopleUnkown %></span>
                               </div>
                               <div class="col-auto">
                                 <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
@@ -105,7 +106,7 @@
                               </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                              <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> None </span>
+                              <span class="text-danger mr-2"><i class="fas fa-arrow-down"></i> <%= peopleTotal - peopleUnknown %> </span>
                               <span class="text-nowrap">People Since last week</span>
                             </p>
                           </div>
@@ -116,8 +117,8 @@
                           <div class="card-body">
                             <div class="row">
                               <div class="col">
-                                <h5 class="card-title text-uppercase text-muted mb-0">Reconized People Seen</h5>
-                                <span class="h2 font-weight-bold mb-0">None</span>
+                                <h5 class="card-title text-uppercase text-muted mb-0">Total Amount of People Seen</h5>
+                                <span class="h2 font-weight-bold mb-0"><%= peopleTotal%</span>
                               </div>
                               <div class="col-auto">
                                 <div class="icon icon-shape bg-yellow text-white rounded-circle shadow">
@@ -126,8 +127,8 @@
                               </div>
                             </div>
                             <p class="mt-3 mb-0 text-muted text-sm">
-                              <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> None %</span>
-                              <span class="text-nowrap">People Seen Since yesterday</span>
+                              <span class="text-warning mr-2"><i class="fas fa-arrow-down"></i> <%= peopleTotal - overallPeople%></span>
+                              <span class="text-nowrap">People Seen Since last week </span>
                             </p>
                           </div>
                         </div>

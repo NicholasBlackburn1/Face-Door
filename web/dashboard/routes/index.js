@@ -1,4 +1,5 @@
 const express = require('express');
+const io = require('socket.io')
 
 const router = express.Router();
 
@@ -8,32 +9,34 @@ const mountLogoutRoutes = require('../features/logout/routes');
 const mountResetPasswordRoutes = require('../features/reset-password/routes');
 const mountProfileRoutes = require('../features/profile/routes');
 
-function isAuthenticated(req, res, next) {
- 
-  return res.render('pages/dashboard',{picture_time:'11/23/15:05PM'},{date:[0,1,2,3,4,5,6]});
+
+function dynamicData(req, res, next) {
+
+
+  return res.render('pages/dashboard',{pictureDate: 'sent socket message'});
 }
 
 /* GET home page. */
-router.get('/', isAuthenticated, (req, res) => {
+router.get('/', dynamicData, (req, res) => {
   res.render('pages/dashboard');
 });
 
-router.get('/icons', isAuthenticated, (req, res) => {
+router.get('/icons', dynamicData, (req, res) => {
   res.render('pages/icons');
 });
 
-router.get('/maps', isAuthenticated, (req, res) => {
+router.get('/maps', dynamicData, (req, res) => {
   res.render('pages/maps');
 });
 
-router.get('/tables', isAuthenticated, (req, res) => {
+router.get('/tables', dynamicData, (req, res) => {
   res.render('pages/tables');
 });
 
 mountRegisterRoutes(router);
 mountLoginRoutes(router);
-mountLogoutRoutes(router, [isAuthenticated]);
+mountLogoutRoutes(router, [dynamicData]);
 mountResetPasswordRoutes(router);
-mountProfileRoutes(router, [isAuthenticated]);
+mountProfileRoutes(router, [dynamicData]);
 
 module.exports = router;
