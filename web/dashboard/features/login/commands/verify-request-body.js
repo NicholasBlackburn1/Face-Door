@@ -34,8 +34,8 @@ module.exports = async function validate(req, res, next) {
   }
 
   if (errors) {
-    req.session.messages = { errors };
-    return res.status(400).redirect('/login');
+    console.log('whi')
+    return res.status(404).redirect('/login');
   }
   return next();
 };
