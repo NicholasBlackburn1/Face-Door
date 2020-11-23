@@ -1,0 +1,8 @@
+INFO:root:Connecting server…
+INFO:root:<zmq.sugar.socket.Socket object at 0x7f6987366160>
+WARNING:root:Client Started
+INFO:root:Connecting server…
+INFO:root:<zmq.sugar.socket.Socket object at 0x7f03d5b5c160>
+WARNING:root:Client Started
+WARNING:root:b'owners'
+WARNING:root:b'owners'

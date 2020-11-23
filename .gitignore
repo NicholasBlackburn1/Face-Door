@@ -1,7 +1,0 @@
-*.css
-env/
-templates/
-src/*.jpg
-*.log
-
-src/Config.py
