@@ -1039,9 +1039,9 @@ var SalesChart = (function() {
 				}
 			},
 			data: {
-				labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				labels: ['Mon,Tue,Wens,Thurs,Fri,Sat,Sun'],
 				datasets: [{
-					label: 'Performance',
+					label: 'Amount of Face',
 					data: [0, 20, 10, 30, 15, 40, 20, 60, 60]
 				}]
 			}

@@ -27,7 +27,7 @@
     "del": "^3.0.0",
     "dotenv": "^6.2.0",
     "ejs": "~2.5.7",
-    "express": "~4.16.0",
+    "express": "^4.16.4",
     "express-ejs-layouts": "^2.5.0",
     "express-session": "^1.15.6",
     "gulp": "^4.0.0",
@@ -57,6 +57,7 @@
     "pino": "^5.11.1",
     "pm2": "^3.2.9",
     "postcss-flexbugs-fixes": "^3.3.1",
+    "socket.io": "^3.0.3",
     "zeromq": "^5.2.0"
   },
   "devDependencies": {

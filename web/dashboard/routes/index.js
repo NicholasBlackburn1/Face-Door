@@ -9,11 +9,8 @@ const mountResetPasswordRoutes = require('../features/reset-password/routes');
 const mountProfileRoutes = require('../features/profile/routes');
 
 function isAuthenticated(req, res, next) {
-  if (req.user && !req.isAuthenticated()) {
-    return next();
-  }
-
-  return res.render('pages/dashboard');
+ 
+  return res.render('pages/dashboard',{picture_time:'11/23/15:05PM'},{date:[0,1,2,3,4,5,6]});
 }
 
 /* GET home page. */
