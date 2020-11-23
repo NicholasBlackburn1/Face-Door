@@ -1,41 +1,3 @@
-#  Face-Door WebDash Rebo
-
-> **Open-Source Admin Dashboard** coded in **Flask Framework** by **AppSeed** [Web App Generator](https://appseed.us/app-generator) - Features:
-
-- UI Kit: **Corona Dark** (Lite Version) provided by **Bootstrapdash**
-- SQLite, PostgreSQL, SQLAlchemy ORM
-- Alembic (DB schema migrations)
-- Modular design with **Blueprints**
-- Session-Based authentication (via **flask_login**)
-- Forms validation
-- Deployment scripts: Docker, Gunicorn / Nginx
-- MIT License
-- Free support via **Github** issues tracker
-- Paid 24/7 Live Support via [Discord](https://discord.gg/fZC6hup).
-
-> Links
-
-- [Flask Dashboard Corona Dark Demo](https://flask-dashboard-corona-dark.appseed.us/) - LIVE App
-- [Flask Dashboard - Corona Dark Design](https://appseed.us/admin-dashboards/flask-dashboard-corona-dark) - Official product page
-- More [Flask Dashboards](https://appseed.us/admin-dashboards/flask) - index hosted by **AppSeed**
-- More [Admin Dashboards](https://appseed.us/admin-dashboards) - index hosted by **AppSeed**
-
-<br />
-
-## Want more? Go PRO!
-
-PRO versions include **Premium UI Kits**, Lifetime updates and **24/7 LIVE Support** (via [Discord](https://discord.gg/fZC6hup))
-
-| [Flask DattaAble PRO](https://appseed.us/admin-dashboards/flask-dashboard-dattaable-pro) | [Flask Dashboard Black PRO](https://appseed.us/admin-dashboards/flask-dashboard-black-pro) | [Flask Dashboard Argon PRO](https://appseed.us/admin-dashboards/flask-dashboard-argon-pro) |
-| --- | --- | --- |
-| [![Flask DattaAble PRO](https://raw.githubusercontent.com/app-generator/flask-dashboard-dattaable-pro/master/media/flask-dashboard-dattaable-pro-screen.png)](https://appseed.us/admin-dashboards/flask-dashboard-dattaable-pro) | [![Flask Dashboard Black PRO](https://raw.githubusercontent.com/app-generator/flask-dashboard-black-pro/master/media/flask-dashboard-black-pro-screen.png)](https://appseed.us/admin-dashboards/flask-dashboard-black-pro) | [![Flask Dashboard Argon PRO](https://raw.githubusercontent.com/app-generator/flask-dashboard-argon-pro/master/media/flask-dashboard-argon-pro-screen.png)](https://appseed.us/admin-dashboards/flask-dashboard-argon-pro)
-
-<br />
-<br />
-
-![Flask Dashboard Corona Dark - Open-Source template project provided by AppSeed.](https://raw.githubusercontent.com/app-generator/flask-dashboard-corona-dark/master/media/flask-dashboard-corona-dark-screen.png)
-
-<br />
 
 ## How to use it
 
@@ -265,13 +227,3 @@ Visit `http://localhost:8001` in your browser. The app should be up & running.
 
 <br />
 
-## Credits & Links
-
-- [Flask Framework](https://www.palletsprojects.com/p/flask/) - The offcial website
-- [Boilerplate Code](https://appseed.us/boilerplate-code) - Index provided by **AppSeed**
-- [Boilerplate Code](https://github.com/app-generator/boilerplate-code) - Index published on Github
-
-<br />
-
----
-[Flask Dashboard - Corona Dark Design](https://appseed.us/admin-dashboards/flask-dashboard-corona-dark) - Provided by **AppSeed** [Web App Generator](https://appseed.us/app-generator).
