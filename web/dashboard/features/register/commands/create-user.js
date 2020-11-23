@@ -2,6 +2,7 @@ const registerRepo = require('../repository');
 
 async function createUser(req, res) {
   let user = {};
+  let messages = 'error'
   const registerSuccessMessage = 'You have successfully registered, you can now log in.';
   try {
     user = await registerRepo.createUser(req.body);
@@ -9,7 +10,7 @@ async function createUser(req, res) {
     user = error;
   }
   if (user.email) {
-    req.session.messages = { success: registerSuccessMessage };
+    req.session.messages == { success: registerSuccessMessage };
     res.redirect('/login');
   }
   const { code } = user;

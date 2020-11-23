@@ -1,19 +1,12 @@
 /*!
 
 =========================================================
-* Argon Dashboard - v1.0.0
+* SecuServe Dashboard Dashboard - v1.0.0
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2018 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
+* Coded by Nicholas Blackburn
 
 =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
 :root
 {
@@ -748,6 +741,7 @@ pre code
     margin-left: auto; 
     padding-right: 15px;
     padding-left: 15px;
+    background-color: rgb(28,28,28);
 }
 @media (min-width: 576px)
 {
@@ -776,6 +770,9 @@ pre code
     {
         max-width: 1140px;
     }
+}
+#sidenav-main{
+    background-color: rgb(25,25,25);
 }
 
 .container-fluid
@@ -5242,6 +5239,7 @@ input[type='button'].btn-block
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
+    background-color: rgb(33,33,33);
 }
 .navbar > .container,
 .navbar > .container-fluid
@@ -5265,6 +5263,7 @@ input[type='button'].btn-block
     padding-bottom: .0625rem;
 
     white-space: nowrap;
+    background-color: rgb(33,33,33);
 }
 .navbar-brand:hover,
 .navbar-brand:focus
@@ -5281,6 +5280,7 @@ input[type='button'].btn-block
     padding-left: 0;
 
     list-style: none;
+    background-color: rgb(33,33,33);
 }
 .navbar-nav .nav-link
 {
@@ -5757,7 +5757,7 @@ input[type='button'].btn-block
     padding: 1.25rem 1.5rem;
 
     border-bottom: 1px solid rgba(0, 0, 0, .05); 
-    background-color: #fff;
+    background-color:rgb(28,28,28);;
 }
 .card-header:first-child
 {
@@ -8039,7 +8039,7 @@ button.bg-default:focus
 
 .bg-white
 {
-    background-color: #fff !important;
+    background-color: rgb(25,25,25) !important;
 }
 
 a.bg-white:hover,
@@ -15041,7 +15041,7 @@ button.bg-lighter:focus
 
 .bg-gradient-primary
 {
-    background: linear-gradient(87deg, #5e72e4 0, #825ee4 100%) !important;
+    background-color: rgb(25,25,25) !important;
 }
 
 .bg-gradient-secondary
@@ -18222,6 +18222,7 @@ textarea[resize='horizontal']
 .header
 {
     position: relative;
+    background-color: rgb(33,33,33);
 }
 
 .icon
@@ -18874,10 +18875,17 @@ textarea[resize='horizontal']
     border-bottom-right-radius: .375rem;
     border-bottom-left-radius: .375rem;
 }
+#sidenav-collapse-main{
+    background-color: rgb(25,25,25);
+}
+
+#sidebar-text{
+    color: whitesmoke;
+}
 
 .nav-link
 {
-    color: #525f7f;
+    color: whitesmoke;
 }
 .nav-link:hover
 {
