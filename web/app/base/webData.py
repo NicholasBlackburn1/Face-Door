@@ -2,7 +2,6 @@
 Data for sending data to the webpage
 """
 
-from flask import app
 import zmq 
 import logging
 from datetime import datetime
@@ -27,9 +26,7 @@ GROUP = 'GROUP'
 TIME = 'TIME'
 NAME = 'NAME'
 FACE = 'FACE'
-OWNER ='OWNER'
-PARENT= 'PARENT'
-UNKOWN = 'UNKOWN'
+
 
 while True:
     #frameobj = client.recv_pyobj()
@@ -45,16 +42,6 @@ while True:
         print(message['face'])
         
     if(starter == IMAGE):
-        print(str(message['image']))
+        print(message['image'])
         
-    if(starter == OWNER):
-        print("owner",message['ownerface'])
-    
-    if(starter == PARENT):
-        print("parent",message['parentface'])
-
-    if(starter == UNKOWN):
-        print("Unknown",message['unknownface'])
-       
- 
     

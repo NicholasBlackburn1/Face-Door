@@ -68,11 +68,8 @@
             <div class="row">
               <div class="col-9">
                 <div class="d-flex align-items-center align-self-start">
-                
                   <h3 class="mb-0">{{ authorized }}</h3>
-                 
                   <p class="text-success ml-2 mb-0 font-weight-medium">+{{ authpre }} person</p>
-                 
                 </div>
               </div>
               <div class="col-3">
@@ -112,8 +109,8 @@
             <div class="row">
               <div class="col-9">
                 <div class="d-flex align-items-center align-self-start">
-                  <h3 class="mb-0">{{ version }}</h3>
-                  <p class="text-success ml-2 mb-0 font-weight-medium">{{ newversion }}</p>
+                  <h3 class="mb-0">{{ errors }}</h3>
+                  <p class="text-success ml-2 mb-0 font-weight-medium">+{{ errors }}%</p>
                 </div>
               </div>
               <div class="col-3">
@@ -122,7 +119,7 @@
                 </div>
               </div>
             </div>
-            <h6 class="text-muted font-weight-normal">Version</h6>
+            <h6 class="text-muted font-weight-normal">Error amount</h6>
           </div>
         </div>
       </div>
@@ -342,9 +339,7 @@
   <script src="/static/assets/vendors/jvectormap/jquery-jvectormap.min.js"></script>
   <script src="/static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="/static/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
-  
-  <script type="text/javascript" src="{{ url_for('static', filename='app.js') }}"></script>
+
 {% endblock plugin_javascripts %}
 
 <!-- Specific Page JS goes HERE  -->

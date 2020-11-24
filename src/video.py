@@ -321,7 +321,7 @@ def send_file(sock,imagename):
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
     sock.send_string("FACE", flags=zmq.SNDMORE)
-    sock.send_json({Config.FACE: str(len(face_encodings+1))})
+    sock.send_json({Config.FACE: str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
     
     #sends Person count info to subscribers 

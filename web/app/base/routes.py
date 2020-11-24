@@ -6,12 +6,10 @@ Copyright (c) 2019 - present AppSeed.us
 
 
 import logging
-from logging import log
 from sys import version
 from flask import json
 from flask.app import Flask
 from flask.helpers import send_from_directory
-
 
 from flask import jsonify, render_template, redirect, request, url_for
 from flask import current_app as app
@@ -35,10 +33,10 @@ from flask import Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import yaml
+import logging
 
 from run import socketio
-import run
-
+import DataSub
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
 # uniquespotted -> presentage og Unique
@@ -76,6 +74,12 @@ import run
 
 # ownerimg - > displays current image taken of owners from opencv
 # parentimg -> displase image of parent taken from fopencv
+# unknownimgs
+logging.basicConfig(
+    filename="flask.log",
+    level=logging.DEBUG,
+    format=f"%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s",
+)
 
 context = zmq.Context()
 
@@ -87,16 +91,11 @@ authpeople = None
 STATIC_FOLDER = "/mnt/user"
 
 
-
-
 @blueprint.route("/")
 def route_default():
     return redirect(url_for("base_blueprint.login"))
 
-@socketio.on('connect')
-def on_create(data):
-    run.logging.info('Created Create event ran\n', data['size'])
-    
+
 @blueprint.route("/error-<error>")
 def route_errors(error):
     return render_template("errors/{}.html".format(error))
@@ -195,9 +194,12 @@ def shutdown():
 
 @blueprint.route("/index", methods=["GET", "POST"])
 def index():
+    starter = client.recv_string()
+    message = client.recv_json()
 
     return render_template(
         "index.html",
+        unique_people = DataSub.Data.getPeopleSeen(starter,message)
     )
 
 
