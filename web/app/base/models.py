@@ -11,6 +11,7 @@ from app import db, login_manager
 
 from app.base.util import hash_pass
 
+
 class User(db.Model, UserMixin):
 
     __tablename__ = 'User'
