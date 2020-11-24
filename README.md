@@ -21,12 +21,9 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 <li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
 <li> added an flask onepager for displaying system data to user easly and securily </li>
 
-![repo for webdash](https://github.com/NicholasBlackburn1/Face-Door-Webdash)
-
 ## Todo's
-
-<li> get webserver to serve up the images taken by cv on a seperate thread </li>
 <li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
+<li> get data to dynamically populate the webpage without the user refreshing the data</li>
 
 
 ## IMPORTANT INFO ABOUT FACES
