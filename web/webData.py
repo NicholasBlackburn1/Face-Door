@@ -6,8 +6,7 @@ import zmq
 import logging
 from datetime import datetime
 from shutil import copyfile
-import Encry
-
+from DataSub import Data
 import json
 context = zmq.Context()
 #  Socket to talk to server
@@ -32,16 +31,6 @@ while True:
     #frameobj = client.recv_pyobj()
     starter = client.recv_string()
     message = client.recv_json()
-    if(starter == NAME):
-        print(message['name'])
-        
-    if(starter == GROUP):
-        print(message['group'])
-        
-    if(starter == FACE):
-        print(message['face'])
-        
-    if(starter == IMAGE):
-        print(message['image'])
-        
-    
+      
+    if (starter == 'OWNER' and int(message['ownerface'] is not None)):
+            print(int(message['ownerface']))

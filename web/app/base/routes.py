@@ -7,6 +7,9 @@ Copyright (c) 2019 - present AppSeed.us
 
 import logging
 from sys import version
+
+from zmq.sugar.frame import Message
+
 from flask import json
 from flask.app import Flask
 from flask.helpers import send_from_directory
@@ -20,7 +23,7 @@ from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm
 from app.base.models import User
 from app.base.util import verify_pass
-
+import queue
 import zmq
 import os
 from shutil import copyfile
@@ -37,6 +40,7 @@ import logging
 
 from run import socketio
 import DataSub
+import threading
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
 # uniquespotted -> presentage og Unique
@@ -191,18 +195,6 @@ def shutdown():
 
     return "Server shutting down..."
 
-
-@blueprint.route("/index", methods=["GET", "POST"])
-def index():
-    starter = client.recv_string()
-    message = client.recv_json()
-
-    return render_template(
-        "index.html",
-        unique_people = DataSub.Data.getPeopleSeen(starter,message)
-    )
-
-
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return render_template("errors/403.html"), 403
@@ -221,3 +213,24 @@ def not_found_error(error):
 @blueprint.errorhandler(500)
 def internal_error(error):
     return render_template("errors/500.html"), 500
+
+
+
+
+# gets Owner Preserntaeg of how many owners are seen 
+
+@blueprint.route("/index", methods=["GET", "POST"])
+def index():
+    starter = client.recv_string()
+    message = client.recv_json()
+    
+    
+    return render_template(
+        "index.html",
+        unique_people =  DataSub.Data.getPeopleSeen(starter,message),
+        authorized = DataSub.Data.getOwnerPeople(starter,message),
+        ownerAmount = DataSub.Data.getOwnerPeople(starter,message),
+    )
+    
+
+
