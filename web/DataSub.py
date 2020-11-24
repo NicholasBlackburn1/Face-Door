@@ -17,9 +17,9 @@ class Data(object):
             return message['name']
         
     # returns amount of people seen 
-    def getPeopleSeen(starter, message):
-        if (starter == 'FACE'):
-            return int(message['face'])
+    def getTotalSeen(starter, message):
+        if (starter == "FACE" and int(message['face']) is not None):
+            return int(message['face']) 
         
          # returns amount of people seen 
     def getOwnerPeople(starter, message):
@@ -27,22 +27,40 @@ class Data(object):
             return int(message['ownerface'])
         
     def getParentPeople(starter,message):
-        if(starter == 'PARENT'):
+        if(starter == 'PARENT' and int(message['parentface'] is not None)):
             return int(message['parentface'])
         
     def getUnknownPeople(starter,message):
-         if (starter == 'UNKNOWN'):
-            return int(message['face'])
+         if (starter == 'UNKNOWN'and int(message['unknown'] is not None)):
+            return int(message['unknown'])
     # returns the group of people sceen
     def getPersonsGroup(starter, message):
-        if(starter == 'GROUP'):
+        if(starter == 'GROUP' and int(message['group'] is not None)):
             return int(message['group'])
 
     # hopefully returns python picle
     def getImageFrame(starter, message):
-        if(starter == 'IMAGE'):
-           copyfile("/mnt/user/"+message['image'], app.Flask.static_folder+"/faces/"+message['image'])
-           app.getLogger("IMAGE LOCAL PATH"+app.Flask.static_folder+"/faces/"+message['image'] )
-           return  "static/faces/"+message['image']
+        if(starter == 'IMAGE' and message['image'] is not None):
+           copyfile("/mnt/user/"+message['image'], "app/base/static/assets/faces/"+message['image'])
+           return  "/static/assets/faces/"+message['image']
+        else:
+            return None
 
+
+    # hopefully returns python picle
+    def getParentImageFrame(starter, message):
+        if(starter == 'IMAGE_PR' and message['image'] is not None):
+           copyfile("/mnt/user/"+"Parent"+message['image'], "app/base/static/assets/faces/"+"Parent"+message['image'])
+           return  "/static/assets/faces/"+"Parent"+message['image']
+        else:
+            return None
+
+
+    # hopefully returns python picle
+    def getUnknownImageFrame(starter, message):
+        if(starter == 'IMAGE_UN' and message['image'] is not None):
+           copyfile("/mnt/user/"+message['image'], "app/base/static/assets/faces/"+message['image'])
+           return  "/static/assets/faces/"++message['image']
+        else:
+            return None
 

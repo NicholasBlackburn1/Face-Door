@@ -8,6 +8,7 @@ Copyright (c) 2019 - present AppSeed.us
 import logging
 from sys import version
 
+
 from zmq.sugar.frame import Message
 
 from flask import json
@@ -217,7 +218,6 @@ def internal_error(error):
 
 
 
-# gets Owner Preserntaeg of how many owners are seen 
 
 @blueprint.route("/index", methods=["GET", "POST"])
 def index():
@@ -227,9 +227,12 @@ def index():
     
     return render_template(
         "index.html",
-        unique_people =  DataSub.Data.getPeopleSeen(starter,message),
+        unique_people = DataSub.Data.getTotalSeen(starter,message),
         authorized = DataSub.Data.getOwnerPeople(starter,message),
-        ownerAmount = DataSub.Data.getOwnerPeople(starter,message),
+        unknown = DataSub.Data.getUnknownPeople(starter,message),
+        ownerimg = DataSub.Data.getImageFrame(starter,message),
+        parentimg = DataSub.Data.getParentImageFrame(starter,message),
+        unknownimg= DataSub.Data.getUnknownImageFrame(starter,message)
     )
     
 
