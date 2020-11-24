@@ -19,24 +19,35 @@ class Data(object):
     # returns amount of people seen 
     def getTotalSeen(starter, message):
         if (starter == "FACE" and int(message['face']) is not None):
-            return int(message['face']) 
+            return int(message['face'])
+        else:
+            return int(0) 
         
          # returns amount of people seen 
     def getOwnerPeople(starter, message):
         if (starter == 'OWNER' and int(message['ownerface'] is not None)):
             return int(message['ownerface'])
+        else: 
+            return int(0)
         
     def getParentPeople(starter,message):
         if(starter == 'PARENT' and int(message['parentface'] is not None)):
             return int(message['parentface'])
-        
+        else:
+            return int(0)
+       
     def getUnknownPeople(starter,message):
-         if (starter == 'UNKNOWN'and int(message['unknown'] is not None)):
+        if (starter == 'UNKNOWN'and int(message['unknown'] is not None)):
             return int(message['unknown'])
+        else:
+            return int(0)
+        
     # returns the group of people sceen
     def getPersonsGroup(starter, message):
         if(starter == 'GROUP' and int(message['group'] is not None)):
             return int(message['group'])
+        else:
+            return int(0)
 
     # hopefully returns python picle
     def getImageFrame(starter, message):
@@ -60,7 +71,7 @@ class Data(object):
     def getUnknownImageFrame(starter, message):
         if(starter == 'IMAGE_UN' and message['image'] is not None):
            copyfile("/mnt/user/"+message['image'], "app/base/static/assets/faces/"+message['image'])
-           return  "/static/assets/faces/"++message['image']
+           return  "/static/assets/faces/"+message['image']
         else:
             return None
 

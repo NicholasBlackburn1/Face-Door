@@ -131,7 +131,7 @@
           <div class="card-body">
            
             <h4 class="card-title">People Detection & Reconition</h4>
-            <canvas id="PeopleReconized" width="400" height="400"></canvas>
+            <div><canvas id="PeopleReconized" width="400" height="400"></canvas></div>
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
               <div class="text-md-center text-xl-left">
                 <h6 class="mb-1">authorized</h6>
@@ -314,9 +314,9 @@
           <div class="card-body">
             <h4 class="card-title">Live Image Display</h4>
             <div class="table-responsive">
-              <img src="{{ ownerimg }}"  height="300px" width="400px"/>
-              <img src="{{ parentimg }}"  height="300px" width="400px"/>
-              <img src="{{ unknownimg }}"  height="300px" width="400px"/>
+              <iframe src="{{ ownerimg }}" seamless="true"  height="300px" width="400px"/>
+              <iframe src="{{ parentimg }}"  height="300px" width="400px"/>
+              <iframe src="{{ unknownimg }}"  height="300px" width="400px"/>
             </div>
           </div>
         </div>
@@ -347,7 +347,7 @@
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
 <script>
-  var reconized = parseInt(' {{ authorized }}')
+var reconized = parseInt(' {{ authorized }}')
 var unreconized =parseInt('{{ unknown }}')
 var group = parseInt('{{ group }}')
 
