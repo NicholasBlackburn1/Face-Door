@@ -36,7 +36,7 @@ class VideoProsessing(object):
         imagePath = "/mnt/user/"
 
         # TODO: Change this into the ipcamera Stream.
-        video_capture = cv2.VideoCapture(0)
+        video_capture = cv2.VideoCapture('http://192.168.1.13:8080/video')
         video_capture.set(cv2.CAP_PROP_FPS, 15)
 
         # add names to list via order of Face encoodings

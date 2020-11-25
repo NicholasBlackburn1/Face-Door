@@ -70,7 +70,7 @@ class Data(object):
     # hopefully returns python picle
     def getUnknownImageFrame(starter, message):
         if(starter == 'IMAGE_UN' and message['image'] is not None):
-           copyfile("/mnt/user/"+message['image'], "app/base/static/assets/faces/"+message['image'])
+           copyfile("/mnt/user/"+message['image'], "static/assets/faces/"+message['image'])
            return  "/static/assets/faces/"+message['image']
         else:
             return None

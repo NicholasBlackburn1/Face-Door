@@ -7,6 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 
 import logging
 from sys import version
+import flask
 
 
 from zmq.sugar.frame import Message
@@ -233,10 +234,13 @@ def index():
         unique_people = DataSub.Data.getTotalSeen(starter,message),
         authorized = DataSub.Data.getOwnerPeople(starter,message),
         unknown = DataSub.Data.getUnknownPeople(starter,message),
-        ownerimg = DataSub.Data.getImageFrame(starter,message),
-        parentimg = DataSub.Data.getParentImageFrame(starter,message),
-        unknownimg= DataSub.Data.getUnknownImageFrame(starter,message)
-    )
+        ownerimg  =DataSub.Data.getImageFrame(starter,message)
+    )   
     
-
+    
+@blueprint.route('/admin',methods=["GET", "POST"])
+def admin():
+    starter = client.recv_string()
+    message = client.recv_json()
+    return flask.send_file(DataSub.Data.getImageFrame(starter,message))
 

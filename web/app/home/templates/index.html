@@ -131,7 +131,7 @@
           <div class="card-body">
            
             <h4 class="card-title">People Detection & Reconition</h4>
-            <div><canvas id="PeopleReconized" width="400" height="400"></canvas></div>
+            <canvas id="PeopleReconized" width="400" height="400"></canvas>
             <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
               <div class="text-md-center text-xl-left">
                 <h6 class="mb-1">authorized</h6>
@@ -314,9 +314,7 @@
           <div class="card-body">
             <h4 class="card-title">Live Image Display</h4>
             <div class="table-responsive">
-              <iframe title = "owner"src="{{ ownerimg }}" seamless="true"  height="300px" width="400px"/>
-              <iframe  title = "parent" src="{{ parentimg }}"  height="300px" width="400px"/>
-              <iframe  title = "unknown" src="{{ unknownimg }}"  height="300px" width="400px"/>
+            <iframe title="owner" translate="no" sandbox="allow-same-origin" src="{{ ownerimg }}"  height="300" width="400"></iframe>
             </div>
           </div>
         </div>
@@ -341,8 +339,6 @@
   <script src="/static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
   <script src="/static/assets/vendors/owl-carousel-2/owl.carousel.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-  
  </head>
 {% endblock plugin_javascripts %}
 
@@ -355,6 +351,7 @@ var group = parseInt('{{ group }}')
 
 
 var ctx = document.getElementById('PeopleReconized').getContext('2d');
+
 var chart = new Chart(ctx, {
   type: 'pie',
   data: {
@@ -394,6 +391,7 @@ var chart = new Chart(ctx, {
 });
 
 chart.update();
+Chart.defaults.global.responsive = false;
   
 </script>
 
