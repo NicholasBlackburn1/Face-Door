@@ -215,6 +215,9 @@ def not_found_error(error):
 def internal_error(error):
     return render_template("errors/500.html"), 500
 
+@socketio.on('connect')
+def test_connect():
+    socketio.emit('after connect',  {'data':'Lets dance'})
 
 
 
