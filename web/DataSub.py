@@ -74,4 +74,10 @@ class Data(object):
            return  "/static/assets/faces/"+message['image']
         else:
             return None
+        
+    def getFaceCompare(starter,message):
+        if(starter== 'COMPARE' and message['compare']is not None):
+            return int(message['compare'])
+        else:
+            return int(0)
 

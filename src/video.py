@@ -19,6 +19,7 @@ from time import sleep
 import threading
 import base64
 import json
+import math
 
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
@@ -36,7 +37,7 @@ class VideoProsessing(object):
         imagePath = "/mnt/user/"
 
         # TODO: Change this into the ipcamera Stream.
-        video_capture = cv2.VideoCapture('http://192.168.1.13:8080/video')
+        video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 15)
 
         # add names to list via order of Face encoodings
@@ -101,14 +102,19 @@ class VideoProsessing(object):
                     #     name = known_face_names[first_match_index]
 
                     # Or instead, use the known face with the smallest distance to the new face
-                    face_distances = face_recognition.face_distance(
+                    face_distance = face_recognition.face_distance(
                         known_face_encodings, face_encoding
                     )
-                    best_match_index = np.argmin(face_distances)
+                    best_match_index = np.argmin(face_distance)
                     if matches[best_match_index]:
                         name = known_face_names[best_match_index]
 
                     face_names.append(name)
+                    print(face_distance)
+                    
+                    print(face_distance_to_conf(face_distance,0.75))
+                   
+                   
 
             process_this_frame = not process_this_frame
 
@@ -140,22 +146,15 @@ class VideoProsessing(object):
                     ## Distance info
                     cv2.putText(
                         frame,
-                        "T&B" + str(top) + "," + str(bottom),
-                        (474, 430),
+                        str(matches),
+                        (400, 469),
                         font,
                         0.5,
                         (255, 255, 255),
                         1,
                     )
-                    cv2.putText(
-                        frame,
-                        "L&R" + str(left) + "," + str(right),
-                        (474, 450),
-                        font,
-                        0.5,
-                        (255, 255, 255),
-                        1,
-                    )
+                    
+                    
                     logging.warning("letting in" + name)
 
                     # sends Image and saves image to disk
@@ -165,6 +164,7 @@ class VideoProsessing(object):
                     send_person_name(sock,name)
                     #send_group_status(sock,"owner")
                     send_owner_count(face_encodings,sock)
+                  
                     
                 # Adult Section add names to here for more adults
                 elif (
@@ -201,6 +201,7 @@ class VideoProsessing(object):
                         (474, 450),
                         font,
                         0.5,
+                        (255, 255, 255),
                         (255, 255, 255),
                         1,
                     )
@@ -295,8 +296,7 @@ class VideoProsessing(object):
             
                     # sends person info
                     send_person_name(sock,name)
-                    #send_group_status(sock,"group")
-                    #send_group_status(face_encodings,sock)
+                   
             # Display the resulting image
             cv2.imshow("Video", frame)
             logging.warning("no one is here")
@@ -309,7 +309,15 @@ class VideoProsessing(object):
 
         # Release handle to the webcam
         video_capture.release()
-
+def face_distance_to_conf(face_distance, face_match_threshold=0.6):
+    if face_distance.any() >= face_match_threshold:
+        range = (1.0 - face_match_threshold)
+        linear_val = (1.0 - face_distance.any()) / (range * 2.0)
+        return linear_val
+    else:
+        range = face_match_threshold
+        linear_val = 1.0 - (face_distance.any() / (range * 2.0))
+        return linear_val + ((1.0 - linear_val) * math.pow((linear_val - 0.5) * 2, 0.2))
 # Sends a file name obver to subscribers  
 def send_file(sock,imagename):
     logging.info("[SOCKET-IMAGE] sending image")
@@ -346,6 +354,12 @@ def send_unkown_count(face_encodings, sock):
     sock.send_string("UNKNOWN", flags=zmq.SNDMORE)
     sock.send_json({Config.UNKNOWN_FACE: str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+def send_face_compare(face_distance,sock):
+    logging.info("[SOCKET FACEMATCH] sending Seen Persons")
+    sock.send_string("COMPARE", flags=zmq.SNDMORE)
+    sock.send_json({Config.COMPARE: face_distance})
+    logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
 
 """
 #sends Person Status info to subscribers 
