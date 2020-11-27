@@ -44,6 +44,7 @@ import logging
 from run import socketio
 import DataSub
 import threading
+import time 
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
 # uniquespotted -> presentage og Unique
@@ -230,9 +231,12 @@ def index():
         authorized = DataSub.Data.getOwnerPeople(starter,message),
         unknown = DataSub.Data.getUnknownPeople(starter,message),
         ownerimg  =DataSub.Data.getImageFrame(starter,message),
+        parentimg='',
+        unknownimg='',
         version = '1.0.10b',
         cpuload= psutil.cpu_percent(),
-        Ram=psutil.virtual_memory().percent
+        Ram=psutil.virtual_memory().percent,
+        uptime=datetime.now().strftime("%H:%M:%S")
     )   
     
 
