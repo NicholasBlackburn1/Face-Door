@@ -8,6 +8,7 @@ Copyright (c) 2019 - present AppSeed.us
 import logging
 from sys import version
 import flask
+from werkzeug.utils import cached_property
 
 
 from zmq.sugar.frame import Message
@@ -216,12 +217,6 @@ def not_found_error(error):
 def internal_error(error):
     return render_template("errors/500.html"), 500
 
-@socketio.on('connect')
-def test_connect():
-    socketio.emit('after connect',  {'data':'Lets dance'})
-
-
-
 
 @blueprint.route("/index", methods=["GET", "POST"])
 def index():
@@ -234,13 +229,21 @@ def index():
         unique_people = DataSub.Data.getTotalSeen(starter,message),
         authorized = DataSub.Data.getOwnerPeople(starter,message),
         unknown = DataSub.Data.getUnknownPeople(starter,message),
-        ownerimg  =DataSub.Data.getImageFrame(starter,message)
+        ownerimg  =DataSub.Data.getImageFrame(starter,message),
+        version = '1.0.10b',
+        cpuload= psutil.cpu_percent(),
+        Ram=psutil.virtual_memory().percent
     )   
     
-    
-@blueprint.route('/admin',methods=["GET", "POST"])
-def admin():
-    starter = client.recv_string()
-    message = client.recv_json()
-    return flask.send_file(DataSub.Data.getImageFrame(starter,message))
 
+@blueprint.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r
