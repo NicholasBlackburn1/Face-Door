@@ -1,0 +1,59 @@
+{% extends "layouts/base-fullscreen.html" %}
+
+{% block title %} Register Page {% endblock %} 
+
+<!-- Specific Plugin CSS goes HERE -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+  <div class="container-fluid page-body-wrapper full-page-wrapper">
+    <div class="row w-100 m-0">
+      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+        <div class="card col-lg-4 mx-auto">
+          <div class="card-body px-5 py-5">
+            <h3 class="card-title text-left mb-3">Add User to Face Reconition</h3>
+            <form>
+              <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control p_input">
+              </div>
+              <div class="form-group">
+                <label>user group</label>
+                <div class="template-demo">
+                  <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> User-Grouops </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                      <h6 class="dropdown-header">user group</h6>
+                      <a class="dropdown-item" href="#">admin</a>
+                      <a class="dropdown-item" href="#">user</a>
+                      <a class="dropdown-item" href="#">unwanted</a>
+                    </div>
+                  </div>
+              </div>
+              <div class="form-group">
+               
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block enter-btn">Add user</button>
+
+              <p class="terms">By addind a user to our facial Reconition you accept our  <a href="#"> Terms & Conditions</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- content-wrapper ends -->
+    </div>
+    <!-- row ends -->
+  </div>
+
+{% endblock content %}
+
+<!-- Specific Plugin JS goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -251,3 +251,7 @@ def add_header(r):
     r.headers["Expires"] = "0"
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
+
+@blueprint.route("/addFace", methods=["GET", "POST"])
+def adduser():
+    return render_template("addFace.html")
