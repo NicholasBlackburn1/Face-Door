@@ -23,7 +23,7 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 ## Todo's
 <li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
-<li> get data to dynamically populate the webpage without the user refreshing the data</li>
+<li> get data to dynamically populate the webpage without the user refreshing the page</li>
 
 
 ## IMPORTANT INFO ABOUT FACES
