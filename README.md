@@ -23,11 +23,12 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 ## Todo's
 <li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
-<li> get data to dynamically populate the webpage without the user refreshing the data</li>
+<li> get data to dynamically populate the webpage without the user refreshing the page</li>
 
 
 ## IMPORTANT INFO ABOUT FACES
 <li> images should be 400x400 but the face needs to be 3/4ths of the image. to get most accurate result via the dlib training </li>
+<li> please use a non skin color background for the face image that your going to train</li>
 
 ## P.S 
 ### Please fork me
