@@ -110,11 +110,6 @@ class VideoProsessing(object):
                         name = known_face_names[best_match_index]
 
                     face_names.append(name)
-                    print(face_distance)
-                    
-                    print(face_distance_to_conf(face_distance,0.75))
-                   
-                   
 
             process_this_frame = not process_this_frame
 
@@ -309,15 +304,7 @@ class VideoProsessing(object):
 
         # Release handle to the webcam
         video_capture.release()
-def face_distance_to_conf(face_distance, face_match_threshold=0.6):
-    if face_distance.any() >= face_match_threshold:
-        range = (1.0 - face_match_threshold)
-        linear_val = (1.0 - face_distance.any()) / (range * 2.0)
-        return linear_val
-    else:
-        range = face_match_threshold
-        linear_val = 1.0 - (face_distance.any() / (range * 2.0))
-        return linear_val + ((1.0 - linear_val) * math.pow((linear_val - 0.5) * 2, 0.2))
+
 # Sends a file name obver to subscribers  
 def send_file(sock,imagename):
     logging.info("[SOCKET-IMAGE] sending image")
