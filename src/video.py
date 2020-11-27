@@ -38,7 +38,7 @@ class VideoProsessing(object):
 
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
-        video_capture.set(cv2.CAP_PROP_FPS, 15)
+        video_capture.set(cv2.CAP_PROP_FPS, 30)
 
         # add names to list via order of Face encoodings
         known_face_names = [
