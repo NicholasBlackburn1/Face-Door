@@ -1,8 +1,8 @@
-# Face-Door
+# SecuServe Security System
 
 **An Auto Unlocking Door written in python and opencv on an Pi**
 
-![example](https://github.com/NicholasBlackburn1/Face-Door/blob/main/2020_11_01-10_45_00_AM_1604245500.jpg)
+![example](https://cdn.discordapp.com/attachments/671837506651815956/778615885605765160/SecuServe_Logo_Design_1.png)
 
 ## What was my Inspiration for this project
 
@@ -21,16 +21,14 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 <li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
 <li> added an flask onepager for displaying system data to user easly and securily </li>
 
-![repo for webdash](https://github.com/NicholasBlackburn1/Face-Door-Webdash)
-
 ## Todo's
-
-<li> get webserver to serve up the images taken by cv on a seperate thread </li>
 <li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
+<li> get data to dynamically populate the webpage without the user refreshing the page</li>
 
 
 ## IMPORTANT INFO ABOUT FACES
 <li> images should be 400x400 but the face needs to be 3/4ths of the image. to get most accurate result via the dlib training </li>
+<li> please use a non skin color background for the face image that your going to train</li>
 
 ## P.S 
 ### Please fork me

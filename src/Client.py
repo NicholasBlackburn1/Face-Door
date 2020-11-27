@@ -12,8 +12,7 @@ import Config
 import logging
 #import doorcontrol
 import philipsControl
-from phue import Bridge
-
+import ClientMessageHandler
 logging.basicConfig(filename='/mnt/user/Client.log',  level=logging.DEBUG)
 
 # setups pins on pi for use 
@@ -45,54 +44,8 @@ logging.warning("Client Started")
 
 # runs forever to wait to reseave
 while True:
-    message = client.recv()
-
-    if(message == b"starting"):
-        logging.warn(message)
-        server.sendmail(name, nick , Config.NAME + " " +
-                        "Starting" + "  " + Config.ENDINGMESSAGE)
-        # doorcontrol.setup()
-        #philipsControl.setup(bridge)
-        time.sleep(10)
-
-    elif(message == b"owners"):
-        logging.warn(message)
-        server.sendmail(name, nick, Config.NAME + " " + "Nick or Ethan" +
-                        "" + "is at the Studio" + "  " + Config.ENDINGMESSAGE)
-        #  doorcontrol.doorOpen()
-        #  doorcontrol.alarmOff()
-        #  philipsControl.allgood(bridge)
-        time.sleep(10)
-    elif(message == b"parents"):
-        logging.warn(message)
-        server.sendmail(name, nick, Config.NAME + " " +
-                        "Adults is at the Studio!" + "  " + Config.ENDINGMESSAGE)
-        #  doorcontrol.doorOpen()
-        #  doorcontrol.alarmOff()
-        #  philipsControl.allgood(bridge)
-        
-        time.sleep(10)
-    elif(message == b"unknown"):
-        logging.warn(message)
-        server.sendmail(name, nick, Config.NAME + " " +
-                        " IS HERE! Sounding Alarm!" + "  " + Config.ENDINGMESSAGE)
-        #  doorcontrol.doorClose()
-        #  doorcontrol.alarmOn()
-        #  philipsControl.breakin(bridge)
-        time.sleep(10)
-    elif(message == b"group"):
-        logging.warn(message)
-        server.sendmail(name, nick, Config.NAME + " " +" A Group of people that ethier has an owner or and Parent in it IS HERE!" + "  " + Config.ENDINGMESSAGE)
-        #  doorcontrol.doorOpen()
-        #  doorcontrol.alarmOff()
-        #philipsControl.allgood(bridge)
-        time.sleep(10)
-    else:
-        
-        #  doorcontrol.doorClose()
-        #  doorcontrol.alarmOff()
-        #  philipsControl.error()
-        #  philipsControll.lightssoff()
-        logging.critical("ERROR AS OCCURRED")
-        server.sendmail(name, nick, Config.NAME + " " +
-                        "Error as occured " + "  " + Config.ENDINGMESSAGE)
+    starter = client.recv_string()
+    message = client.recv_json()
+    
+    
+    ClientMessageHandler.MessageHandler.sendSms(server,Config.NAME+"   "+)
