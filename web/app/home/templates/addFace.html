@@ -15,7 +15,7 @@
             <div class="card col-lg-4 mx-auto">
               <div class="card-body px-5 py-5">
                 <h3 class="card-title text-left mb-3">
-                  <a href="">SecuServe</a> - Add Face to Facial Reconition
+                  <a href="/">SecuServe</a> - Add Face to Facial Reconition
                 </h3>
   
                 <span class="mb-0 text-muted">
@@ -29,7 +29,7 @@
                 <div class="d-flex">
                   <br />    
                 </div>
-                <form role="form" method="post" action="">
+                <form role="form" method="post" enctype= "multipart/form-data" action="">
   
                   {{ form.hidden_tag() }}  
   
@@ -46,6 +46,11 @@
                         </ul>
                      
                     
+                  </div>
+                  <div class="form-group form-text">
+                    <label>Face Image</label>
+                    <h6>400x400 .jpg image with a soild non skin color background</h6>
+                      </ul>  
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
                     <div class="form-check">

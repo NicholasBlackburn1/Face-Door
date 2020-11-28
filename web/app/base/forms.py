@@ -6,7 +6,10 @@ Copyright (c) 2019 - present AppSeed.us
 
 from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField,SelectField
+from wtforms.fields.simple import FileField
 from wtforms.validators import InputRequired, Email, DataRequired
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 ## login and registration
 
@@ -29,3 +32,4 @@ class AddFaceForm(FlaskForm):
             ('Unwanted', 'unwanted')
         ]
     )
+    

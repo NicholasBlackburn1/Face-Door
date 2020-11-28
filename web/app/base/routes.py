@@ -9,7 +9,7 @@ import logging
 from sys import version
 
 import flask
-from werkzeug.utils import cached_property
+from werkzeug.utils import cached_property, secure_filename
 
 
 from zmq.sugar.frame import Message
@@ -46,6 +46,8 @@ from run import socketio
 import DataSub
 import threading
 import time 
+
+from flask_wtf.file import FileField
 
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
@@ -258,7 +260,7 @@ def add_header(r):
 def adduser():
     face_from = AddFaceForm(request.form)
     if "add" in request.form:
-
+       
         # read form data
         username = request.form["user"]
         group = request.form["group"]
@@ -286,10 +288,10 @@ def adduser():
                 success=False,
                 form=face_from,
             )
-
-        # else we can create the user
         user = Face(**request.form)
         db.session.add(user)
         db.session.commit()
         ##print(image)
+
+        
     return render_template("addFace.html",form = face_from)

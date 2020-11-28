@@ -20,6 +20,8 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 <li> Uses GPIO control to control 2 big Electromagnet </li>
 <li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
 <li> added an flask onepager for displaying system data to user easly and securily </li>
+<li> secure login for data security and privacy </li>
+<li> Easy Web enterface to see data and to add more users  to the facial reconitions </li>
 
 ## Todo's
 <li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
