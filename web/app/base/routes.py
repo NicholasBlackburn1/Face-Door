@@ -25,7 +25,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from app import db, login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm
-from app.base.models import User
+from app.base.models import User,Face
 from app.base.util import verify_pass
 import queue
 import zmq
@@ -266,5 +266,30 @@ def adduser():
     
         print(username)
         print(group)
+        
+        # Check usename exists
+        user = Face.query.filter_by(user=username).first()
+        if user:
+            return render_template(
+                 "addFace.html",
+                msg="Username already registered",
+                success=False,
+                form= face_from,
+            )
+
+        # Check email exists
+        user = Face.query.filter_by(group=group).first()
+        if user:
+            return render_template(
+                "addFace.html",
+                msg="person in group",
+                success=False,
+                form=face_from,
+            )
+
+        # else we can create the user
+        user = Face(**request.form)
+        db.session.add(user)
+        db.session.commit()
         ##print(image)
     return render_template("addFace.html",form = face_from)
