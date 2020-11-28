@@ -7,6 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 
 import logging
 from sys import version
+
 import flask
 from werkzeug.utils import cached_property
 
@@ -23,7 +24,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm
+from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm
 from app.base.models import User
 from app.base.util import verify_pass
 import queue
@@ -45,6 +46,7 @@ from run import socketio
 import DataSub
 import threading
 import time 
+
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
 # uniquespotted -> presentage og Unique
@@ -252,6 +254,15 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-@blueprint.route("/addFace", methods=["GET", "POST"])
+@blueprint.route("/addFace")
 def adduser():
-    return render_template("addFace.html")
+    login_form = AddFaceForm(request.form)
+    if "login" in request.form:
+
+        # read form data
+        username = request.form["name"]
+        group = request.form["group"]
+
+    
+        print(username)
+    return render_template("addFace.html",form = login_form)

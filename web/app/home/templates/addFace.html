@@ -1,6 +1,6 @@
 {% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Register Page {% endblock %} 
+{% block title %} Add Face {% endblock %} 
 
 <!-- Specific Plugin CSS goes HERE -->
 {% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
@@ -9,46 +9,74 @@
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
-
-  <div class="container-fluid page-body-wrapper full-page-wrapper">
-    <div class="row w-100 m-0">
-      <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
-        <div class="card col-lg-4 mx-auto">
-          <div class="card-body px-5 py-5">
-            <h3 class="card-title text-left mb-3">Add User to Face Reconition</h3>
-            <form>
-              <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control p_input">
-              </div>
-              <div class="form-group">
-                <label>user group</label>
-                <div class="template-demo">
-                  <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> User-Grouops </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                      <h6 class="dropdown-header">user group</h6>
-                      <a class="dropdown-item" href="#">admin</a>
-                      <a class="dropdown-item" href="#">user</a>
-                      <a class="dropdown-item" href="#">unwanted</a>
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="row w-100 m-0">
+          <div class="content-wrapper full-page-wrapper d-flex align-items-center auth login-bg">
+            <div class="card col-lg-4 mx-auto">
+              <div class="card-body px-5 py-5">
+                <h3 class="card-title text-left mb-3">
+                  <a href="">SecuServe</a> - Add Face to Facial Reconition
+                </h3>
+  
+                <span class="mb-0 text-muted">
+                  {% if msg %}
+                      {{ msg | safe }}
+                  {% else %}
+                   Please add a user's Face to the DataBase
+                  {% endif %} 
+                </span>
+                
+                <div class="d-flex">
+                  <br />    
+                </div>
+                <form role="form" method="post" action="">
+  
+                  {{ form.hidden_tag() }}  
+  
+                  <div class="form-group">
+                    <label>Name</label>
+                    {{ form.name(class="form-control p_input", style="color: rgb(255,255,255)") }} 
+                      {% if form.name.errors %}
+                      <ul class="errors">
+                        {% for error in form.name.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                      </ul>
+                      {% endif %}
+                  </div>
+                  <div class="form-group form-text">
+                    <label>User Status</label>
+                      {{ form.group(class="form-control p_button",style="color: rgb(255,255,255)")}}
+                      {% if form.group.errors %}
+                        <ul class="errors">
+                          {% for error in form.group.errors %}
+                          <li>{{ error }}</li>
+                          {% endfor %}
+                        </ul>
+                      {% endif %}
+                    
+                  </div>
+                  <div class="form-group d-flex align-items-center justify-content-between">
+                    <div class="form-check">
+                      <label class="form-check-label">
+                        <input type="checkbox" class="form-check-input" checked=""> Remember me </label>
                     </div>
                   </div>
+                  <div class="text-center">
+                    <button type="submit" name="add" class="btn btn-primary btn-block enter-btn">Save</button>
+                  </div>
+                  <div class="d-flex">
+                    <br />    
+                  </div>
+                </form>
               </div>
-              <div class="form-group">
-               
-              </div>
-              <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-block enter-btn">Add user</button>
-
-              <p class="terms">By addind a user to our facial Reconition you accept our  <a href="#"> Terms & Conditions</a></p>
-            </form>
+            </div>
           </div>
+          <!-- content-wrapper ends -->
         </div>
+        <!-- row ends -->
       </div>
-      <!-- content-wrapper ends -->
-    </div>
-    <!-- row ends -->
-  </div>
+  
 
 {% endblock content %}
 
