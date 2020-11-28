@@ -21,7 +21,7 @@ class CreateAccountForm(FlaskForm):
 
 
 class AddFaceForm(FlaskForm):
-    name = TextField('name', id='name'   , validators=[DataRequired()])
+    user = TextField('name', id='name'   , validators=[DataRequired()])
   
     group = SelectField('group', id='drop', validators=[DataRequired()],choices=[
             ('Admin', 'admin'),

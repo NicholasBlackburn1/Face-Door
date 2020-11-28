@@ -254,15 +254,17 @@ def add_header(r):
     r.headers['Cache-Control'] = 'public, max-age=0'
     return r
 
-@blueprint.route("/addFace")
+@blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
-    login_form = AddFaceForm(request.form)
-    if "login" in request.form:
+    face_from = AddFaceForm(request.form)
+    if "add" in request.form:
 
         # read form data
-        username = request.form["name"]
+        username = request.form["user"]
         group = request.form["group"]
-
+        #image = request.form["image"]
     
         print(username)
-    return render_template("addFace.html",form = login_form)
+        print(group)
+        ##print(image)
+    return render_template("addFace.html",form = face_from)

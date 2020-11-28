@@ -35,25 +35,16 @@
   
                   <div class="form-group">
                     <label>Name</label>
-                    {{ form.name(class="form-control p_input", style="color: rgb(255,255,255)") }} 
-                      {% if form.name.errors %}
-                      <ul class="errors">
-                        {% for error in form.name.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
+                    {{ form.user(placeholder="username",class="form-control p_input", style="color: rgb(255,255,255)") }} 
                       </ul>
-                      {% endif %}
+                    
                   </div>
                   <div class="form-group form-text">
                     <label>User Status</label>
-                      {{ form.group(class="form-control p_button",style="color: rgb(255,255,255)")}}
-                      {% if form.group.errors %}
-                        <ul class="errors">
-                          {% for error in form.group.errors %}
-                          <li>{{ error }}</li>
-                          {% endfor %}
+                      {{ form.group(placeholder="group", class="form-control p_button",style="color: rgb(255,255,255)")}}
+                      
                         </ul>
-                      {% endif %}
+                     
                     
                   </div>
                   <div class="form-group d-flex align-items-center justify-content-between">
