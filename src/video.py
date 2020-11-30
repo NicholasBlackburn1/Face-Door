@@ -30,7 +30,8 @@ class VideoProsessing(object):
         # Database connection handing 
         logging.info("Connecting to the Database")
         logging.debug(Database.Database.getFaces())
-        
+        logging.info("connected to database")
+        Database.Database.getFaces()
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind("tcp://127.0.0.1:5000")

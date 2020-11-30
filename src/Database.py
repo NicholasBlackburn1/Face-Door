@@ -14,4 +14,10 @@ class Database(object):
         query = db.select([faces])
         result_proxy = connection.execute(query)
         result_set = result_proxy.fetchall()
+       
         return(result_set)
+    
+    # get Keys from Database and sort them to Data 
+    def getKey(result_set, i):
+        
+        return result_set[i]
