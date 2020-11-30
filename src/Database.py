@@ -1,12 +1,13 @@
 
 import pathlib
 import sqlalchemy as db 
+import sqlalchemy.dialects.sqlite
 class Database(object):
     
     # Gets the Face Data from the Face data 
     def getFaces():
         print('sqlite://'+str(pathlib.Path().absolute())+'/web/db.sqlite3')
-        engine = db.create_engine(f'sqllite:///'+str(pathlib.Path().absolute())+'/web/db.sqlite3')
+        engine = db.create_engine(f'sqlite:///'+str(pathlib.Path().absolute())+'/web/db.sqlite3')
         connection = engine.connect()
         metadata = db.MetaData()
         faces = db.Table('Face', metadata, autoload=True, autoload_with=engine)
