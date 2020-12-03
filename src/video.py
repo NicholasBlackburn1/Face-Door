@@ -24,14 +24,14 @@ import Database
 
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
-
+    
                     
     def ProcessVideo():
         # Database connection handing 
         logging.info("Connecting to the Database")
         logging.debug(Database.Database.getFaces())
         logging.info("connected to database")
-        Database.Database.getFaces()
+        
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind("tcp://127.0.0.1:5000")
@@ -45,26 +45,26 @@ class VideoProsessing(object):
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
 
+        id,name,status,image = Database.Database.getKey(Database.Database.getFaces(),0)
         # add names to list via order of Face encoodings
         known_face_names = [
-            Config.NICHOLAS_BLACKBURN,
-            Config.ETHAN_WAGNER,
-            Config.LAURA_WAGNER,
-            # add more here like Config.NAMEHERE,
+            
+           str(name)
+        ]
+        Known_user_images = [
+            str(Config.NICK_IMAGE)
         ]
 
-       # Ethan = face_recognition.load_image_file(Config.ETHAN_IMAGE)
-        Nicholas = face_recognition.load_image_file(Config.NICK_IMAGE)
-        EthansMom = face_recognition.load_image_file(Config.ETHANS_MOM_IMAGE)
+       
+        userimage = face_recognition.load_image_file(Known_user_images[0])
         # add more faces to be trained to be reconized
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        NicholasEncode = face_recognition.face_encodings(Nicholas, num_jitters=75)[0]
-        Ethansmom = face_recognition.face_encodings(EthansMom, num_jitters=75)[0]
+        userEncode = face_recognition.face_encodings(userimage, num_jitters=75)[0]
          
         # Add names of the ecodings to thw end of list 
-        known_face_encodings = [NicholasEncode, Ethansmom]
+        known_face_encodings = [userEncode]
 
         # Initialize some variables
         face_locations = []
@@ -100,6 +100,7 @@ class VideoProsessing(object):
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
                     name = Config.UNRECONIZED
+                    status = 'unknown'
 
                     # # If a match was found in known_face_encodings, just use the first one.
                     # if True in matches:
@@ -127,9 +128,8 @@ class VideoProsessing(object):
                 left *= 4
 
                 if (
-                    name == Config.NICHOLAS_BLACKBURN
-                    or name == Config.ETHAN_WAGNER
-                    and not Config.UNRECONIZED
+                    status == 'admin'
+                    and not status == 'Unwanted' or status == 'user'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
@@ -140,7 +140,7 @@ class VideoProsessing(object):
                     cv2.putText(
                         frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
                     )
-                    cv2.putText(frame, "Owner", (0, 450), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, status, (0, 450), font, 0.5, (255, 255, 255), 1)
                     cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
 
                     ## Distance info
@@ -168,8 +168,7 @@ class VideoProsessing(object):
                     
                 # Adult Section add names to here for more adults
                 elif (
-                    name == Config.LAURA_WAGNER
-                    and not name == Config.UNRECONIZED
+                    status == 'User' and not status == 'unknown'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
@@ -181,7 +180,7 @@ class VideoProsessing(object):
                         frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(
-                        frame, "Parent", (0, 450), font, 0.5, (255, 255, 255), 1
+                        frame, status, (0, 450), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
 
@@ -216,7 +215,7 @@ class VideoProsessing(object):
                     send_parent_count(face_encodings,sock)
                     
 
-                elif name == Config.UNRECONIZED:
+                elif status == 'Unwanted' or status == 'unknown':
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
@@ -251,10 +250,7 @@ class VideoProsessing(object):
 
 
                 elif (
-                    name == Config.NICHOLAS_BLACKBURN
-                    or name == Config.ETHAN_WAGNER
-                    or name == Config.LAURA_WAGNER
-                    and name == Config.UNRECONIZED
+                    status == 'admin' and status == 'User' and status == 'unknown' or status == 'Unwanted'
                 ):
 
                     cv2.rectangle(
@@ -387,3 +383,4 @@ def save_unknown(sock, imagepath,imagename,frame):
 def save_group(sock, imagepath,imagename,frame):
     cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
     send_file(sock,"Group"+imagename)
+
