@@ -27,10 +27,26 @@ class VideoProsessing(object):
     
                     
     def ProcessVideo():
+        known_user_ids = []
+        known_face_names = []
+        known_user_status = []
+        Known_user_images = [
+            str(Config.NICK_IMAGE)
+        ]
+
         # Database connection handing 
         logging.info("Connecting to the Database")
         logging.debug(Database.Database.getFaces())
         logging.info("connected to database")
+      
+    
+        logging.debug(known_user_ids)
+        logging.debug(known_face_names)
+        logging.debug(known_user_status)
+        
+        name, status =setLists(known_user_ids,known_face_names,known_user_status)[1]
+
+        print(name)
         
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
@@ -44,17 +60,8 @@ class VideoProsessing(object):
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
-
-        id,name,status,image = Database.Database.getKey(Database.Database.getFaces(),0)
-        # add names to list via order of Face encoodings
-        known_face_names = [
-            
-           str(name)
-        ]
-        Known_user_images = [
-            str(Config.NICK_IMAGE)
-        ]
-
+        
+        
        
         userimage = face_recognition.load_image_file(Known_user_images[0])
         # add more faces to be trained to be reconized
@@ -126,10 +133,9 @@ class VideoProsessing(object):
                 right *= 4
                 bottom *= 4
                 left *= 4
-
+                i = 1
                 if (
-                    status == 'admin'
-                    and not status == 'Unwanted' or status == 'user'
+                    status == "Admin" and not status == "User" or status == "unknown" or status == 'Unwanted'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
@@ -168,7 +174,7 @@ class VideoProsessing(object):
                     
                 # Adult Section add names to here for more adults
                 elif (
-                    status == 'User' and not status == 'unknown'
+                    status == 'User' and not status == 'unknown' or status == 'Admin' or status == 'Unwanted'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
@@ -215,7 +221,7 @@ class VideoProsessing(object):
                     send_parent_count(face_encodings,sock)
                     
 
-                elif status == 'Unwanted' or status == 'unknown':
+                elif (status == 'Unwanted' and not status == 'unknown' or status == 'Admin' or status == 'User') :
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
@@ -238,6 +244,7 @@ class VideoProsessing(object):
                         (255, 255, 255),
                         1,
                     )
+                    print("not letting in ")
                     logging.warning("not letting in" + name)
                       
                     # sends Image and saves image to disk
@@ -250,7 +257,7 @@ class VideoProsessing(object):
 
 
                 elif (
-                    status == 'admin' and status == 'User' and status == 'unknown' or status == 'Unwanted'
+                    status == 'Admin' and status == 'User' and status == 'unknown' or status == 'Unwanted'
                 ):
 
                     cv2.rectangle(
@@ -305,6 +312,23 @@ class VideoProsessing(object):
 
         # Release handle to the webcam
         video_capture.release()
+
+
+# handles adding data to lists so i can tuppleize it 
+def setLists(known_user_ids,known_face_names,known_user_status):
+      
+        i = 0
+        
+        for i in range(3):
+            known_user_ids.append(Database.Database.getID(Database.Database.getFaces(),i))
+            known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
+            known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
+            i = i+1
+            
+        data  =zip(known_face_names,known_user_status)
+        output = tuple(data)
+        return output
+            
 
 # Sends a file name obver to subscribers  
 def send_file(sock,imagename):

@@ -21,3 +21,23 @@ class Database(object):
         print(result_set[i])
         return result_set[i]
     
+    
+    def getID(result_set,i):
+        id,user,groub,image = result_set[i]
+        return id
+    
+        # gets Database entry name
+    def getName(result_set,i):
+        id, user,group,image = result_set[i]
+        return user
+
+    def getStatus(result_set,i):
+        id, user,group,image = result_set[i]
+        return group
+
+    def getImage(result_set,i):
+        id, user,group,image = result_set[i]
+        return image
+
+
+    
