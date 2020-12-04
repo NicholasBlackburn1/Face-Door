@@ -30,7 +30,7 @@ class VideoProsessing(object):
        
         known_face_names = []
         known_user_status = []
-        Known_user_images = [
+        known_user_images = [
             str(Config.NICK_IMAGE)
         ]
 
@@ -57,8 +57,10 @@ class VideoProsessing(object):
         video_capture.set(cv2.CAP_PROP_FPS, 30)
         
         
-       
-        userimage = face_recognition.load_image_file(Known_user_images[0])
+        name, status =setLists(known_face_names,known_user_status,0)[0]
+        print(name,status)
+        
+        userimage = face_recognition.load_image_file()
         # add more faces to be trained to be reconized
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
@@ -78,9 +80,8 @@ class VideoProsessing(object):
 
         sock.send(b"starting")
       
-        name, status =setLists(known_face_names,known_user_status,0)[0]
-        print(name,status)
-                   
+       
+                  
         while True:
             # Grab a single frame of video
             ret, frame = video_capture.read()
@@ -314,12 +315,12 @@ class VideoProsessing(object):
 
 
 # handles adding data to lists so i can tuppleize it 
-def setLists(known_face_names,known_user_status,i):
+def setLists(known_face_names,known_user_status,known_user_images,i):
               
     known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
     known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
-         
-    data  =zip(known_face_names,known_user_status)
+    known_user_images.append(Database.Database.getImage(Database.Database.getFaces(),i))
+    data  =zip(known_face_names,known_user_status,known_user_images)
     output = tuple(data)
     return output
             
