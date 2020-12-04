@@ -6,7 +6,7 @@ class Database(object):
     
     # Gets the Face Data from the Face data 
     def getFaces():
-        print('sqlite://'+str(pathlib.Path().absolute())+'/web/db.sqlite3')
+      
         engine = db.create_engine(f'sqlite:///'+str(pathlib.Path().absolute())+'/web/db.sqlite3')
         connection = engine.connect()
         metadata = db.MetaData()

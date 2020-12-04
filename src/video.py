@@ -39,15 +39,10 @@ class VideoProsessing(object):
         logging.debug(Database.Database.getFaces())
         logging.info("connected to database")
       
-    
         logging.debug(known_user_ids)
         logging.debug(known_face_names)
         logging.debug(known_user_status)
-        
-        name, status =setLists(known_user_ids,known_face_names,known_user_status)[1]
-
-        print(name)
-        
+    
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind("tcp://127.0.0.1:5000")
@@ -82,6 +77,9 @@ class VideoProsessing(object):
         logging.info("Cv setup")
 
         sock.send(b"starting")
+      
+        name, status =setLists(known_user_ids,known_face_names,known_user_status)[2]
+                   
         while True:
             # Grab a single frame of video
             ret, frame = video_capture.read()
@@ -135,7 +133,7 @@ class VideoProsessing(object):
                 left *= 4
                 i = 1
                 if (
-                    status == "Admin" and not status == "User" or status == "unknown" or status == 'Unwanted'
+                    status == "Admin" and not status == "User" and not status == "unknown" or status == 'Unwanted'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
@@ -174,7 +172,7 @@ class VideoProsessing(object):
                     
                 # Adult Section add names to here for more adults
                 elif (
-                    status == 'User' and not status == 'unknown' or status == 'Admin' or status == 'Unwanted'
+                    status == 'User' and not status == 'unknown' and not  status == 'Admin' and not  status == 'Unwanted'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
@@ -221,7 +219,7 @@ class VideoProsessing(object):
                     send_parent_count(face_encodings,sock)
                     
 
-                elif (status == 'Unwanted' and not status == 'unknown' or status == 'Admin' or status == 'User') :
+                elif (status == 'unknown' or status =='Unwanted'):
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
@@ -244,7 +242,7 @@ class VideoProsessing(object):
                         (255, 255, 255),
                         1,
                     )
-                    print("not letting in ")
+                    
                     logging.warning("not letting in" + name)
                       
                     # sends Image and saves image to disk

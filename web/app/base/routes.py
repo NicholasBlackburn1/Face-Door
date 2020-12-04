@@ -42,7 +42,7 @@ from matplotlib.figure import Figure
 import yaml
 import logging
 
-from run import socketio
+
 import DataSub
 import threading
 import time 
@@ -243,19 +243,6 @@ def index():
         uptime=datetime.now().strftime("%H:%M:%S")
     )   
     
-
-@blueprint.after_request
-def add_header(r):
-    """
-    Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
-    """
-    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
-    r.headers["Pragma"] = "no-cache"
-    r.headers["Expires"] = "0"
-    r.headers['Cache-Control'] = 'public, max-age=0'
-    return r
-
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
     face_from = AddFaceForm(request.form)
