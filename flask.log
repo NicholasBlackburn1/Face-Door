@@ -2884,3 +2884,215 @@
 2020-12-03 19:21:43,341 INFO werkzeug MainThread :  * Restarting with stat
 2020-12-03 19:21:44,067 WARNING werkzeug MainThread :  * Debugger is active!
 2020-12-03 19:21:44,067 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-03 19:27:18,720 INFO werkzeug MainThread :  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
+2020-12-03 19:27:18,721 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-03 19:27:19,223 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-03 19:27:19,223 INFO werkzeug MainThread :  * Debugger PIN: 284-582-279
+2020-12-03 19:27:40,149 INFO werkzeug Thread-2 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:27:40,591 INFO werkzeug Thread-3 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[37mGET /static/assets/faces/unKnownPerson2020_12_03-07_25_16_PM_1607041516.jpg HTTP/1.1[0m" 200 -
+2020-12-03 19:27:40,608 INFO werkzeug Thread-5 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[37mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 200 -
+2020-12-03 19:27:40,610 INFO werkzeug Thread-4 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:27:40,614 INFO werkzeug Thread-6 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[37mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 200 -
+2020-12-03 19:27:40,615 INFO werkzeug Thread-7 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[37mGET /static/assets/js/todolist.js HTTP/1.1[0m" 200 -
+2020-12-03 19:27:40,618 INFO werkzeug Thread-8 : 127.0.0.1 - - [03/Dec/2020 19:27:40] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:27:41,145 INFO werkzeug Thread-9 : 127.0.0.1 - - [03/Dec/2020 19:27:41] "[37mGET /static/assets/fonts/Rubik/Rubik-Bold.ttf HTTP/1.1[0m" 200 -
+2020-12-03 19:27:44,455 INFO werkzeug Thread-10 : 127.0.0.1 - - [03/Dec/2020 19:27:44] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:27:44,676 INFO werkzeug Thread-12 : 127.0.0.1 - - [03/Dec/2020 19:27:44] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:27:44,682 INFO werkzeug Thread-11 : 127.0.0.1 - - [03/Dec/2020 19:27:44] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:27:44,685 INFO werkzeug Thread-13 : 127.0.0.1 - - [03/Dec/2020 19:27:44] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:27:46,029 INFO werkzeug Thread-14 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+2020-12-03 19:27:46,127 INFO werkzeug Thread-15 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[37mGET /index?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:27:46,127 INFO werkzeug Thread-16 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[37mGET /index?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:27:46,128 INFO werkzeug Thread-17 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[37mGET /index?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:27:46,204 INFO werkzeug Thread-18 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[37mGET /index?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-03 19:27:46,239 INFO werkzeug Thread-19 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[37mGET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:27:46,308 INFO werkzeug Thread-20 : 127.0.0.1 - - [03/Dec/2020 19:27:46] "[37mGET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:27:48,054 INFO werkzeug Thread-21 : 127.0.0.1 - - [03/Dec/2020 19:27:48] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:27:48,259 INFO werkzeug Thread-23 : 127.0.0.1 - - [03/Dec/2020 19:27:48] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:27:48,261 INFO werkzeug Thread-22 : 127.0.0.1 - - [03/Dec/2020 19:27:48] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:28:04,582 INFO werkzeug Thread-24 : 127.0.0.1 - - [03/Dec/2020 19:28:04] "[37mGET /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:28:04,742 INFO werkzeug Thread-25 : 127.0.0.1 - - [03/Dec/2020 19:28:04] "[37mGET /static/assets/images/auth/Login_bg.jpg HTTP/1.1[0m" 200 -
+2020-12-03 19:29:35,023 INFO werkzeug MainThread :  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
+2020-12-03 19:29:35,024 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-03 19:29:35,681 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-03 19:29:35,681 INFO werkzeug MainThread :  * Debugger PIN: 284-582-279
+2020-12-03 19:29:47,618 INFO werkzeug Thread-3 : 127.0.0.1 - - [03/Dec/2020 19:29:47] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:37:45,044 INFO werkzeug Thread-5 : 127.0.0.1 - - [03/Dec/2020 19:37:45] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:37:50,532 INFO werkzeug Thread-9 : 127.0.0.1 - - [03/Dec/2020 19:37:50] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:52:25,658 INFO werkzeug Thread-12 : 127.0.0.1 - - [03/Dec/2020 19:52:25] "[35m[1mPOST /addFace HTTP/1.1[0m" 500 -
+2020-12-03 19:52:25,857 INFO werkzeug Thread-13 : 127.0.0.1 - - [03/Dec/2020 19:52:25] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:52:25,861 INFO werkzeug Thread-14 : 127.0.0.1 - - [03/Dec/2020 19:52:25] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:52:25,862 INFO werkzeug Thread-15 : 127.0.0.1 - - [03/Dec/2020 19:52:25] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:52:25,949 INFO werkzeug Thread-16 : 127.0.0.1 - - [03/Dec/2020 19:52:25] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:52:25,983 INFO werkzeug Thread-17 : 127.0.0.1 - - [03/Dec/2020 19:52:25] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-03 19:52:26,115 INFO werkzeug Thread-18 : 127.0.0.1 - - [03/Dec/2020 19:52:26] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:52:30,445 INFO werkzeug Thread-19 : 127.0.0.1 - - [03/Dec/2020 19:52:30] "[35m[1mPOST /addFace HTTP/1.1[0m" 500 -
+2020-12-03 19:52:30,572 INFO werkzeug Thread-20 : 127.0.0.1 - - [03/Dec/2020 19:52:30] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:52:30,575 INFO werkzeug Thread-21 : 127.0.0.1 - - [03/Dec/2020 19:52:30] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:52:30,576 INFO werkzeug Thread-22 : 127.0.0.1 - - [03/Dec/2020 19:52:30] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:52:30,729 INFO werkzeug Thread-23 : 127.0.0.1 - - [03/Dec/2020 19:52:30] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:52:34,737 INFO werkzeug Thread-24 : 127.0.0.1 - - [03/Dec/2020 19:52:34] "[35m[1mPOST /addFace HTTP/1.1[0m" 500 -
+2020-12-03 19:52:34,902 INFO werkzeug Thread-26 : 127.0.0.1 - - [03/Dec/2020 19:52:34] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:52:34,903 INFO werkzeug Thread-25 : 127.0.0.1 - - [03/Dec/2020 19:52:34] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:52:34,907 INFO werkzeug Thread-27 : 127.0.0.1 - - [03/Dec/2020 19:52:34] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:52:35,072 INFO werkzeug Thread-28 : 127.0.0.1 - - [03/Dec/2020 19:52:35] "[37mGET /addFace?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:52:55,449 INFO werkzeug MainThread :  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
+2020-12-03 19:52:55,450 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-03 19:52:56,390 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-03 19:52:56,390 INFO werkzeug MainThread :  * Debugger PIN: 284-582-279
+2020-12-03 19:53:24,977 INFO werkzeug Thread-2 : 127.0.0.1 - - [03/Dec/2020 19:53:24] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:53:25,199 INFO werkzeug Thread-4 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,201 INFO werkzeug Thread-3 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,204 INFO werkzeug Thread-5 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,212 INFO werkzeug Thread-6 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,216 INFO werkzeug Thread-7 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,218 INFO werkzeug Thread-8 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,225 INFO werkzeug Thread-9 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 304 -
+2020-12-03 19:53:25,226 INFO werkzeug Thread-10 : 127.0.0.1 - - [03/Dec/2020 19:53:25] "[36mGET /static/assets/fonts/Rubik/Rubik-Regular.ttf HTTP/1.1[0m" 304 -
+2020-12-03 19:55:32,077 INFO werkzeug Thread-13 : 127.0.0.1 - - [03/Dec/2020 19:55:32] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:57:29,638 INFO werkzeug Thread-16 : 127.0.0.1 - - [03/Dec/2020 19:57:29] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:57:35,335 INFO werkzeug Thread-20 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:57:35,430 INFO werkzeug Thread-21 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-03 19:57:35,438 INFO werkzeug Thread-24 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-03 19:57:35,441 INFO werkzeug Thread-22 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-03 19:57:35,443 INFO werkzeug Thread-23 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-03 19:57:35,444 INFO werkzeug Thread-25 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-03 19:57:35,445 INFO werkzeug Thread-26 : 127.0.0.1 - - [03/Dec/2020 19:57:35] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-03 19:57:36,356 INFO werkzeug Thread-27 : 127.0.0.1 - - [03/Dec/2020 19:57:36] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:57:45,270 INFO werkzeug MainThread :  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
+2020-12-03 19:57:45,271 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-03 19:57:45,884 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-03 19:57:45,884 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-03 19:58:31,851 INFO werkzeug Thread-2 : 127.0.0.1 - - [03/Dec/2020 19:58:31] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:58:33,150 INFO werkzeug Thread-3 : 127.0.0.1 - - [03/Dec/2020 19:58:33] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:58:36,411 INFO werkzeug Thread-4 : 127.0.0.1 - - [03/Dec/2020 19:58:36] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-03 19:58:36,460 INFO werkzeug Thread-5 : 127.0.0.1 - - [03/Dec/2020 19:58:36] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-03 19:58:42,454 INFO werkzeug Thread-8 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[35m[1mGET /index.html HTTP/1.1[0m" 500 -
+2020-12-03 19:58:42,627 INFO werkzeug Thread-9 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:58:42,631 INFO werkzeug Thread-10 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:58:42,632 INFO werkzeug Thread-11 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:58:42,716 INFO werkzeug Thread-12 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-03 19:58:42,753 INFO werkzeug Thread-13 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:58:42,821 INFO werkzeug Thread-14 : 127.0.0.1 - - [03/Dec/2020 19:58:42] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:58:45,401 INFO werkzeug Thread-15 : 127.0.0.1 - - [03/Dec/2020 19:58:45] "[35m[1mGET /index.html HTTP/1.1[0m" 500 -
+2020-12-03 19:58:45,515 INFO werkzeug Thread-16 : 127.0.0.1 - - [03/Dec/2020 19:58:45] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:58:45,518 INFO werkzeug Thread-17 : 127.0.0.1 - - [03/Dec/2020 19:58:45] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:58:45,520 INFO werkzeug Thread-18 : 127.0.0.1 - - [03/Dec/2020 19:58:45] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:58:45,658 INFO werkzeug Thread-19 : 127.0.0.1 - - [03/Dec/2020 19:58:45] "[37mGET /index.html?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:58:51,000 INFO werkzeug Thread-20 : 127.0.0.1 - - [03/Dec/2020 19:58:51] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-03 19:58:54,914 INFO werkzeug Thread-21 : 127.0.0.1 - - [03/Dec/2020 19:58:54] "[37mGET /register HTTP/1.1[0m" 200 -
+2020-12-03 19:59:05,276 INFO werkzeug Thread-32 : 127.0.0.1 - - [03/Dec/2020 19:59:05] "[37mPOST /register HTTP/1.1[0m" 200 -
+2020-12-03 19:59:06,946 INFO werkzeug Thread-31 : 127.0.0.1 - - [03/Dec/2020 19:59:06] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-03 19:59:10,397 INFO werkzeug Thread-33 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[32mPOST /login HTTP/1.1[0m" 302 -
+2020-12-03 19:59:10,438 INFO werkzeug Thread-34 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-03 19:59:10,486 INFO werkzeug Thread-35 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-03 19:59:10,564 INFO werkzeug Thread-36 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:59:10,888 INFO werkzeug Thread-38 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[37mGET /static/assets/faces/unKnownPerson2020_12_03-07_57_12_PM_1607043432.jpg HTTP/1.1[0m" 200 -
+2020-12-03 19:59:10,896 INFO werkzeug Thread-39 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:10,899 INFO werkzeug Thread-37 : 127.0.0.1 - - [03/Dec/2020 19:59:10] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:32,163 INFO werkzeug Thread-43 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:59:32,460 INFO werkzeug Thread-44 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,468 INFO werkzeug Thread-45 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,474 INFO werkzeug Thread-46 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,481 INFO werkzeug Thread-47 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,485 INFO werkzeug Thread-48 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,493 INFO werkzeug Thread-49 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,496 INFO werkzeug Thread-50 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,503 INFO werkzeug Thread-52 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,505 INFO werkzeug Thread-51 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,507 INFO werkzeug Thread-54 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,508 INFO werkzeug Thread-53 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,519 INFO werkzeug Thread-55 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/logo.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,521 INFO werkzeug Thread-56 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,530 INFO werkzeug Thread-57 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,540 INFO werkzeug Thread-60 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,541 INFO werkzeug Thread-58 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,552 INFO werkzeug Thread-59 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,553 INFO werkzeug Thread-61 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[36mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 304 -
+2020-12-03 19:59:32,557 INFO werkzeug Thread-62 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:32,570 INFO werkzeug Thread-63 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:32,573 INFO werkzeug Thread-64 : 127.0.0.1 - - [03/Dec/2020 19:59:32] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:33,903 INFO werkzeug Thread-65 : 127.0.0.1 - - [03/Dec/2020 19:59:33] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+2020-12-03 19:59:34,089 INFO werkzeug Thread-67 : 127.0.0.1 - - [03/Dec/2020 19:59:34] "[37mGET /index?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:59:34,091 INFO werkzeug Thread-66 : 127.0.0.1 - - [03/Dec/2020 19:59:34] "[37mGET /index?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:59:34,092 INFO werkzeug Thread-68 : 127.0.0.1 - - [03/Dec/2020 19:59:34] "[37mGET /index?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:59:34,174 INFO werkzeug Thread-69 : 127.0.0.1 - - [03/Dec/2020 19:59:34] "[37mGET /index?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-03 19:59:34,267 INFO werkzeug Thread-71 : 127.0.0.1 - - [03/Dec/2020 19:59:34] "[37mGET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:59:35,398 INFO werkzeug Thread-72 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:59:35,711 INFO werkzeug Thread-73 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,714 INFO werkzeug Thread-74 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,720 INFO werkzeug Thread-75 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,725 INFO werkzeug Thread-76 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,733 INFO werkzeug Thread-77 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,738 INFO werkzeug Thread-78 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,745 INFO werkzeug Thread-80 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,757 INFO werkzeug Thread-79 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,759 INFO werkzeug Thread-81 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,760 INFO werkzeug Thread-82 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,766 INFO werkzeug Thread-83 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,768 INFO werkzeug Thread-84 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/logo.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,779 INFO werkzeug Thread-87 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,781 INFO werkzeug Thread-86 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,786 INFO werkzeug Thread-85 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,792 INFO werkzeug Thread-88 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,794 INFO werkzeug Thread-89 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,795 INFO werkzeug Thread-90 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[36mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 304 -
+2020-12-03 19:59:35,814 INFO werkzeug Thread-91 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:35,819 INFO werkzeug Thread-92 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:35,821 INFO werkzeug Thread-93 : 127.0.0.1 - - [03/Dec/2020 19:59:35] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:38,365 INFO werkzeug Thread-94 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:59:38,609 INFO werkzeug Thread-95 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,613 INFO werkzeug Thread-96 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,618 INFO werkzeug Thread-97 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,630 INFO werkzeug Thread-101 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,633 INFO werkzeug Thread-99 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,635 INFO werkzeug Thread-100 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,639 INFO werkzeug Thread-98 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,649 INFO werkzeug Thread-103 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,649 INFO werkzeug Thread-102 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,657 INFO werkzeug Thread-104 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,662 INFO werkzeug Thread-105 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,668 INFO werkzeug Thread-106 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/logo.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,671 INFO werkzeug Thread-107 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,676 INFO werkzeug Thread-108 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,767 INFO werkzeug Thread-110 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,784 INFO werkzeug Thread-109 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,786 INFO werkzeug Thread-112 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 304 -
+2020-12-03 19:59:38,790 INFO werkzeug Thread-113 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:38,798 INFO werkzeug Thread-115 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:38,800 INFO werkzeug Thread-114 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:38,801 INFO werkzeug Thread-111 : 127.0.0.1 - - [03/Dec/2020 19:59:38] "[36mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:40,334 INFO werkzeug Thread-116 : 127.0.0.1 - - [03/Dec/2020 19:59:40] "[35m[1mGET /index HTTP/1.1[0m" 500 -
+2020-12-03 19:59:40,469 INFO werkzeug Thread-117 : 127.0.0.1 - - [03/Dec/2020 19:59:40] "[37mGET /index?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-03 19:59:40,473 INFO werkzeug Thread-118 : 127.0.0.1 - - [03/Dec/2020 19:59:40] "[37mGET /index?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-03 19:59:40,474 INFO werkzeug Thread-119 : 127.0.0.1 - - [03/Dec/2020 19:59:40] "[37mGET /index?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-03 19:59:40,631 INFO werkzeug Thread-120 : 127.0.0.1 - - [03/Dec/2020 19:59:40] "[37mGET /index?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-03 19:59:41,499 INFO werkzeug Thread-121 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[37mGET /index HTTP/1.1[0m" 200 -
+2020-12-03 19:59:41,791 INFO werkzeug Thread-122 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,799 INFO werkzeug Thread-124 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,806 INFO werkzeug Thread-127 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,808 INFO werkzeug Thread-125 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,813 INFO werkzeug Thread-123 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,815 INFO werkzeug Thread-129 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,819 INFO werkzeug Thread-126 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,821 INFO werkzeug Thread-128 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,827 INFO werkzeug Thread-132 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,832 INFO werkzeug Thread-133 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/logo.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,833 INFO werkzeug Thread-131 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,834 INFO werkzeug Thread-130 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,843 INFO werkzeug Thread-135 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,851 INFO werkzeug Thread-136 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,854 INFO werkzeug Thread-134 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,856 INFO werkzeug Thread-137 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,863 INFO werkzeug Thread-138 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,865 INFO werkzeug Thread-139 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[36mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 304 -
+2020-12-03 19:59:41,972 INFO werkzeug Thread-140 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:41,978 INFO werkzeug Thread-142 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:41,980 INFO werkzeug Thread-141 : 127.0.0.1 - - [03/Dec/2020 19:59:41] "[33mGET /None HTTP/1.1[0m" 404 -
+2020-12-03 19:59:43,445 INFO werkzeug Thread-143 : 127.0.0.1 - - [03/Dec/2020 19:59:43] "[37mGET /addFace HTTP/1.1[0m" 200 -
+2020-12-03 19:59:47,481 INFO werkzeug Thread-144 : 127.0.0.1 - - [03/Dec/2020 19:59:47] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-03 20:02:43,261 INFO werkzeug MainThread :  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
+2020-12-03 20:02:43,262 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-03 20:02:44,068 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-03 20:02:44,069 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-03 20:02:52,598 INFO werkzeug Thread-2 : 127.0.0.1 - - [03/Dec/2020 20:02:52] "[37mPOST /addFace HTTP/1.1[0m" 200 -

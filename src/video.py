@@ -27,7 +27,7 @@ class VideoProsessing(object):
     
                     
     def ProcessVideo():
-        known_user_ids = []
+       
         known_face_names = []
         known_user_status = []
         Known_user_images = [
@@ -39,7 +39,7 @@ class VideoProsessing(object):
         logging.debug(Database.Database.getFaces())
         logging.info("connected to database")
       
-        logging.debug(known_user_ids)
+    
         logging.debug(known_face_names)
         logging.debug(known_user_status)
     
@@ -78,7 +78,8 @@ class VideoProsessing(object):
 
         sock.send(b"starting")
       
-        name, status =setLists(known_user_ids,known_face_names,known_user_status)[2]
+        name, status =setLists(known_face_names,known_user_status,0)[0]
+        print(name,status)
                    
         while True:
             # Grab a single frame of video
@@ -105,7 +106,7 @@ class VideoProsessing(object):
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
                     name = Config.UNRECONIZED
-                    status = 'unknown'
+                    
 
                     # # If a match was found in known_face_encodings, just use the first one.
                     # if True in matches:
@@ -133,7 +134,7 @@ class VideoProsessing(object):
                 left *= 4
                 i = 1
                 if (
-                    status == "Admin" and not status == "User" and not status == "unknown" or status == 'Unwanted'
+                    status == 'Admin'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
@@ -172,7 +173,7 @@ class VideoProsessing(object):
                     
                 # Adult Section add names to here for more adults
                 elif (
-                    status == 'User' and not status == 'unknown' and not  status == 'Admin' and not  status == 'Unwanted'
+                    status == 'User'
                 ):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
@@ -313,19 +314,14 @@ class VideoProsessing(object):
 
 
 # handles adding data to lists so i can tuppleize it 
-def setLists(known_user_ids,known_face_names,known_user_status):
-      
-        i = 0
-        
-        for i in range(3):
-            known_user_ids.append(Database.Database.getID(Database.Database.getFaces(),i))
-            known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
-            known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
-            i = i+1
-            
-        data  =zip(known_face_names,known_user_status)
-        output = tuple(data)
-        return output
+def setLists(known_face_names,known_user_status,i):
+              
+    known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
+    known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
+         
+    data  =zip(known_face_names,known_user_status)
+    output = tuple(data)
+    return output
             
 
 # Sends a file name obver to subscribers  
