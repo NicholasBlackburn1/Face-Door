@@ -30,9 +30,7 @@ class VideoProsessing(object):
        
         known_face_names = []
         known_user_status = []
-        known_user_images = [
-            str(Config.NICK_IMAGE)
-        ]
+        known_user_images = []
 
         # Database connection handing 
         logging.info("Connecting to the Database")
