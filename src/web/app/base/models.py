@@ -48,6 +48,7 @@ class Face(db.Model, UserMixin):
     user = Column(String, unique=True)
     group = Column(String, unique=True)
     image = Column(Binary)
+    seen = Column(Integer)
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():

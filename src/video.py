@@ -55,7 +55,7 @@ class VideoProsessing(object):
         video_capture.set(cv2.CAP_PROP_FPS, 30)
         
         
-        name, status =setLists(known_face_names,known_user_status,0)[0]
+        name, status =setLists(known_face_names,known_user_status,known_user_images)[0]
         print(name,status)
         
         userimage = face_recognition.load_image_file()

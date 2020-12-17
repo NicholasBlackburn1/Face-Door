@@ -7,13 +7,16 @@ class Database(object):
     # Gets the Face Data from the Face data 
     def getFaces():
       
-        engine = db.create_engine(f'sqlite:///'+str(pathlib.Path().absolute())+'/web/db.sqlite3')
+        engine = db.create_engine(f'postgresql://test:pass@0.0.0.0:5432/face')
         connection = engine.connect()
         metadata = db.MetaData()
         faces = db.Table('Face', metadata, autoload=True, autoload_with=engine)
+        print(faces)
         query = db.select([faces])
+        print(query)
         result_proxy = connection.execute(query)
         result_set = result_proxy.fetchall()
+        print(result_set)
         return(result_set)
     
     # get Keys from Database and sort them to Data 

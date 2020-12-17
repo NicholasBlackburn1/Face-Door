@@ -251,10 +251,11 @@ def adduser():
         # read form data
         username = request.form["user"]
         group = request.form["group"]
-        #image = request.form["image"]
+        image = request.form["image"]
     
         print(username)
         print(group)
+        print(image)
         
         # Check usename exists
         user = Face.query.filter_by(user=username).first()
@@ -275,6 +276,8 @@ def adduser():
                 success=False,
                 form=face_from,
             )
+            
+        
         user = Face(**request.form)
         db.session.add(user)
         db.session.commit()
