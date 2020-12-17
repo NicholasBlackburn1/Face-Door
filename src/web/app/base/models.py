@@ -47,7 +47,7 @@ class Face(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
     user = Column(String, unique=True)
     group = Column(String, unique=True)
-    image = Column(Binary)
+    image = Column(String)
     seen = Column(Integer)
 
     def __init__(self, **kwargs):

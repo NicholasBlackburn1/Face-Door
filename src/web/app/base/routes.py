@@ -251,7 +251,7 @@ def adduser():
         # read form data
         username = request.form["user"]
         group = request.form["group"]
-        image = request.form["image"]
+        image = request.files['image'].read()
     
         print(username)
         print(group)
@@ -276,7 +276,15 @@ def adduser():
                 success=False,
                 form=face_from,
             )
-            
+        
+        user = Face.query.filter_by(image=image).first()
+        if user:
+          return render_template(
+                "addFace.html",
+                msg="image is already saved",
+                success=False,
+                form=face_from,
+            )
         
         user = Face(**request.form)
         db.session.add(user)
