@@ -5,7 +5,8 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 
-import logging
+import 5p
+import pathlib
 from sys import version
 
 import flask
@@ -40,12 +41,12 @@ from flask import Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import yaml
-import logging
 
 
 import DataSub
 import threading
 import time 
+import socket
 
 from flask_wtf.file import FileField
 
@@ -242,21 +243,49 @@ def index():
         Ram=psutil.virtual_memory().percent,
         uptime=datetime.now().strftime("%H:%M:%S")
     )   
+
+# gets ip addr from pinging dns for accurate ip
+def getIpaddr():
+
+    # Create a socket object
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+    # connect to the server on local computer
+    s.connect(("8.8.8.8", 80))
+
+    # Print Output
+    logging.debug("HostName: ",s.getsockname()[0])
+    s.close()
+    return s.getsockname()[0]
+
     
+'''
+TODO: need to Read from a temp dir for flask to send images from upload dir to Opencv proessing client and save them to opencv local dir  
+'''
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
+    
+ 
     face_from = AddFaceForm(request.form)
     if "add" in request.form:
        
         # read form data
         username = request.form["user"]
         group = request.form["group"]
-        image = request.files['image'].read()
-    
+        
+        image = request.files['image']
+        imagename= request.files['image'].filename
+        
+        tempfile_path= str(pathlib.Path().absolute())+'/web/app/base/static/assets/tmp/'
+        temfile_url = str('http://'+getIpaddr()+':'+8089+"/static/assets/tmp/"+imagename)
+
         print(username)
         print(group)
-        print(image)
+        print(imagename)
         
+        # saves uploaded image to a temp file dir for sending to opencv client 
+        image.save(tempfile_path+imagename)
+
         # Check usename exists
         user = Face.query.filter_by(user=username).first()
         if user:
