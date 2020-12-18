@@ -40,6 +40,7 @@ from flask import Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import yaml
+import uuid
 
 
 import DataSub
@@ -267,7 +268,7 @@ TODO: need to Read from a temp dir for flask to send images from upload dir to O
 '''
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
-    port = '8080'
+    port = '2000'
  
     face_from = AddFaceForm(request.form)
     if "add" in request.form:
@@ -276,12 +277,15 @@ def adduser():
         username = request.form["user"]
         group = request.form["group"]
         
-        image = request.files['image']
-        imagename= request.files['image'].filename
+        file = request.files["files"]
+        imagename= request.files['files'].filename
         
         tempfile_path= str(pathlib.Path().absolute())+'/src/web/app/base/static/assets/tmp/'
         
-        tempfile_url = str("http://"+getIpaddr()+":"+port+"/static/assets/tmp/"+imagename)
+        output_name = str(uuid.uuid1())+".jpg"
+        
+        tempfile_url = str('http://'+getIpaddr()+':'+port+"/static/assets/tmp/"+output_name)
+        
 
         print(username)
         print(group)
@@ -289,7 +293,7 @@ def adduser():
         print(tempfile_url)
         
         # saves uploaded image to a temp file dir for sending to opencv client 
-        image.save(tempfile_path+imagename)
+        file.save(tempfile_path+output_name)
 
         # Check usename exists
         user = Face.query.filter_by(user=username).first()
@@ -304,14 +308,14 @@ def adduser():
         # Check email exists
         user = Face.query.filter_by(group=group).first()
         
-        if(tempfile_url is not None):
-            user = Face.query.filter_by(image=tempfile_url).first()
-        else:
-            print(" why is image null")
-     
+      
+        user = Face.query.filter_by(image="none")
+      
         
         
         user = Face(**request.form)
+        user.image = output_name
+        user.imageurl = tempfile_url
         db.session.add(user)
         db.session.commit()
         ##print(image)

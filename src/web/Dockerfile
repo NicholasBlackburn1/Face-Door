@@ -7,5 +7,7 @@ COPY app app
 
 RUN pip install -r requirements.txt
 
-EXPOSE 5005
+
+EXPOSE 8080
+
 CMD ["gunicorn", "--config", "gunicorn-cfg.py", "run:app"]
