@@ -3543,3 +3543,76 @@
 2020-12-18 09:49:38,300 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
 2020-12-18 09:49:55,425 INFO werkzeug Thread-2 : 127.0.0.1 - - [18/Dec/2020 09:49:55] "[37mPOST /addFace HTTP/1.1[0m" 200 -
 2020-12-18 09:49:55,711 INFO werkzeug Thread-3 : 127.0.0.1 - - [18/Dec/2020 09:49:55] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
+2020-12-18 09:53:15,205 INFO werkzeug MainThread :  * Running on http://127.0.0.1:8080/ (Press CTRL+C to quit)
+2020-12-18 09:53:15,205 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-18 09:53:16,035 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-18 09:53:16,035 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-18 09:53:16,798 INFO werkzeug Thread-2 : 127.0.0.1 - - [18/Dec/2020 09:53:16] "[35m[1mGET /reqister HTTP/1.1[0m" 500 -
+2020-12-18 09:53:16,949 INFO werkzeug Thread-3 : 127.0.0.1 - - [18/Dec/2020 09:53:16] "[37mGET /reqister?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-18 09:53:16,949 INFO werkzeug Thread-4 : 127.0.0.1 - - [18/Dec/2020 09:53:16] "[37mGET /reqister?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-18 09:53:16,950 INFO werkzeug Thread-5 : 127.0.0.1 - - [18/Dec/2020 09:53:16] "[37mGET /reqister?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-18 09:53:17,049 INFO werkzeug Thread-6 : 127.0.0.1 - - [18/Dec/2020 09:53:17] "[37mGET /reqister?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-18 09:53:17,063 INFO werkzeug Thread-7 : 127.0.0.1 - - [18/Dec/2020 09:53:17] "[37mGET /reqister?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-18 09:53:26,724 INFO werkzeug Thread-8 : 127.0.0.1 - - [18/Dec/2020 09:53:26] "[37mGET /register HTTP/1.1[0m" 200 -
+2020-12-18 09:53:26,997 INFO werkzeug Thread-9 : 127.0.0.1 - - [18/Dec/2020 09:53:26] "[33mGET /static/assets/images/auth/Login_bg.jpg HTTP/1.1[0m" 404 -
+2020-12-18 09:53:35,329 INFO werkzeug Thread-14 : 127.0.0.1 - - [18/Dec/2020 09:53:35] "[37mPOST /register HTTP/1.1[0m" 200 -
+2020-12-18 09:53:39,397 INFO werkzeug Thread-13 : 127.0.0.1 - - [18/Dec/2020 09:53:39] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-18 09:53:43,905 INFO werkzeug Thread-20 : 127.0.0.1 - - [18/Dec/2020 09:53:43] "[37mPOST /login HTTP/1.1[0m" 200 -
+2020-12-18 09:53:48,189 INFO werkzeug Thread-19 : 127.0.0.1 - - [18/Dec/2020 09:53:48] "[37mGET /register HTTP/1.1[0m" 200 -
+2020-12-18 09:54:00,406 INFO werkzeug Thread-24 : 127.0.0.1 - - [18/Dec/2020 09:54:00] "[37mPOST /register HTTP/1.1[0m" 200 -
+2020-12-18 09:54:03,064 INFO werkzeug Thread-28 : 127.0.0.1 - - [18/Dec/2020 09:54:03] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-18 09:54:04,690 INFO werkzeug Thread-27 : 127.0.0.1 - - [18/Dec/2020 09:54:04] "[37mPOST /login HTTP/1.1[0m" 200 -
+2020-12-18 09:54:07,304 INFO werkzeug Thread-30 : 127.0.0.1 - - [18/Dec/2020 09:54:07] "[37mGET /register HTTP/1.1[0m" 200 -
+2020-12-18 09:54:11,280 INFO werkzeug Thread-31 : 127.0.0.1 - - [18/Dec/2020 09:54:11] "[37mPOST /register HTTP/1.1[0m" 200 -
+2020-12-18 09:54:19,717 INFO werkzeug Thread-33 : 127.0.0.1 - - [18/Dec/2020 09:54:19] "[37mPOST /register HTTP/1.1[0m" 200 -
+2020-12-18 09:54:21,671 INFO werkzeug Thread-34 : 127.0.0.1 - - [18/Dec/2020 09:54:21] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-18 09:54:27,957 INFO werkzeug Thread-37 : 127.0.0.1 - - [18/Dec/2020 09:54:27] "[37mPOST /login HTTP/1.1[0m" 200 -
+2020-12-18 09:54:42,153 INFO werkzeug Thread-42 : 127.0.0.1 - - [18/Dec/2020 09:54:42] "[32mPOST /login HTTP/1.1[0m" 302 -
+2020-12-18 09:54:42,181 INFO werkzeug Thread-43 : 127.0.0.1 - - [18/Dec/2020 09:54:42] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-18 09:54:42,210 INFO werkzeug Thread-44 : 127.0.0.1 - - [18/Dec/2020 09:54:42] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:54:45,424 INFO werkzeug Thread-46 : 127.0.0.1 - - [18/Dec/2020 09:54:45] "[37mGET /register HTTP/1.1[0m" 200 -
+2020-12-18 09:54:59,550 INFO werkzeug Thread-49 : 127.0.0.1 - - [18/Dec/2020 09:54:59] "[37mPOST /register HTTP/1.1[0m" 200 -
+2020-12-18 09:55:02,224 INFO werkzeug Thread-51 : 127.0.0.1 - - [18/Dec/2020 09:55:02] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:03,569 INFO werkzeug Thread-54 : 127.0.0.1 - - [18/Dec/2020 09:55:03] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:04,565 INFO werkzeug Thread-55 : 127.0.0.1 - - [18/Dec/2020 09:55:04] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:05,680 INFO werkzeug Thread-57 : 127.0.0.1 - - [18/Dec/2020 09:55:05] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:05,820 INFO werkzeug Thread-59 : 127.0.0.1 - - [18/Dec/2020 09:55:05] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:06,760 INFO werkzeug Thread-61 : 127.0.0.1 - - [18/Dec/2020 09:55:06] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:15,376 INFO werkzeug MainThread :  * Running on http://127.0.0.1:8080/ (Press CTRL+C to quit)
+2020-12-18 09:55:15,377 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-18 09:55:16,140 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-18 09:55:16,141 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-18 09:55:24,687 INFO werkzeug Thread-3 : 127.0.0.1 - - [18/Dec/2020 09:55:24] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:55:47,550 INFO werkzeug Thread-5 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /index.html HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,902 INFO werkzeug Thread-7 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/flag-icon-css/css/flag-icon.min.css HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,902 INFO werkzeug Thread-6 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/jvectormap/jquery-jvectormap.css HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,908 INFO werkzeug Thread-8 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.css HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,911 INFO werkzeug Thread-10 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,912 INFO werkzeug Thread-9 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/owl-carousel-2/owl.theme.default.min.css HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,914 INFO werkzeug Thread-11 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,918 INFO werkzeug Thread-12 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,919 INFO werkzeug Thread-13 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,922 INFO werkzeug Thread-14 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,923 INFO werkzeug Thread-15 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/images/logo.svg HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,928 INFO werkzeug Thread-17 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-18 09:55:47,929 INFO werkzeug Thread-16 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 200 -
+2020-12-18 09:55:47,931 INFO werkzeug Thread-18 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-18 09:55:47,934 INFO werkzeug Thread-19 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-18 09:55:47,934 INFO werkzeug Thread-20 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-18 09:55:47,937 INFO werkzeug Thread-21 : 127.0.0.1 - - [18/Dec/2020 09:55:47] "[37mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 200 -
+2020-12-18 09:55:48,155 INFO werkzeug Thread-24 : 127.0.0.1 - - [18/Dec/2020 09:55:48] "[37mGET /static/assets/vendors/mdi/fonts/materialdesignicons-webfont.woff2?v=3.9.97 HTTP/1.1[0m" 200 -
+2020-12-18 09:55:48,156 INFO werkzeug Thread-22 : 127.0.0.1 - - [18/Dec/2020 09:55:48] "[37mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 200 -
+2020-12-18 09:55:48,157 INFO werkzeug Thread-23 : 127.0.0.1 - - [18/Dec/2020 09:55:48] "[37mGET /static/assets/fonts/Rubik/Rubik-Regular.ttf HTTP/1.1[0m" 200 -
+2020-12-18 09:55:48,319 INFO werkzeug Thread-25 : 127.0.0.1 - - [18/Dec/2020 09:55:48] "[37mGET /static/assets/fonts/Rubik/Rubik-Light.ttf HTTP/1.1[0m" 200 -
+2020-12-18 09:57:23,909 INFO werkzeug Thread-30 : 127.0.0.1 - - [18/Dec/2020 09:57:23] "[33mGET /ilogi HTTP/1.1[0m" 404 -
+2020-12-18 09:57:24,794 INFO werkzeug Thread-31 : 127.0.0.1 - - [18/Dec/2020 09:57:24] "[37mGET /static/assets/fonts/Rubik/Rubik-Light.ttf HTTP/1.1[0m" 200 -
+2020-12-18 09:57:24,794 INFO werkzeug Thread-32 : 127.0.0.1 - - [18/Dec/2020 09:57:24] "[37mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 200 -
+2020-12-18 09:57:37,414 INFO werkzeug Thread-33 : 127.0.0.1 - - [18/Dec/2020 09:57:37] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:57:50,862 INFO werkzeug MainThread :  * Running on http://127.0.0.1:8080/ (Press CTRL+C to quit)
+2020-12-18 09:57:50,863 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-18 09:57:51,608 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-18 09:57:51,609 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-18 09:57:57,208 INFO werkzeug Thread-3 : 127.0.0.1 - - [18/Dec/2020 09:57:57] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-18 09:57:57,252 INFO werkzeug Thread-4 : 127.0.0.1 - - [18/Dec/2020 09:57:57] "[32mGET /login HTTP/1.1[0m" 302 -
+2020-12-18 09:58:44,149 INFO werkzeug MainThread :  * Running on http://127.0.0.1:2000/ (Press CTRL+C to quit)
+2020-12-18 09:59:14,560 INFO werkzeug Thread-2 : 127.0.0.1 - - [18/Dec/2020 09:59:14] "[32mGET /login HTTP/1.1[0m" 302 -

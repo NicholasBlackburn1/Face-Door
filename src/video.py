@@ -49,16 +49,18 @@ class VideoProsessing(object):
         logging.info("Setting up cv")
         imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
         imagePath = "/mnt/user/"
+        
+        
 
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
         
         
-        name, status =setLists(known_face_names,known_user_status,known_user_images)[0]
-        print(name,status)
+        name, status,image =setLists(known_face_names,known_user_status,known_user_images)[0]
+        print(name,status, image)
         
-        userimage = face_recognition.load_image_file()
+        userimage = face_recognition.load_image_file(image)
         # add more faces to be trained to be reconized
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
@@ -313,8 +315,8 @@ class VideoProsessing(object):
 
 
 # handles adding data to lists so i can tuppleize it 
-def setLists(known_face_names,known_user_status,known_user_images,i):
-              
+def setLists(known_face_names,known_user_status,known_user_images):
+    i = 0
     known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
     known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
     known_user_images.append(Database.Database.getImage(Database.Database.getFaces(),i))
