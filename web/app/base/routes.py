@@ -5,11 +5,10 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 
-import pathlib
+import logging
 from sys import version
-
 import flask
-from werkzeug.utils import cached_property, secure_filename
+from werkzeug.utils import cached_property
 
 
 from zmq.sugar.frame import Message
@@ -24,8 +23,8 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm
-from app.base.models import User,Face
+from app.base.forms import LoginForm, CreateAccountForm
+from app.base.models import User
 from app.base.util import verify_pass
 import queue
 import zmq
@@ -40,17 +39,12 @@ from flask import Response
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 import yaml
-import uuid
+import logging
 
-
+from run import socketio
 import DataSub
 import threading
 import time 
-import socket
-import logging
-
-from flask_wtf.file import FileField
-
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
 # uniquespotted -> presentage og Unique
@@ -244,81 +238,16 @@ def index():
         Ram=psutil.virtual_memory().percent,
         uptime=datetime.now().strftime("%H:%M:%S")
     )   
-
-# gets ip addr from pinging dns for accurate ip
-def getIpaddr():
-
-    # Create a socket object
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-    # connect to the server on local computer
-    s.connect(("8.8.8.8", 80))
-
-    # Print Output
-    print("HostName: ",s.getsockname()[0])
-    hostname = s.getsockname()[0]
-    if(hostname is not None):
-        return hostname
-    else:
-        return None
-
     
-'''
-TODO: need to Read from a temp dir for flask to send images from upload dir to Opencv proessing client and save them to opencv local dir  
-'''
-@blueprint.route("/addFace",methods=["GET", "POST"])
-def adduser():
-    port = '2000'
- 
-    face_from = AddFaceForm(request.form)
-    if "add" in request.form:
-       
-        # read form data
-        username = request.form["user"]
-        group = request.form["group"]
-        
-        file = request.files["files"]
-        imagename= request.files['files'].filename
-        
-        tempfile_path= str(pathlib.Path().absolute())+'/src/web/app/base/static/assets/tmp/'
-        
-        output_name = str(uuid.uuid1())+".jpg"
-        
-        tempfile_url = str('http://'+getIpaddr()+':'+port+"/static/assets/tmp/"+output_name)
-        
 
-        print(username)
-        print(group)
-        print(imagename)
-        print(tempfile_url)
-        
-        # saves uploaded image to a temp file dir for sending to opencv client 
-        file.save(tempfile_path+output_name)
-
-        # Check usename exists
-        user = Face.query.filter_by(user=username).first()
-        if user:
-            return render_template(
-                 "addFace.html",
-                msg="Username already registered",
-                success=False,
-                form= face_from,
-            )
-
-        # Check email exists
-        user = Face.query.filter_by(group=group).first()
-        
-      
-        user = Face.query.filter_by(image="none")
-      
-        
-        
-        user = Face(**request.form)
-        user.image = output_name
-        user.imageurl = tempfile_url
-        db.session.add(user)
-        db.session.commit()
-        ##print(image)
-
-        
-    return render_template("addFace.html",form = face_from)
+@blueprint.after_request
+def add_header(r):
+    """
+    Add headers to both force latest IE rendering engine or Chrome Frame,
+    and also to cache the rendered page for 10 minutes.
+    """
+    r.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    r.headers["Pragma"] = "no-cache"
+    r.headers["Expires"] = "0"
+    r.headers['Cache-Control'] = 'public, max-age=0'
+    return r

@@ -6,7 +6,7 @@ import logging
 from shutil import copyfile
 import app
 import zmq
-import pathlib
+
 
 class Data(object):
         
@@ -51,9 +51,8 @@ class Data(object):
 
     # hopefully returns python picle
     def getImageFrame(starter, message):
-    
         if(starter == 'IMAGE' and message['image'] is not None):
-           copyfile("/mnt/user/"+message['image'], str(pathlib.Path().absolute())+"/web/app/base/static/assets/faces/"+message['image'])
+           copyfile("/mnt/user/"+message['image'], "app/base/static/assets/faces/"+message['image'])
            return  "/static/assets/faces/"+message['image']
         else:
             return None
@@ -62,7 +61,7 @@ class Data(object):
     # hopefully returns python picle
     def getParentImageFrame(starter, message):
         if(starter == 'IMAGE_PR' and message['image'] is not None):
-           copyfile("/mnt/user/"+"Parent"+message['image'],  str(pathlib.Path().absolute())+"/web/app/base/static/assets/faces/"+message['image'])
+           copyfile("/mnt/user/"+"Parent"+message['image'], "app/base/static/assets/faces/"+"Parent"+message['image'])
            return  "/static/assets/faces/"+"Parent"+message['image']
         else:
             return None
@@ -71,7 +70,7 @@ class Data(object):
     # hopefully returns python picle
     def getUnknownImageFrame(starter, message):
         if(starter == 'IMAGE_UN' and message['image'] is not None):
-           copyfile("/mnt/user/"+message['image'],  str(pathlib.Path().absolute())+"/web/app/base/static/assets/faces/"+message['image'])
+           copyfile("/mnt/user/"+message['image'], "static/assets/faces/"+message['image'])
            return  "/static/assets/faces/"+message['image']
         else:
             return None

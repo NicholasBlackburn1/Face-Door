@@ -11,12 +11,12 @@ from decouple import config
 
 from config import config_dict
 from app import create_app, db
-
+from flask_socketio import SocketIO, emit
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
 
 # The configuration
-get_config_mode = 'Debug'
+get_config_mode = 'Debug' if DEBUG else 'Production'
 
 try:
     
@@ -28,7 +28,7 @@ except KeyError:
 
 app = create_app( app_config ) 
 Migrate(app, db)
-
+socketio = SocketIO(app)
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=2000,debug=True)
+    app.run(host='127.0.0.1', port=2000)

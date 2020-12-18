@@ -75,8 +75,8 @@ The project is coded using blueprints, app factory pattern, dual configuration p
 - `run.py` loads the `.env` file
 - Initialize the app using the specified profile: *Debug* or *Production*
   - If env.DEBUG is set to *True* the SQLite storage is used
-  - If env.DEBUG is set to *False* the specifiapp factory method `create_app` defined in app/_ed DB driver is used (MySql, PostgreSQL)
-- Call the _init__.py
+  - If env.DEBUG is set to *False* the specified DB driver is used (MySql, PostgreSQL)
+- Call the app factory method `create_app` defined in app/__init__.py
 - Redirect the guest users to Login page
 - Unlock the pages served by *home* blueprint for authenticated users
 

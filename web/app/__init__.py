@@ -27,7 +27,6 @@ def configure_database(app):
 
     @app.before_first_request
     def initialize_database():
-       
         db.create_all()
 
     @app.teardown_request
@@ -36,7 +35,6 @@ def configure_database(app):
 
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
-    
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)
