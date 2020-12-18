@@ -281,7 +281,7 @@ def adduser():
         
         tempfile_path= str(pathlib.Path().absolute())+'/src/web/app/base/static/assets/tmp/'
         
-        tempfile_url = str("http://"+getIpaddr()+""+port+"/static/assets/tmp/"+imagename)
+        tempfile_url = str("http://"+getIpaddr()+":"+port+"/static/assets/tmp/"+imagename)
 
         print(username)
         print(group)

@@ -3537,3 +3537,9 @@
 2020-12-18 09:16:15,626 INFO werkzeug Thread-12 : 127.0.0.1 - - [18/Dec/2020 09:16:15] "[37mPOST /addFace HTTP/1.1[0m" 200 -
 2020-12-18 09:16:26,743 INFO werkzeug Thread-15 : 127.0.0.1 - - [18/Dec/2020 09:16:26] "[37mPOST /addFace HTTP/1.1[0m" 200 -
 2020-12-18 09:16:39,256 INFO werkzeug Thread-19 : 127.0.0.1 - - [18/Dec/2020 09:16:39] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-18 09:49:37,578 INFO werkzeug MainThread :  * Running on http://127.0.0.1:8080/ (Press CTRL+C to quit)
+2020-12-18 09:49:37,579 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-18 09:49:38,300 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-18 09:49:38,300 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-18 09:49:55,425 INFO werkzeug Thread-2 : 127.0.0.1 - - [18/Dec/2020 09:49:55] "[37mPOST /addFace HTTP/1.1[0m" 200 -
+2020-12-18 09:49:55,711 INFO werkzeug Thread-3 : 127.0.0.1 - - [18/Dec/2020 09:49:55] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
