@@ -5,7 +5,6 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 
-import 5p
 import pathlib
 from sys import version
 
@@ -47,6 +46,7 @@ import DataSub
 import threading
 import time 
 import socket
+import logging
 
 from flask_wtf.file import FileField
 
@@ -254,9 +254,12 @@ def getIpaddr():
     s.connect(("8.8.8.8", 80))
 
     # Print Output
-    logging.debug("HostName: ",s.getsockname()[0])
-    s.close()
-    return s.getsockname()[0]
+    print("HostName: ",s.getsockname()[0])
+    hostname = s.getsockname()[0]
+    if(hostname is not None):
+        return hostname
+    else:
+        return None
 
     
 '''
@@ -264,7 +267,7 @@ TODO: need to Read from a temp dir for flask to send images from upload dir to O
 '''
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
-    
+    port = '8080'
  
     face_from = AddFaceForm(request.form)
     if "add" in request.form:
@@ -276,12 +279,14 @@ def adduser():
         image = request.files['image']
         imagename= request.files['image'].filename
         
-        tempfile_path= str(pathlib.Path().absolute())+'/web/app/base/static/assets/tmp/'
-        temfile_url = str('http://'+getIpaddr()+':'+8089+"/static/assets/tmp/"+imagename)
+        tempfile_path= str(pathlib.Path().absolute())+'/src/web/app/base/static/assets/tmp/'
+        
+        tempfile_url = str("http://"+getIpaddr()+""+port+"/static/assets/tmp/"+imagename)
 
         print(username)
         print(group)
         print(imagename)
+        print(tempfile_url)
         
         # saves uploaded image to a temp file dir for sending to opencv client 
         image.save(tempfile_path+imagename)
@@ -298,22 +303,13 @@ def adduser():
 
         # Check email exists
         user = Face.query.filter_by(group=group).first()
-        if user:
-            return render_template(
-                "addFace.html",
-                msg="person in group",
-                success=False,
-                form=face_from,
-            )
         
-        user = Face.query.filter_by(image=image).first()
-        if user:
-          return render_template(
-                "addFace.html",
-                msg="image is already saved",
-                success=False,
-                form=face_from,
-            )
+        if(tempfile_url is not None):
+            user = Face.query.filter_by(image=tempfile_url).first()
+        else:
+            print(" why is image null")
+     
+        
         
         user = Face(**request.form)
         db.session.add(user)
