@@ -322,3 +322,10 @@ def adduser():
 
         
     return render_template("addFace.html",form = face_from)
+
+
+@blueprint.route("/settings",methods=["GET", "POST"])
+def settings():
+    
+     return render_template("settings.html",form = settings_from)
+    
