@@ -329,5 +329,5 @@ def settings():
     
     face_from = AddFaceForm(request.form)
     
-     return render_template("settings.html",form = face_from)
+    return render_template("settings.html",form = face_from)
     
