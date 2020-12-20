@@ -24,7 +24,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm
+from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm,RemoveFaceForm
 from app.base.models import User,Face
 from app.base.util import verify_pass
 import queue
@@ -327,7 +327,7 @@ def adduser():
 @blueprint.route("/settings",methods=["GET", "POST"])
 def settings():
     
-    face_from = AddFaceForm(request.form)
+    face_from = RemoveFaceForm(request.form)
     
     return render_template("settings.html",form = face_from)
     

@@ -6,7 +6,7 @@ Copyright (c) 2019 - present AppSeed.us
 
 from flask_wtf import FlaskForm
 from wtforms import TextField, PasswordField,SelectField
-from wtforms.fields.simple import FileField
+from wtforms.fields.simple import FileField,SubmitField
 from wtforms.validators import InputRequired, Email, DataRequired
 
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
@@ -33,3 +33,13 @@ class AddFaceForm(FlaskForm):
         ]
     )
     
+
+class RemoveFaceForm(FlaskForm):
+    user = TextField('name', id='name'   , validators=[DataRequired()])
+    check = SubmitField('files', id='files', validators=[DataRequired()] )
+    group = SelectField('group', id='drop', validators=[DataRequired()],choices=[
+            ('Admin', 'admin'),
+            ('User', 'user'),
+            ('Unwanted', 'unwanted')
+        ]
+    )
