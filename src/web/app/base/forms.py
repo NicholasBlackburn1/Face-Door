@@ -32,8 +32,7 @@ class AddFaceForm(FlaskForm):
             ('Unwanted', 'unwanted')
         ]
     )
-    
-
+    # enables removal of a database entry from the webpage
 class RemoveFaceForm(FlaskForm):
     user = TextField('name', id='name'   , validators=[DataRequired()])
     check = SubmitField('files', id='files', validators=[DataRequired()] )
@@ -43,3 +42,10 @@ class RemoveFaceForm(FlaskForm):
             ('Unwanted', 'unwanted')
         ]
     )
+    
+    
+class ServerSettings(FlaskForm):
+    ipaddress = TextField('ipaddress ', id='ipaddress'   , validators=[DataRequired()])
+    portnumber =  TextField('portnumber ', id='portnumber'   , validators=[DataRequired()])
+    
+    
