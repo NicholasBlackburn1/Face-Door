@@ -38,16 +38,12 @@ class VideoProsessing(object):
         logging.debug(Database.Database.getFaces())
         logging.info("connected to database Faces")
         
-            # Database connection handing 
-        logging.info("Connecting to the Database Settings")
-        logging.debug(Database.Database.getSettings())
-        logging.info("connected to database Faces")
 
         ZMQURI = str("tcp://"+ipaddr+":"+port)
         
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
-        sock.bind("tcp://127.0.0.1:5000")
+        sock.bind(ZMQURI)
 
         sock.send(b"setup")
         logging.info("Setting up cv")
@@ -333,29 +329,29 @@ def setLists(known_face_names,known_user_status,known_user_images):
 def send_file(sock,imagename):
     logging.info("[SOCKET-IMAGE] sending image")
     sock.send_string("IMAGE", flags=zmq.SNDMORE)
-    sock.send_json({Config.IMAGE:imagename+".jpg"})
+    sock.send_json({"image":imagename+".jpg"})
     logging.info("[SOCKET-IMAGE] image sent\n")
     
 #sends Person count info to subscribers 
 def send_person_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
     sock.send_string("FACE", flags=zmq.SNDMORE)
-    sock.send_json({Config.FACE: str(len(face_encodings))})
+    sock.send_json({"face": str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
     
     #sends Person count info to subscribers 
 def send_owner_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string("OWNER", flags=zmq.SNDMORE)
-    sock.send_json({Config.OWNER_FACE: len(face_encodings)})
+    sock.send_string("ADMIN", flags=zmq.SNDMORE)
+    sock.send_json({"admin": len(face_encodings)})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
     
     #sends Person count info to subscribers 
 def send_parent_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string("PARENT", flags=zmq.SNDMORE)
-    sock.send_json({Config.PARENT_FACE: str(len(face_encodings))})
+    sock.send_string("USER", flags=zmq.SNDMORE)
+    sock.send_json({"user": str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
     
@@ -363,13 +359,13 @@ def send_parent_count(face_encodings, sock):
 def send_unkown_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
     sock.send_string("UNKNOWN", flags=zmq.SNDMORE)
-    sock.send_json({Config.UNKNOWN_FACE: str(len(face_encodings))})
+    sock.send_json({"uknown": str(len(face_encodings))})
     logging.info("[SOCKET PERSON] Sent Seen Persons")
 
 def send_face_compare(face_distance,sock):
     logging.info("[SOCKET FACEMATCH] sending Seen Persons")
     sock.send_string("COMPARE", flags=zmq.SNDMORE)
-    sock.send_json({Config.COMPARE: face_distance})
+    sock.send_json({"compare": face_distance})
     logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
 
 """
@@ -385,7 +381,7 @@ def send_group_status(sock,group_status):
 def send_person_name(sock,name):
     logging.info("[SOCKET Name] Sending person seen name")
     sock.send_string("NAME", flags=zmq.SNDMORE)
-    sock.send_json({Config.NAME_TOKEN: name})
+    sock.send_json("name": name})
     logging.info("[SOCKET Name] Sent Person name")
     
 # saves owner images and sends Frame 
