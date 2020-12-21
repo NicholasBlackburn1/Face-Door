@@ -42,7 +42,6 @@ from matplotlib.figure import Figure
 import yaml
 import uuid
 
-
 import DataSub
 import threading
 import time 
@@ -50,6 +49,49 @@ import socket
 import logging
 
 from flask_wtf.file import FileField
+from configparser import ConfigParser
+# returns the zmq settings from the config.ini
+
+
+def getZmqConfig():
+    # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read("Config.ini")
+
+    # Get the password
+    zmq = config_object['ZMQ']
+    return zmq
+
+
+def getFlaskConfig():
+    # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read("Config.ini")
+
+    # Get the password
+    flask = config_object['FLASK']
+    return flask
+
+
+def getDatabaseConfig():
+    # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read("Config.ini")
+
+    # Get the password
+    database = config_object['DATABASE']
+    return database
+
+
+def getLogConfig():
+    # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read("Config.ini")
+
+    # Get the password
+    log = config_object['LOGGING']
+    return log
+
 '''
 TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
 '''
@@ -91,17 +133,19 @@ TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
 # ownerimg - > displays current image taken of owners from opencv
 # parentimg -> displase image of parent taken from fopencv
 # unknownimgs
+
 logging.basicConfig(
-    filename="",
+    filename=getLogConfig()['filename'],
     level=logging.DEBUG,
     format=f"%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s",
 )
 
+zmq_ip = str("tcp://"+getZmqConfig()['ip']+":"+getZmqConfig()['port'])
 context = zmq.Context()
 
 client = context.socket(zmq.SUB)
 client.setsockopt_string(zmq.SUBSCRIBE, "")
-client.connect("tcp://127.0.0.1:5000")
+client.connect(zmq_ip)
 authpeople = None
 
 STATIC_FOLDER = "/mnt/user"
