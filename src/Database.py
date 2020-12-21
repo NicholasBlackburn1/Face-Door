@@ -53,12 +53,3 @@ class Database(object):
     def getImageName(result_set,i):
         id, user,group,image,imageurl,seen = result_set[i]
         return image
-
-    def getIpaddress(result_set, i):
-        id, ipadress, port =  result_set[i]
-        return ipaddress
-    
-    def getPort(result_set, i):
-        id, ipadress, port =  result_set[i]
-        return port
-    

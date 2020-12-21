@@ -50,7 +50,9 @@ import socket
 import logging
 
 from flask_wtf.file import FileField
-
+'''
+TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
+'''
 # image = client.recv_pyobj()
 # unigue_people ->  Unique People Spotted box
 # uniquespotted -> presentage og Unique
@@ -90,7 +92,7 @@ from flask_wtf.file import FileField
 # parentimg -> displase image of parent taken from fopencv
 # unknownimgs
 logging.basicConfig(
-    filename="flask.log",
+    filename="",
     level=logging.DEBUG,
     format=f"%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s",
 )
@@ -245,22 +247,7 @@ def index():
         uptime=datetime.now().strftime("%H:%M:%S")
     )   
 
-# gets ip addr from pinging dns for accurate ip
-def getIpaddr():
 
-    # Create a socket object
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-
-    # connect to the server on local computer
-    s.connect(("8.8.8.8", 80))
-
-    # Print Output
-    print("HostName: ",s.getsockname()[0])
-    hostname = s.getsockname()[0]
-    if(hostname is not None):
-        return hostname
-    else:
-        return None
 
     
 '''
@@ -268,7 +255,6 @@ TODO: need to Read from a temp dir for flask to send images from upload dir to O
 '''
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
-    port = '2000'
  
     face_from = AddFaceForm(request.form)
     if "add" in request.form:
