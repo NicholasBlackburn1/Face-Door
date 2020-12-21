@@ -28,12 +28,7 @@ NAME_VAR = str("Persons Name")
 #uknown person 
 
 UNRECONIZED= str("Unknown")
-#Owners
-ETHAN_WAGNER = str("Ethan Wagner")
-NICHOLAS_BLACKBURN = str("Nicholas Blackburn")
-# adults 
-LAURA_WAGNER = str("Laura Wagner")
-DR_DAN = str("Danial Wagner")
+
 
 # Dont touch this is the rgb color Conversion for the Philips hue light
 def rgb_to_xy(red, green, blue):
@@ -65,8 +60,7 @@ def rgb_to_xy(red, green, blue):
      
     return [x, y]
 
-#Phillips Hue Lights Ip addr
-HUE_IP = str('10.0.0.230')
+
 
 #hue Color Pref
 HUE_ALARM = rgb_to_xy(255,0,0)

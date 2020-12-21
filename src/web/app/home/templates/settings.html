@@ -215,6 +215,52 @@
       </div>
     
           </div>
+          <div class="col-4 grid-margin  align-self-start">
+            <div class="card">
+              
+              <div class="card-body">
+               
+                <h4 class="card-title">Computer Vision Backend Settings </h4>
+                <div class="bg-gray-dark d-flex d-md-block d-xl-flex flex-row py-3 px-4 px-md-3 px-xl-4 rounded mt-3">
+                  <div class="align-self-center flex-grow text-right text-md-center text-xl-right py-md-2 py-xl-0">
+                    <form role="form" method="post" enctype= "multipart/form-data" action="">
+      
+                      {{ form.hidden_tag() }}  
+      
+                      <div class="form-group">
+                        <label>Server Ip Address</label>
+                        {{ serverForm.ipaddress(placeholder="Ip Address",class="form-control p_input", style="color: rgb(255,255,255)") }} 
+                          </ul>
+                        
+                      </div>
+                      <div class="form-group form-text">
+                        <label>Server Port Number</label>
+                          {{ serverForm.portnumber(placeholder="PortNumber", class="form-control p_button",style="color: rgb(255,255,255)")}}
+                          
+                            </ul>
+                         
+                        
+                      </div>
+                      <div class="form-group form-text">
+                        <h6>Are You sure? Saving the entry Will Overwrite Previous Entry and A Restart Is Requried!</h6>
+                        <button type="submit" name="save" class="btn btn-primary btn-block enter-btn">Save Settings</button>
+                          </ul>  
+                      </div>
+                      <div class="form-group d-flex align-items-center justify-content-between">
+                      
+                      </div>
+                      <div class="d-flex">
+                        <br />    
+                      </div>
+                    </form>
+                  </div>
+                </div>
+               
+                </div>
+        </div>
+      
+            </div>
+
         </div>
     <!---- 
           <div class="col-md-8 grid-margin stretch-card">

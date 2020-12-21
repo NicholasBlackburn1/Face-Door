@@ -2,12 +2,44 @@
 import pathlib
 import sqlalchemy as db 
 import sqlalchemy.dialects.sqlite
+from configparser import ConfigParser
 class Database(object):
+    
+
+   
+    
+    # Gets the Settings Data from the Settings database data 
+    def getSettings():
+         #Read config.ini file
+        config_object = ConfigParser()
+        config_object.read("Config.ini")
+
+        #Get the password   
+        database = config_object["DATABASE"]
+      
+        engine = db.create_engine(f'postgresql://'+database['user']+":"+database['pass']+'@'+database['ip']+':'+database['port']+'/settings')
+        connection = engine.connect()
+        metadata = db.MetaData()
+        settings = db.Table('Settings', metadata, autoload=True, autoload_with=engine)
+        print(faces)
+        query = db.select([settings])
+        print(query)
+        result_proxy = connection.execute(query)
+        result_set = result_proxy.fetchall()
+        print(result_set)
+        return(result_set)
+    
     
     # Gets the Face Data from the Face data 
     def getFaces():
+         #Read config.ini file
+        config_object = ConfigParser()
+        config_object.read("Config.ini")
+
+        #Get the password   
+        database = config_object["DATABASE"]
       
-        engine = db.create_engine(f'postgresql://test:pass@0.0.0.0:5432/face')
+        engine = db.create_engine(f'postgresql://'+database['user']+":"+database['pass']+'@'+database['ip']+databse['port']+'/face')
         connection = engine.connect()
         metadata = db.MetaData()
         faces = db.Table('Face', metadata, autoload=True, autoload_with=engine)
@@ -42,5 +74,11 @@ class Database(object):
         id, user,group,image,imageurl,seen = result_set[i]
         return image
 
-
+    def getIpaddress(result_set, i):
+        id, ipadress, port =  result_set[i]
+        return ipaddress
+    
+    def getPort(result_set, i):
+        id, ipadress, port =  result_set[i]
+        return port
     
