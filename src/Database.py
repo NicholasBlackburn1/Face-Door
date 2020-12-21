@@ -8,26 +8,6 @@ class Database(object):
 
    
     
-    # Gets the Settings Data from the Settings database data 
-    def getSettings():
-         #Read config.ini file
-        config_object = ConfigParser()
-        config_object.read("Config.ini")
-
-        #Get the password   
-        database = config_object["DATABASE"]
-      
-        engine = db.create_engine(f'postgresql://'+database['user']+":"+database['pass']+'@'+database['ip']+':'+database['port']+'/settings')
-        connection = engine.connect()
-        metadata = db.MetaData()
-        settings = db.Table('Settings', metadata, autoload=True, autoload_with=engine)
-        print(faces)
-        query = db.select([settings])
-        print(query)
-        result_proxy = connection.execute(query)
-        result_set = result_proxy.fetchall()
-        print(result_set)
-        return(result_set)
     
     
     # Gets the Face Data from the Face data 
