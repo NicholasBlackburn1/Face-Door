@@ -24,7 +24,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 
 from app import db, login_manager
 from app.base import blueprint
-from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm,RemoveFaceForm,ServerSettings
+from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm,RemoveFaceForm,ServerSettings,ZmqServerSettings
 from app.base.models import User,Face
 from app.base.util import verify_pass
 import queue
@@ -360,6 +360,26 @@ def settings():
     
     face_from = RemoveFaceForm(request.form)
     server_form = ServerSettings(request.form)
+    zmq_form = ZmqServerSettings(request.form)
     
-    return render_template("settings.html",form = face_from, serverForm=  server_form)
+    if "Remove" in request.form:
+        username = request.form['user']
+        group = request.form['group']
+
+        print(username)
+        print(group)
+
+        remove = Face.query.filter_by(user=username).one()
+        db.session.delete(remove)
+        db.session.commit()
+        
+    if "save" in request.form:
+        ipaddress = request.form['ipaddress']
+        port = request.form['portnumber']
+        
+        print(ipaddress)
+        print(port)
+    
+    
+    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form)
     

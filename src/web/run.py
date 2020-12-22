@@ -11,6 +11,17 @@ from decouple import config
 
 from config import config_dict
 from app import create_app, db
+from configparser import ConfigParser
+
+def getFlaskConfig():
+    # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read("Config.ini")
+
+    # Get the password
+    flask = config_object['FLASK']
+    return flask
+
 
 # WARNING: Don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True)
@@ -31,4 +42,4 @@ Migrate(app, db)
 
 
 if __name__ == "__main__":
-    app.run(host='127.0.0.1', port=2000,debug=True)
+    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True)
