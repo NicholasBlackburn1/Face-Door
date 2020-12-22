@@ -13,10 +13,11 @@ from config import config_dict
 from app import create_app, db
 from configparser import ConfigParser
 
+import pathlib
 def getFlaskConfig():
     # Read config.ini file
     config_object = ConfigParser()
-    config_object.read("Config.ini")
+    config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
 
     # Get the password
     flask = config_object['FLASK']

@@ -14,11 +14,6 @@ ETHANSPHONE=str('7249390029@messaging.sprintpcs.com')
 
 # ADD Image Names and path vars
 FILE_LOC = "/mnt/user/people/"
-ETHAN_IMAGE =FILE_LOC+"ethan.jpg"
-NICK_IMAGE = FILE_LOC+"nick.jpg"
-ETHANS_MOM_IMAGE = FILE_LOC+"ethansMom.jpg"  
-DR_DAN_IMAGE = FILE_LOC+"drDan.jpg"
-
 
 '''
 THis section is for adding new names to the system

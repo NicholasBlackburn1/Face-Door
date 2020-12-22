@@ -52,45 +52,17 @@ from flask_wtf.file import FileField
 from configparser import ConfigParser
 # returns the zmq settings from the config.ini
 
+print( str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+# Read config.ini file
+config_object = ConfigParser()
+config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
 
-def getZmqConfig():
-    # Read config.ini file
-    config_object = ConfigParser()
-    config_object.read("Config.ini")
+logconfig = config_object['LOG']
+zmqconfig = config_object['ZMQ']    
+flaskconfig = config_object['FLASK']
 
-    # Get the password
-    zmq = config_object['ZMQ']
-    return zmq
+   
 
-
-def getFlaskConfig():
-    # Read config.ini file
-    config_object = ConfigParser()
-    config_object.read("Config.ini")
-
-    # Get the password
-    flask = config_object['FLASK']
-    return flask
-
-
-def getDatabaseConfig():
-    # Read config.ini file
-    config_object = ConfigParser()
-    config_object.read("Config.ini")
-
-    # Get the password
-    database = config_object['DATABASE']
-    return database
-
-
-def getLogConfig():
-    # Read config.ini file
-    config_object = ConfigParser()
-    config_object.read("Config.ini")
-
-    # Get the password
-    log = config_object['LOGGING']
-    return log
 
 '''
 TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
@@ -135,12 +107,12 @@ TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
 # unknownimgs
 
 logging.basicConfig(
-    filename=getLogConfig()['filename'],
+    filename=logconfig['name'],
     level=logging.DEBUG,
     format=f"%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s",
 )
 
-zmq_ip = str("tcp://"+getZmqConfig()['ip']+":"+getZmqConfig()['port'])
+zmq_ip = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
 context = zmq.Context()
 
 client = context.socket(zmq.SUB)
@@ -380,6 +352,7 @@ def settings():
         print(ipaddress)
         print(port)
     
+
     
     return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form)
     

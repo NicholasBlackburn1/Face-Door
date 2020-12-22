@@ -22,12 +22,25 @@ import json
 import math
 import Database
 
+import pathlib
+from configparser import ConfigParser
+
 #TODOD: add All Config.py Settings that arnt python fiunctions to Database
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
     
                     
     def ProcessVideo():
+        
+    print( str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+    # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
+
+    logconfig = config_object['LOGGING']
+    zmqconfig = config_object['ZMQ']    
+    opencvconfig = config_object['OPENCV']
+    fileconfig = config_object['FILE']
        
         known_face_names = []
         known_user_status = []
@@ -39,7 +52,7 @@ class VideoProsessing(object):
         logging.info("connected to database Faces")
         
 
-        ZMQURI = str("tcp://"+ipaddr+":"+port)
+        ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
         
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
@@ -65,7 +78,7 @@ class VideoProsessing(object):
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        userEncode = face_recognition.face_encodings(userimage, num_jitters=75)[0]
+        userEncode = face_recognition.face_encodings(userimage, num_jitters=opencvconfig['numberOfJitters'])[0]
          
         # Add names of the ecodings to thw end of list 
         known_face_encodings = [userEncode]
@@ -104,9 +117,9 @@ class VideoProsessing(object):
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
-                        known_face_encodings, face_encoding, tolerance=0.6932
+                        known_face_encodings, face_encoding, tolerance=opencvconfig[errorTollerance]
                     )
-                    name = Config.UNRECONIZED
+                    name = opencvconfig['unreconizedPerson']
                     
 
                     # # If a match was found in known_face_encodings, just use the first one.
