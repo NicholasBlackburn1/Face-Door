@@ -60,7 +60,7 @@ config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
 logconfig = config_object['LOG']
 zmqconfig = config_object['ZMQ']    
 flaskconfig = config_object['FLASK']
-
+versionconfig = config_object['VERSION']
    
 
 
@@ -257,7 +257,7 @@ def index():
         ownerimg  =DataSub.Data.getImageFrame(starter,message),
         parentimg=DataSub.Data.getParentImageFrame(starter,message),
         unknownimg=DataSub.Data.getUnknownImageFrame(starter,message),
-        version = '1.0.10b',
+        version = versionconfig['number'],
         cpuload= psutil.cpu_percent(),
         Ram=psutil.virtual_memory().percent,
         uptime=datetime.now().strftime("%H:%M:%S")
@@ -370,7 +370,7 @@ def settings():
         #Write changes back to file
         with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
             config_object.write(conf)
-        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updated" )
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updated",version = versionconfig['number'] )
         
 
     if "zmqsave" in request.form:
@@ -393,11 +393,11 @@ def settings():
         with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
             config_object.write(conf)
             
-        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updatedzmq" )
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updatedzmq",version = versionconfig['number'] )
         
         
         
 
     
-    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form)
+    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, version = versionconfig['number'])
     
