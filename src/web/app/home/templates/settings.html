@@ -132,8 +132,8 @@
            
             <h4 class="card-title">Remove Users In database</h4>
             <span class="mb-0 text-muted">
-              {% if msg %}
-                msg
+              {% if msg == "removedUser" %}
+              Successfully Removed User From Database
               {% else %}
               Please enter the username you want to Remove
               {% endif %} 
@@ -185,8 +185,8 @@
              
               <h4 class="card-title"> Flask Server IP  Settings </h4>
               <span class="mb-0 text-muted">
-                {% if msg %}
-                  msg
+                {% if msg == "updated" %}
+                  updated Flask Server Ip address
                 {% else %}
                 Please enter the Ip Address u want to use
                 {% endif %} 
@@ -239,8 +239,8 @@
              
               <h4 class="card-title"> Zmq Subscriber IP  Settings </h4>
               <span class="mb-0 text-muted">
-                {% if msg %}
-                  msg
+                {% if msg == "updatedzmq" %}
+                  Updated Zmq Config
                 {% else %}
                 Please enter the Ip Address u want to use
                 {% endif %} 

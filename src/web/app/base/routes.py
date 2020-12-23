@@ -333,6 +333,7 @@ def settings():
     face_from = RemoveFaceForm(request.form)
     server_form = ServerSettings(request.form)
     zmq_form = ZmqServerSettings(request.form)
+    message = ""
     
     if "Remove" in request.form:
         username = request.form['user']
@@ -344,6 +345,8 @@ def settings():
         remove = Face.query.filter_by(user=username).one()
         db.session.delete(remove)
         db.session.commit()
+              
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "removedUser" )
         
     if "save" in request.form:
         ipaddress = request.form['ipaddress']
@@ -353,12 +356,21 @@ def settings():
         print(port)
         
         #Get the configparser object
+       
+        #Get the configparser object
         config_object = ConfigParser()
-        config_object['FLASK'] = {
-            "ip": ipaddress,
-            "port": port,
-            "debug": False
-        }
+        config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+
+        flasksettings = config_object['FLASK']
+        flasksettings['ip'] = ipaddress
+        flasksettings['port'] = port
+        
+        
+
+        #Write changes back to file
+        with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
+            config_object.write(conf)
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updated" )
         
 
     if "zmqsave" in request.form:
@@ -380,7 +392,9 @@ def settings():
         #Write changes back to file
         with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
             config_object.write(conf)
-                
+            
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updatedzmq" )
+        
         
         
 
