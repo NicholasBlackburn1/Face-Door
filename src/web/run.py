@@ -43,4 +43,4 @@ Migrate(app, db)
 
 
 if __name__ == "__main__":
-    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True)
+    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)

@@ -329,11 +329,13 @@ def adduser():
 # Renders and handles the settings of the backend server
 @blueprint.route("/settings",methods=["GET", "POST"])
 def settings():
+
+  
     
     face_from = RemoveFaceForm(request.form)
     server_form = ServerSettings(request.form)
     zmq_form = ZmqServerSettings(request.form)
-    message = ""
+  
     
     if "Remove" in request.form:
         username = request.form['user']
@@ -365,8 +367,6 @@ def settings():
         flasksettings['ip'] = ipaddress
         flasksettings['port'] = port
         
-        
-
         #Write changes back to file
         with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
             config_object.write(conf)
