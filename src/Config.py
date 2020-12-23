@@ -2,30 +2,7 @@
 """
 This file is custom vars for the Program you can add Names vars to the name sectiom
 """
-# sms sending info
-SMSGATWAYEMAIL = str('hackercraftstudio@gmail.com')
-SMSGATEWAYPASSWORD = str('CatFish123@')
-
-NAME = str("[SecuServe Security System]")
-ENDINGMESSAGE=str("By nicholas Blackburn")
-
-NICKSPHONE=str('4123891615@vtext.com')
-ETHANSPHONE=str('7249390029@messaging.sprintpcs.com')
-
-# ADD Image Names and path vars
-FILE_LOC = "/mnt/user/people/"
-
-'''
-THis section is for adding new names to the system
-to define names 
-NAME_VAR = str("Persons Name")
-'''
-#uknown person 
-
-UNRECONIZED= str("Unknown")
-
-
-# Dont touch this is the rgb color Conversion for the Philips hue light
+s the rgb color Conversion for the Philips hue light
 def rgb_to_xy(red, green, blue):
     """ conversion of RGB colors to CIE1931 XY colors
     Formulas implemented from: https://gist.github.com/popcorn245/30afa0f98eea1c2fd34d
@@ -63,23 +40,3 @@ HUE_AllGOOD= rgb_to_xy(0,255,0)
 HUE_STARTUP = rgb_to_xy(0,0,255)
 
 
-#ecrytion for privacey DO NOT CHANGE ANYTHING OR UR SCREWED
-BLOCK_SIZE = 2556
-PAD = lambda s: s + (BLOCK_SIZE - len(s) % BLOCK_SIZE) * chr(BLOCK_SIZE - len(s) % BLOCK_SIZE)
-UNPAD = lambda s: s[:-ord(s[len(s) - 1:])]
-SALT  = b"this is a salt SUPER MUCH SALT times one billion"
-ENCRYPITON_PASSWORD = 'L4xVTDwcEGWkAng7X9mKqdBP8hrfZtYvuzS2jyQUe6ps5FNb3C'
-
-
-
-
-## Tokenifyer
-IMAGE = 'image'
-GROUP = 'group'
-TIME = 'time'
-NAME_TOKEN = 'name'
-FACE = 'face'
-OWNER_FACE = 'ownerface'
-PARENT_FACE = 'parentface'
-UNKNOWN_FACE = 'unknownface'
-COMPARE = 'compare'

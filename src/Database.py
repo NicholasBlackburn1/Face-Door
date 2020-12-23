@@ -14,7 +14,7 @@ class Database(object):
     def getFaces():
          #Read config.ini file
         config_object = ConfigParser()
-        config_object.read("Config.ini")
+        config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
 
         #Get the password   
         database = config_object["DATABASE"]

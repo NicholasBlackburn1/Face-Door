@@ -7,3 +7,38 @@
 2020-12-22 11:06:29,692 INFO werkzeug Thread-5 : 192.168.1.133 - - [22/Dec/2020 11:06:29] "[37mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 200 -
 2020-12-22 11:06:29,692 INFO werkzeug Thread-4 : 192.168.1.133 - - [22/Dec/2020 11:06:29] "[37mGET /static/assets/vendors/mdi/fonts/materialdesignicons-webfont.woff2?v=3.9.97 HTTP/1.1[0m" 200 -
 2020-12-22 11:06:29,728 INFO werkzeug Thread-6 : 192.168.1.133 - - [22/Dec/2020 11:06:29] "[37mGET /static/assets/fonts/Rubik/Rubik-Light.ttf HTTP/1.1[0m" 200 -
+2020-12-22 19:57:09,273 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-22 19:57:09,275 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-22 19:57:10,229 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-22 19:57:10,230 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-22 19:57:19,974 INFO werkzeug Thread-2 : 192.168.1.133 - - [22/Dec/2020 19:57:19] "[35m[1mGET / HTTP/1.1[0m" 500 -
+2020-12-22 19:57:20,436 INFO werkzeug Thread-3 : 192.168.1.133 - - [22/Dec/2020 19:57:20] "[37mGET /?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-22 19:57:20,438 INFO werkzeug Thread-4 : 192.168.1.133 - - [22/Dec/2020 19:57:20] "[37mGET /?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-22 19:57:21,013 INFO werkzeug Thread-5 : 192.168.1.133 - - [22/Dec/2020 19:57:21] "[37mGET /?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-22 19:57:21,215 INFO werkzeug Thread-6 : 192.168.1.133 - - [22/Dec/2020 19:57:21] "[37mGET /?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-22 19:57:21,331 INFO werkzeug Thread-7 : 192.168.1.133 - - [22/Dec/2020 19:57:21] "[37mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-22 19:57:21,753 INFO werkzeug Thread-8 : 192.168.1.133 - - [22/Dec/2020 19:57:21] "[37mGET /?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-22 20:00:47,190 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-22 20:00:47,192 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-22 20:00:48,114 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-22 20:00:48,115 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-22 20:01:25,430 INFO werkzeug Thread-2 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-22 20:01:25,499 INFO werkzeug Thread-3 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-22 20:01:25,748 INFO werkzeug Thread-5 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/vendors/css/vendor.bundle.base.css HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,750 INFO werkzeug Thread-4 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/vendors/mdi/css/materialdesignicons.min.css HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,752 INFO werkzeug Thread-6 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/css/style.css HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,756 INFO werkzeug Thread-7 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,760 INFO werkzeug Thread-8 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,764 INFO werkzeug Thread-9 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,769 INFO werkzeug Thread-11 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,769 INFO werkzeug Thread-10 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,771 INFO werkzeug Thread-12 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-22 20:01:25,864 INFO werkzeug Thread-13 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[33mGET /static/assets/images/auth/Login_bg.jpg HTTP/1.1[0m" 404 -
+2020-12-22 20:01:25,891 INFO werkzeug Thread-15 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[37mGET /static/assets/fonts/Rubik/Rubik-Regular.ttf HTTP/1.1[0m" 200 -
+2020-12-22 20:01:25,893 INFO werkzeug Thread-14 : 192.168.1.133 - - [22/Dec/2020 20:01:25] "[37mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 200 -
+2020-12-22 20:01:30,926 INFO werkzeug Thread-16 : 192.168.1.133 - - [22/Dec/2020 20:01:30] "[37mGET /settings HTTP/1.1[0m" 200 -
+2020-12-22 20:01:31,319 INFO werkzeug Thread-17 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-22 20:01:31,322 INFO werkzeug Thread-18 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-22 20:01:31,326 INFO werkzeug Thread-19 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-22 20:01:31,331 INFO werkzeug Thread-20 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-22 20:01:31,507 INFO werkzeug Thread-21 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[37mGET /static/assets/fonts/Rubik/Rubik-Light.ttf HTTP/1.1[0m" 200 -
