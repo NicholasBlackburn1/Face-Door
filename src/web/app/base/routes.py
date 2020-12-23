@@ -351,7 +351,38 @@ def settings():
         
         print(ipaddress)
         print(port)
-    
+        
+        #Get the configparser object
+        config_object = ConfigParser()
+        config_object['FLASK'] = {
+            "ip": ipaddress,
+            "port": port,
+            "debug": False
+        }
+        
+
+    if "zmqsave" in request.form:
+        
+        ipaddress = request.form['ipaddress']
+        port = request.form['portnumber']
+        print("zmq")
+        print(ipaddress)
+        print(port)
+        
+        #Get the configparser object
+        config_object = ConfigParser()
+        config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+
+        zmqsettings = config_object['ZMQ']
+        zmqsettings['ip'] = ipaddress
+        zmqsettings['port'] = port
+
+        #Write changes back to file
+        with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
+            config_object.write(conf)
+                
+        
+        
 
     
     return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form)

@@ -42,3 +42,165 @@
 2020-12-22 20:01:31,326 INFO werkzeug Thread-19 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
 2020-12-22 20:01:31,331 INFO werkzeug Thread-20 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
 2020-12-22 20:01:31,507 INFO werkzeug Thread-21 : 192.168.1.133 - - [22/Dec/2020 20:01:31] "[37mGET /static/assets/fonts/Rubik/Rubik-Light.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:23:42,113 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-23 11:23:42,114 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:23:42,590 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:23:42,591 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:23:56,404 INFO werkzeug Thread-2 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-23 11:23:56,437 INFO werkzeug Thread-3 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-23 11:23:56,700 INFO werkzeug Thread-4 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/vendors/mdi/css/materialdesignicons.min.css HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,705 INFO werkzeug Thread-5 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/vendors/css/vendor.bundle.base.css HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,708 INFO werkzeug Thread-6 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/css/style.css HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,709 INFO werkzeug Thread-7 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,713 INFO werkzeug Thread-8 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,714 INFO werkzeug Thread-10 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,716 INFO werkzeug Thread-9 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,717 INFO werkzeug Thread-11 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,718 INFO werkzeug Thread-12 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-23 11:23:56,830 INFO werkzeug Thread-13 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
+2020-12-23 11:23:56,871 INFO werkzeug Thread-14 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[37mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:23:56,873 INFO werkzeug Thread-15 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[37mGET /static/assets/fonts/Rubik/Rubik-Regular.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:23:56,876 INFO werkzeug Thread-16 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[33mGET /static/assets/images/auth/Login_bg.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:23:56,920 INFO werkzeug Thread-17 : 192.168.1.133 - - [23/Dec/2020 11:23:56] "[36mGET /static/assets/vendors/mdi/fonts/materialdesignicons-webfont.woff2?v=3.9.97 HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,152 INFO werkzeug Thread-18 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[37mGET /settings HTTP/1.1[0m" 200 -
+2020-12-23 11:24:02,374 INFO werkzeug Thread-20 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/flag-icon-css/css/flag-icon.min.css HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,377 INFO werkzeug Thread-19 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.css HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,379 INFO werkzeug Thread-22 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/owl-carousel-2/owl.theme.default.min.css HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,381 INFO werkzeug Thread-21 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.css HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,384 INFO werkzeug Thread-23 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[37mGET /static/assets/fonts/Rubik/Rubik-Light.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:24:02,387 INFO werkzeug Thread-25 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,387 INFO werkzeug Thread-26 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:24:02,388 INFO werkzeug Thread-24 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/images/logo.svg HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,389 INFO werkzeug Thread-27 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:24:02,392 INFO werkzeug Thread-28 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:24:02,396 INFO werkzeug Thread-29 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,400 INFO werkzeug Thread-31 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,401 INFO werkzeug Thread-30 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,402 INFO werkzeug Thread-32 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,405 INFO werkzeug Thread-33 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,405 INFO werkzeug Thread-34 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[36mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 304 -
+2020-12-23 11:24:02,407 INFO werkzeug Thread-35 : 192.168.1.133 - - [23/Dec/2020 11:24:02] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:25:26,023 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:25:26,189 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:28:34,390 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-23 11:28:34,390 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:28:34,855 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:28:34,855 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:29:41,652 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-23 11:29:41,653 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:29:42,133 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:29:42,134 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:29:54,942 INFO werkzeug Thread-2 : 192.168.1.133 - - [23/Dec/2020 11:29:54] "[32mGET / HTTP/1.1[0m" 302 -
+2020-12-23 11:29:54,981 INFO werkzeug Thread-3 : 192.168.1.133 - - [23/Dec/2020 11:29:54] "[37mGET /login HTTP/1.1[0m" 200 -
+2020-12-23 11:29:55,281 INFO werkzeug Thread-4 : 192.168.1.133 - - [23/Dec/2020 11:29:55] "[33mGET /static/assets/images/auth/Login_bg.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:29:55,293 INFO werkzeug Thread-5 : 192.168.1.133 - - [23/Dec/2020 11:29:55] "[37mGET /static/assets/fonts/Rubik/Rubik-Medium.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:30:01,489 INFO werkzeug Thread-6 : 192.168.1.133 - - [23/Dec/2020 11:30:01] "[37mGET /settings HTTP/1.1[0m" 200 -
+2020-12-23 11:30:01,706 INFO werkzeug Thread-7 : 192.168.1.133 - - [23/Dec/2020 11:30:01] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:01,707 INFO werkzeug Thread-8 : 192.168.1.133 - - [23/Dec/2020 11:30:01] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:01,709 INFO werkzeug Thread-9 : 192.168.1.133 - - [23/Dec/2020 11:30:01] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:01,711 INFO werkzeug Thread-10 : 192.168.1.133 - - [23/Dec/2020 11:30:01] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:15,013 INFO werkzeug Thread-13 : 192.168.1.133 - - [23/Dec/2020 11:30:15] "[37mPOST /settings HTTP/1.1[0m" 200 -
+2020-12-23 11:30:15,162 INFO werkzeug Thread-14 : 192.168.1.133 - - [23/Dec/2020 11:30:15] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:15,165 INFO werkzeug Thread-15 : 192.168.1.133 - - [23/Dec/2020 11:30:15] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:15,167 INFO werkzeug Thread-16 : 192.168.1.133 - - [23/Dec/2020 11:30:15] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:30:15,168 INFO werkzeug Thread-17 : 192.168.1.133 - - [23/Dec/2020 11:30:15] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:31:28,612 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:31:28,742 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:31:29,211 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:31:29,211 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:31:52,507 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:31:52,632 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:31:53,104 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:31:53,104 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:32:43,484 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-23 11:32:43,485 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:32:43,942 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:32:43,942 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:32:53,655 INFO werkzeug Thread-2 : 192.168.1.133 - - [23/Dec/2020 11:32:53] "[35m[1mPOST /settings HTTP/1.1[0m" 500 -
+2020-12-23 11:32:53,777 INFO werkzeug Thread-3 : 192.168.1.133 - - [23/Dec/2020 11:32:53] "[37mGET /settings?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-23 11:32:53,779 INFO werkzeug Thread-4 : 192.168.1.133 - - [23/Dec/2020 11:32:53] "[37mGET /settings?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-23 11:32:53,780 INFO werkzeug Thread-5 : 192.168.1.133 - - [23/Dec/2020 11:32:53] "[37mGET /settings?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-23 11:32:53,846 INFO werkzeug Thread-6 : 192.168.1.133 - - [23/Dec/2020 11:32:53] "[37mGET /settings?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:32:53,949 INFO werkzeug Thread-7 : 192.168.1.133 - - [23/Dec/2020 11:32:53] "[37mGET /settings?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-23 11:32:58,147 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:32:58,264 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:32:58,861 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:32:58,862 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:33:06,084 INFO werkzeug Thread-2 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[37mPOST /settings HTTP/1.1[0m" 200 -
+2020-12-23 11:33:06,266 INFO werkzeug Thread-3 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,270 INFO werkzeug Thread-4 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,271 INFO werkzeug Thread-5 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,274 INFO werkzeug Thread-6 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,276 INFO werkzeug Thread-8 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,276 INFO werkzeug Thread-7 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,280 INFO werkzeug Thread-11 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,281 INFO werkzeug Thread-9 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,282 INFO werkzeug Thread-10 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,287 INFO werkzeug Thread-14 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:06,288 INFO werkzeug Thread-12 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,290 INFO werkzeug Thread-13 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,291 INFO werkzeug Thread-15 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:06,292 INFO werkzeug Thread-16 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:06,294 INFO werkzeug Thread-17 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:06,296 INFO werkzeug Thread-18 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/images/logo.svg HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,297 INFO werkzeug Thread-20 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 304 -
+2020-12-23 11:33:06,299 INFO werkzeug Thread-19 : 192.168.1.133 - - [23/Dec/2020 11:33:06] "[36mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 304 -
+2020-12-23 11:33:10,624 INFO werkzeug Thread-21 : 192.168.1.133 - - [23/Dec/2020 11:33:10] "[37mPOST /settings HTTP/1.1[0m" 200 -
+2020-12-23 11:33:10,794 INFO werkzeug Thread-22 : 192.168.1.133 - - [23/Dec/2020 11:33:10] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:10,796 INFO werkzeug Thread-23 : 192.168.1.133 - - [23/Dec/2020 11:33:10] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:10,798 INFO werkzeug Thread-25 : 192.168.1.133 - - [23/Dec/2020 11:33:10] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:10,799 INFO werkzeug Thread-24 : 192.168.1.133 - - [23/Dec/2020 11:33:10] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:33:10,906 INFO werkzeug Thread-26 : 192.168.1.133 - - [23/Dec/2020 11:33:10] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
+2020-12-23 11:38:56,899 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:38:57,081 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:38:57,655 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:38:57,655 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:39:37,118 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:39:37,223 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:39:37,682 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:39:37,682 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:40:56,752 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:40:56,880 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:40:57,352 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:40:57,352 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:41:15,596 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:41:15,733 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:41:16,221 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:41:16,221 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:41:25,336 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:41:25,474 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:41:25,941 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:41:25,941 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:41:34,987 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2020-12-23 11:41:34,988 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:41:35,466 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:41:35,466 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:41:39,982 INFO werkzeug Thread-2 : 192.168.1.133 - - [23/Dec/2020 11:41:39] "[35m[1mPOST /settings HTTP/1.1[0m" 500 -
+2020-12-23 11:41:40,109 INFO werkzeug Thread-3 : 192.168.1.133 - - [23/Dec/2020 11:41:40] "[37mGET /settings?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2020-12-23 11:41:40,111 INFO werkzeug Thread-4 : 192.168.1.133 - - [23/Dec/2020 11:41:40] "[37mGET /settings?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2020-12-23 11:41:40,114 INFO werkzeug Thread-5 : 192.168.1.133 - - [23/Dec/2020 11:41:40] "[37mGET /settings?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2020-12-23 11:41:40,166 INFO werkzeug Thread-6 : 192.168.1.133 - - [23/Dec/2020 11:41:40] "[37mGET /settings?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2020-12-23 11:41:40,274 INFO werkzeug Thread-7 : 192.168.1.133 - - [23/Dec/2020 11:41:40] "[37mGET /settings?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2020-12-23 11:41:47,638 INFO werkzeug MainThread :  * Detected change in '/home/nicholas/Documents/Face-Door/src/web/app/base/routes.py', reloading
+2020-12-23 11:41:47,808 INFO werkzeug MainThread :  * Restarting with stat
+2020-12-23 11:41:48,520 WARNING werkzeug MainThread :  * Debugger is active!
+2020-12-23 11:41:48,521 INFO werkzeug MainThread :  * Debugger PIN: 225-836-494
+2020-12-23 11:41:52,438 INFO werkzeug Thread-2 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[37mPOST /settings HTTP/1.1[0m" 200 -
+2020-12-23 11:41:52,633 INFO werkzeug Thread-3 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/vendors/js/vendor.bundle.base.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,635 INFO werkzeug Thread-4 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/vendors/chart.js/Chart.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,637 INFO werkzeug Thread-5 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/vendors/progressbar.js/progressbar.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,641 INFO werkzeug Thread-6 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,644 INFO werkzeug Thread-7 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,646 INFO werkzeug Thread-8 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/vendors/owl-carousel-2/owl.carousel.min.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,647 INFO werkzeug Thread-9 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/js/off-canvas.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,650 INFO werkzeug Thread-10 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/js/hoverable-collapse.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,652 INFO werkzeug Thread-11 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/js/misc.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,654 INFO werkzeug Thread-12 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/js/settings.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,655 INFO werkzeug Thread-14 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:41:52,656 INFO werkzeug Thread-13 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[36mGET /static/assets/js/todolist.js HTTP/1.1[0m" 304 -
+2020-12-23 11:41:52,657 INFO werkzeug Thread-15 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:41:52,658 INFO werkzeug Thread-16 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:41:52,660 INFO werkzeug Thread-17 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2020-12-23 11:41:52,663 INFO werkzeug Thread-18 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[37mGET /static/assets/images/logo.svg HTTP/1.1[0m" 200 -
+2020-12-23 11:41:52,666 INFO werkzeug Thread-20 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[37mGET /static/assets/images/dashboard/Group126@2x.png HTTP/1.1[0m" 200 -
+2020-12-23 11:41:52,666 INFO werkzeug Thread-19 : 192.168.1.133 - - [23/Dec/2020 11:41:52] "[37mGET /static/assets/images/logo-mini.svg HTTP/1.1[0m" 200 -
