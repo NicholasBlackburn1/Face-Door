@@ -61,6 +61,7 @@ logconfig = config_object['LOG']
 zmqconfig = config_object['ZMQ']    
 flaskconfig = config_object['FLASK']
 versionconfig = config_object['VERSION']
+settingsconfig = config_object['AMOUNT']
    
 
 
@@ -399,5 +400,5 @@ def settings():
         
 
     
-    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, version = versionconfig['number'])
+    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, version = versionconfig['number'], total= settingsconfig['settings'])
     

@@ -177,8 +177,12 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
 
                     # sends Image and saves image to disk
-                    save_owner(sock,imagePath,imagename,frame)                 
-                    
+                if(os.path.exists(imagePath+imimagename+".jpg")):
+                    print("File exisits not creating")
+                else:
+                      save_owner(sock,imagePath,imagename,frame)    
+                   
+                  
                     # sends person info
                     send_person_name(sock,name)
                     #send_group_status(sock,"owner")
@@ -224,14 +228,18 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("letting in" + name)
-                    
-            
-                    # sends Image and saves image to disk
-                    save_parent(sock,imagePath,imagename,frame)                 
+
+                    # checks to see if image exsitis
+                    if(os.path.exists(imagePath+"user"+imimagename+".jpg")):
+                        print("File exisits not creating")
+                    else:
+                        # sends Image and saves image to disk
+                        save_user(sock,imagePath,imagename,frame)     
+                                    
                     # sends person info
                     send_person_name(sock,name)
-                   # send_group_status(sock,"Parent")
-                    send_parent_count(face_encodings,sock)
+                   # send_group_status(sock,"user")
+                    send_user_count(face_encodings,sock)
                     
 
                 elif (status == 'unknown' or status =='Unwanted'):
@@ -259,9 +267,14 @@ class VideoProsessing(object):
                     )
                     
                     logging.warning("not letting in" + name)
-                      
-                    # sends Image and saves image to disk
-                    save_unknown(sock,imagePath,imagename,frame)                 
+
+                    
+                    # checks to see if image exsitis
+                    if(os.path.exists(imagepath + "unKnownPerson" + imagename + ".jpg")):
+                        print("File exisits not creating")
+                    else:
+                        # sends Image and saves image to disk
+                        save_unknown(sock,imagePath,imagename,frame)                 
                    
                     # sends person info
                     send_person_name(sock,name)
@@ -306,13 +319,17 @@ class VideoProsessing(object):
                         1,
                     )
                     logging.warning("Letting in group" + name)
-                     
-                    # sends Image and saves image to disk
-                    save_group(sock,imagePath,imagename,frame)                 
+
+                    
+                    if(os.path.exists(imagepath + "Group" + imagename + ".jpg")):
+                        print("File exisits not creating")
+                    else:
+                        # sends Image and saves image to disk
+                        save_group(sock,imagePath,imagename,frame)                 
             
                     # sends person info
                     send_person_name(sock,name)
-                   
+                        
             # Display the resulting image
             cv2.imshow("Video", frame)
             logging.warning("no one is here")
@@ -361,7 +378,7 @@ def send_owner_count(face_encodings, sock):
 
     
     #sends Person count info to subscribers 
-def send_parent_count(face_encodings, sock):
+def send_user_count(face_encodings, sock):
     logging.info("[SOCKET PERSON] sending Seen Persons")
     sock.send_string("USER", flags=zmq.SNDMORE)
     sock.send_json({"user": str(len(face_encodings))})
@@ -403,9 +420,9 @@ def save_owner(sock, imagepath,imagename,frame):
     send_file(sock,imagename)
   
     
-def save_parent(sock, imagePath,imagename,frame):
-    cv2.imwrite(imagePath + "Parent" + imagename + ".jpg", frame)
-    send_file(sock,"Parent"+imagename)
+def save_user(sock, imagePath,imagename,frame):
+    cv2.imwrite(imagePath + "user" + imagename + ".jpg", frame)
+    send_file(sock,"user"+imagename)
     
     
 def save_unknown(sock, imagepath,imagename,frame):
