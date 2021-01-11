@@ -287,7 +287,7 @@ def adduser():
         
         output_name = str(uuid.uuid1())+".jpg"
         
-        tempfile_url = str('http://'+getIpaddr()+':'+port+"/static/assets/tmp/"+output_name)
+        tempfile_url = str('http://'+flaskconfig['ip']+':'+flaskconfig['port']+"/static/assets/tmp/"+output_name)
         
 
         print(username)
@@ -400,5 +400,5 @@ def settings():
         
 
     
-    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, version = versionconfig['number'], total= settingsconfig['settings'])
+    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, version = versionconfig['number'], port_number= flaskconfig['port'], ip_address= flaskconfig['ip'])
     

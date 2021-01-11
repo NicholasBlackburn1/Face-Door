@@ -21,9 +21,9 @@ class Config(object):
   # PostgreSQL database
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(
         config( 'DB_ENGINE'   , default='postgresql'    ),
-        config( 'DB_USERNAME' , default='test'       ),
-        config( 'DB_PASS'     , default='pass'          ),
-        config( 'DB_HOST'     , default='0.0.0.0'     ),
+        config( 'DB_USERNAME' , default='1234'       ),
+        config( 'DB_PASS'     , default='1234'          ),
+        config( 'DB_HOST'     , default='192.168.5.24'     ),
         config( 'DB_PORT'     , default=5432            ),
         config( 'DB_NAME'     , default='secuserve' )
     )
@@ -38,9 +38,9 @@ class ProductionConfig(Config):
     # PostgreSQL database
     SQLALCHEMY_DATABASE_URI = '{}://{}:{}@{}:{}/{}'.format(
         config( 'DB_ENGINE'   , default='postgresql'    ),
-        config( 'DB_USERNAME' , default='test'       ),
-        config( 'DB_PASS'     , default='pass'          ),
-        config( 'DB_HOST'     , default='0.0.0.0'     ),
+        config( 'DB_USERNAME' , default='1234'       ),
+        config( 'DB_PASS'     , default='1234'          ),
+        config( 'DB_HOST'     , default='192.168.5.24'     ),
         config( 'DB_PORT'     , default=5432            ),
         config( 'DB_NAME'     , default='secuserve' )
     )

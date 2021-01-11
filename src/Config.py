@@ -2,7 +2,7 @@
 """
 This file is custom vars for the Program you can add Names vars to the name sectiom
 """
-s the rgb color Conversion for the Philips hue light
+
 def rgb_to_xy(red, green, blue):
     """ conversion of RGB colors to CIE1931 XY colors
     Formulas implemented from: https://gist.github.com/popcorn245/30afa0f98eea1c2fd34d

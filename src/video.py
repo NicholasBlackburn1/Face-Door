@@ -6,7 +6,7 @@ from os import sendfile, wait
 from os.path import join
 
 import cv2
-from zmq.sugar import socket
+
 import face_recognition
 import numpy as np
 import os
@@ -25,35 +25,122 @@ import Database
 import pathlib
 from configparser import ConfigParser
 
-#TODOD: add All Config.py Settings that arnt python fiunctions to Database
+# TODOD: add All Config.py Settings that arnt python fiunctions to Database
+
+
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
-    
-                    
-    def ProcessVideo():
-        
-    print( str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
-    # Read config.ini file
-    config_object = ConfigParser()
-    config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
 
-    logconfig = config_object['LOGGING']
-    zmqconfig = config_object['ZMQ']    
-    opencvconfig = config_object['OPENCV']
-    fileconfig = config_object['FILE']
-       
+
+# handles adding data to lists so i can tuppleize it 
+   
+           
+    def setLists(self,known_face_names,known_user_status,known_user_images):
+        i = 0
+        known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
+        known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
+        known_user_images.append(Database.Database.getImage(Database.Database.getFaces(),i))
+        data  =zip(known_face_names,known_user_status,known_user_images)
+        output = tuple(data)
+        return output
+
+    
+    # sends Person count info to subscribers 
+    def send_person_count(self,face_encodings, sock):
+        logging.info("[SOCKET PERSON] sending Seen Persons")
+        sock.send_string("FACE")
+        sock.send_json({"face": str(len(face_encodings))})
+        logging.info("[SOCKET PERSON] Sent Seen Persons")
+        
+        # sends Person count info to subscribers 
+    def send_owner_count(self,face_encodings, sock):
+        logging.info("[SOCKET PERSON] sending Seen Persons")
+        sock.send_string("ADMIN")
+        sock.send_json({"admin": len(face_encodings)})
+        logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+        
+        # sends Person count info to subscribers 
+    def send_user_count(self,face_encodings, sock):
+        logging.info("[SOCKET PERSON] sending Seen Persons")
+        sock.send_string("USER")
+        sock.send_json({"user": str(len(face_encodings))})
+        logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+        
+        # sends Person count info to subscribers 
+    def send_unkown_count(self,face_encodings, sock):
+        logging.info("[SOCKET PERSON] sending Seen Persons")
+        sock.send_string("UNKNOWN")
+        sock.send_json({"unknown": str(len(face_encodings))})
+        logging.info("[SOCKET PERSON] Sent Seen Persons")
+
+    def send_face_compare(self,face_distance,sock):
+        logging.info("[SOCKET FACEMATCH] sending Seen Persons")
+        sock.send_string("COMPARE")
+        sock.send_json({"compare": face_distance})
+        logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
+
+    """
+    # sends Person Status info to subscribers 
+    def send_group_status(sock,group_status):
+        logging.info("[SOCKET STATUS] sending Person Group status")
+        sock.send_string("GROUP",flags=zmq.SNDMORE)
+        sock.send_json({Config.GROUP: group_status})
+        logging.info("[SOCKET STATUS] Sent Person Group status")
+    """
+        
+    # sends person name to subsecriber 
+    def send_person_name(self,sock,name):
+        logging.info("[SOCKET Name] Sending person seen name")
+        sock.send_string("NAME")
+        sock.send_json({"name": name})
+        logging.info("[SOCKET Name] Sent Person name")
+        
+    # saves owner images and sends Frame 
+    def save_owner(self, imagepath,imagename,frame):
+        cv2.imwrite(imagepath + imagename + ".jpg", frame)
+        
+    
+        
+    def save_user(self, imagePath,imagename,frame):
+        cv2.imwrite(imagePath + "user" + imagename + ".jpg", frame)
+        
+        
+        
+    def save_unknown(self,imagepath,imagename,frame):
+        cv2.imwrite(imagepath + "unKnownPerson" + imagename + ".jpg", frame)
+        
+        
+    def save_group(self,imagepath,imagename,frame):
+        cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
+        
+             
+
+
+    def ProcessVideo():
+
+        print(str(pathlib.Path().absolute())+"/"+"Config.ini")
+        # Read config.ini file
+        config_object = ConfigParser()
+        config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
+
+        logconfig = config_object['LOGGING']
+        zmqconfig = config_object['ZMQ']
+        opencvconfig = config_object['OPENCV']
+        fileconfig = config_object['FILE']
+
         known_face_names = []
         known_user_status = []
         known_user_images = []
 
-        # Database connection handing 
+        # Database connection handing
         logging.info("Connecting to the Database Faces")
         logging.debug(Database.Database.getFaces())
         logging.info("connected to database Faces")
-        
 
         ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
-        
+
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind(ZMQURI)
@@ -62,25 +149,23 @@ class VideoProsessing(object):
         logging.info("Setting up cv")
         imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
         imagePath = "/mnt/user/"
-        
-        
 
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
-        
-        
-        name, status,image =setLists(known_face_names,known_user_status,known_user_images)[0]
-        print(name,status, image)
-        
+
+        name, status, image= setLists(known_face_names, known_user_status, known_user_images)[0]
+        print(name, status, image)
+
         userimage = face_recognition.load_image_file(image)
         # add more faces to be trained to be reconized
 
-        # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train 
+        # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        userEncode = face_recognition.face_encodings(userimage, num_jitters=opencvconfig['numberOfJitters'])[0]
-         
-        # Add names of the ecodings to thw end of list 
+        userEncode = face_recognition.face_encodings(
+            userimage, num_jitters=opencvconfig['numberOfJitters'])[0]
+
+        # Add names of the ecodings to thw end of list
         known_face_encodings = [userEncode]
 
         # Initialize some variables
@@ -92,9 +177,7 @@ class VideoProsessing(object):
         logging.info("Cv setup")
 
         sock.send(b"starting")
-      
-       
-                  
+
         while True:
             # Grab a single frame of video
             ret, frame = video_capture.read()
@@ -117,10 +200,9 @@ class VideoProsessing(object):
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
-                        known_face_encodings, face_encoding, tolerance=opencvconfig[errorTollerance]
+                        known_face_encodings, face_encoding, tolerance=opencvconfig['errorTollerance']
                     )
                     name = opencvconfig['unreconizedPerson']
-                    
 
                     # # If a match was found in known_face_encodings, just use the first one.
                     # if True in matches:
@@ -147,22 +229,25 @@ class VideoProsessing(object):
                 bottom *= 4
                 left *= 4
                 i = 1
-                if (
-                    status == 'Admin'
-                ):
+                if (status == 'Admin'):
                     # Draw a box around the face
-                    cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
+                    cv2.rectangle(frame, (left, top),
+                                  (right, bottom), (0, 255, 0), 2)
 
                     font = cv2.FONT_HERSHEY_DUPLEX
 
-                    cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (left, top),
+                                font, 0.5, (255, 255, 255), 1)
                     cv2.putText(
-                        frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
+                        frame, "Known Person..", (0,
+                                                  430), font, 0.5, (255, 255, 255), 1
                     )
-                    cv2.putText(frame, status, (0, 450), font, 0.5, (255, 255, 255), 1)
-                    cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, status, (0, 450),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
 
-                    ## Distance info
+                    # Distance info
                     cv2.putText(
                         frame,
                         str(matches),
@@ -172,27 +257,23 @@ class VideoProsessing(object):
                         (255, 255, 255),
                         1,
                     )
-                    
-                    
+
                     logging.warning("letting in" + name)
 
                     # sends Image and saves image to disk
-                if(os.path.exists(imagePath+imimagename+".jpg")):
+                if(os.path.exists(imagePath+imagename+".jpg")):
                     print("File exisits not creating")
                 else:
-                      save_owner(sock,imagePath,imagename,frame)    
-                   
-                  
-                    # sends person info
-                    send_person_name(sock,name)
-                    #send_group_status(sock,"owner")
-                    send_owner_count(face_encodings,sock)
-                  
+                        save_owner(sock, imagePath, imagename, frame)
+
+                        # sends person info
+                        send_person_name(sock,name)
+                        # send_group_status(sock,"owner")
+                        send_owner_count(face_encodings,sock)
+                    
                     
                 # Adult Section add names to here for more adults
-                elif (
-                    status == 'User'
-                ):
+                if (status == 'User'):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
 
@@ -207,7 +288,7 @@ class VideoProsessing(object):
                     )
                     cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
 
-                    ## Distance info
+                    # Distance info
                     cv2.putText(
                         frame,
                         "T&B" + str(top) + "," + str(bottom),
@@ -230,23 +311,23 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
 
                     # checks to see if image exsitis
-                    if(os.path.exists(imagePath+"user"+imimagename+".jpg")):
+                    if(os.path.exists(imagePath+"user"+imagename+".jpg")):
                         print("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
                         save_user(sock,imagePath,imagename,frame)     
-                                    
-                    # sends person info
-                    send_person_name(sock,name)
-                   # send_group_status(sock,"user")
-                    send_user_count(face_encodings,sock)
+                                        
+                        # sends person info
+                        send_person_name(sock,name)
+                    # send_group_status(sock,"user")
+                        send_user_count(face_encodings,sock)
                     
 
-                elif (status == 'unknown' or status =='Unwanted'):
+                if (status == 'unknown' or status =='Unwanted'):
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
-                    ## Distance info
+                    # Distance info
                     cv2.putText(
                         frame,
                         "T&B" + str(top) + "," + str(bottom),
@@ -274,15 +355,15 @@ class VideoProsessing(object):
                         print("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
-                        save_unknown(sock,imagePath,imagename,frame)                 
+                        save_unknown(imagePath,imagename,frame)                 
                    
-                    # sends person info
-                    send_person_name(sock,name)
-                   # send_group_status(sock,"Unknown")
-                    send_unkown_count(face_encodings,sock)                    
+                        # sends person info
+                        send_person_name(sock,name)
+                        # send_group_status(sock,"Unknown")
+                        send_unkown_count(face_encodings,sock)                    
 
 
-                elif (
+                if (
                     status == 'Admin' and status == 'User' and status == 'unknown' or status == 'Unwanted'
                 ):
 
@@ -299,7 +380,7 @@ class VideoProsessing(object):
                     cv2.putText(frame, "Group", (0, 450), font, 0.5, (255, 255, 255), 1)
                     cv2.putText(frame, "Known and Unknown People", (0, 470), font, 0.5, (255, 255, 255), 1)
 
-                    ## Distance info
+                    # Distance info
                     cv2.putText(
                         frame,
                         "T&B" + str(top) + "," + str(bottom),
@@ -325,111 +406,17 @@ class VideoProsessing(object):
                         print("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
-                        save_group(sock,imagePath,imagename,frame)                 
+                        save_group(imagePath,imagename,frame)                 
             
-                    # sends person info
-                    send_person_name(sock,name)
+                        # sends person info
+                        send_person_name(sock,name)
                         
-            # Display the resulting image
-            cv2.imshow("Video", frame)
-            logging.warning("no one is here")
+                # Display the resulting image
+                cv2.imshow("Video", frame)
+                logging.warning("no one is here")
              
            
             
-            # Hit 'q' on the keyboard to quit!
+                # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
-
-        # Release handle to the webcam
-        video_capture.release()
-
-
-# handles adding data to lists so i can tuppleize it 
-def setLists(known_face_names,known_user_status,known_user_images):
-    i = 0
-    known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
-    known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
-    known_user_images.append(Database.Database.getImage(Database.Database.getFaces(),i))
-    data  =zip(known_face_names,known_user_status,known_user_images)
-    output = tuple(data)
-    return output
-            
-
-# Sends a file name obver to subscribers  
-def send_file(sock,imagename):
-    logging.info("[SOCKET-IMAGE] sending image")
-    sock.send_string("IMAGE", flags=zmq.SNDMORE)
-    sock.send_json({"image":imagename+".jpg"})
-    logging.info("[SOCKET-IMAGE] image sent\n")
-    
-#sends Person count info to subscribers 
-def send_person_count(face_encodings, sock):
-    logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string("FACE", flags=zmq.SNDMORE)
-    sock.send_json({"face": str(len(face_encodings))})
-    logging.info("[SOCKET PERSON] Sent Seen Persons")
-    
-    #sends Person count info to subscribers 
-def send_owner_count(face_encodings, sock):
-    logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string("ADMIN", flags=zmq.SNDMORE)
-    sock.send_json({"admin": len(face_encodings)})
-    logging.info("[SOCKET PERSON] Sent Seen Persons")
-
-    
-    #sends Person count info to subscribers 
-def send_user_count(face_encodings, sock):
-    logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string("USER", flags=zmq.SNDMORE)
-    sock.send_json({"user": str(len(face_encodings))})
-    logging.info("[SOCKET PERSON] Sent Seen Persons")
-
-    
-    #sends Person count info to subscribers 
-def send_unkown_count(face_encodings, sock):
-    logging.info("[SOCKET PERSON] sending Seen Persons")
-    sock.send_string("UNKNOWN", flags=zmq.SNDMORE)
-    sock.send_json({"uknown": str(len(face_encodings))})
-    logging.info("[SOCKET PERSON] Sent Seen Persons")
-
-def send_face_compare(face_distance,sock):
-    logging.info("[SOCKET FACEMATCH] sending Seen Persons")
-    sock.send_string("COMPARE", flags=zmq.SNDMORE)
-    sock.send_json({"compare": face_distance})
-    logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
-
-"""
-#sends Person Status info to subscribers 
-def send_group_status(sock,group_status):
-    logging.info("[SOCKET STATUS] sending Person Group status")
-    sock.send_string("GROUP",flags=zmq.SNDMORE)
-    sock.send_json({Config.GROUP: group_status})
-    logging.info("[SOCKET STATUS] Sent Person Group status")
-"""
-    
-#sends person name to subsecriber 
-def send_person_name(sock,name):
-    logging.info("[SOCKET Name] Sending person seen name")
-    sock.send_string("NAME", flags=zmq.SNDMORE)
-    sock.send_json("name": name})
-    logging.info("[SOCKET Name] Sent Person name")
-    
-# saves owner images and sends Frame 
-def save_owner(sock, imagepath,imagename,frame):
-    cv2.imwrite(imagepath + imagename + ".jpg", frame)
-    send_file(sock,imagename)
-  
-    
-def save_user(sock, imagePath,imagename,frame):
-    cv2.imwrite(imagePath + "user" + imagename + ".jpg", frame)
-    send_file(sock,"user"+imagename)
-    
-    
-def save_unknown(sock, imagepath,imagename,frame):
-    cv2.imwrite(imagepath + "unKnownPerson" + imagename + ".jpg", frame)
-    send_file(sock,"unKnownPerson"+imagename)
-    
-def save_group(sock, imagepath,imagename,frame):
-    cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
-    send_file(sock,"Group"+imagename)
-
