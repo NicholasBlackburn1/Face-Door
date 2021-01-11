@@ -20,7 +20,7 @@ import threading
 import base64
 import json
 import math
-import Database
+import Database as db
 
 import pathlib
 from configparser import ConfigParser
@@ -35,14 +35,7 @@ class VideoProsessing(object):
 # handles adding data to lists so i can tuppleize it 
    
            
-    def setLists(self,known_face_names,known_user_status,known_user_images):
-        i = 0
-        known_face_names.append(Database.Database.getName(Database.Database.getFaces(),i))
-        known_user_status.append(Database.Database.getStatus(Database.Database.getFaces(),i))
-        known_user_images.append(Database.Database.getImage(Database.Database.getFaces(),i))
-        data  =zip(known_face_names,known_user_status,known_user_images)
-        output = tuple(data)
-        return output
+   
 
     
     # sends Person count info to subscribers 
@@ -114,17 +107,23 @@ class VideoProsessing(object):
         
     def save_group(self,imagepath,imagename,frame):
         cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
-        
-             
+ 
+      
+    def datalist(self,known_face_names, known_user_status,known_user_images,i):
+        known_face_names.append(db.getName(db.getFaces(),i))
+        known_user_status.append(db.getStatus(db.getFaces(),i))
+        known_user_images.append(db.getImageName(db.getFaces(),i))
+        data  =zip(known_face_names,known_user_status,known_user_images)
+        return tuple(data)
 
+    def ProcessVideo(self):
 
-    def ProcessVideo():
-
-        print(str(pathlib.Path().absolute())+"/"+"Config.ini")
+        print(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
         # Read config.ini file
         config_object = ConfigParser()
-        config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
-
+        config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
+        
+        
         logconfig = config_object['LOGGING']
         zmqconfig = config_object['ZMQ']
         opencvconfig = config_object['OPENCV']
@@ -136,7 +135,7 @@ class VideoProsessing(object):
 
         # Database connection handing
         logging.info("Connecting to the Database Faces")
-        logging.debug(Database.Database.getFaces())
+        logging.debug(db.getFaces())
         logging.info("connected to database Faces")
 
         ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
@@ -149,12 +148,13 @@ class VideoProsessing(object):
         logging.info("Setting up cv")
         imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
         imagePath = "/mnt/user/"
-
+        
+  
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
 
-        name, status, image= setLists(known_face_names, known_user_status, known_user_images)[0]
+        name, status, image=self.datalist(known_face_names,known_user_status,known_user_images,0)[0]
         print(name, status, image)
 
         userimage = face_recognition.load_image_file(image)
@@ -420,3 +420,7 @@ class VideoProsessing(object):
                 # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
+
+
+           
+  

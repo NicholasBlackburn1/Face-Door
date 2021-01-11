@@ -3523,3 +3523,311 @@
 2021-01-11 13:35:52,438 INFO werkzeug Thread-36 : 192.168.1.133 - - [11/Jan/2021 13:35:52] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
 2021-01-11 13:35:52,865 ERROR werkzeug Thread-37 : 192.168.1.133 - - [11/Jan/2021 13:35:52] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
 2021-01-11 13:35:52,865 INFO werkzeug Thread-37 : 192.168.1.133 - - [11/Jan/2021 13:35:52] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:38:04,727 INFO werkzeug MainThread :  * Running on http://192.168.1.133:2000/ (Press CTRL+C to quit)
+2021-01-11 13:38:04,728 INFO werkzeug MainThread :  * Restarting with stat
+2021-01-11 13:38:05,415 WARNING werkzeug MainThread :  * Debugger is active!
+2021-01-11 13:38:05,415 INFO werkzeug MainThread :  * Debugger PIN: 281-682-439
+2021-01-11 13:38:13,071 INFO werkzeug Thread-4 : 192.168.1.133 - - [11/Jan/2021 13:38:13] "[37mGET /settings HTTP/1.1[0m" 200 -
+2021-01-11 13:38:13,419 INFO werkzeug Thread-5 : 192.168.1.133 - - [11/Jan/2021 13:38:13] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:38:13,422 INFO werkzeug Thread-6 : 192.168.1.133 - - [11/Jan/2021 13:38:13] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:38:13,424 INFO werkzeug Thread-7 : 192.168.1.133 - - [11/Jan/2021 13:38:13] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:38:13,426 INFO werkzeug Thread-8 : 192.168.1.133 - - [11/Jan/2021 13:38:13] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:38:30,518 INFO werkzeug Thread-9 : 192.168.1.133 - - [11/Jan/2021 13:38:30] "[32mGET / HTTP/1.1[0m" 302 -
+2021-01-11 13:38:30,627 INFO werkzeug Thread-10 : 192.168.1.133 - - [11/Jan/2021 13:38:30] "[37mGET /login HTTP/1.1[0m" 200 -
+2021-01-11 13:38:30,907 INFO werkzeug Thread-11 : 192.168.1.133 - - [11/Jan/2021 13:38:30] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
+2021-01-11 13:38:32,263 INFO werkzeug Thread-12 : 192.168.1.133 - - [11/Jan/2021 13:38:32] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:38:33,840 INFO werkzeug Thread-13 : 192.168.1.133 - - [11/Jan/2021 13:38:33] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:38:34,928 ERROR werkzeug Thread-2 : 192.168.1.133 - - [11/Jan/2021 13:38:34] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:38:34,929 INFO werkzeug Thread-2 : 192.168.1.133 - - [11/Jan/2021 13:38:34] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:38:35,117 INFO werkzeug Thread-14 : 192.168.1.133 - - [11/Jan/2021 13:38:35] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:38:35,358 INFO werkzeug Thread-16 : 192.168.1.133 - - [11/Jan/2021 13:38:35] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
+2021-01-11 13:38:35,428 ERROR werkzeug Thread-3 : 192.168.1.133 - - [11/Jan/2021 13:38:35] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:38:35,429 INFO werkzeug Thread-3 : 192.168.1.133 - - [11/Jan/2021 13:38:35] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:38:36,342 INFO werkzeug Thread-18 : 192.168.1.133 - - [11/Jan/2021 13:38:36] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:39:05,075 ERROR werkzeug Thread-15 : 192.168.1.133 - - [11/Jan/2021 13:39:05] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:39:05,075 INFO werkzeug Thread-15 : 192.168.1.133 - - [11/Jan/2021 13:39:05] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:39:05,552 ERROR werkzeug Thread-17 : 192.168.1.133 - - [11/Jan/2021 13:39:05] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:39:05,552 INFO werkzeug Thread-17 : 192.168.1.133 - - [11/Jan/2021 13:39:05] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:39:35,224 ERROR werkzeug Thread-19 : 192.168.1.133 - - [11/Jan/2021 13:39:35] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:39:35,225 INFO werkzeug Thread-19 : 192.168.1.133 - - [11/Jan/2021 13:39:35] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:39:35,730 ERROR werkzeug Thread-20 : 192.168.1.133 - - [11/Jan/2021 13:39:35] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:39:35,730 INFO werkzeug Thread-20 : 192.168.1.133 - - [11/Jan/2021 13:39:35] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:40:05,442 ERROR werkzeug Thread-21 : 192.168.1.133 - - [11/Jan/2021 13:40:05] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:40:05,442 INFO werkzeug Thread-21 : 192.168.1.133 - - [11/Jan/2021 13:40:05] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:40:05,873 ERROR werkzeug Thread-22 : 192.168.1.133 - - [11/Jan/2021 13:40:05] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:40:05,874 INFO werkzeug Thread-22 : 192.168.1.133 - - [11/Jan/2021 13:40:05] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:40:35,661 ERROR werkzeug Thread-23 : 192.168.1.133 - - [11/Jan/2021 13:40:35] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:40:35,662 INFO werkzeug Thread-23 : 192.168.1.133 - - [11/Jan/2021 13:40:35] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:40:36,038 ERROR werkzeug Thread-24 : 192.168.1.133 - - [11/Jan/2021 13:40:36] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:40:36,038 INFO werkzeug Thread-24 : 192.168.1.133 - - [11/Jan/2021 13:40:36] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:41:05,789 ERROR werkzeug Thread-25 : 192.168.1.133 - - [11/Jan/2021 13:41:05] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:41:05,789 INFO werkzeug Thread-25 : 192.168.1.133 - - [11/Jan/2021 13:41:05] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:41:06,180 ERROR werkzeug Thread-26 : 192.168.1.133 - - [11/Jan/2021 13:41:06] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:41:06,180 INFO werkzeug Thread-26 : 192.168.1.133 - - [11/Jan/2021 13:41:06] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:41:35,944 ERROR werkzeug Thread-27 : 192.168.1.133 - - [11/Jan/2021 13:41:35] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:41:35,944 INFO werkzeug Thread-27 : 192.168.1.133 - - [11/Jan/2021 13:41:35] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:41:36,391 ERROR werkzeug Thread-28 : 192.168.1.133 - - [11/Jan/2021 13:41:36] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:41:36,392 INFO werkzeug Thread-28 : 192.168.1.133 - - [11/Jan/2021 13:41:36] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:42:06,138 ERROR werkzeug Thread-29 : 192.168.1.133 - - [11/Jan/2021 13:42:06] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:42:06,138 INFO werkzeug Thread-29 : 192.168.1.133 - - [11/Jan/2021 13:42:06] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:42:06,611 ERROR werkzeug Thread-30 : 192.168.1.133 - - [11/Jan/2021 13:42:06] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:42:06,612 INFO werkzeug Thread-30 : 192.168.1.133 - - [11/Jan/2021 13:42:06] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:42:06,994 INFO werkzeug Thread-33 : 192.168.1.133 - - [11/Jan/2021 13:42:06] "[35m[1mGET /lsettings HTTP/1.1[0m" 500 -
+2021-01-11 13:42:07,196 INFO werkzeug Thread-34 : 192.168.1.133 - - [11/Jan/2021 13:42:07] "[37mGET /lsettings?__debugger__=yes&cmd=resource&f=style.css HTTP/1.1[0m" 200 -
+2021-01-11 13:42:07,199 INFO werkzeug Thread-35 : 192.168.1.133 - - [11/Jan/2021 13:42:07] "[37mGET /lsettings?__debugger__=yes&cmd=resource&f=jquery.js HTTP/1.1[0m" 200 -
+2021-01-11 13:42:07,199 INFO werkzeug Thread-36 : 192.168.1.133 - - [11/Jan/2021 13:42:07] "[37mGET /lsettings?__debugger__=yes&cmd=resource&f=debugger.js HTTP/1.1[0m" 200 -
+2021-01-11 13:42:07,355 INFO werkzeug Thread-37 : 192.168.1.133 - - [11/Jan/2021 13:42:07] "[37mGET /lsettings?__debugger__=yes&cmd=resource&f=console.png HTTP/1.1[0m" 200 -
+2021-01-11 13:42:07,363 INFO werkzeug Thread-38 : 192.168.1.133 - - [11/Jan/2021 13:42:07] "[37mGET /lsettings?__debugger__=yes&cmd=resource&f=ubuntu.ttf HTTP/1.1[0m" 200 -
+2021-01-11 13:42:13,653 INFO werkzeug Thread-39 : 192.168.1.133 - - [11/Jan/2021 13:42:13] "[37mGET /settings HTTP/1.1[0m" 200 -
+2021-01-11 13:42:14,017 INFO werkzeug Thread-40 : 192.168.1.133 - - [11/Jan/2021 13:42:14] "[33mGET /static/assets/images/faces/face15.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:42:14,020 INFO werkzeug Thread-41 : 192.168.1.133 - - [11/Jan/2021 13:42:14] "[33mGET /static/assets/images/faces/face4.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:42:14,023 INFO werkzeug Thread-42 : 192.168.1.133 - - [11/Jan/2021 13:42:14] "[33mGET /static/assets/images/faces/face2.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:42:14,028 INFO werkzeug Thread-43 : 192.168.1.133 - - [11/Jan/2021 13:42:14] "[33mGET /static/assets/images/faces/face3.jpg HTTP/1.1[0m" 404 -
+2021-01-11 13:42:14,241 INFO werkzeug Thread-44 : 192.168.1.133 - - [11/Jan/2021 13:42:14] "[37mGET /static/assets/images/favicon.png HTTP/1.1[0m" 200 -
+2021-01-11 13:42:18,015 INFO werkzeug Thread-45 : 192.168.1.133 - - [11/Jan/2021 13:42:18] "[32mGET / HTTP/1.1[0m" 302 -
+2021-01-11 13:42:18,369 INFO werkzeug Thread-46 : 192.168.1.133 - - [11/Jan/2021 13:42:18] "[37mGET /login HTTP/1.1[0m" 200 -
+2021-01-11 13:42:20,953 INFO werkzeug Thread-47 : 192.168.1.133 - - [11/Jan/2021 13:42:20] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:42:21,804 INFO werkzeug Thread-48 : 192.168.1.133 - - [11/Jan/2021 13:42:21] "[37mGET /register HTTP/1.1[0m" 200 -
+2021-01-11 13:42:35,170 INFO werkzeug Thread-49 : 192.168.1.133 - - [11/Jan/2021 13:42:35] "[37mPOST /register HTTP/1.1[0m" 200 -
+2021-01-11 13:42:36,308 ERROR werkzeug Thread-31 : 192.168.1.133 - - [11/Jan/2021 13:42:36] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:42:36,309 INFO werkzeug Thread-31 : 192.168.1.133 - - [11/Jan/2021 13:42:36] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:42:36,784 ERROR werkzeug Thread-32 : 192.168.1.133 - - [11/Jan/2021 13:42:36] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:42:36,784 INFO werkzeug Thread-32 : 192.168.1.133 - - [11/Jan/2021 13:42:36] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:42:37,554 INFO werkzeug Thread-52 : 192.168.1.133 - - [11/Jan/2021 13:42:37] "[37mGET /login HTTP/1.1[0m" 200 -
+2021-01-11 13:42:40,682 INFO werkzeug Thread-53 : 192.168.1.133 - - [11/Jan/2021 13:42:40] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:42:45,698 INFO werkzeug Thread-54 : 192.168.1.133 - - [11/Jan/2021 13:42:45] "[37mPOST /login HTTP/1.1[0m" 200 -
+2021-01-11 13:42:56,252 INFO werkzeug Thread-55 : 192.168.1.133 - - [11/Jan/2021 13:42:56] "[37mGET /register HTTP/1.1[0m" 200 -
+2021-01-11 13:43:02,197 INFO werkzeug Thread-56 : 192.168.1.133 - - [11/Jan/2021 13:43:02] "[37mPOST /register HTTP/1.1[0m" 200 -
+2021-01-11 13:43:06,511 ERROR werkzeug Thread-50 : 192.168.1.133 - - [11/Jan/2021 13:43:06] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:43:06,511 INFO werkzeug Thread-50 : 192.168.1.133 - - [11/Jan/2021 13:43:06] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:43:06,915 ERROR werkzeug Thread-51 : 192.168.1.133 - - [11/Jan/2021 13:43:06] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:43:06,915 INFO werkzeug Thread-51 : 192.168.1.133 - - [11/Jan/2021 13:43:06] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:43:07,091 INFO werkzeug Thread-57 : 192.168.1.133 - - [11/Jan/2021 13:43:07] "[37mPOST /register HTTP/1.1[0m" 200 -
+2021-01-11 13:43:09,120 INFO werkzeug Thread-60 : 192.168.1.133 - - [11/Jan/2021 13:43:09] "[37mGET /login HTTP/1.1[0m" 200 -
+2021-01-11 13:43:15,425 INFO werkzeug Thread-61 : 192.168.1.133 - - [11/Jan/2021 13:43:15] "[32mPOST /login HTTP/1.1[0m" 302 -
+2021-01-11 13:43:15,479 INFO werkzeug Thread-62 : 192.168.1.133 - - [11/Jan/2021 13:43:15] "[32mGET / HTTP/1.1[0m" 302 -
+2021-01-11 13:43:15,557 INFO werkzeug Thread-63 : 192.168.1.133 - - [11/Jan/2021 13:43:15] "[32mGET /login HTTP/1.1[0m" 302 -
+2021-01-11 13:43:36,637 ERROR werkzeug Thread-58 : 192.168.1.133 - - [11/Jan/2021 13:43:36] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:43:36,637 INFO werkzeug Thread-58 : 192.168.1.133 - - [11/Jan/2021 13:43:36] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:43:37,070 ERROR werkzeug Thread-59 : 192.168.1.133 - - [11/Jan/2021 13:43:37] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:43:37,071 INFO werkzeug Thread-59 : 192.168.1.133 - - [11/Jan/2021 13:43:37] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:44:06,782 ERROR werkzeug Thread-65 : 192.168.1.133 - - [11/Jan/2021 13:44:06] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:44:06,782 INFO werkzeug Thread-65 : 192.168.1.133 - - [11/Jan/2021 13:44:06] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:44:07,221 ERROR werkzeug Thread-66 : 192.168.1.133 - - [11/Jan/2021 13:44:07] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:44:07,221 INFO werkzeug Thread-66 : 192.168.1.133 - - [11/Jan/2021 13:44:07] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:44:36,994 ERROR werkzeug Thread-67 : 192.168.1.133 - - [11/Jan/2021 13:44:36] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:44:36,994 INFO werkzeug Thread-67 : 192.168.1.133 - - [11/Jan/2021 13:44:36] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:44:37,385 ERROR werkzeug Thread-68 : 192.168.1.133 - - [11/Jan/2021 13:44:37] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:44:37,385 INFO werkzeug Thread-68 : 192.168.1.133 - - [11/Jan/2021 13:44:37] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:45:07,135 ERROR werkzeug Thread-69 : 192.168.1.133 - - [11/Jan/2021 13:45:07] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:45:07,136 INFO werkzeug Thread-69 : 192.168.1.133 - - [11/Jan/2021 13:45:07] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:45:07,571 ERROR werkzeug Thread-70 : 192.168.1.133 - - [11/Jan/2021 13:45:07] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:45:07,571 INFO werkzeug Thread-70 : 192.168.1.133 - - [11/Jan/2021 13:45:07] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:45:37,281 ERROR werkzeug Thread-71 : 192.168.1.133 - - [11/Jan/2021 13:45:37] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:45:37,281 INFO werkzeug Thread-71 : 192.168.1.133 - - [11/Jan/2021 13:45:37] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:45:37,742 ERROR werkzeug Thread-72 : 192.168.1.133 - - [11/Jan/2021 13:45:37] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:45:37,743 INFO werkzeug Thread-72 : 192.168.1.133 - - [11/Jan/2021 13:45:37] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:46:07,441 ERROR werkzeug Thread-73 : 192.168.1.133 - - [11/Jan/2021 13:46:07] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:46:07,441 INFO werkzeug Thread-73 : 192.168.1.133 - - [11/Jan/2021 13:46:07] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:46:07,954 ERROR werkzeug Thread-74 : 192.168.1.133 - - [11/Jan/2021 13:46:07] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:46:07,954 INFO werkzeug Thread-74 : 192.168.1.133 - - [11/Jan/2021 13:46:07] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:46:37,591 ERROR werkzeug Thread-75 : 192.168.1.133 - - [11/Jan/2021 13:46:37] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:46:37,591 INFO werkzeug Thread-75 : 192.168.1.133 - - [11/Jan/2021 13:46:37] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:46:38,111 ERROR werkzeug Thread-76 : 192.168.1.133 - - [11/Jan/2021 13:46:38] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:46:38,111 INFO werkzeug Thread-76 : 192.168.1.133 - - [11/Jan/2021 13:46:38] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:47:07,731 ERROR werkzeug Thread-77 : 192.168.1.133 - - [11/Jan/2021 13:47:07] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:47:07,731 INFO werkzeug Thread-77 : 192.168.1.133 - - [11/Jan/2021 13:47:07] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:47:08,261 ERROR werkzeug Thread-78 : 192.168.1.133 - - [11/Jan/2021 13:47:08] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:47:08,262 INFO werkzeug Thread-78 : 192.168.1.133 - - [11/Jan/2021 13:47:08] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:47:37,954 ERROR werkzeug Thread-79 : 192.168.1.133 - - [11/Jan/2021 13:47:37] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:47:37,954 INFO werkzeug Thread-79 : 192.168.1.133 - - [11/Jan/2021 13:47:37] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:47:38,477 ERROR werkzeug Thread-80 : 192.168.1.133 - - [11/Jan/2021 13:47:38] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:47:38,478 INFO werkzeug Thread-80 : 192.168.1.133 - - [11/Jan/2021 13:47:38] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:48:08,094 ERROR werkzeug Thread-81 : 192.168.1.133 - - [11/Jan/2021 13:48:08] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:48:08,095 INFO werkzeug Thread-81 : 192.168.1.133 - - [11/Jan/2021 13:48:08] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:48:08,685 ERROR werkzeug Thread-82 : 192.168.1.133 - - [11/Jan/2021 13:48:08] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:48:08,686 INFO werkzeug Thread-82 : 192.168.1.133 - - [11/Jan/2021 13:48:08] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:48:38,302 ERROR werkzeug Thread-83 : 192.168.1.133 - - [11/Jan/2021 13:48:38] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:48:38,303 INFO werkzeug Thread-83 : 192.168.1.133 - - [11/Jan/2021 13:48:38] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:48:38,837 ERROR werkzeug Thread-84 : 192.168.1.133 - - [11/Jan/2021 13:48:38] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:48:38,838 INFO werkzeug Thread-84 : 192.168.1.133 - - [11/Jan/2021 13:48:38] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:49:08,502 ERROR werkzeug Thread-85 : 192.168.1.133 - - [11/Jan/2021 13:49:08] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:49:08,503 INFO werkzeug Thread-85 : 192.168.1.133 - - [11/Jan/2021 13:49:08] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:49:09,027 ERROR werkzeug Thread-86 : 192.168.1.133 - - [11/Jan/2021 13:49:09] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:49:09,027 INFO werkzeug Thread-86 : 192.168.1.133 - - [11/Jan/2021 13:49:09] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:49:38,664 ERROR werkzeug Thread-87 : 192.168.1.133 - - [11/Jan/2021 13:49:38] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:49:38,664 INFO werkzeug Thread-87 : 192.168.1.133 - - [11/Jan/2021 13:49:38] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:49:39,232 ERROR werkzeug Thread-88 : 192.168.1.133 - - [11/Jan/2021 13:49:39] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:49:39,232 INFO werkzeug Thread-88 : 192.168.1.133 - - [11/Jan/2021 13:49:39] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:50:08,874 ERROR werkzeug Thread-89 : 192.168.1.133 - - [11/Jan/2021 13:50:08] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:50:08,874 INFO werkzeug Thread-89 : 192.168.1.133 - - [11/Jan/2021 13:50:08] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:50:09,447 ERROR werkzeug Thread-90 : 192.168.1.133 - - [11/Jan/2021 13:50:09] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:50:09,447 INFO werkzeug Thread-90 : 192.168.1.133 - - [11/Jan/2021 13:50:09] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:50:39,017 ERROR werkzeug Thread-91 : 192.168.1.133 - - [11/Jan/2021 13:50:39] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:50:39,017 INFO werkzeug Thread-91 : 192.168.1.133 - - [11/Jan/2021 13:50:39] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:50:39,609 ERROR werkzeug Thread-92 : 192.168.1.133 - - [11/Jan/2021 13:50:39] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:50:39,609 INFO werkzeug Thread-92 : 192.168.1.133 - - [11/Jan/2021 13:50:39] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:51:09,161 ERROR werkzeug Thread-93 : 192.168.1.133 - - [11/Jan/2021 13:51:09] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:51:09,161 INFO werkzeug Thread-93 : 192.168.1.133 - - [11/Jan/2021 13:51:09] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:51:09,771 ERROR werkzeug Thread-94 : 192.168.1.133 - - [11/Jan/2021 13:51:09] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:51:09,771 INFO werkzeug Thread-94 : 192.168.1.133 - - [11/Jan/2021 13:51:09] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:51:39,381 ERROR werkzeug Thread-95 : 192.168.1.133 - - [11/Jan/2021 13:51:39] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:51:39,381 INFO werkzeug Thread-95 : 192.168.1.133 - - [11/Jan/2021 13:51:39] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:51:39,917 ERROR werkzeug Thread-96 : 192.168.1.133 - - [11/Jan/2021 13:51:39] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:51:39,917 INFO werkzeug Thread-96 : 192.168.1.133 - - [11/Jan/2021 13:51:39] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:52:09,514 ERROR werkzeug Thread-97 : 192.168.1.133 - - [11/Jan/2021 13:52:09] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:52:09,515 INFO werkzeug Thread-97 : 192.168.1.133 - - [11/Jan/2021 13:52:09] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:52:10,124 ERROR werkzeug Thread-98 : 192.168.1.133 - - [11/Jan/2021 13:52:10] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:52:10,124 INFO werkzeug Thread-98 : 192.168.1.133 - - [11/Jan/2021 13:52:10] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:52:39,704 ERROR werkzeug Thread-99 : 192.168.1.133 - - [11/Jan/2021 13:52:39] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:52:39,705 INFO werkzeug Thread-99 : 192.168.1.133 - - [11/Jan/2021 13:52:39] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:52:40,301 ERROR werkzeug Thread-100 : 192.168.1.133 - - [11/Jan/2021 13:52:40] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:52:40,301 INFO werkzeug Thread-100 : 192.168.1.133 - - [11/Jan/2021 13:52:40] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:53:09,879 ERROR werkzeug Thread-101 : 192.168.1.133 - - [11/Jan/2021 13:53:09] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:53:09,880 INFO werkzeug Thread-101 : 192.168.1.133 - - [11/Jan/2021 13:53:09] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:53:10,486 ERROR werkzeug Thread-102 : 192.168.1.133 - - [11/Jan/2021 13:53:10] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:53:10,487 INFO werkzeug Thread-102 : 192.168.1.133 - - [11/Jan/2021 13:53:10] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:53:40,063 ERROR werkzeug Thread-103 : 192.168.1.133 - - [11/Jan/2021 13:53:40] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:53:40,063 INFO werkzeug Thread-103 : 192.168.1.133 - - [11/Jan/2021 13:53:40] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:53:40,657 ERROR werkzeug Thread-104 : 192.168.1.133 - - [11/Jan/2021 13:53:40] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:53:40,658 INFO werkzeug Thread-104 : 192.168.1.133 - - [11/Jan/2021 13:53:40] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:54:10,224 ERROR werkzeug Thread-105 : 192.168.1.133 - - [11/Jan/2021 13:54:10] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:54:10,225 INFO werkzeug Thread-105 : 192.168.1.133 - - [11/Jan/2021 13:54:10] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:54:10,858 ERROR werkzeug Thread-106 : 192.168.1.133 - - [11/Jan/2021 13:54:10] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:54:10,858 INFO werkzeug Thread-106 : 192.168.1.133 - - [11/Jan/2021 13:54:10] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:54:40,438 ERROR werkzeug Thread-107 : 192.168.1.133 - - [11/Jan/2021 13:54:40] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:54:40,438 INFO werkzeug Thread-107 : 192.168.1.133 - - [11/Jan/2021 13:54:40] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:54:41,011 ERROR werkzeug Thread-108 : 192.168.1.133 - - [11/Jan/2021 13:54:41] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:54:41,011 INFO werkzeug Thread-108 : 192.168.1.133 - - [11/Jan/2021 13:54:41] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:55:10,633 ERROR werkzeug Thread-109 : 192.168.1.133 - - [11/Jan/2021 13:55:10] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:55:10,634 INFO werkzeug Thread-109 : 192.168.1.133 - - [11/Jan/2021 13:55:10] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:55:11,187 ERROR werkzeug Thread-110 : 192.168.1.133 - - [11/Jan/2021 13:55:11] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:55:11,188 INFO werkzeug Thread-110 : 192.168.1.133 - - [11/Jan/2021 13:55:11] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:55:40,824 ERROR werkzeug Thread-111 : 192.168.1.133 - - [11/Jan/2021 13:55:40] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:55:40,824 INFO werkzeug Thread-111 : 192.168.1.133 - - [11/Jan/2021 13:55:40] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:55:41,401 ERROR werkzeug Thread-112 : 192.168.1.133 - - [11/Jan/2021 13:55:41] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:55:41,401 INFO werkzeug Thread-112 : 192.168.1.133 - - [11/Jan/2021 13:55:41] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:56:11,027 ERROR werkzeug Thread-113 : 192.168.1.133 - - [11/Jan/2021 13:56:11] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:56:11,027 INFO werkzeug Thread-113 : 192.168.1.133 - - [11/Jan/2021 13:56:11] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:56:11,587 ERROR werkzeug Thread-114 : 192.168.1.133 - - [11/Jan/2021 13:56:11] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:56:11,588 INFO werkzeug Thread-114 : 192.168.1.133 - - [11/Jan/2021 13:56:11] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:56:41,187 ERROR werkzeug Thread-115 : 192.168.1.133 - - [11/Jan/2021 13:56:41] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:56:41,188 INFO werkzeug Thread-115 : 192.168.1.133 - - [11/Jan/2021 13:56:41] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:56:41,754 ERROR werkzeug Thread-116 : 192.168.1.133 - - [11/Jan/2021 13:56:41] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:56:41,754 INFO werkzeug Thread-116 : 192.168.1.133 - - [11/Jan/2021 13:56:41] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:57:11,381 ERROR werkzeug Thread-117 : 192.168.1.133 - - [11/Jan/2021 13:57:11] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:57:11,382 INFO werkzeug Thread-117 : 192.168.1.133 - - [11/Jan/2021 13:57:11] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:57:11,897 ERROR werkzeug Thread-118 : 192.168.1.133 - - [11/Jan/2021 13:57:11] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:57:11,898 INFO werkzeug Thread-118 : 192.168.1.133 - - [11/Jan/2021 13:57:11] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:57:41,544 ERROR werkzeug Thread-119 : 192.168.1.133 - - [11/Jan/2021 13:57:41] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:57:41,544 INFO werkzeug Thread-119 : 192.168.1.133 - - [11/Jan/2021 13:57:41] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:57:42,104 ERROR werkzeug Thread-120 : 192.168.1.133 - - [11/Jan/2021 13:57:42] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:57:42,104 INFO werkzeug Thread-120 : 192.168.1.133 - - [11/Jan/2021 13:57:42] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:58:11,718 ERROR werkzeug Thread-121 : 192.168.1.133 - - [11/Jan/2021 13:58:11] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:58:11,718 INFO werkzeug Thread-121 : 192.168.1.133 - - [11/Jan/2021 13:58:11] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:58:12,277 ERROR werkzeug Thread-122 : 192.168.1.133 - - [11/Jan/2021 13:58:12] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:58:12,278 INFO werkzeug Thread-122 : 192.168.1.133 - - [11/Jan/2021 13:58:12] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:58:41,932 ERROR werkzeug Thread-123 : 192.168.1.133 - - [11/Jan/2021 13:58:41] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:58:41,933 INFO werkzeug Thread-123 : 192.168.1.133 - - [11/Jan/2021 13:58:41] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:58:42,423 ERROR werkzeug Thread-124 : 192.168.1.133 - - [11/Jan/2021 13:58:42] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:58:42,423 INFO werkzeug Thread-124 : 192.168.1.133 - - [11/Jan/2021 13:58:42] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:59:12,140 ERROR werkzeug Thread-125 : 192.168.1.133 - - [11/Jan/2021 13:59:12] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:59:12,140 INFO werkzeug Thread-125 : 192.168.1.133 - - [11/Jan/2021 13:59:12] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:59:12,581 ERROR werkzeug Thread-126 : 192.168.1.133 - - [11/Jan/2021 13:59:12] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:59:12,581 INFO werkzeug Thread-126 : 192.168.1.133 - - [11/Jan/2021 13:59:12] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:59:42,359 ERROR werkzeug Thread-127 : 192.168.1.133 - - [11/Jan/2021 13:59:42] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:59:42,359 INFO werkzeug Thread-127 : 192.168.1.133 - - [11/Jan/2021 13:59:42] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 13:59:42,741 ERROR werkzeug Thread-128 : 192.168.1.133 - - [11/Jan/2021 13:59:42] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 13:59:42,741 INFO werkzeug Thread-128 : 192.168.1.133 - - [11/Jan/2021 13:59:42] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:00:12,541 ERROR werkzeug Thread-129 : 192.168.1.133 - - [11/Jan/2021 14:00:12] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:00:12,541 INFO werkzeug Thread-129 : 192.168.1.133 - - [11/Jan/2021 14:00:12] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:00:12,964 ERROR werkzeug Thread-130 : 192.168.1.133 - - [11/Jan/2021 14:00:12] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:00:12,965 INFO werkzeug Thread-130 : 192.168.1.133 - - [11/Jan/2021 14:00:12] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:00:42,656 ERROR werkzeug Thread-131 : 192.168.1.133 - - [11/Jan/2021 14:00:42] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:00:42,656 INFO werkzeug Thread-131 : 192.168.1.133 - - [11/Jan/2021 14:00:42] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:00:43,141 ERROR werkzeug Thread-132 : 192.168.1.133 - - [11/Jan/2021 14:00:43] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:00:43,141 INFO werkzeug Thread-132 : 192.168.1.133 - - [11/Jan/2021 14:00:43] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:01:12,819 ERROR werkzeug Thread-133 : 192.168.1.133 - - [11/Jan/2021 14:01:12] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:01:12,819 INFO werkzeug Thread-133 : 192.168.1.133 - - [11/Jan/2021 14:01:12] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:01:13,335 ERROR werkzeug Thread-134 : 192.168.1.133 - - [11/Jan/2021 14:01:13] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:01:13,335 INFO werkzeug Thread-134 : 192.168.1.133 - - [11/Jan/2021 14:01:13] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:01:43,011 ERROR werkzeug Thread-135 : 192.168.1.133 - - [11/Jan/2021 14:01:43] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:01:43,011 INFO werkzeug Thread-135 : 192.168.1.133 - - [11/Jan/2021 14:01:43] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:01:43,560 ERROR werkzeug Thread-136 : 192.168.1.133 - - [11/Jan/2021 14:01:43] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:01:43,561 INFO werkzeug Thread-136 : 192.168.1.133 - - [11/Jan/2021 14:01:43] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:02:13,177 ERROR werkzeug Thread-137 : 192.168.1.133 - - [11/Jan/2021 14:02:13] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:02:13,178 INFO werkzeug Thread-137 : 192.168.1.133 - - [11/Jan/2021 14:02:13] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:02:13,701 ERROR werkzeug Thread-138 : 192.168.1.133 - - [11/Jan/2021 14:02:13] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:02:13,701 INFO werkzeug Thread-138 : 192.168.1.133 - - [11/Jan/2021 14:02:13] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:02:43,335 ERROR werkzeug Thread-139 : 192.168.1.133 - - [11/Jan/2021 14:02:43] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:02:43,335 INFO werkzeug Thread-139 : 192.168.1.133 - - [11/Jan/2021 14:02:43] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:02:43,904 ERROR werkzeug Thread-140 : 192.168.1.133 - - [11/Jan/2021 14:02:43] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:02:43,905 INFO werkzeug Thread-140 : 192.168.1.133 - - [11/Jan/2021 14:02:43] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:03:13,507 ERROR werkzeug Thread-141 : 192.168.1.133 - - [11/Jan/2021 14:03:13] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:03:13,508 INFO werkzeug Thread-141 : 192.168.1.133 - - [11/Jan/2021 14:03:13] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:03:14,077 ERROR werkzeug Thread-142 : 192.168.1.133 - - [11/Jan/2021 14:03:14] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:03:14,078 INFO werkzeug Thread-142 : 192.168.1.133 - - [11/Jan/2021 14:03:14] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:03:43,733 ERROR werkzeug Thread-143 : 192.168.1.133 - - [11/Jan/2021 14:03:43] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:03:43,734 INFO werkzeug Thread-143 : 192.168.1.133 - - [11/Jan/2021 14:03:43] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:03:44,297 ERROR werkzeug Thread-144 : 192.168.1.133 - - [11/Jan/2021 14:03:44] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:03:44,298 INFO werkzeug Thread-144 : 192.168.1.133 - - [11/Jan/2021 14:03:44] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:04:13,899 ERROR werkzeug Thread-145 : 192.168.1.133 - - [11/Jan/2021 14:04:13] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:04:13,899 INFO werkzeug Thread-145 : 192.168.1.133 - - [11/Jan/2021 14:04:13] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:04:14,447 ERROR werkzeug Thread-146 : 192.168.1.133 - - [11/Jan/2021 14:04:14] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:04:14,448 INFO werkzeug Thread-146 : 192.168.1.133 - - [11/Jan/2021 14:04:14] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:04:44,045 ERROR werkzeug Thread-147 : 192.168.1.133 - - [11/Jan/2021 14:04:44] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:04:44,045 INFO werkzeug Thread-147 : 192.168.1.133 - - [11/Jan/2021 14:04:44] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:04:44,651 ERROR werkzeug Thread-148 : 192.168.1.133 - - [11/Jan/2021 14:04:44] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:04:44,651 INFO werkzeug Thread-148 : 192.168.1.133 - - [11/Jan/2021 14:04:44] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:05:14,273 ERROR werkzeug Thread-149 : 192.168.1.133 - - [11/Jan/2021 14:05:14] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:05:14,273 INFO werkzeug Thread-149 : 192.168.1.133 - - [11/Jan/2021 14:05:14] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:05:14,793 ERROR werkzeug Thread-150 : 192.168.1.133 - - [11/Jan/2021 14:05:14] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:05:14,794 INFO werkzeug Thread-150 : 192.168.1.133 - - [11/Jan/2021 14:05:14] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:05:44,411 ERROR werkzeug Thread-151 : 192.168.1.133 - - [11/Jan/2021 14:05:44] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:05:44,411 INFO werkzeug Thread-151 : 192.168.1.133 - - [11/Jan/2021 14:05:44] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:05:44,981 ERROR werkzeug Thread-152 : 192.168.1.133 - - [11/Jan/2021 14:05:44] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:05:44,981 INFO werkzeug Thread-152 : 192.168.1.133 - - [11/Jan/2021 14:05:44] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:06:14,591 ERROR werkzeug Thread-153 : 192.168.1.133 - - [11/Jan/2021 14:06:14] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:06:14,591 INFO werkzeug Thread-153 : 192.168.1.133 - - [11/Jan/2021 14:06:14] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:06:15,128 ERROR werkzeug Thread-154 : 192.168.1.133 - - [11/Jan/2021 14:06:15] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:06:15,128 INFO werkzeug Thread-154 : 192.168.1.133 - - [11/Jan/2021 14:06:15] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:06:44,721 ERROR werkzeug Thread-155 : 192.168.1.133 - - [11/Jan/2021 14:06:44] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:06:44,721 INFO werkzeug Thread-155 : 192.168.1.133 - - [11/Jan/2021 14:06:44] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:06:45,343 ERROR werkzeug Thread-156 : 192.168.1.133 - - [11/Jan/2021 14:06:45] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:06:45,344 INFO werkzeug Thread-156 : 192.168.1.133 - - [11/Jan/2021 14:06:45] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:07:14,886 ERROR werkzeug Thread-157 : 192.168.1.133 - - [11/Jan/2021 14:07:14] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:07:14,886 INFO werkzeug Thread-157 : 192.168.1.133 - - [11/Jan/2021 14:07:14] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:07:15,548 ERROR werkzeug Thread-158 : 192.168.1.133 - - [11/Jan/2021 14:07:15] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:07:15,549 INFO werkzeug Thread-158 : 192.168.1.133 - - [11/Jan/2021 14:07:15] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:07:45,011 ERROR werkzeug Thread-159 : 192.168.1.133 - - [11/Jan/2021 14:07:45] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:07:45,011 INFO werkzeug Thread-159 : 192.168.1.133 - - [11/Jan/2021 14:07:45] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:07:45,744 ERROR werkzeug Thread-160 : 192.168.1.133 - - [11/Jan/2021 14:07:45] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:07:45,745 INFO werkzeug Thread-160 : 192.168.1.133 - - [11/Jan/2021 14:07:45] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:08:15,233 ERROR werkzeug Thread-161 : 192.168.1.133 - - [11/Jan/2021 14:08:15] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:08:15,234 INFO werkzeug Thread-161 : 192.168.1.133 - - [11/Jan/2021 14:08:15] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:08:15,857 ERROR werkzeug Thread-162 : 192.168.1.133 - - [11/Jan/2021 14:08:15] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:08:15,858 INFO werkzeug Thread-162 : 192.168.1.133 - - [11/Jan/2021 14:08:15] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:08:45,451 ERROR werkzeug Thread-163 : 192.168.1.133 - - [11/Jan/2021 14:08:45] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:08:45,451 INFO werkzeug Thread-163 : 192.168.1.133 - - [11/Jan/2021 14:08:45] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:08:46,014 ERROR werkzeug Thread-164 : 192.168.1.133 - - [11/Jan/2021 14:08:46] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:08:46,014 INFO werkzeug Thread-164 : 192.168.1.133 - - [11/Jan/2021 14:08:46] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:09:15,657 ERROR werkzeug Thread-165 : 192.168.1.133 - - [11/Jan/2021 14:09:15] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:09:15,658 INFO werkzeug Thread-165 : 192.168.1.133 - - [11/Jan/2021 14:09:15] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:09:16,151 ERROR werkzeug Thread-166 : 192.168.1.133 - - [11/Jan/2021 14:09:16] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:09:16,151 INFO werkzeug Thread-166 : 192.168.1.133 - - [11/Jan/2021 14:09:16] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:09:45,834 ERROR werkzeug Thread-167 : 192.168.1.133 - - [11/Jan/2021 14:09:45] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:09:45,834 INFO werkzeug Thread-167 : 192.168.1.133 - - [11/Jan/2021 14:09:45] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:09:46,312 ERROR werkzeug Thread-168 : 192.168.1.133 - - [11/Jan/2021 14:09:46] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:09:46,312 INFO werkzeug Thread-168 : 192.168.1.133 - - [11/Jan/2021 14:09:46] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:10:15,990 ERROR werkzeug Thread-169 : 192.168.1.133 - - [11/Jan/2021 14:10:15] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:10:15,991 INFO werkzeug Thread-169 : 192.168.1.133 - - [11/Jan/2021 14:10:15] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:10:16,491 ERROR werkzeug Thread-170 : 192.168.1.133 - - [11/Jan/2021 14:10:16] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:10:16,491 INFO werkzeug Thread-170 : 192.168.1.133 - - [11/Jan/2021 14:10:16] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:10:46,177 ERROR werkzeug Thread-171 : 192.168.1.133 - - [11/Jan/2021 14:10:46] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:10:46,178 INFO werkzeug Thread-171 : 192.168.1.133 - - [11/Jan/2021 14:10:46] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:10:46,704 ERROR werkzeug Thread-172 : 192.168.1.133 - - [11/Jan/2021 14:10:46] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:10:46,704 INFO werkzeug Thread-172 : 192.168.1.133 - - [11/Jan/2021 14:10:46] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:11:16,374 ERROR werkzeug Thread-173 : 192.168.1.133 - - [11/Jan/2021 14:11:16] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:11:16,375 INFO werkzeug Thread-173 : 192.168.1.133 - - [11/Jan/2021 14:11:16] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
+2021-01-11 14:11:16,904 ERROR werkzeug Thread-174 : 192.168.1.133 - - [11/Jan/2021 14:11:16] code 400, message Bad request syntax ('ÿ\x00\x00\x00\x00\x00\x00\x00\x01\x7f')
+2021-01-11 14:11:16,905 INFO werkzeug Thread-174 : 192.168.1.133 - - [11/Jan/2021 14:11:16] "[35m[1mÿ       [0m" HTTPStatus.BAD_REQUEST -
