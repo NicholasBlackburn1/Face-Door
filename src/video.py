@@ -251,7 +251,7 @@ class VideoProsessing(object):
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
                     name = opencvconfig['unreconizedPerson']
-
+                    
                     # # If a match was found in known_face_encodings, just use the first one.
                     # if True in matches:
                     #     first_match_index = matches.index(True)
@@ -271,6 +271,7 @@ class VideoProsessing(object):
 
             # Display the results
             for (top, right, bottom, left), name in zip(face_locations, face_names):
+                
                 # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                 top *= 4
                 right *= 4
@@ -359,14 +360,49 @@ class VideoProsessing(object):
                          self.send_user_count(face_encodings,sock)
                     
 
-                if (status == 'unknown' or status =='Unwanted'):
+                if (status =='Unwanted'):
+                   
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
                     # Distance info
+                    cv2.putText(frame, status, (0, 450),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
+
+
+                    
+                    logging.warning("not letting in" + name)
+
+                    
+                    # checks to see if image exsitis
+                    if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
+                        logging.info("File exisits not creating")
+                    else:
+                        # sends Image and saves image to disk
+                         self.save_unknown(imagePath,imagename,frame)                 
+                   
+                        # sends person info
+                         self.send_person_name(sock,name)
+                        # send_group_status(sock,"Unknown")
+                         self.send_unkown_count(face_encodings,sock)                    
+                elif (
+                    len(face_locations) >= 2
+                ):
+
+                    cv2.rectangle(
+                        frame, (left, top), (right, bottom), (255, 103, 100), 2
+                    )
+
+                    font = cv2.FONT_HERSHEY_DUPLEX
+
+                    cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
+                   
+                                       # Distance info
                     cv2.putText(
                         frame,
-                        "T&B" + str(top) + "," + str(bottom),
+                        "There's a group..",
                         (474, 430),
                         font,
                         0.5,
@@ -375,13 +411,36 @@ class VideoProsessing(object):
                     )
                     cv2.putText(
                         frame,
-                        "L&R" + str(left) + "," + str(right),
+                        "be carfull now!",
                         (474, 450),
                         font,
                         0.5,
                         (255, 255, 255),
                         1,
                     )
+                    logging.warning("Letting in group")
+
+                    
+                    if(os.path.exists(imagePath + "Group" + imagename + ".jpg") ):
+                        logging.info("File exisits not creating")
+                    else:
+                        # sends Image and saves image to disk
+                         self.save_group(imagePath,imagename,frame)                 
+            
+                        # sends person info
+                         self.send_person_name(sock,name)
+                    
+                elif (name == opencvconfig['unreconizedPerson']):
+                    font = cv2.FONT_HERSHEY_DUPLEX
+                    cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+                    cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
+                    # Distance info
+                    cv2.putText(frame, opencvconfig['unreconizedPerson'], (0, 450),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
+
+                
                     
                     logging.warning("not letting in" + name)
 
@@ -399,53 +458,9 @@ class VideoProsessing(object):
                          self.send_unkown_count(face_encodings,sock)                    
 
 
-                if (
-                    status == 'Admin' and status == 'User' and status == 'unknown' or status == 'Unwanted'
-                ):
-
-                    cv2.rectangle(
-                        frame, (left, top), (right, bottom), (255, 103, 100), 2
-                    )
-
-                    font = cv2.FONT_HERSHEY_DUPLEX
-
-                    cv2.putText(frame, name, (left, top), font, 0.5, (255, 255, 255), 1)
-                    cv2.putText(
-                        frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
-                    )
-                    cv2.putText(frame, "Group", (0, 450), font, 0.5, (255, 255, 255), 1)
-                    cv2.putText(frame, "Known and Unknown People", (0, 470), font, 0.5, (255, 255, 255), 1)
-
-                    # Distance info
-                    cv2.putText(
-                        frame,
-                        "T&B" + str(top) + "," + str(bottom),
-                        (474, 430),
-                        font,
-                        0.5,
-                        (255, 255, 255),
-                        1,
-                    )
-                    cv2.putText(
-                        frame,
-                        "L&R" + str(left) + "," + str(right),
-                        (474, 450),
-                        font,
-                        0.5,
-                        (255, 255, 255),
-                        1,
-                    )
-                    logging.warning("Letting in group" + name)
 
                     
-                    if(os.path.exists(imagePath + "Group" + imagename + ".jpg")):
-                        logging.info("File exisits not creating")
-                    else:
-                        # sends Image and saves image to disk
-                         self.save_group(imagePath,imagename,frame)                 
-            
-                        # sends person info
-                         self.send_person_name(sock,name)
+                    logging.warning("not letting in" + name)
                         
                 # Display the resulting image
                 cv2.imshow("Video", frame)
