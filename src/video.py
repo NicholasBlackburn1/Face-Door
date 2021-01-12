@@ -2,8 +2,11 @@
 This is the main (Bulk) possessing done in my opencv Program
 """
 from logging import log
+from numbers import Number
 from os import sendfile, wait
 from os.path import join
+import shutil
+from tokenize import Double
 
 import cv2
 
@@ -21,16 +24,18 @@ import base64
 import json
 import math
 import Database as db
+import wget
 
 import pathlib
 from configparser import ConfigParser
+from PIL import Image 
 
 # TODOD: add All Config.py Settings that arnt python fiunctions to Database
 
 
 class VideoProsessing(object):
     logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
-
+    
 
 # handles adding data to lists so i can tuppleize it 
    
@@ -109,15 +114,31 @@ class VideoProsessing(object):
         cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
  
       
-    def datalist(self,known_face_names, known_user_status,known_user_images,i):
-        known_face_names.append(db.getName(db.getFaces(),i))
-        known_user_status.append(db.getStatus(db.getFaces(),i))
-        known_user_images.append(db.getImageName(db.getFaces(),i))
-        data  =zip(known_face_names,known_user_status,known_user_images)
-        return tuple(data)
+    def datalist(self,known_face_names, known_user_status,known_user_images,known_user_imagesurl):
+        for i in range(db.getAmountOfEntrys(logging)):
+            known_face_names.append(db.getName(db.getFaces(),i))
+            known_user_status.append(db.getStatus(db.getFaces(),i))
+            known_user_images.append(db.getImageName(db.getFaces(),i))
+            known_user_imagesurl.append(db.getImageUrI(db.getFaces(),i))
+            i=i+1
+            data  =zip(known_face_names,known_user_status,known_user_images,known_user_imagesurl)
+            return tuple(data)
+    
+    # saves downloaded Image Converted to black and white 
+    def downloadFacesAndProssesThem(self,logging,imagename,imageurl,filepath ):
+        wget.download(imageurl, str(filepath))
+        logging.info('Downloading '+str(imagename)+', this may take a while...')
+    
+
+
+
+        '''
+        This Function is the Bulk of the Openv Image Prossesing Code
+        '''
 
     def ProcessVideo(self):
 
+# gets Config file
         print(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
         # Read config.ini file
         config_object = ConfigParser()
@@ -132,38 +153,45 @@ class VideoProsessing(object):
         known_face_names = []
         known_user_status = []
         known_user_images = []
-
+        known_user_imagesurl = []
+# connects to database
         # Database connection handing
         logging.info("Connecting to the Database Faces")
         logging.debug(db.getFaces())
         logging.info("connected to database Faces")
-
+        
+# inits Zmq Server
         ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
 
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind(ZMQURI)
 
+# sends setup message and sets base image name to the current date mills and image storage path
         sock.send(b"setup")
         logging.info("Setting up cv")
         imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
         imagePath = "/mnt/user/"
+        imagePathusers = "/mnt/user/people/"
+
+
+
+        name, status, image, imageurl=self.datalist(known_face_names,known_user_status,known_user_images,known_user_imagesurl)[0]
+        print(name, status, image, imageurl)
+
+        self.downloadFacesAndProssesThem(logging,image,imageurl,fileconfig['faceStorage'])
+        print(imagePathusers+image)
+
         
-  
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
-
-        name, status, image=self.datalist(known_face_names,known_user_status,known_user_images,0)[0]
-        print(name, status, image)
-
-        userimage = face_recognition.load_image_file(image)
-        # add more faces to be trained to be reconized
+        
+        userloaded = face_recognition.load_image_file(str(imagePathusers+image))
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        userEncode = face_recognition.face_encodings(
-            userimage, num_jitters=opencvconfig['numberOfJitters'])[0]
+        userEncode = face_recognition.face_encodings(userloaded)[0]
 
         # Add names of the ecodings to thw end of list
         known_face_encodings = [userEncode]
@@ -183,24 +211,26 @@ class VideoProsessing(object):
             ret, frame = video_capture.read()
 
             # Resize frame of video to 1/4 size for faster face recognition processing
+            # Resize frame of video to 1/4 size for faster face recognition processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
-            # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-            rgbframe = small_frame[:, :, ::-1]
+    # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+            rgb_small_frame = small_frame[:, :, ::-1]
+
 
             # Only process every other frame of video to save time
             if process_this_frame:
                 # Find all the faces and face encodings in the current frame of video
-                face_locations = face_recognition.face_locations(rgbframe)
+                face_locations = face_recognition.face_locations(rgb_small_frame)
                 face_encodings = face_recognition.face_encodings(
-                    rgbframe, face_locations
+                    rgb_small_frame, face_locations
                 )
 
                 face_names = []
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
-                        known_face_encodings, face_encoding, tolerance=opencvconfig['errorTollerance']
+                        known_face_encodings, face_encoding, tolerance=0.6932
                     )
                     name = opencvconfig['unreconizedPerson']
 
@@ -247,29 +277,17 @@ class VideoProsessing(object):
                     cv2.putText(frame, name, (0, 470), font,
                                 0.5, (255, 255, 255), 1)
 
-                    # Distance info
-                    cv2.putText(
-                        frame,
-                        str(matches),
-                        (400, 469),
-                        font,
-                        0.5,
-                        (255, 255, 255),
-                        1,
-                    )
-
-                    logging.warning("letting in" + name)
 
                     # sends Image and saves image to disk
                 if(os.path.exists(imagePath+imagename+".jpg")):
-                    print("File exisits not creating")
+                    logging.info("File exisits not creating")
                 else:
-                        save_owner(sock, imagePath, imagename, frame)
+                        self.save_owner(imagePath, imagename,frame)
 
                         # sends person info
-                        send_person_name(sock,name)
+                        self.send_person_name(sock,name)
                         # send_group_status(sock,"owner")
-                        send_owner_count(face_encodings,sock)
+                        self.send_owner_count(face_encodings,sock)
                     
                     
                 # Adult Section add names to here for more adults
@@ -315,12 +333,12 @@ class VideoProsessing(object):
                         print("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
-                        save_user(sock,imagePath,imagename,frame)     
+                         self.save_user(sock,imagePath,imagename)     
                                         
                         # sends person info
-                        send_person_name(sock,name)
+                         self.send_person_name(sock,name)
                     # send_group_status(sock,"user")
-                        send_user_count(face_encodings,sock)
+                         self.send_user_count(face_encodings,sock)
                     
 
                 if (status == 'unknown' or status =='Unwanted'):
@@ -351,16 +369,16 @@ class VideoProsessing(object):
 
                     
                     # checks to see if image exsitis
-                    if(os.path.exists(imagepath + "unKnownPerson" + imagename + ".jpg")):
+                    if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
                         print("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
-                        save_unknown(imagePath,imagename,frame)                 
+                         self.save_unknown(imagePath,imagename,frame)                 
                    
                         # sends person info
-                        send_person_name(sock,name)
+                         self.send_person_name(sock,name)
                         # send_group_status(sock,"Unknown")
-                        send_unkown_count(face_encodings,sock)                    
+                         self.send_unkown_count(face_encodings,sock)                    
 
 
                 if (
@@ -402,18 +420,18 @@ class VideoProsessing(object):
                     logging.warning("Letting in group" + name)
 
                     
-                    if(os.path.exists(imagepath + "Group" + imagename + ".jpg")):
+                    if(os.path.exists(imagePath + "Group" + imagename + ".jpg")):
                         print("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
-                        save_group(imagePath,imagename,frame)                 
+                         self.save_group(imagePath,imagename,frame)                 
             
                         # sends person info
-                        send_person_name(sock,name)
+                         self.send_person_name(sock,name)
                         
                 # Display the resulting image
                 cv2.imshow("Video", frame)
-                logging.warning("no one is here")
+             
              
            
             

@@ -18,7 +18,7 @@ def getFlaskConfig():
     print("Flask config"+str(pathlib.Path().absolute())+"/"+"Config.ini")
     # Read config.ini file
     config_object = ConfigParser()
-    config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+    config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
     
 
     # Get the password
