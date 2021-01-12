@@ -55,7 +55,7 @@ from configparser import ConfigParser
 print( str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
 # Read config.ini file
 config_object = ConfigParser()
-config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
+config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
 
 logconfig = config_object['LOG']
 zmqconfig = config_object['ZMQ']    

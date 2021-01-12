@@ -127,7 +127,7 @@ class VideoProsessing(object):
     # saves downloaded Image Converted to black and white 
     def downloadFacesAndProssesThem(self,logging,imagename,imageurl,filepath ):
         if(os.path.exists(filepath+imagename+".jpg")):
-            logging.info("File exisits not creating")
+            return
         else:
             wget.download(imageurl, str(filepath))
             logging.info('Downloading '+str(imagename)+', this may take a while...')
@@ -299,7 +299,7 @@ class VideoProsessing(object):
 
                     # sends Image and saves image to disk
                 if(os.path.exists(imagePath+imagename+".jpg")):
-                    logging.info("File exisits not creating")
+                    return
                 else:
                         self.save_owner(imagePath, imagename,frame)
 
@@ -349,7 +349,7 @@ class VideoProsessing(object):
 
                     # checks to see if image exsitis
                     if(os.path.exists(imagePath+"user"+imagename+".jpg")):
-                        logging.info("File exisits not creating")
+                        return
                     else:
                         # sends Image and saves image to disk
                          self.save_user(imagePath,imagename,frame)     
@@ -378,7 +378,7 @@ class VideoProsessing(object):
                     
                     # checks to see if image exsitis
                     if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
-                        logging.info("File exisits not creating")
+                        return
                     else:
                         # sends Image and saves image to disk
                          self.save_unknown(imagePath,imagename,frame)                 
@@ -422,7 +422,7 @@ class VideoProsessing(object):
 
                     
                     if(os.path.exists(imagePath + "Group" + imagename + ".jpg") ):
-                        logging.info("File exisits not creating")
+                        return
                     else:
                         # sends Image and saves image to disk
                          self.save_group(imagePath,imagename,frame)                 
@@ -447,7 +447,7 @@ class VideoProsessing(object):
                     
                     # checks to see if image exsitis
                     if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
-                        logging.info("File exisits not creating")
+                        return
                     else:
                         # sends Image and saves image to disk
                          self.save_unknown(imagePath,imagename,frame)                 
