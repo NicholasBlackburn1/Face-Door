@@ -52,10 +52,10 @@ from flask_wtf.file import FileField
 from configparser import ConfigParser
 # returns the zmq settings from the config.ini
 
-print( str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+print( str(pathlib.Path().absolute())+"/"+"Config.ini")
 # Read config.ini file
 config_object = ConfigParser()
-config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
 
 logconfig = config_object['LOG']
 zmqconfig = config_object['ZMQ']    

@@ -19,12 +19,13 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 <li> Uses realtime Facial recognition to Recognize Authorized users and the non authorized Users</li>
 <li> Uses GPIO control to control 2 big Electromagnet </li>
 <li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
-<li> added an flask onepager for displaying system data to user easly and securily </li>
+<li> added an flask onepager for displaying system data to user easily and securily </li>
 <li> secure login for data security and privacy </li>
 <li> Easy Web enterface to see data and to add more users  to the facial reconitions </li>
+<li> respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
 
 ## Todo's
-<li> get the opencv to respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
+
 <li> get data to dynamically populate the webpage without the user refreshing the page</li>
 <li> watchdog for handleing door control for raspi </li>
 <li> Writing config data from webpage and saving it & displaying it on webpage </li>
@@ -33,5 +34,19 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 ## IMPORTANT INFO ABOUT FACES
 <li> please use a non skin color background for the face image that your going to train</li>
 
+
+
+## Opencv User Color Code  for Detected Faces
+
+1. <span style="color:#00FF00">Admin Green</span> this color is only used for indicating Detected Admin Users.
+
+2. <span style="color:#00FFFF">User Blue</span> this color is only used for indicating detected non Admin users
+
+3. <span style="color:#FFB000">Unwated Orange</span> this color is only used for Displaying detected Banned Users.
+
+4.  <span style="color:#FF00FF">Group Purple </span> this color is only used for Displaying a detected group of people. 
+
+
+5.  <span style="color:#FF0000">Death Red </span> this color is only used for Displaying when a unreconized person shows up
 ## P.S 
 ### Please fork me

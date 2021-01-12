@@ -126,9 +126,7 @@ class VideoProsessing(object):
     
     # saves downloaded Image Converted to black and white 
     def downloadFacesAndProssesThem(self,logging,imagename,imageurl,filepath ):
-        if(os.path.exists(filepath+imagename+".jpg")):
-            return
-        else:
+        if(not os.path.exists(filepath+imagename+".jpg")):
             wget.download(imageurl, str(filepath))
             logging.info('Downloading '+str(imagename)+', this may take a while...')
         '''
@@ -143,7 +141,7 @@ class VideoProsessing(object):
 
         img.save(filename_output)
 
-        return filename_output
+        pass filename_output
         '''
     
 
@@ -298,9 +296,8 @@ class VideoProsessing(object):
 
 
                     # sends Image and saves image to disk
-                if(os.path.exists(imagePath+imagename+".jpg")):
-                    return
-                else:
+                if(not os.path.exists(imagePath+imagename+".jpg")):
+              
                         self.save_owner(imagePath, imagename,frame)
 
                         # sends person info
@@ -312,7 +309,7 @@ class VideoProsessing(object):
                 # Adult Section add names to here for more adults
                 if (status == 'User'):
                     # Draw a box around the face
-                    cv2.rectangle(frame, (left, top), (right, bottom), (255, 0, 0), 2)
+                    cv2.rectangle(frame, (left, top), (right, bottom), (255, 255, 0), 2)
 
                     font = cv2.FONT_HERSHEY_DUPLEX
 
@@ -348,9 +345,8 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
 
                     # checks to see if image exsitis
-                    if(os.path.exists(imagePath+"user"+imagename+".jpg")):
-                        return
-                    else:
+                    if(not os.path.exists(imagePath+"user"+imagename+".jpg")):
+                 
                         # sends Image and saves image to disk
                          self.save_user(imagePath,imagename,frame)     
                                         
@@ -377,9 +373,8 @@ class VideoProsessing(object):
 
                     
                     # checks to see if image exsitis
-                    if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
-                        return
-                    else:
+                    if(not os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
+               
                         # sends Image and saves image to disk
                          self.save_unknown(imagePath,imagename,frame)                 
                    
@@ -392,7 +387,7 @@ class VideoProsessing(object):
                 ):
 
                     cv2.rectangle(
-                        frame, (left, top), (right, bottom), (255, 103, 100), 2
+                        frame, (left, top), (right, bottom), (255, 0, 255), 2
                     )
 
                     font = cv2.FONT_HERSHEY_DUPLEX
@@ -418,12 +413,12 @@ class VideoProsessing(object):
                         (255, 255, 255),
                         1,
                     )
+                    
                     logging.warning("Letting in group")
 
                     
-                    if(os.path.exists(imagePath + "Group" + imagename + ".jpg") ):
-                        return
-                    else:
+                    if(not os.path.exists(imagePath + "Group" + imagename + ".jpg") ):
+                     
                         # sends Image and saves image to disk
                          self.save_group(imagePath,imagename,frame)                 
             
@@ -446,9 +441,7 @@ class VideoProsessing(object):
 
                     
                     # checks to see if image exsitis
-                    if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
-                        return
-                    else:
+                    if(not os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
                         # sends Image and saves image to disk
                          self.save_unknown(imagePath,imagename,frame)                 
                    
