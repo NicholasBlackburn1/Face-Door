@@ -10,7 +10,7 @@ from tokenize import Double
 
 import cv2
 
-import face_recognition
+import facerec
 import numpy as np
 import os
 from datetime import datetime
@@ -126,8 +126,25 @@ class VideoProsessing(object):
     
     # saves downloaded Image Converted to black and white 
     def downloadFacesAndProssesThem(self,logging,imagename,imageurl,filepath ):
-        wget.download(imageurl, str(filepath))
-        logging.info('Downloading '+str(imagename)+', this may take a while...')
+        if(os.path.exists(filepath+imagename+".jpg")):
+            logging.info("File exisits not creating")
+        else:
+            wget.download(imageurl, str(filepath))
+            logging.info('Downloading '+str(imagename)+', this may take a while...')
+        '''
+          #convets Image file output to png
+        filename = pathlib.Path(str(filepath)+str(imagename))
+        filename_output = filename.with_suffix('.png')
+
+        m1 = Image.open(filepath+imagename)
+        m1.save(filename_output)
+
+        img = Image.open(filename_output).convert('LA')
+
+        img.save(filename_output)
+
+        return filename_output
+        '''
     
 
 
@@ -180,18 +197,19 @@ class VideoProsessing(object):
         print(name, status, image, imageurl)
 
         self.downloadFacesAndProssesThem(logging,image,imageurl,fileconfig['faceStorage'])
-        print(imagePathusers+image)
+        print("output file" +str(image))
+        
 
         
         # TODO: Change this into the ipcamera Stream.
         video_capture = cv2.VideoCapture(0)
         video_capture.set(cv2.CAP_PROP_FPS, 30)
         
-        userloaded = face_recognition.load_image_file(str(imagePathusers+image))
+        userloaded = facerec.load_image_file(imagePathusers+image)
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        userEncode = face_recognition.face_encodings(userloaded)[0]
+        userEncode = facerec.face_encodings(userloaded)[0]
 
         # Add names of the ecodings to thw end of list
         known_face_encodings = [userEncode]
@@ -221,15 +239,15 @@ class VideoProsessing(object):
             # Only process every other frame of video to save time
             if process_this_frame:
                 # Find all the faces and face encodings in the current frame of video
-                face_locations = face_recognition.face_locations(rgb_small_frame)
-                face_encodings = face_recognition.face_encodings(
+                face_locations = facerec.face_locations(rgb_small_frame)
+                face_encodings = facerec.face_encodings(
                     rgb_small_frame, face_locations
                 )
 
                 face_names = []
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
-                    matches = face_recognition.compare_faces(
+                    matches = facerec.compare_faces(
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
                     name = opencvconfig['unreconizedPerson']
@@ -240,7 +258,7 @@ class VideoProsessing(object):
                     #     name = known_face_names[first_match_index]
 
                     # Or instead, use the known face with the smallest distance to the new face
-                    face_distance = face_recognition.face_distance(
+                    face_distance = facerec.face_distance(
                         known_face_encodings, face_encoding
                     )
                     best_match_index = np.argmin(face_distance)
@@ -330,10 +348,10 @@ class VideoProsessing(object):
 
                     # checks to see if image exsitis
                     if(os.path.exists(imagePath+"user"+imagename+".jpg")):
-                        print("File exisits not creating")
+                        logging.info("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
-                         self.save_user(sock,imagePath,imagename)     
+                         self.save_user(imagePath,imagename,frame)     
                                         
                         # sends person info
                          self.send_person_name(sock,name)
@@ -370,7 +388,7 @@ class VideoProsessing(object):
                     
                     # checks to see if image exsitis
                     if(os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
-                        print("File exisits not creating")
+                        logging.info("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
                          self.save_unknown(imagePath,imagename,frame)                 
@@ -421,7 +439,7 @@ class VideoProsessing(object):
 
                     
                     if(os.path.exists(imagePath + "Group" + imagename + ".jpg")):
-                        print("File exisits not creating")
+                        logging.info("File exisits not creating")
                     else:
                         # sends Image and saves image to disk
                          self.save_group(imagePath,imagename,frame)                 
