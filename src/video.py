@@ -188,30 +188,27 @@ class VideoProsessing(object):
         imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
         imagePath = "/mnt/user/"
         imagePathusers = "/mnt/user/people/"
+        index = 0
 
 
-
-        name, status, image, imageurl=self.datalist(known_face_names,known_user_status,known_user_images,known_user_imagesurl)[0]
-        print(name, status, image, imageurl)
-
-        self.downloadFacesAndProssesThem(logging,image,imageurl,fileconfig['faceStorage'])
-        print("output file" +str(image))
-        
+        for index in range(db.getAmountOfEntrys(logging)):
+            name, status, image, imageurl=self.datalist(known_face_names,known_user_status,known_user_images,known_user_imagesurl)[index]
+            print(name, status, image, imageurl)
 
         
-        # TODO: Change this into the ipcamera Stream.
-        video_capture = cv2.VideoCapture(0)
-        video_capture.set(cv2.CAP_PROP_FPS, 30)
+            self.downloadFacesAndProssesThem(logging,image,imageurl,fileconfig['faceStorage'])
+            print("output file" +str(image))
         
-        userloaded = facerec.load_image_file(imagePathusers+image)
+        
+            userloaded = facerec.load_image_file(imagePathusers+image)
 
-        # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
-       # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        userEncode = facerec.face_encodings(userloaded)[0]
+            # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
+        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
+            userEncode = facerec.face_encodings(userloaded)[0]
+            index = index+1
 
-        # Add names of the ecodings to thw end of list
+            # Add names of the ecodings to thw end of list
         known_face_encodings = [userEncode]
-
         # Initialize some variables
         face_locations = []
         face_encodings = []
@@ -220,7 +217,13 @@ class VideoProsessing(object):
         process_this_frame = True
         logging.info("Cv setup")
 
+        
+
         sock.send(b"starting")
+        
+        # TODO: Change this into the ipcamera Stream.
+        video_capture = cv2.VideoCapture(0)
+        video_capture.set(cv2.CAP_PROP_FPS, 30)
 
         while True:
             # Grab a single frame of video
@@ -318,7 +321,7 @@ class VideoProsessing(object):
                         frame, "Known Person..", (0, 430), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(
-                        frame, status, (0, 450), font, 0.5, (255, 255, 255), 1
+                        frame, "Parent", (0, 450), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(frame, name, (0, 470), font, 0.5, (255, 255, 255), 1)
 
