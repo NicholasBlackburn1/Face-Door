@@ -283,20 +283,22 @@ def adduser():
         file = request.files["files"]
         imagename= request.files['files'].filename
         
-        tempfile_path= str(pathlib.Path().absolute())+'/src/web/app/base/static/assets/tmp/'
+        tempfile_path= str(pathlib.Path().absolute())+'/app/base/static/assets/tmp/'
         
         output_name = str(uuid.uuid1())+".jpg"
         
         tempfile_url = str('http://'+flaskconfig['ip']+':'+flaskconfig['port']+"/static/assets/tmp/"+output_name)
         
-
-        print(username)
-        print(group)
-        print(imagename)
-        print(tempfile_url)
+        if(tempfile_path+output_name is None):
+             file.save(tempfile_path+output_name)
+        else:
+            file.save(tempfile_path+output_name)
+            print(username)
+            print(group)
+            print(imagename)
+            print(tempfile_url)
         
-        # saves uploaded image to a temp file dir for sending to opencv client 
-        file.save(tempfile_path+output_name)
+        
 
         # Check usename exists
         user = Face.query.filter_by(user=username).first()
