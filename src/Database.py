@@ -33,7 +33,7 @@ def getFaces():
 '''
 Return the amout of Entrys in the  dataBase 
 '''
-def getAmountOfEntrys(logging):
+def getAmountOfEntrys():
     # Read config.ini file
     config_object = ConfigParser()
     config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
@@ -49,7 +49,7 @@ def getAmountOfEntrys(logging):
     metadata = db.MetaData()
     faces = db.Table(database['table'], metadata,
                      autoload=True, autoload_with=engine)
-    logging.info("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
+    print("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
     return session.query(faces).count()
 
 

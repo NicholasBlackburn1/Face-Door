@@ -28,6 +28,9 @@ def configure_database(app):
     @app.before_first_request    
     def initialize_database():
         db.create_all()
+    
+        print("Created DataTables and tuiff")
+        
 
     @app.teardown_request
     def shutdown_session(exception=None):
@@ -35,7 +38,6 @@ def configure_database(app):
 
 def create_app(config):
     app = Flask(__name__, static_folder='base/static')
-    
     app.config.from_object(config)
     register_extensions(app)
     register_blueprints(app)

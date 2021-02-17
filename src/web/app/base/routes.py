@@ -289,16 +289,14 @@ def adduser():
         
         tempfile_url = str('http://'+flaskconfig['ip']+':'+flaskconfig['port']+"/static/assets/tmp/"+output_name)
         
-        if(tempfile_path+output_name is None):
-             file.save(tempfile_path+output_name)
-        else:
-            file.save(tempfile_path+output_name)
-            print(username)
-            print(group)
-            print(imagename)
-            print(tempfile_url)
+
+        print(username)
+        print(group)
+        print(imagename)
+        print(tempfile_url)
         
-        
+        # saves uploaded image to a temp file dir for sending to opencv client 
+        file.save(tempfile_path+output_name)
 
         # Check usename exists
         user = Face.query.filter_by(user=username).first()
@@ -327,7 +325,6 @@ def adduser():
 
         
     return render_template("addFace.html",form = face_from)
-
 
 # Renders and handles the settings of the backend server
 @blueprint.route("/settings",methods=["GET", "POST"])

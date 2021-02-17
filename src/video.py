@@ -115,7 +115,7 @@ class VideoProsessing(object):
  
       
     def datalist(self,known_face_names, known_user_status,known_user_images,known_user_imagesurl):
-        for i in range(db.getAmountOfEntrys(logging)):
+        for i in range(db.getAmountOfEntrys()):
             known_face_names.append(db.getName(db.getFaces(),i))
             known_user_status.append(db.getStatus(db.getFaces(),i))
             known_user_images.append(db.getImageName(db.getFaces(),i))
