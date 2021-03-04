@@ -377,7 +377,7 @@ def settings():
         
         ipaddress = request.form['ipaddress']
         port = request.form['portnumber']
-        print("zmq")
+        print("ZMQ")
         print(ipaddress)
         print(port)
         
