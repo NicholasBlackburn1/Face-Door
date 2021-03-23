@@ -112,13 +112,6 @@ logging.basicConfig(
     level=logging.DEBUG,
     format=f"%(asctime)s %(levelname)s %(name)s %(threadName)s : %(message)s",
 )
-
-zmq_ip = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
-context = zmq.Context()
-
-client = context.socket(zmq.SUB)
-client.setsockopt_string(zmq.SUBSCRIBE, "")
-client.connect(zmq_ip)
 authpeople = None
 
 STATIC_FOLDER = "/mnt/user"
@@ -246,6 +239,14 @@ def internal_error(error):
 
 @blueprint.route("/index", methods=["GET", "POST"])
 def index():
+
+    zmq_ip = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
+    context = zmq.Context()
+
+    client = context.socket(zmq.SUB)
+    client.setsockopt_string(zmq.SUBSCRIBE, "")
+    client.connect(zmq_ip)
+
     starter = client.recv_string()
     message = client.recv_json()
     

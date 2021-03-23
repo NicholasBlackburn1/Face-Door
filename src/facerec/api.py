@@ -89,7 +89,7 @@ def load_image_file(file, mode='RGB'):
     return np.array(im)
 
 
-def _raw_face_locations(img, number_of_times_to_upsample=1, model="hog"):
+def _raw_face_locations(img, number_of_times_to_upsample=1, model="cnn"):
     """
     Returns an array of bounding boxes of human faces in a image
 
@@ -105,7 +105,7 @@ def _raw_face_locations(img, number_of_times_to_upsample=1, model="hog"):
         return face_detector(img, number_of_times_to_upsample)
 
 
-def face_locations(img, number_of_times_to_upsample=1, model="hog"):
+def face_locations(img, number_of_times_to_upsample=1, model="cnn"):
     """
     Returns an array of bounding boxes of human faces in a image
 

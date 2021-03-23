@@ -16,8 +16,7 @@ def getFaces():
     # Get the password
     database = config_object["DATABASE"]
 
-    engine = db.create_engine(
-        f'postgresql://'+database['user']+":"+database['pass']+'@'+database['ip']+":"+database['port']+'/'+database['databaseName'])
+    engine = db.create_engine('postgresql://'+ str(database['user'])+":"+str(database['pass'])+"@"+str(database['ip'])+":"+str(database['port'])+"/"+str(database['databasename']))
     connection = engine.connect()
     metadata = db.MetaData()
     faces = db.Table(database['table'], metadata,
@@ -41,8 +40,7 @@ def getAmountOfEntrys():
     # Get the password
     database = config_object["DATABASE"]
 
-    engine = db.create_engine(
-        f'postgresql://'+database['user']+":"+database['pass']+'@'+database['ip']+":"+database['port']+'/'+database['databaseName'])
+    engine = db.create_engine('postgresql://'+ str(database['user'])+":"+str(database['pass'])+"@"+str(database['ip'])+":"+str(database['port'])+"/"+str(database['databasename']))
     Session = sessionmaker(bind=engine)
     session = Session()
 

@@ -13,7 +13,7 @@ import logging
 #import doorcontrol
 import philipsControl
 import ClientMessageHandler
-logging.basicConfig(filename='/mnt/user/Client.log',  level=logging.DEBUG)
+logging.basicConfig(filename='/mnt/user/logs/Client.log',  level=logging.DEBUG)
 
 # setups pins on pi for use 
 #doorcontrol.setup()

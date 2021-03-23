@@ -3,14 +3,14 @@ This is the main (Bulk) possessing done in my opencv Program
 """
 from logging import log
 from numbers import Number
-from os import sendfile, wait
+
 from os.path import join
 import shutil
 from tokenize import Double
 
 import cv2
 
-import facerec
+import face_recognition
 import numpy as np
 import os
 from datetime import datetime
@@ -34,12 +34,10 @@ from PIL import Image
 
 
 class VideoProsessing(object):
-    logging.basicConfig(filename="/mnt/user/cv.log", level=logging.DEBUG)
+    logging.basicConfig(filename="/mnt/user/logs/cv.log", level=logging.DEBUG)
     
 
 # handles adding data to lists so i can tuppleize it 
-   
-           
    
 
     
@@ -79,15 +77,6 @@ class VideoProsessing(object):
         sock.send_json({"compare": face_distance})
         logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
 
-    """
-    # sends Person Status info to subscribers 
-    def send_group_status(sock,group_status):
-        logging.info("[SOCKET STATUS] sending Person Group status")
-        sock.send_string("GROUP",flags=zmq.SNDMORE)
-        sock.send_json({Config.GROUP: group_status})
-        logging.info("[SOCKET STATUS] Sent Person Group status")
-    """
-        
     # sends person name to subsecriber 
     def send_person_name(self,sock,name):
         logging.info("[SOCKET Name] Sending person seen name")
@@ -129,24 +118,6 @@ class VideoProsessing(object):
         if(not os.path.exists(filepath+imagename+".jpg")):
             wget.download(imageurl, str(filepath))
             logging.info('Downloading '+str(imagename)+', this may take a while...')
-        '''
-          #convets Image file output to png
-        filename = pathlib.Path(str(filepath)+str(imagename))
-        filename_output = filename.with_suffix('.png')
-
-        m1 = Image.open(filepath+imagename)
-        m1.save(filename_output)
-
-        img = Image.open(filename_output).convert('LA')
-
-        img.save(filename_output)
-
-        pass filename_output
-        '''
-    
-
-
-
         '''
         This Function is the Bulk of the Openv Image Prossesing Code
         '''
@@ -201,16 +172,15 @@ class VideoProsessing(object):
         
 
         
-        # TODO: Change this into the ipcamera Stream.
+        # TODO: Change this into the ipcamera Stream using the config.
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
         
-        video_capture = cv2.VideoCapture("rstp://192.168.5.150:5554",cv2.CAP_FFMPEG)
-    
-        userloaded = facerec.load_image_file(imagePathusers+image)
+        video_capture = cv2.VideoCapture("rtsp://"+str(opencvconfig['Stream_url'])+":"+str(opencvconfig["Stream_port"]),cv2.CAP_FFMPEG)
+        userloaded = face_recognition.load_image_file(imagePathusers+image)
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-        userEncode = facerec.face_encodings(userloaded)[0]
+        userEncode = face_recognition.face_encodings(userloaded)[0]
 
         # Add names of the ecodings to thw end of list
         known_face_encodings = [userEncode]
@@ -234,24 +204,24 @@ class VideoProsessing(object):
             height = int(video_capture.get(4))  # float `height`
 
             # Resize frame of video to 1/4 size for faster face recognition processing
-            small_frame = cv2.resize(frame, (0,0), fx=0.25, fy=0.25)
+            small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
             # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
             rgb_small_frame = small_frame[:, :, ::-1]
+                    
             
-       
             # Only process every other frame of video to save time
             if True:
                 # Find all the faces and face encodings in the current frame of video
-                face_locations = facerec.face_locations(rgb_small_frame)
-                face_encodings = facerec.face_encodings(
+                face_locations = face_recognition.face_locations(rgb_small_frame)
+                face_encodings = face_recognition.face_encodings(
                     rgb_small_frame, face_locations
                 )
 
                 face_names = []
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
-                    matches = facerec.compare_faces(
+                    matches = face_recognition.compare_faces(
                         known_face_encodings, face_encoding, tolerance=0.6932
                     )
                     name = opencvconfig['unreconizedPerson']
@@ -262,7 +232,7 @@ class VideoProsessing(object):
                     #     name = known_face_names[first_match_index]
 
                     # Or instead, use the known face with the smallest distance to the new face
-                    face_distance = facerec.face_distance(
+                    face_distance = face_recognition.face_distance(
                         known_face_encodings, face_encoding
                     )
                     best_match_index = np.argmin(face_distance)
@@ -299,6 +269,7 @@ class VideoProsessing(object):
                                 font, 0.5, (255, 255, 255), 1)
                     cv2.putText(frame, name, (0, 470), font,
                                 0.5, (255, 255, 255), 1)
+                                
 
 
                     # sends Image and saves image to disk
