@@ -1,6 +1,7 @@
 """
 This is the main (Bulk) possessing done in my opencv Program
 """
+from asyncio.log import logger
 from logging import log
 from numbers import Number
 
@@ -34,7 +35,7 @@ from PIL import Image
 
 
 class VideoProsessing(object):
-    logging.basicConfig(filename="/mnt/user/logs/cv.log", level=logging.DEBUG)
+    logging.basicConfig(filename="/mnt/user/logs/"+ datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
     
 
 # handles adding data to lists so i can tuppleize it 
@@ -123,25 +124,28 @@ class VideoProsessing(object):
         '''
 
     def ProcessVideo(self):
+        
         # sets rtsp vsr in python 
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
 # gets Config file
-        print(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
+        print(str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini")
         # Read config.ini file
         config_object = ConfigParser()
-        config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
+        config_object.read(str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini")
         
         
         logconfig = config_object['LOGGING']
         zmqconfig = config_object['ZMQ']
         opencvconfig = config_object['OPENCV']
         fileconfig = config_object['FILE']
+        current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
 
         known_face_names = []
         known_user_status = []
         known_user_images = []
         known_user_imagesurl = []
+        
 # connects to database
         # Database connection handing
         logging.info("Connecting to the Database Faces")
@@ -175,7 +179,7 @@ class VideoProsessing(object):
         # TODO: Change this into the ipcamera Stream using the config.
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
         
-        video_capture = cv2.VideoCapture("rtsp://"+str(opencvconfig['Stream_url'])+":"+str(opencvconfig["Stream_port"]),cv2.CAP_FFMPEG)
+        video_capture = cv2.VideoCapture('udpsrc port=5006 ! application/x-rtp, encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegparse ! jpegdec ! autovideosink', cv2.CAP_GSTREAMER)
         userloaded = face_recognition.load_image_file(imagePathusers+image)
 
         # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
@@ -199,21 +203,32 @@ class VideoProsessing(object):
             #graps image to read
             ret, frame = video_capture.read()
 
-            # gets video size w
+            # gets video 
+            fps = int(video_capture.get(2))
             width  = int(video_capture.get(3))   # float `width`
             height = int(video_capture.get(4))  # float `height`
 
-            # Resize frame of video to 1/4 size for faster face recognition processing
-            small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
-
-            # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-            rgb_small_frame = small_frame[:, :, ::-1]
+            #checks to see if frames are vaild not black or empty
+            if(frame == None):
+                logger.warning(str(current_time)+"Frame is Not Vaild Skiping...")
+            else:
+                if np.sum(frame) == 0:
+                     logger.warning(str(current_time)+"Frame is all black Skiping...")
+                else:
                     
+
+           
+                    
+            # Resize frame of video to 1/4 size for faster face detection processing
+            small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
+            
+             # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
+            rgb_small_frame = small_frame[:, :, ::-1]
             
             # Only process every other frame of video to save time
             if True:
                 # Find all the faces and face encodings in the current frame of video
-                face_locations = face_recognition.face_locations(rgb_small_frame)
+                face_locations = face_recognition.face_locations(rgb_small_frame,model="cnn")
                 face_encodings = face_recognition.face_encodings(
                     rgb_small_frame, face_locations
                 )

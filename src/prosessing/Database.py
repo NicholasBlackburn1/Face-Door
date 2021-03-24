@@ -6,12 +6,13 @@ import sqlalchemy.dialects.sqlite
 from configparser import ConfigParser
 from sqlalchemy.orm import sessionmaker
 # Gets the Face Data from the Face data
+PATH = str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini"
 
 
 def getFaces():
     # Read config.ini file
     config_object = ConfigParser()
-    config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
+    config_object.read(PATH)
 
     # Get the password
     database = config_object["DATABASE"]
@@ -35,7 +36,7 @@ Return the amout of Entrys in the  dataBase
 def getAmountOfEntrys():
     # Read config.ini file
     config_object = ConfigParser()
-    config_object.read(str(pathlib.Path().absolute())+"/src/"+"Config.ini")
+    config_object.read(PATH)
 
     # Get the password
     database = config_object["DATABASE"]
