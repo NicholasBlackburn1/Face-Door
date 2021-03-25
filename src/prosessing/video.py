@@ -128,6 +128,7 @@ class VideoProsessing(object):
            
             i+=1
 
+            # Checks to see if i == the database amount hehe
             if(str(i) == str(db.getAmountOfEntrys())):
                 logging.warn("Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
                 return storage_array
