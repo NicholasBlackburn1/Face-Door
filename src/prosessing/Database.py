@@ -49,7 +49,7 @@ def getAmountOfEntrys():
     faces = db.Table(database['table'], metadata,
                      autoload=True, autoload_with=engine)
     print("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
-    return session.query(faces).count()
+    return int(session.query(faces).count())
 
 
 def getKey(result_set, i):

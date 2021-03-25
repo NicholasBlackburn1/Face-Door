@@ -1,8 +1,9 @@
 """
 This is the main (Bulk) possessing done in my opencv Program
 """
-from asyncio.log import logger
-from logging import log
+
+from collections import OrderedDict
+import logging 
 from numbers import Number
 
 from os.path import join
@@ -104,15 +105,13 @@ class VideoProsessing(object):
         cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
  
       
-    def datalist(self,known_face_names, known_user_status,known_user_images,known_user_imagesurl):
-        for i in range(db.getAmountOfEntrys()):
-            known_face_names.append(db.getName(db.getFaces(),i))
-            known_user_status.append(db.getStatus(db.getFaces(),i))
-            known_user_images.append(db.getImageName(db.getFaces(),i))
-            known_user_imagesurl.append(db.getImageUrI(db.getFaces(),i))
-            i=i+1
-            data  =zip(known_face_names,known_user_status,known_user_images,known_user_imagesurl)
-            return tuple(data)
+    def datalist(self):
+        i =int(0)
+        while i >= db.getAmountOfEntrys():
+            print(str("Indext of Data is ")+str(i))
+            userdata = str({"name":db.getName(db.getFaces(),i),"status":db.getStatus(db.getFaces(),i),"image":db.getImageName(db.getFaces(),i),"download_Url":db.getImageUrI(db.getFaces(),i)})
+            print(userdata)
+            
     
     # saves downloaded Image Converted to black and white 
     def downloadFacesAndProssesThem(self,logging,imagename,imageurl,filepath ):
@@ -140,17 +139,21 @@ class VideoProsessing(object):
         opencvconfig = config_object['OPENCV']
         fileconfig = config_object['FILE']
         current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
+       
 
         known_face_names = []
         known_user_status = []
         known_user_images = []
         known_user_imagesurl = []
+
+        
         
 # connects to database
         # Database connection handing
         logging.info("Connecting to the Database Faces")
         logging.debug(db.getFaces())
         logging.info("connected to database Faces")
+        logging.info("connecting to zmq")
         
 # inits Zmq Server
         ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
@@ -158,6 +161,7 @@ class VideoProsessing(object):
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
         sock.bind(ZMQURI)
+        logging.info("conneted to zmq")
 
 # sends setup message and sets base image name to the current date mills and image storage path
         sock.send(b"setup")
@@ -167,12 +171,11 @@ class VideoProsessing(object):
         imagePathusers = "/mnt/user/people/"
 
 
+    # gets users names statuses face iamges and the urls from the tuples
+        self.datalist()
 
-        name, status, image, imageurl=self.datalist(known_face_names,known_user_status,known_user_images,known_user_imagesurl)[0]
-        print(name, status, image, imageurl)
-
-        self.downloadFacesAndProssesThem(logging,image,imageurl,fileconfig['faceStorage'])
-        print("output file" +str(image))
+        self.downloadFacesAndProssesThem(logging,userdict.s,userdict['imageurl'],fileconfig['faceStorage'])
+        print("output file" +str(userdict['image']))
         
 
         
@@ -214,11 +217,7 @@ class VideoProsessing(object):
             else:
                 if np.sum(frame) == 0:
                      logger.warning(str(current_time)+"Frame is all black Skiping...")
-                else:
-                    
 
-           
-                    
             # Resize frame of video to 1/4 size for faster face detection processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
             
@@ -459,4 +458,5 @@ class VideoProsessing(object):
 
 
            
+  
   
