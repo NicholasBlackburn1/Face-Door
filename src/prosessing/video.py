@@ -1,5 +1,7 @@
 """
 This is the main (Bulk) possessing done in my opencv Program
+TODO: Need to Fix Face loading into Facial Reconition lib 
+TODO: Need to have a Gstreamer out to asmble an video stream Effecintly to allow user to view it live on web page hehe
 """
 from sqlalchemy.sql.elements import literal
 
@@ -209,18 +211,18 @@ class VideoProsessing(object):
             
 
             
-            
-            
             # TODO: Change this into the ipcamera Stream using the config.
             os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
             
             video_capture = cv2.VideoCapture('udpsrc port=5006 ! application/x-rtp, encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegparse ! jpegdec ! autovideosink', cv2.CAP_GSTREAMER)
 
+            #TODO: FIX USERS LOADING INTO FACIAL RECONITION LIBs
             # enabled user 
-            userloaded = face_recognition.load_image_file(imagePathusers+self.datalist()[index])
+            userloaded = face_recognition.load_image_file(imagePathusers+self.datalist()[])
 
             # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
-        # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
+            
+            #EXAMPLE: EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
             userEncode = face_recognition.face_encodings(userloaded)
 
             # Add names of the ecodings to thw end of list
@@ -290,7 +292,10 @@ class VideoProsessing(object):
                         face_names.append(name)
 
                 process_this_frame = not process_this_frame
-
+                
+                """
+                This Section is Deticated to dealing with user Seperatation via the User Stats data tag
+                """
                 # Display the results
                 for (top, right, bottom, left), name in zip(face_locations, face_names):
                     
