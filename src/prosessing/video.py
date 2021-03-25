@@ -1,14 +1,16 @@
 """
 This is the main (Bulk) possessing done in my opencv Program
 """
+from sqlalchemy.sql.elements import literal
 
+import cardinality
 from collections import OrderedDict
 import logging 
 from numbers import Number
 
 from os.path import join
 import shutil
-from tokenize import Double
+from tokenize import Double, String
 
 import cv2
 
@@ -106,11 +108,23 @@ class VideoProsessing(object):
  
       
     def datalist(self):
-        i =int(0)
-        while i >= db.getAmountOfEntrys():
+        i = 0
+        storage_array=[]
+    
+        while True:
             print(str("Indext of Data is ")+str(i))
             userdata = str({"name":db.getName(db.getFaces(),i),"status":db.getStatus(db.getFaces(),i),"image":db.getImageName(db.getFaces(),i),"download_Url":db.getImageUrI(db.getFaces(),i)})
             print(userdata)
+
+            storage_array.insert(i,userdata)
+            print("Array with all strings in it"+str(storage_array))
+
+            i+=1
+
+            if(str(i) == str(db.getAmountOfEntrys())):
+                print("Full Storage Array"+str(storage_array))
+                return storage_array
+                
             
     
     # saves downloaded Image Converted to black and white 
@@ -139,14 +153,6 @@ class VideoProsessing(object):
         opencvconfig = config_object['OPENCV']
         fileconfig = config_object['FILE']
         current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
-       
-
-        known_face_names = []
-        known_user_status = []
-        known_user_images = []
-        known_user_imagesurl = []
-
-        
         
 # connects to database
         # Database connection handing

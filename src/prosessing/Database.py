@@ -1,5 +1,7 @@
 
+import logging
 import pathlib
+from tokenize import Double
 from requests import Session
 import sqlalchemy as db
 import sqlalchemy.dialects.sqlite
@@ -22,12 +24,12 @@ def getFaces():
     metadata = db.MetaData()
     faces = db.Table(database['table'], metadata,
                      autoload=True, autoload_with=engine)
-    print(faces)
+    logging.warn("got table...")
     query = db.select([faces])
-    print(query)
+    logging.warn("got querying....")
     result_proxy = connection.execute(query)
     result_set = result_proxy.fetchall()
-    print(result_set)
+    logging.warn("got result returning")
     return(result_set)
 
 '''
@@ -49,7 +51,8 @@ def getAmountOfEntrys():
     faces = db.Table(database['table'], metadata,
                      autoload=True, autoload_with=engine)
     print("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
-    return int(session.query(faces).count())
+    print("the type is"+str(type(session.query(faces).count())))
+    return str(session.query(faces).count())
 
 
 def getKey(result_set, i):
