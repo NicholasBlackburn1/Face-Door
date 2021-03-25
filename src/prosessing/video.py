@@ -215,11 +215,13 @@ class VideoProsessing(object):
             os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
             
             video_capture = cv2.VideoCapture('udpsrc port=5006 ! application/x-rtp, encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegparse ! jpegdec ! autovideosink', cv2.CAP_GSTREAMER)
-            userloaded = face_recognition.load_image_file(imagePathusers+image)
+
+            # enabled user 
+            userloaded = face_recognition.load_image_file(imagePathusers+self.datalist()[index])
 
             # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
         # EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-            userEncode = face_recognition.face_encodings(userloaded)[0]
+            userEncode = face_recognition.face_encodings(userloaded)
 
             # Add names of the ecodings to thw end of list
             known_face_encodings = [userEncode]
