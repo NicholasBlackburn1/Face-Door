@@ -131,7 +131,7 @@ class VideoProsessing(object):
     
     # saves downloaded Image Converted to black and white 
     def downloadFacesAndProssesThem(self,logging,array ):
-        while True
+        
         if(not os.path.exists(filepath+imagename+".jpg")):
             wget.download(imageurl, str(filepath))
             logging.info('Downloading '+str(imagename)+', this may take a while...')
