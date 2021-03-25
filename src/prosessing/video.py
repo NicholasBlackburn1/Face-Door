@@ -130,11 +130,15 @@ class VideoProsessing(object):
             
     
     # saves downloaded Image Converted to black and white 
-    def downloadFacesAndProssesThem(self,logging,array ):
-        
-        if(not os.path.exists(filepath+imagename+".jpg")):
-            wget.download(imageurl, str(filepath))
-            logging.info('Downloading '+str(imagename)+', this may take a while...')
+    def downloadFacesAndProssesThem(self,logging,userData,filepath, i ):
+        # Main Storage Array for json strings
+        data = userData[i]
+        # converts json string into
+        user_info = json.loads(data)
+
+        if(not os.path.exists(filepath+user_info['image']+".jpg")):
+            wget.download(user_info['download_Url'], str(filepath))
+            logging.info('Downloading '+str(user_info['image'])+', this may take a while...')
         '''
         This Function is the Bulk of the Openv Image Prossesing Code
         '''
