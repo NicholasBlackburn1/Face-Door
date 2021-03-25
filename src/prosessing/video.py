@@ -11,6 +11,7 @@ from numbers import Number
 from os.path import join
 import shutil
 from tokenize import Double, String
+import json 
 
 import cv2
 
@@ -118,6 +119,7 @@ class VideoProsessing(object):
 
             storage_array.insert(i,userdata)
             print("Array with all strings in it"+str(storage_array))
+            
 
             i+=1
 
@@ -128,7 +130,8 @@ class VideoProsessing(object):
             
     
     # saves downloaded Image Converted to black and white 
-    def downloadFacesAndProssesThem(self,logging,imagename,imageurl,filepath ):
+    def downloadFacesAndProssesThem(self,logging,array ):
+        while True
         if(not os.path.exists(filepath+imagename+".jpg")):
             wget.download(imageurl, str(filepath))
             logging.info('Downloading '+str(imagename)+', this may take a while...')
@@ -177,13 +180,14 @@ class VideoProsessing(object):
         imagePathusers = "/mnt/user/people/"
 
 
-    # gets users names statuses face iamges and the urls from the tuples
-        self.datalist()
 
-        self.downloadFacesAndProssesThem(logging,userdict.s,userdict['imageurl'],fileconfig['faceStorage'])
+
+        # gets users names statuses face iamges and the urls from the tuples
+        while 
+        print("PLACE ONE DATA"+str(self.datalist()[0]))
+        self.downloadFacesAndProssesThem(logging,self.datalist().index(i),userdict['imageurl'],fileconfig['faceStorage'])
         print("output file" +str(userdict['image']))
-        
-
+            
         
         # TODO: Change this into the ipcamera Stream using the config.
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
