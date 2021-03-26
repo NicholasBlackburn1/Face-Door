@@ -206,8 +206,7 @@ class VideoProsessing(object):
 
             if(str(index) == db.getAmountOfEntrys()):
                 logging.error("Done Downloading Images UWU....")
-                break
-            return
+                return
         
 
 
