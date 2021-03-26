@@ -7,7 +7,7 @@ import Config
 import logging
 
 
-logging.basicConfig(filename="/mnt/user/hue.log", level=logging.DEBUG)
+logging.basicConfig(filename="/mnt/user/logs/hue.log", level=logging.DEBUG)
 i = 0
 
 # setups hue control

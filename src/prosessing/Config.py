@@ -1,6 +1,6 @@
 
 """
-This file is custom vars for the Program you can add Names vars to the name sectiom
+File for Testing custom Philips Hue Support whenever i get one hehe
 """
 
 def rgb_to_xy(red, green, blue):
