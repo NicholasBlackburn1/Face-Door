@@ -61,7 +61,7 @@ def sendMessageToClient(logging,usrnumber,message):
         if(server.ehlo() is not None):
             server.starttls()
             server.login(smsconfig['gatwayemail'], smsconfig['gatewaypass'])
-            server.sendmail(smsconfig['sendername'], str(usrnumber)+smsconfig['gatewayOutEmail'], str(message)+smsconfig['endingmessage']+)
+            server.sendmail(smsconfig['sendername'], str(usrnumber)+smsconfig['gatewayOutEmail'], str(message)+smsconfig['endingmessage'])
             logging.warn("Sent Email to"+usrnumber)
             server.close()
             logging.info("Closed connection to email server email sent UWU")
