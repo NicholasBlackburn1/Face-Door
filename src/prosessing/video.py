@@ -115,6 +115,12 @@ class VideoProsessing(object):
     def save_group(self, imagepath, imagename, frame):
         cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
 
+    # decodes Json Encoded Data Created From DataList Function to retun image name
+    def decodeJsonImageData(self,facedata):
+        decodedjson= json.loads(facedata)
+        return decodedjson['image']
+        
+    # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
     def datalist(self):
         i = 0
         storage_array = []
@@ -158,7 +164,7 @@ class VideoProsessing(object):
 
         # this function will load and prepare face encodes  for
 
-    def loadFacesIntoFacialReconition(self, datalist):
+    def loadFacesIntoFacialReconition(self, db):
 
         print("Registering Faces to Face Rec Subsystem Please wait (Will Take a long time)")
         logging.warn(
@@ -171,8 +177,7 @@ class VideoProsessing(object):
 
             # TODO: FIX USERS LOADING INTO FACIAL RECONITION LIBs
             # enabled user
-            userloaded = face_recognition.load_image_file(
-                VideoProsessing.imagePathusers+datalist()[i])
+            userloaded = face_recognition.load_image_file(VideoProsessing.imagePathusers+self.decodeJsonImageData((self.datalist())[i]))
 
             # EXAMPLE: EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
             userEncode = face_recognition.face_encodings(userloaded)
@@ -181,12 +186,12 @@ class VideoProsessing(object):
 
             i += 1
 
-            if(str(i) == db.getAmountEntrys()):
+            if(str(i) == db):
                 logging.warn("Finished Registering Faces With Face Lib")
                 return encoding_user_faces_array
 
     # Fully Downloades USer Images and Returns No data
-    def downloadUserFaces(self, imagePath, getAmountOfEntrys):
+    def downloadUserFaces(self, imagePath):
 
         index = 0
         # gets users names statuses face iamges and the urls from the tuples
@@ -195,14 +200,17 @@ class VideoProsessing(object):
             self.downloadFacesAndProssesThem(
                 logging, self.datalist(), imagePath, index)
             logging.warn("downloaded"+str(index) +
-                         "out of " + getAmountOfEntrys())
+                         "out of " + db.getAmountOfEntrys())
 
             index += 1
 
-            if(str(index) == getAmountOfEntrys()):
+            if(str(index) == db.getAmountOfEntrys()):
                 logging.error("Done Downloading Images UWU....")
                 break
             return
+        
+
+
 
             # Add names of the ecodings to thw end of list
         '''
@@ -248,10 +256,13 @@ class VideoProsessing(object):
         logging.info("Setting up cv")
 
         # Downlaods all the Faces 
-        self.downloadUserFaces(VideoProsessing.imagePath, db.getAmountOfEntrys())
+        self.downloadUserFaces(VideoProsessing.imagePathusers)
 
-        # Loads User Faces Into Facial Reconition System UwU
-        known_face_encodings = self.loadFacesIntoFacialReconition(self.datalist())
+        
+        known_face_encodings = []
+
+        # gets known face encodings 
+        known_face_encodings = ( self.loadFacesIntoFacialReconition(db.getAmountOfEntrys()))
 
         # Initialize some variables
         face_locations = []
@@ -265,12 +276,12 @@ class VideoProsessing(object):
 
         while True:
             # graps image to read
-            ret, frame = video_capture.read()
+            ret, frame = VideoProsessing.video_capture.read()
 
             # gets video
-            fps = int(video_capture.get(2))
-            width = int(video_capture.get(3))   # float `width`
-            height = int(video_capture.get(4))  # float `height`
+            fps = int(VideoProsessing.video_capture.get(2))
+            width = int(VideoProsessing.video_capture.get(3))   # float `width`
+            height = int(VideoProsessing.video_capture.get(4))  # float `height`
 
             # checks to see if frames are vaild not black or empty
             if(frame == None):
@@ -297,7 +308,7 @@ class VideoProsessing(object):
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
-                        known_face_encodings, face_encoding, tolerance=0.6932
+                        0, face_encoding, tolerance=0.6932
                     )
                     name = opencvconfig['unreconizedPerson']
 
