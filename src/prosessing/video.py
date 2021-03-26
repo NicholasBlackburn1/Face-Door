@@ -314,15 +314,15 @@ class VideoProsessing(object):
         face_locations = []
         face_encodings = []
         face_names = []
-
-      
-
-        process_this_frame = True
+        
         logging.info("Cv setup")
 
         sock.send(b"starting")
 
         while True:
+            # adds list of names to Facial Reconition subsystem 
+            face_names.append((self.getUserNames(self.datalist())))
+
             # graps image to read
             ret, frame = VideoProsessing.video_capture.read()
 
@@ -352,7 +352,7 @@ class VideoProsessing(object):
                     rgb_small_frame, face_locations
                 )
 
-                face_names = []
+                
                 for face_encoding in face_encodings:
                     # See if the face is a match for the known face(s)
                     matches = face_recognition.compare_faces(
