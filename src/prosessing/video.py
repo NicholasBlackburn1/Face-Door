@@ -37,7 +37,7 @@ import wget
 import pathlib
 from configparser import ConfigParser
 from PIL import Image
-
+import SmsHandler
 # TODOD: add All Config.py Settings that arnt python fiunctions to Database
 
 
@@ -265,7 +265,7 @@ class VideoProsessing(object):
         '''
 
     def ProcessVideo(self):
-
+        SmsHandler.sendMessageToClient(logging,4123891615,"hello... OpenCv Subsystem is Starting UwU")
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
