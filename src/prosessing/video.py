@@ -119,6 +119,11 @@ class VideoProsessing(object):
     def decodeJsonImageData(self,facedata):
         decodedjson= json.loads(facedata)
         return decodedjson['image']
+
+    # decode Json Data 
+    def decodeJsonString(self,faceData):
+        decodedjson= json.loads(facedata)
+        return decodedjson
         
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
     def datalist(self):
@@ -205,12 +210,26 @@ class VideoProsessing(object):
             index += 1
 
             if(str(index) == db.getAmountOfEntrys()):
-                logging.error("Done Downloading Images UWU....")
+                logging.info("Done Downloading Images UWU....")
                 return
         
-
-
-
+    # checks usr and json status
+    def getUserStatusandCheckStatus(self,ogfacedata,comparefacedata):
+  
+            decodedogjson= json.loads(ogfacedata)
+            decodedcomparejson= json.loads(comparefacedata)
+            
+            # Simply Checks to see if the 2 json strings equle each
+            if(decodedogjson == decodedcomparejson):
+                logging.info("YaY User Json Strings Are Right UwU Now to try to check user status hehe")
+                return decodedcomparejson['status']
+            
+            # if check fail throws error 
+            if(not decodedogjson  == decodedcomparejson):
+                logging.critical("STRINGS FAILD COMPARISON")
+                raise Exception('FAILD JSON COMPARISON for user status') # Don't! If you catch, likely to hide bugs.
+                
+        
             # Add names of the ecodings to thw end of list
         '''
         This Function is the Bulk of the Openv Image Prossesing Code
