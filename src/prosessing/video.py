@@ -214,23 +214,52 @@ class VideoProsessing(object):
                 return
         
     # checks usr and json status
-    def getUserStatusandCheckStatus(self,ogfacedata,comparefacedata):
-  
-            decodedogjson= json.loads(ogfacedata)
-            decodedcomparejson= json.loads(comparefacedata)
+    def getUserStatusandCheckStatus(self,ogfacedata):
+            i = 0 
             
-            # Simply Checks to see if the 2 json strings equle each
-            if(decodedogjson == decodedcomparejson):
-                logging.info("YaY User Json Strings Are Right UwU Now to try to check user status hehe")
-                return decodedcomparejson['status']
-            
-            # if check fail throws error 
-            if(not decodedogjson  == decodedcomparejson):
-                logging.critical("STRINGS FAILD COMPARISON")
-                raise Exception('FAILD JSON COMPARISON for user status') # Don't! If you catch, likely to hide bugs.
+            while True:
+                    
+                decodedogjson= json.loads(ogfacedata[i])
+                decodedcomparejson= json.loads(ogfacedata[i])
                 
+                # Simply Checks to see if the 2 json strings equle each
+                if(decodedogjson == decodedcomparejson):
+                    logging.info("YaY User Json Strings Are Right UwU Now to try to check user status hehe")
+                    return decodedcomparejson['status']
+                    
+                
+                # if check fail throws error 
+                if(decodedogjson  == None):
+                    logging.critical("STRINGS FAILD COMPARISON")
+                    raise Exception('FAILD JSON COMPARISON for user status') # Don't! If you catch, likely to hide bugs.
+
+                i+=1
+                if(str(i) == db.getAmountOfEntrys()):
+                    logging.info("finished checking status")
+                    return
+    
+    # gets USer name from Json String 
+    def getUserNames(self, datalist):
+
+        i = 0 
+
+        logging.info("Decoding Json String for user name...")
+        while True:
+            # interpates json string 
+            decodedstring = self.decodeJsonString(datalist[i])
+
+            if decodedstring is not None:
+                logging.info("Done decoding string sending name to other code...")
+                return decodedstring['name']
+            i+=1
+
+            if(str(i) == db.getAmountOfEntrys()):
+                logging.info("Done decoding string sending name to other code returning to main code UWU...")
+                return
+
         
-            # Add names of the ecodings to thw end of list
+                
+                # Add names of the ecodings to thw end of list
         '''
         This Function is the Bulk of the Openv Image Prossesing Code
         '''
@@ -275,17 +304,18 @@ class VideoProsessing(object):
 
         # Downlaods all the Faces 
         self.downloadUserFaces(VideoProsessing.imagePathusers)
-
-        
         known_face_encodings = []
 
         # gets known face encodings 
         known_face_encodings = ( self.loadFacesIntoFacialReconition(db.getAmountOfEntrys()))
-
+        
+    
         # Initialize some variables
         face_locations = []
         face_encodings = []
         face_names = []
+
+      
 
         process_this_frame = True
         logging.info("Cv setup")
@@ -346,6 +376,9 @@ class VideoProsessing(object):
                     face_names.append(name)
 
             process_this_frame = not process_this_frame
+
+            # Loads Status of people 
+            status = self.getUserStatusandCheckStatus(self.datalist())
 
             """
             This Section is Deticated to dealing with user Seperatation via the User Stats data tag
@@ -510,7 +543,7 @@ class VideoProsessing(object):
                         # sends person info
                         self.send_person_name(sock, name)
 
-                elif (name == opencvconfig['unreconizedPerson']):
+                elif (name == opencvconfig['unreconizedPerson'] or status == None):
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top),
                                     (right, bottom), (0, 0, 255), 2)
