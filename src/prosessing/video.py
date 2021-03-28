@@ -265,7 +265,8 @@ class VideoProsessing(object):
         '''
 
     def ProcessVideo(self):
-        SmsHandler.sendMessageToClient(logging,4123891615,"hello... OpenCv Subsystem is Starting UwU")
+        # Sends Sms Message Saying Starting Server
+        
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 

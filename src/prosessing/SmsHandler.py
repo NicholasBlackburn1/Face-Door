@@ -1,5 +1,6 @@
 """
 this class is for handling full Messaging capabilitys for Notifing the user during import situations in program
+TODO: Finish Image Sending Function from mms gateway hehe
 """
 
 from email.header import Header
@@ -14,7 +15,6 @@ import imghdr
 PATH = str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini"
 config_object = ConfigParser()
 config_object.read(PATH)
-
 smsconfig = config_object["SMS"]
 
 
@@ -31,7 +31,7 @@ def checkEmailGatewayStatus(logging):
         logging.info('Something went wrong...')
 
 
-# Sends mms message with images for user
+# Sends mms message with images for user 
 def addImageToEmail(file,msg,usrnumber,messagefromprogram):
     # Header of email
     msg['From'] = smsconfig['sendername']
