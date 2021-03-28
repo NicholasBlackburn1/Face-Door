@@ -129,11 +129,13 @@ class VideoProsessing(object):
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
     def datalist(self):
         i = 0
+
         storage_array = []
 
         while True:
             # example Json string  [{"name":"Tesla", "age":2, "city":"New York"}]
             print(str("Indext of Data is ")+str(i))
+            
             userdata = '{"name":'+str("[")+str(db.getName(db.getFaces(), i))+str("[")+','+'"status":'+str("[")+str(db.getStatus(db.getFaces(), i)) + str(
                 "[")+','+'"image":'+str("[")+str(db.getImageName(db.getFaces(), i))+str("[")+','+'"download_Url":'+str("[")+str(db.getImageUrI(db.getFaces(), i))+str("[")+'}'
 
@@ -147,9 +149,8 @@ class VideoProsessing(object):
             i += 1
 
             # Checks to see if i == the database amount hehe
-            if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
-                logging.warn(
-                    "Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
+            if(i == db.getAmountOfEntrys()):
+                logging.warn("Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
                 return storage_array
 
     # saves downloaded Image Converted to black and white
@@ -192,7 +193,7 @@ class VideoProsessing(object):
 
             i += 1
 
-            if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
+            if(i == db.getAmountOfEntrys()):
                 logging.warn("Finished Registering Faces With Face Lib")
                 return encoding_user_faces_array
 
@@ -206,11 +207,11 @@ class VideoProsessing(object):
             self.downloadFacesAndProssesThem(
                 logging, self.datalist(), imagePath, index)
             logging.warn("downloaded"+str(index) +
-                         "out of " + db.getAmountOfEntrys())
+                         "out of " + str(db.getAmountOfEntrys()))
 
-            index += 1
+            index +=1
 
-            if(index == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
+            if(index == db.getAmountOfEntrys()):
                 logging.info("Done Downloading Images UWU....")
                 return
         
@@ -235,7 +236,7 @@ class VideoProsessing(object):
                     raise Exception('FAILD JSON COMPARISON for user status') # Don't! If you catch, likely to hide bugs.
 
                 i+=1
-                if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
+                if(i == db.getAmountOfEntrys):
                     logging.info("finished checking status")
                     return
     
@@ -254,7 +255,7 @@ class VideoProsessing(object):
                 return decodedstring['name']
             i+=1
 
-            if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
+            if(i == db.getAmountOfEntrys):
                 logging.info("Done decoding string sending name to other code returning to main code UWU...")
                 return
 
