@@ -53,7 +53,8 @@ def getAmountOfEntrys():
                      autoload=True, autoload_with=engine)
     print("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
     print("the type is"+str(type(session.query(faces).count())))
-    return float(session.query(faces).count())
+    databasecount = int(float(session.query(faces).count()))
+    return databasecount
 
 def getKey(result_set, i):
     print(result_set[i])

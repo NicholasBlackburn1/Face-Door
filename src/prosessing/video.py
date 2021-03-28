@@ -171,7 +171,7 @@ class VideoProsessing(object):
 
         # this function will load and prepare face encodes  for
 
-    def loadFacesIntoFacialReconition(self, db):
+    def loadFacesIntoFacialReconition(self):
 
         print("Registering Faces to Face Rec Subsystem Please wait (Will Take a long time)")
         logging.warn(
@@ -187,8 +187,9 @@ class VideoProsessing(object):
             userloaded = face_recognition.load_image_file(VideoProsessing.imagePathusers+self.decodeJsonImageData((self.datalist())[i]))
 
             # EXAMPLE: EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-            userEncode = face_recognition.face_encodings(userloaded)
-
+            userEncode = face_recognition.face_encodings(userloaded,num_jitters=75)[0]
+            
+            print("finished Loading Facies into program")
             encoding_user_faces_array.insert(i, userEncode)
 
             i += 1
@@ -310,7 +311,7 @@ class VideoProsessing(object):
         known_face_encodings = []
 
         # gets known face encodings 
-        known_face_encodings = ( self.loadFacesIntoFacialReconition(db.getAmountOfEntrys()))
+        known_face_encodings = ( self.loadFacesIntoFacialReconition())
         
     
         # Initialize some variables
