@@ -126,13 +126,6 @@ class VideoProsessing(object):
         decodedjson= json.loads(facedata)
         return decodedjson
 
-    #Simply Checks if entry is a string or not 
-    def convertDatabaseNumbertoInt(self,entryCount):
-        if(not entryCount == None or int):
-            return int(entryCount,12)
-        else:
-            raise ValueError('This value is not able to be converted into a Int!!!')
-        
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
     def datalist(self):
         i = 0

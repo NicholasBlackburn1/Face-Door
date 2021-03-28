@@ -7,6 +7,7 @@ import sqlalchemy as db
 import sqlalchemy.dialects.sqlite
 from configparser import ConfigParser
 from sqlalchemy.orm import sessionmaker
+
 # Gets the Face Data from the Face data
 PATH = str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini"
 
@@ -52,8 +53,7 @@ def getAmountOfEntrys():
                      autoload=True, autoload_with=engine)
     print("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
     print("the type is"+str(type(session.query(faces).count())))
-    return str(session.query(faces).count())
-
+    return session.query(faces).count
 
 def getKey(result_set, i):
     print(result_set[i])
