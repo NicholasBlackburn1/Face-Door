@@ -12,11 +12,6 @@ import ConfigParser
 import imghdr
 
 
-PATH = str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini"
-config_object = ConfigParser()
-config_object.read(PATH)
-smsconfig = config_object["SMS"]
-
 
 # CHecks to see of server responds
 def checkEmailGatewayStatus(logging):
@@ -32,7 +27,7 @@ def checkEmailGatewayStatus(logging):
 
 
 # Sends mms message with images for user 
-def addImageToEmail(file,msg,usrnumber,messagefromprogram):
+def addImageToEmail(file,msg,usrnumber,messagefromprogram,smsconfig):
     # Header of email
     msg['From'] = smsconfig['sendername']
     msg['To'] = str(usrnumber)+smsconfig['gatewayOutEmail']

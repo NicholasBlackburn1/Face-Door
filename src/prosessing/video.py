@@ -3,6 +3,8 @@ This is the main (Bulk) possessing done in my opencv Program
 TODO: Need to Fix Face loading into Facial Reconition lib
 TODO: Need to have a Gstreamer out to asmble an video stream Effecintly to allow user to view it live on web page hehe
 """
+
+
 from sqlalchemy.sql.elements import literal
 
 import cardinality
@@ -120,10 +122,16 @@ class VideoProsessing(object):
         decodedjson= json.loads(facedata)
         return decodedjson['image']
 
-    # decode Json Data 
-    def decodeJsonString(self,faceData):
+    def decodeJsonString(self,facedata):
         decodedjson= json.loads(facedata)
         return decodedjson
+
+    #Simply Checks if entry is a string or not 
+    def convertDatabaseNumbertoInt(self,entryCount):
+        if(not entryCount == None or int):
+            return int(entryCount,12)
+        else:
+            raise ValueError('This value is not able to be converted into a Int!!!')
         
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
     def datalist(self):
@@ -146,7 +154,7 @@ class VideoProsessing(object):
             i += 1
 
             # Checks to see if i == the database amount hehe
-            if(str(i) == str(db.getAmountOfEntrys())):
+            if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
                 logging.warn(
                     "Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
                 return storage_array
@@ -191,7 +199,7 @@ class VideoProsessing(object):
 
             i += 1
 
-            if(str(i) == db):
+            if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
                 logging.warn("Finished Registering Faces With Face Lib")
                 return encoding_user_faces_array
 
@@ -209,7 +217,7 @@ class VideoProsessing(object):
 
             index += 1
 
-            if(str(index) == db.getAmountOfEntrys()):
+            if(index == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
                 logging.info("Done Downloading Images UWU....")
                 return
         
@@ -234,7 +242,7 @@ class VideoProsessing(object):
                     raise Exception('FAILD JSON COMPARISON for user status') # Don't! If you catch, likely to hide bugs.
 
                 i+=1
-                if(str(i) == db.getAmountOfEntrys()):
+                if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
                     logging.info("finished checking status")
                     return
     
@@ -253,7 +261,7 @@ class VideoProsessing(object):
                 return decodedstring['name']
             i+=1
 
-            if(str(i) == db.getAmountOfEntrys()):
+            if(i == self.convertDatabaseNumbertoInt(db.getAmountOfEntrys)):
                 logging.info("Done decoding string sending name to other code returning to main code UWU...")
                 return
 
