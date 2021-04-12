@@ -2,6 +2,7 @@
 This is the main (Bulk) possessing done in my opencv Program
 TODO: Need to Fix Face loading into Facial Reconition lib
 TODO: Need to have a Gstreamer out to asmble an video stream Effecintly to allow user to view it live on web page hehe
+TODO: REMOVE ZMQ SOCKET DATA
 """
 
 
@@ -53,7 +54,7 @@ class VideoProsessing(object):
 
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
-    video_capture = cv2.VideoCapture( 'udpsrc port=5006 ! application/x-rtp, encoding-name=JPEG,payload=26 ! rtpjpegdepay ! jpegparse ! jpegdec ! autovideosink', cv2.CAP_GSTREAMER)
+    video_capture = cv2.VideoCapture(0)
 
 
 
@@ -169,34 +170,9 @@ class VideoProsessing(object):
             logging.info("output file" +
                          str(user_info['image']+"at" + filepath))
 
-        # this function will load and prepare face encodes  for
-
-    def loadFacesIntoFacialReconition(self):
-
-        print("Registering Faces to Face Rec Subsystem Please wait (Will Take a long time)")
-        logging.warn(
-            "Registering Faces to Face Rec Subsystem Please wait (Will Take a long time)")
-
-        encoding_user_faces_array = []
-        # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
-        i = 0
-        while True:
-
-            # TODO: FIX USERS LOADING INTO FACIAL RECONITION LIBs
-            # enabled user
-            userloaded = face_recognition.load_image_file(VideoProsessing.imagePathusers+self.decodeJsonImageData((self.datalist())[i]))
-
-            # EXAMPLE: EthanEncode = face_recognition.face_encodings(Ethan, num_jitters=75)[0]
-            userEncode = face_recognition.face_encodings(userloaded,num_jitters=75)[0]
-            
-            print("finished Loading Facies into program")
-            encoding_user_faces_array.insert(i, userEncode)
-
-            i += 1
-
-            if(i == db.getAmountOfEntrys()):
-                logging.warn("Finished Registering Faces With Face Lib")
-                return encoding_user_faces_array
+    # this function will load and prepare face encodes  for knn model so i can efficiently load and run face rec
+    def loadFacesIntoKnnGen(self): 
+        pass
 
     # Fully Downloades USer Images and Returns No data
     def downloadUserFaces(self, imagePath):
@@ -205,10 +181,8 @@ class VideoProsessing(object):
         # gets users names statuses face iamges and the urls from the tuples
         while True:
 
-            self.downloadFacesAndProssesThem(
-                logging, self.datalist(), imagePath, index)
-            logging.warn("downloaded"+str(index) +
-                         "out of " + str(db.getAmountOfEntrys()))
+            self.downloadFacesAndProssesThem(logging, self.datalist(), imagePath, index)
+            logging.warn("downloaded"+str(index) +"out of " + str(db.getAmountOfEntrys()))
 
             index +=1
 
@@ -340,13 +314,13 @@ class VideoProsessing(object):
                 logging.warning(str(current_time) +"Frame is Not Vaild Skiping...")
             if np.sum(frame) == 0:
                 logging.warning(str(current_time) +"Frame is all black Skiping...")
+            if (width > 0 and height > 0):
+                logging.warn("cannot open Non exsting image")
+                print("Broaking Image Uwu It does not Exsit fix")
 
             # Resize frame of video to 1/4 size for faster face detection processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
-
-        # Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
-            rgb_small_frame = small_frame[:, :, ::-1]
-
+            rgb_small_frame = small_frame[:,:,0]
             # Only process every other frame of video to save time
             if True:
                 # Find all the faces and face encodings in the current frame of video

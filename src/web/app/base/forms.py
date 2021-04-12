@@ -54,4 +54,8 @@ class ZmqServerSettings(FlaskForm):
     ipaddress = TextField('ipaddress ', id='ipaddress'   , validators=[DataRequired()])
     portnumber =  TextField('portnumber ', id='portnumber'   , validators=[DataRequired()])
     
+
     
+class AlertPhoneNumberSettings(FlaskForm):
+    phonenumber = TextField('phonenumber', id='phonenumber'   , validators=[DataRequired()])
+    name = TextField('Name ', id='name'   , validators=[DataRequired()])
