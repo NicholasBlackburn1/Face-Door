@@ -70,29 +70,7 @@ class VideoProsessing(object):
         sock.send_json({"face": str(len(face_encodings))})
         logging.info("[SOCKET PERSON] Sent Seen Persons")
 
-        # sends Person count info to subscribers
-    def send_owner_count(self, face_encodings, sock):
-        logging.info("[SOCKET PERSON] sending Seen Persons")
-        sock.send_string("ADMIN")
-        sock.send_json({"admin": len(face_encodings)})
-        logging.info("[SOCKET PERSON] Sent Seen Persons")
-
-        # sends Person count info to subscribers
-
-    def send_user_count(self, face_encodings, sock):
-        logging.info("[SOCKET PERSON] sending Seen Persons")
-        sock.send_string("USER")
-        sock.send_json({"user": str(len(face_encodings))})
-        logging.info("[SOCKET PERSON] Sent Seen Persons")
-
-        # sends Person count info to subscribers
-
-    def send_unkown_count(self, face_encodings, sock):
-        logging.info("[SOCKET PERSON] sending Seen Persons")
-        sock.send_string("UNKNOWN")
-        sock.send_json({"unknown": str(len(face_encodings))})
-        logging.info("[SOCKET PERSON] Sent Seen Persons")
-
+    
     def send_face_compare(self, face_distance, sock):
         logging.info("[SOCKET FACEMATCH] sending Seen Persons")
         sock.send_string("COMPARE")
@@ -301,20 +279,16 @@ class VideoProsessing(object):
         self.downloadUserFaces(VideoProsessing.imagePathusers)
         
         #Trains Knn
-        KnnClassifiyer.train()
+        KnnClassifiyer.train("/mnt/user/train",image_files_in_folder,face_recognition,neighbors)
     
-        # Initialize some variables
-        face_locations = []
-        face_encodings = []
-        face_names = []
-        
         logging.info("Cv setup")
 
         sock.send(b"starting")
 
+        
+
         while True:
-            # adds list of names to Facial Reconition subsystem 
-            face_names.append((self.getUserNames(self.datalist())))
+          
 
             # graps image to read
             ret, frame = VideoProsessing.video_capture.read()
@@ -336,16 +310,16 @@ class VideoProsessing(object):
             # Resize frame of video to 1/4 size for faster face detection processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
-
+            predictions =KnnClassifiyer.predict(small_frame)
             # Loads Status of people 
             status = self.getUserStatusandCheckStatus(self.datalist())
 
             """
-            This Section is Deticated to dealing with user Seperatation via the User Stats data tag
+            This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
             # Display the results
-            for name,(top, right, bottom, left) in predictions):
-
+            for name,(top, right, bottom, left) in predictions:
+                
                 # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                 top *= 4
                 right *= 4
@@ -371,14 +345,14 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # sends Image and saves image to disk
-                if(not os.path.exists(imagePath+imagename+".jpg")):
+                if(not os.path.exists(self.imagePath+self.imagename+".jpg")):
 
-                    self.save_owner(imagePath, imagename, frame)
+                    self.save_owner(self.imagePath,self.imagename, frame)
 
                     # sends person info
                     self.send_person_name(sock, name)
                     # send_group_status(sock,"owner")
-                    self.send_owner_count(face_encodings, sock)
+                  
 
                 # Adult Section add names to here for more adults
                 if (status == 'User'):
@@ -424,15 +398,14 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(imagePath+"user"+imagename+".jpg")):
+                    if(not os.path.exists(self.imagePath+"user"+imagename+".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_user(imagePath, imagename, frame)
+                        self.save_user(self.imagePath, imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
-                    # send_group_status(sock,"user")
-                        self.send_user_count(face_encodings, sock)
+                    # 
 
                 if (status == 'Unwanted'):
 
@@ -450,17 +423,16 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "unKnownPerson" + imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_unknown(imagePath, imagename, frame)
+                        self.save_unknown(self.imagePath, imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
-                        self.send_unkown_count(face_encodings, sock)
                 elif (
-                    len(face_locations) >= 2
+                    len(predictions) >= 2
                 ):
 
                     cv2.rectangle(
@@ -495,10 +467,10 @@ class VideoProsessing(object):
 
                     logging.warning("Letting in group")
 
-                    if(not os.path.exists(imagePath + "Group" + imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "Group" + imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_group(imagePath, imagename, frame)
+                        self.save_group(self.imagePath, imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -515,19 +487,15 @@ class VideoProsessing(object):
                     cv2.putText(frame, name, (0, 470), font,
                                 0.5, (255, 255, 255), 1)
 
-                    logging.warning("not letting in" + name)
-
                     # checks to see if image exsitis
-                    if(not os.path.exists(imagePath + "unKnownPerson" + imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "unKnownPerson" + imagename + ".jpg")):
                         # sends Image and saves image to disk
-                        self.save_unknown(imagePath, imagename, frame)
+                        self.save_unknown(self.imagePath, imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
-                        self.send_unkown_count(face_encodings, sock)
 
-                    logging.warning("not letting in" + name)
 
                 # Display the resulting image
                 cv2.imshow("Video", frame)

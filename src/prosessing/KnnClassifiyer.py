@@ -6,7 +6,7 @@ import math
 import os
 
 
-def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
+def train(train_dir,image_files_in_folder,face_recognition,neighbors, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
     """
     Trains a k-nearest neighbors classifier for face recognition.
     :param train_dir: directory that contains a sub-directory for each known person, with its name.
