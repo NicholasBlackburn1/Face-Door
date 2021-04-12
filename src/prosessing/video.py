@@ -3,9 +3,12 @@ This is the main (Bulk) possessing done in my opencv Program
 TODO: Need to Fix Face loading into Facial Reconition lib
 TODO: Need to have a Gstreamer out to asmble an video stream Effecintly to allow user to view it live on web page hehe
 TODO: REMOVE ZMQ SOCKET DATA
+TODO: ASSINE USERS UUIDS TO MAKE IT EASER
 """
 
 
+from uuid import uuid1
+import uuid
 from sqlalchemy.sql.elements import literal
 
 import cardinality
@@ -52,6 +55,7 @@ class VideoProsessing(object):
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     imagePath = "/mnt/user/"
     imagePathusers = "/mnt/user/people/"
+    storage_array = []
 
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
@@ -110,13 +114,12 @@ class VideoProsessing(object):
     def datalist(self):
         i = 0
 
-        storage_array = []
 
         while True:
             # example Json string  [{"name":"Tesla", "age":2, "city":"New York"}]
             print(str("Indext of Data is ")+str(i))
             
-            userdata = '{"name":'+str("[")+str(db.getName(db.getFaces(), i))+str("[")+','+'"status":'+str("[")+str(db.getStatus(db.getFaces(), i)) + str(
+            userdata = '{'+str(uuid.uuid1())+':'+'"name":'+str("[")+str(db.getName(db.getFaces(), i))+str("[")+','+'"status":'+str("[")+str(db.getStatus(db.getFaces(), i)) + str(
                 "[")+','+'"image":'+str("[")+str(db.getImageName(db.getFaces(), i))+str("[")+','+'"download_Url":'+str("[")+str(db.getImageUrI(db.getFaces(), i))+str("[")+'}'
 
             # prepares Mal Json strings
@@ -124,14 +127,16 @@ class VideoProsessing(object):
             finaljson = basejson.replace("'", '"')
             # Final Json  string replacement accoures
 
-            storage_array.insert(i, finaljson)
+            self.storage_array.insert(i, finaljson)
 
             i += 1
 
             # Checks to see if i == the database amount hehe
             if(i == db.getAmountOfEntrys()):
                 logging.warn("Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
-                return storage_array
+                return 
+
+    #
 
     # saves downloaded Image Converted to black and white
     def downloadFacesAndProssesThem(self, logging, userData, filepath, i):
@@ -151,23 +156,7 @@ class VideoProsessing(object):
 
         # this function will load and prepare face encodes  for
     
-    def loadFacesIntoKnnGen(self):
-
-        print("Registering Faces to Face Rec Subsystem Please wait (Will Take a long time)")
-        logging.warn(
-            "Registering Faces to Face Rec Subsystem Please wait (Will Take a long time)")
-
-        encoding_user_faces_array = []
-        # defines all known faces for the system and how many times the dlib will train it self with that image takes min 49 sec to train
-        i = 0
-        while True:
-
-            VideoProsessing.imagePathusers+self.decodeJsonImageData((self.datalist())[i])
-            i += 1
-
-            if(i == db.getAmountOfEntrys()):
-                logging.warn("Finished Registering Faces With Face Lib")
-                return encoding_user_faces_array
+    
 
     # Fully Downloades USer Images and Returns No data
     def downloadUserFaces(self, imagePath):
@@ -288,7 +277,7 @@ class VideoProsessing(object):
         
 
         while True:
-          
+            
 
             # graps image to read
             ret, frame = VideoProsessing.video_capture.read()
@@ -398,10 +387,10 @@ class VideoProsessing(object):
                     logging.warning("letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath+"user"+imagename+".jpg")):
+                    if(not os.path.exists(self.imagePath+"user"+self.imagename+".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_user(self.imagePath, imagename, frame)
+                        self.save_user(self.imagePath, self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -423,10 +412,10 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath + "unKnownPerson" + imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "unKnownPerson" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_unknown(self.imagePath, imagename, frame)
+                        self.save_unknown(self.imagePath, self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -467,10 +456,10 @@ class VideoProsessing(object):
 
                     logging.warning("Letting in group")
 
-                    if(not os.path.exists(self.imagePath + "Group" + imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "Group" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_group(self.imagePath, imagename, frame)
+                        self.save_group(self.imagePath, self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -488,9 +477,9 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath + "unKnownPerson" + imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "unKnownPerson" + self.imagename + ".jpg")):
                         # sends Image and saves image to disk
-                        self.save_unknown(self.imagePath, imagename, frame)
+                        self.save_unknown(self.imagePath, self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
