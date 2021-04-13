@@ -119,7 +119,7 @@ STATIC_FOLDER = "/mnt/user"
 
 @blueprint.route("/")
 def route_default():
-    return redirect(url_for("base_blueprint.login"))
+    return redirect(url_for("base_blueprint.index"))
 
 
 @blueprint.route("/error-<error>")
@@ -209,14 +209,6 @@ def logout():
     return redirect(url_for("base_blueprint.login"))
 
 
-@blueprint.route("/shutdown")
-def shutdown():
-    func = request.environ.get("werkzeug.server.shutdown")
-    if func is None:
-        raise RuntimeError("Not running with the Werkzeug Server")
-
-    return "Server shutting down..."
-
 @login_manager.unauthorized_handler
 def unauthorized_handler():
     return render_template("errors/403.html"), 403
@@ -253,12 +245,6 @@ def index():
     
     return render_template(
         "index.html",
-        unique_people = DataSub.Data.getTotalSeen(starter,message),
-        authorized = DataSub.Data.getOwnerPeople(starter,message),
-        unknown = DataSub.Data.getUnknownPeople(starter,message),
-        ownerimg  =DataSub.Data.getImageFrame(starter,message),
-        parentimg=DataSub.Data.getParentImageFrame(starter,message),
-        unknownimg=DataSub.Data.getUnknownImageFrame(starter,message),
         version = versionconfig['number'],
         cpuload= psutil.cpu_percent(),
         Ram=psutil.virtual_memory().percent,
