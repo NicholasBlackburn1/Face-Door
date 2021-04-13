@@ -172,8 +172,7 @@ def play_audio():
 		print "Error: Unable put modem into TAD mode."
 		return
 
-	exec_AT_cmd("AT+VTS=4127604197")
-
+	
 	time.sleep(1)
 
 	# Play Audio File
@@ -181,7 +180,7 @@ def play_audio():
 	global disable_modem_event_listener
 	disable_modem_event_listener = True
 	
-	wf = wave.open("/home/nicholas/Desktop/Face-Door/src/prosessing/song.wav",'rb')
+	wf = wave.open("/home/nicholas/Desktop/Face-Door/src/prosessing/audio/song.wav",'rb')
 	chunk = 1024
 
 	data = wf.readframes(chunk)
@@ -189,7 +188,6 @@ def play_audio():
 		analog_modem.write(data)
 		data = wf.readframes(chunk)
 		# You may need to change this sleep interval to smooth-out the audio
-		time.sleep(.1)
 	wf.close()
 
 	#analog_modem.flushInput()
