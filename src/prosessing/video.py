@@ -39,6 +39,8 @@ import wget
 import pathlib
 from configparser import ConfigParser
 from PIL import Image
+from prosessing.dataclass import UserData 
+
 #import KnnClassifiyer
 # TODOD: add All Config.py Settings that arnt python fiunctions to Database
 
@@ -50,6 +52,7 @@ class VideoProsessing(object):
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     imagePath = "/mnt/user/"
     imagePathusers = "/mnt/user/people/"
+
     storage_array = []
     userArray= []
 
@@ -110,22 +113,11 @@ class VideoProsessing(object):
     def datalist(self):
         i = 0
 
-
         while True:
-            # example Json string  [{"name":"Tesla", "age":2, "city":"New York"}]
+            # example Json string  [{"uuid":"Tesla", "name":2, "status":"New York",image:none, url:}]
             print(str("Indext of Data is ")+str(i))
             
-            userdata = {
-                    "user" : uuid.uuid1(),
-                    "name" : db.getName(db.getFaces(), i),
-                    "status" : db.getStatus(db.getFaces(), i),
-                    "image" : db.getName(db.getFaces(), i),
-                    "url"  : db.getImageUrI(db.getFaces(), i)                    
-            }
-
-            output = json.dumps(userdata,indent=2)
-            VideoProsessing.userArray.extend(output)
-            print(VideoProsessing.userArray)
+            VideoProsessing.userArray.append(UserData(uuid.uuid1(),db.getName(db.getFaces(),i),db.getStatus(db.getFaces(),i),db.getImageName(db.getFaces(),i),db.getImageUrl(db.getFaces(),i)))
             i += 1
 
             # Checks to see if i == the database amount hehe
