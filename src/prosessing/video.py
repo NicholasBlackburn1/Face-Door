@@ -9,9 +9,6 @@ TODO: ASSINE USERS UUIDS TO MAKE IT EASER
 
 from uuid import uuid1
 import uuid
-from sqlalchemy.sql.elements import literal
-
-import cardinality
 import ast
 from collections import OrderedDict
 import logging
@@ -24,14 +21,13 @@ import json
 
 import cv2
 
-import face_recognition
+
 import numpy as np
 import os
 from datetime import datetime
 import time
 import logging
 import zmq
-import Config
 from time import sleep
 import threading
 import base64
@@ -43,8 +39,7 @@ import wget
 import pathlib
 from configparser import ConfigParser
 from PIL import Image
-import SmsHandler
-import KnnClassifiyer
+#import KnnClassifiyer
 # TODOD: add All Config.py Settings that arnt python fiunctions to Database
 
 
@@ -56,6 +51,7 @@ class VideoProsessing(object):
     imagePath = "/mnt/user/"
     imagePathusers = "/mnt/user/people/"
     storage_array = []
+    userArray= []
 
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
@@ -119,15 +115,17 @@ class VideoProsessing(object):
             # example Json string  [{"name":"Tesla", "age":2, "city":"New York"}]
             print(str("Indext of Data is ")+str(i))
             
-            userdata = '{'+str(uuid.uuid1())+":"+'{'+'"name":'+str("[")+str(db.getName(db.getFaces(), i))+str("[")+','+'"status":'+str("[")+str(db.getStatus(db.getFaces(), i)) + str("[")+','+'"image":'+str("[")+str(db.getImageName(db.getFaces(), i))+str("[")+','+'"download_Url":'+str("[")+str(db.getImageUrI(db.getFaces(), i))+str("[")+'}'+'}'
+            userdata = {
+                    "user" : uuid.uuid1(),
+                    "name" : db.getName(db.getFaces(), i),
+                    "status" : db.getStatus(db.getFaces(), i),
+                    "image" : db.getName(db.getFaces(), i),
+                    "url"  : db.getImageUrI(db.getFaces(), i)                    
+            }
 
-            # prepares Mal Json strings
-            basejson = userdata.replace("[", "'")
-            finaljson = basejson.replace("'", '"')
-            # Final Json  string replacement accoures
-
-            self.storage_array.insert(i, finaljson)
-
+            output = json.dumps(userdata,indent=2)
+            VideoProsessing.userArray.extend(output)
+            print(VideoProsessing.userArray)
             i += 1
 
             # Checks to see if i == the database amount hehe
@@ -267,7 +265,7 @@ class VideoProsessing(object):
         self.downloadUserFaces(VideoProsessing.imagePathusers)
         
         #Trains Knn
-        KnnClassifiyer.train("/mnt/user/train",image_files_in_folder,face_recognition,neighbors)
+        #KnnClassifiyer.train("/mnt/user/train",image_files_in_folder,face_recognition,neighbors)
     
         logging.info("Cv setup")
 
@@ -298,7 +296,7 @@ class VideoProsessing(object):
             # Resize frame of video to 1/4 size for faster face detection processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
-            predictions =KnnClassifiyer.predict(small_frame)
+            #redictions =KnnClassifiyer.predict(small_frame)
             # Loads Status of people 
             status = self.getUserStatusandCheckStatus(self.datalist())
 
