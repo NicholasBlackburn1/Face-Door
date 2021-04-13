@@ -1,5 +1,5 @@
 """
-this file is for Knn Handler for Face Rec Subsystem to handdl
+this file is for Knn Handler for Face Rec Subsystem to handle
 """
 
 import math
@@ -84,7 +84,7 @@ def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):
         with open(model_path, 'rb') as f:
             knn_clf = pickle.load(f)
 
-    X_face_locations = face_recognition.face_locations(X_frame)
+    wX_face_locations = face_recognition.face_locations(X_frame)
 
     # If no faces are found in the image, return an empty result.
     if len(X_face_locations) == 0:

@@ -119,8 +119,7 @@ class VideoProsessing(object):
             # example Json string  [{"name":"Tesla", "age":2, "city":"New York"}]
             print(str("Indext of Data is ")+str(i))
             
-            userdata = '{'+str(uuid.uuid1())+':'+'"name":'+str("[")+str(db.getName(db.getFaces(), i))+str("[")+','+'"status":'+str("[")+str(db.getStatus(db.getFaces(), i)) + str(
-                "[")+','+'"image":'+str("[")+str(db.getImageName(db.getFaces(), i))+str("[")+','+'"download_Url":'+str("[")+str(db.getImageUrI(db.getFaces(), i))+str("[")+'}'
+            userdata = '{'+str(uuid.uuid1())+":"+'{'+'"name":'+str("[")+str(db.getName(db.getFaces(), i))+str("[")+','+'"status":'+str("[")+str(db.getStatus(db.getFaces(), i)) + str("[")+','+'"image":'+str("[")+str(db.getImageName(db.getFaces(), i))+str("[")+','+'"download_Url":'+str("[")+str(db.getImageUrI(db.getFaces(), i))+str("[")+'}'+'}'
 
             # prepares Mal Json strings
             basejson = userdata.replace("[", "'")
