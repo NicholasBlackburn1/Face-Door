@@ -41,17 +41,12 @@ from PIL import Image
 from prosessing.data.DataClass import UserData
 
 #import KnnClassifiyer
-# TODOD: add All Config.py Settings that arnt python fiunctions to Database
 
 
 class VideoProsessing(object):
    
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
-    rootDirPath = "/mnt/secu"
-    configPath = "/mnt/secu/config"
-    imagePath = "/mnt/secu/user/CaughtImages/"
-    imagePathusers = "/mnt/secu/user/people/"
-
+   
 
 
     user_Array={}
@@ -129,62 +124,11 @@ class VideoProsessing(object):
         '''
 
     def ProcessVideo(self):
-
-        logging.basicConfig(filename="/mnt/user/logs/" + datetime.now().strftime(
-        "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
-
-        # Checks To see if Folder Paths Exists For All the File Storages
-        logging.warning("UwU Creating Files Dirs")
-
-        if(not os.path.exists(self.rootDirPath)):
-            os.makedirs(self.rootDirPath)
-            logging.info("Creating Root Dir of Program")
-
-            if(not os.path.exists(self.imagePath)):
-                os.makedirs(self.imagePath)
-                logging.info("created Caputered Image Local")
-            
-            if(not os.path.exists(self.imagePath+"Admin/")):
-                os.makedirs(self.imagePath+"Admin/")
-                logging.info("created  Admin Image Local")
-
-            if(not os.path.exists(self.imagePath+"User/")):
-                os.makedirs(self.imagePath+"User/")
-                logging.info("created  User Image Local")
-
-            if(not os.path.exists(self.imagePath+"Unwanted/")):
-                os.makedirs(self.imagePath+"Unwanted/")
-                logging.info("created  Unwanted Image Local")
-            
-            if(not os.path.exists(self.imagePath+"Unwated/")):
-                os.makedirs(self.imagePath+"Unwanted/")
-                logging.info("created  Unwanted Image Local")
-
-            if(not os.path.exists(self.imagePath+"Group/")):
-                os.makedirs(self.imagePath+"Group/")
-                logging.info("created  Group Image Local")
-
-            if(not os.path.exists(self.imagePath+"unknown/")):
-                os.makedirs(self.imagePath+"unknown/")
-                logging.info("created  unknown Image Local")
-            
-            logging.warn("Created File Dir's")
-
-        if(os.path.exists(self.rootDirPath)):
-            logging.info("Paths created Skipping creating newOnes")
-            
-
-                
-
-
-
-        # Sends Sms Message Saying Starting Server
-        
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
-# gets Config file
-        print(str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini")
+        # gets Config file
+        print("Example Config"+str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini")
         # Read config.ini file
         config_object = ConfigParser()
         config_object.read(str(pathlib.Path().absolute()) +
@@ -196,6 +140,68 @@ class VideoProsessing(object):
         fileconfig = config_object['FILE']
         current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
 
+        rootDirPath = fileconfig['rootDirPath']
+        configPath = fileconfig['rootDirPath']+fileconfig['configPath']
+        imagePath = fileconfig['rootDirPath']+ fileconfig['imagePath']
+        imagePathusers = fileconfig['rootDirPath']+ fileconfig['imagePathusers']
+
+
+
+        logging.basicConfig(filename=configPath+logconfig['filename'] + datetime.now().strftime(
+        "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
+
+        # Checks To see if Folder Paths Exists For All the File Storages
+        logging.warning("UwU Creating Files Dirs")
+
+        if(not os.path.exists(rootDirPath)):
+            os.makedirs(rootDirPath)
+            logging.info("Creating Root Dir of Program")
+
+            if(not os.path.exists(configPath)):
+                os.makedirs(configPath)
+                logging.info("Creating COnfig Dir of Program")
+                shutil.copyfile(str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini",configPath,follow_symlinks=True)
+                
+            if(not os.path.exists(imagePath)):
+                os.makedirs(imagePath)
+                logging.info("created Caputered Image Local")
+            
+            if(not os.path.exists(imagePath+"Admin/")):
+                os.makedirs(imagePath+"Admin/")
+                logging.info("created  Admin Image Local")
+
+            if(not os.path.exists(imagePath+"User/")):
+                os.makedirs(imagePath+"User/")
+                logging.info("created  User Image Local")
+
+            if(not os.path.exists(imagePath+"Unwanted/")):
+                os.makedirs(imagePath+"Unwanted/")
+                logging.info("created  Unwanted Image Local")
+            
+            if(not os.path.exists(imagePath+"Unwated/")):
+                os.makedirs(imagePath+"Unwanted/")
+                logging.info("created  Unwanted Image Local")
+
+            if(not os.path.exists(imagePath+"Group/")):
+                os.makedirs(imagePath+"Group/")
+                logging.info("created  Group Image Local")
+
+            if(not os.path.exists(imagePath+"unknown/")):
+                os.makedirs(imagePath+"unknown/")
+                logging.info("created  unknown Image Local")
+                
+            
+            logging.warn("Created File Dir's")
+
+        if(os.path.exists(rootDirPath)):
+            logging.info("Paths created Skipping creating newOnes")
+
+            if( os.path.exists(configPath)):
+                logging.info("config local Exsitis")
+                config_object.read(configPath+"Config.ini")
+                logging.info("Reloading config to The one in"+configPath)
+
+                
 # connects to database
         # Database connection handing
         logging.info("Connecting to the Database Faces")
@@ -217,7 +223,7 @@ class VideoProsessing(object):
         logging.info("Setting up cv")
 
         # Downlaods all the Faces 
-        self.downloadUserFaces(VideoProsessing.imagePathusers)
+        self.downloadUserFaces(imagePathusers)
         
         #Trains Knn
         #KnnClassifiyer.train("/mnt/user/train",image_files_in_folder,face_recognition,neighbors)
@@ -285,9 +291,9 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # sends Image and saves image to disk
-                if(not os.path.exists(self.imagePath+"Admin/"+self.imagename+".jpg")):
+                if(not os.path.exists(imagePath+"Admin/"+self.imagename+".jpg")):
 
-                    self.saveImage(self.imagePath+"Admin/",self.imagename,frame)
+                    self.saveImage(imagePath+"Admin/",self.imagename,frame)
 
                     # sends person info
                     filehandler.send_person_name(sock, name,logging)
@@ -337,10 +343,10 @@ class VideoProsessing(object):
                     )
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath+"User/"+self.imagename+".jpg")):
+                    if(not os.path.exists(imagePath+"User/"+self.imagename+".jpg")):
 
                         # sends Image and saves image to disk
-                        self.saveImage(self.imagePath+"User/", self.imagename, frame)
+                        self.saveImage(imagePath+"User/", self.imagename, frame)
 
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
@@ -362,10 +368,10 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath+"Unwanted/" + self.imagename + ".jpg")):
+                    if(not os.path.exists(imagePath+"Unwanted/" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.saveImage(self.imagePath+"Unwanted/",self.imagename, frame)
+                        self.saveImage(imagePath+"Unwanted/",self.imagename, frame)
 
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
@@ -406,10 +412,10 @@ class VideoProsessing(object):
 
                     logging.warning("Letting in group")
 
-                    if(not os.path.exists(self.imagePath + "Group/" + self.imagename + ".jpg")):
+                    if(not os.path.exists(imagePath + "Group/" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.saveImage(self.imagePath + "Group/", self.imagename, frame)
+                        self.saveImage(imagePath + "Group/", self.imagename, frame)
 
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
@@ -427,9 +433,9 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath + "unknown/" + self.imagename + ".jpg")):
+                    if(not os.path.exists(imagePath + "unknown/" + self.imagename + ".jpg")):
                         # sends Image and saves image to disk
-                        self.saveImage(self.imagePath+"unknown/", self.imagename, frame)
+                        self.saveImage(imagePath+"unknown/", self.imagename, frame)
 
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
