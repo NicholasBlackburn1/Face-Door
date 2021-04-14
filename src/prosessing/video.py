@@ -100,24 +100,24 @@ class VideoProsessing(object):
     def save_group(self, imagepath, imagename, frame):
         cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
 
-    # decodes Json Encoded Data Created From DataList Function to retun image name
-    def decodeJsonImageData(self,facedata):
-        decodedjson= json.loads(facedata)
-        return decodedjson['image']
-
-    def decodeJsonString(self,facedata):
-        decodedjson= json.loads(facedata)
-        return decodedjson
-
+    
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
-    def datalist(self):
+    def UserDataList(self):
         i = 0
 
         while True:
             # example Json string  [{"uuid":"Tesla", "name":2, "status":"New York",image:none, url:}]
-            print(str("Indext of Data is ")+str(i))
-            
-            VideoProsessing.userArray.append(UserData(uuid.uuid1(),db.getName(db.getFaces(),i),db.getStatus(db.getFaces(),i),db.getImageName(db.getFaces(),i),db.getImageUrl(db.getFaces(),i)))
+            print(str("Data index ")+str(i))
+
+            # this is Where the Data gets Wrapped into am DataList with uuid First key
+            localData = {
+                uuid.uuid1():UserData(db.getName(db.getFaces(),i),db.getStatus(db.getFaces(),i),db.getImageName(db.getFaces(),i),db.getImageUrl(db.getFaces(),i))
+            }
+
+            # adds Local data key into usr dict
+            VideoProsessing.userArray.extend(localData)
+
+            print(VideoProsessing.userArray)
             i += 1
 
             # Checks to see if i == the database amount hehe
@@ -133,15 +133,14 @@ class VideoProsessing(object):
         data = userData[i]
 
         print(" this is the data yaya" + str(data))
-        # converts json string into
-        user_info = json.loads(data)
+       
 
-        if(not os.path.exists(filepath+user_info['image']+".jpg")):
-            wget.download(user_info['download_Url'], str(filepath))
+        if(not os.path.exists(filepath+data['image']+".jpg")):
+            wget.download(data['download_Url'], str(filepath))
             logging.info('Downloading ' +
-                         str(user_info['image'])+', this may take a while...')
+                         str(data['image'])+', this may take a while...')
             logging.info("output file" +
-                         str(user_info['image']+"at" + filepath))
+                         str(data['image']+"at" + filepath))
 
         # this function will load and prepare face encodes  for
     
@@ -154,7 +153,7 @@ class VideoProsessing(object):
         # gets users names statuses face iamges and the urls from the tuples
         while True:
 
-            self.downloadFacesAndProssesThem(logging, self.datalist(), imagePath, index)
+            self.downloadFacesAndProssesThem(logging, self.UserDataList(), imagePath, index)
             logging.warn("downloaded"+str(index) +"out of " + str(db.getAmountOfEntrys()))
 
             index +=1
@@ -162,32 +161,7 @@ class VideoProsessing(object):
             if(index == db.getAmountOfEntrys()):
                 logging.info("Done Downloading Images UWU....")
                 return
-        
-    # checks usr and json status
-    def getUserStatusandCheckStatus(self,ogfacedata):
-            i = 0 
-            
-            while True:
-                    
-                decodedogjson= json.loads(ogfacedata[i])
-                decodedcomparejson= json.loads(ogfacedata[i])
-                
-                # Simply Checks to see if the 2 json strings equle each
-                if(decodedogjson == decodedcomparejson):
-                    logging.info("YaY User Json Strings Are Right UwU Now to try to check user status hehe")
-                    return decodedcomparejson['status']
-                    
-                
-                # if check fail throws error 
-                if(decodedogjson  == None):
-                    logging.critical("STRINGS FAILD COMPARISON")
-                    raise Exception('FAILD JSON COMPARISON for user status') # Don't! If you catch, likely to hide bugs.
-
-                i+=1
-                if(i == db.getAmountOfEntrys):
-                    logging.info("finished checking status")
-                    return
-    
+   
     # gets USer name from Json String 
     def getUserNames(self, datalist):
 
@@ -196,11 +170,11 @@ class VideoProsessing(object):
         logging.info("Decoding Json String for user name...")
         while True:
             # interpates json string 
-            decodedstring = self.decodeJsonString(datalist[i])
+            decodedstring = self.UserDataList()()
 
             if decodedstring is not None:
                 logging.info("Done decoding string sending name to other code...")
-                return decodedstring['name']
+                return decodedstring['']
             i+=1
             
             if(i == db.getAmountOfEntrys):
@@ -290,8 +264,7 @@ class VideoProsessing(object):
             
             #redictions =KnnClassifiyer.predict(small_frame)
             # Loads Status of people 
-            status = self.getUserStatusandCheckStatus(self.datalist())
-
+            
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """

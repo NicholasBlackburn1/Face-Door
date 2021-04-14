@@ -10,9 +10,10 @@ import uuid
 
 # This Data class is for Handling UserData and allowing Programsers to use all the User data  UwU
 @dataclass
-class UserData:
-    UserId : uuid.UUID
+class UserData():
     Name : str
     Status: str
     Image : str
-    Url : str
+    download_Url : str
+
+
