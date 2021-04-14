@@ -27,6 +27,7 @@ import os
 from datetime import datetime
 import time
 import logging
+from prosessing.Database import getUserUUID
 import zmq
 from time import sleep
 import threading
@@ -53,9 +54,8 @@ class VideoProsessing(object):
     imagePath = "/mnt/user/"
     imagePathusers = "/mnt/user/people/"
 
-    storage_array = []
-    userArray= []
 
+    user_Array={}
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
     video_capture = cv2.VideoCapture(0)
@@ -110,16 +110,13 @@ class VideoProsessing(object):
             print(str("Data index ")+str(i))
 
             # this is Where the Data gets Wrapped into am DataList with uuid First key
-            localData = {
-                uuid.uuid1():UserData(db.getName(db.getFaces(),i),db.getStatus(db.getFaces(),i),db.getImageName(db.getFaces(),i),db.getImageUrl(db.getFaces(),i))
+            local_data = {
+                 uuid.uuid1(db.getUserUUID(db.getFaces(),i)):UserData(db.getName(db.getFaces(),i),db.getStatus(db.getFaces(),i),db.getImageName(db.getFaces(),i),db.getImageUrl(db.getFaces(),i))
             }
 
-            # adds Local data key into usr dict
-            VideoProsessing.userArray.extend(localData)
+            VideoProsessing.user_Array[local_data]   
+            print(VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(),i)))
 
-
-
-            print(VideoProsessing.userArray[0])
             i += 1
 
             # Checks to see if i == the database amount hehe
@@ -130,19 +127,19 @@ class VideoProsessing(object):
     #
 
     # saves downloaded Image Converted to black and white
-    def downloadFacesAndProssesThem(self, logging, userData, filepath, i):
+    def downloadFacesAndProssesThem(self, logging, userData, filepath):
         # Main Storage Array for json strings
-        data = userData[i]
+        
 
-        print(" this is the data yaya" + str(data))
+        print(" this is the data yaya" + str(userData))
        
 
-        if(not os.path.exists(filepath+data['image']+".jpg")):
-            wget.download(data['download_Url'], str(filepath))
+        if(not os.path.exists(filepath+userData['image']+".jpg")):
+            wget.download(userData['download_Url'], str(filepath))
             logging.info('Downloading ' +
-                         str(data['image'])+', this may take a while...')
+                         str(userData['image'])+', this may take a while...')
             logging.info("output file" +
-                         str(data['image']+"at" + filepath))
+                         str(userData['image']+"at" + filepath))
 
         # this function will load and prepare face encodes  for
     
@@ -155,7 +152,7 @@ class VideoProsessing(object):
         # gets users names statuses face iamges and the urls from the tuples
         while True:
 
-            self.downloadFacesAndProssesThem(logging, self.UserDataList(), imagePath, index)
+            self.downloadFacesAndProssesThem(logging, VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(),index)), imagePath)
             logging.warn("downloaded"+str(index) +"out of " + str(db.getAmountOfEntrys()))
 
             index +=1

@@ -82,10 +82,10 @@ def getImageName(result_set, i):
     id, user, group, image, imageurl, seen = result_set[i]
     return image
 
-    id, user, group, image, imageurl, seen = result_set[i]
-    return image
-
-
 def getImageUrI(result_set, i):
     id, user, group, image, imageurl, seen = result_set[i]
     return imageurl
+
+def getUserUUID(result_set, i):
+    id, useruuid,user, group, image, imageurl, seen = result_set[i]
+    return useruuid
