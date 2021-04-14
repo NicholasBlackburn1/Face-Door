@@ -87,7 +87,6 @@ class VideoProsessing(object):
 
         print(" this is the data yaya" + str(userData))
        
-
         if(not os.path.exists(filepath+userData['image']+".jpg")):
             wget.download(userData['download_Url'], str(filepath))
             logging.info('Downloading ' +
@@ -108,7 +107,7 @@ class VideoProsessing(object):
         # gets users names statuses face iamges and the urls from the tuples
         while True:
 
-            self.downloadFacesAndProssesThem(logging, VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(),index)), imagePath)
+            self.downloadFacesAndProssesThem(logging, VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(),index)), imagePath+VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(),index).user))
             logging.warn("downloaded"+str(index) +"out of " + str(db.getAmountOfEntrys()))
 
             index +=1
@@ -161,6 +160,10 @@ class VideoProsessing(object):
                 os.makedirs(configPath)
                 logging.info("Creating COnfig Dir of Program")
                 shutil.copyfile(str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini",configPath,follow_symlinks=True)
+                
+            if(not os.path.exists(imagePathusers)):
+                os.makedirs(imagePathusers)
+                logging.info("Creating Training Dir For users")
                 
             if(not os.path.exists(imagePath)):
                 os.makedirs(imagePath)
