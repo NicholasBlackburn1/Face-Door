@@ -20,27 +20,25 @@ from tokenize import Double, String
 import json
 
 import cv2
-
-
 import numpy as np
 import os
 from datetime import datetime
 import time
 import logging
-from prosessing.Database import getUserUUID
+from prosessing.data.Database import getUserUUID
 import zmq
 from time import sleep
 import threading
 import base64
 import json
 import math
-import Database as db
+import prosessing.data.Database as db
 import wget
-
+from prosessing.data.CvFileHandler import CvFileHandler as filehandler
 import pathlib
 from configparser import ConfigParser
 from PIL import Image
-from prosessing.dataclass import UserData 
+from prosessing.data.DataClass import UserData
 
 #import KnnClassifiyer
 # TODOD: add All Config.py Settings that arnt python fiunctions to Database
@@ -51,8 +49,9 @@ class VideoProsessing(object):
         "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
-    imagePath = "/mnt/user/"
+    imagePath = "/mnt/user/CaughtImages/"
     imagePathusers = "/mnt/user/people/"
+
 
 
     user_Array={}
@@ -62,45 +61,6 @@ class VideoProsessing(object):
 
 
 
-# handles adding data to lists so i can tuppleize it
-
-    # sends Person count info to subscribers
-
-
-    def send_person_count(self, face_encodings, sock):
-        logging.info("[SOCKET PERSON] sending Seen Persons")
-        sock.send_string("FACE")
-        sock.send_json({"face": str(len(face_encodings))})
-        logging.info("[SOCKET PERSON] Sent Seen Persons")
-
-    
-    def send_face_compare(self, face_distance, sock):
-        logging.info("[SOCKET FACEMATCH] sending Seen Persons")
-        sock.send_string("COMPARE")
-        sock.send_json({"compare": face_distance})
-        logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
-
-    # sends person name to subsecriber
-    def send_person_name(self, sock, name):
-        logging.info("[SOCKET Name] Sending person seen name")
-        sock.send_string("NAME")
-        sock.send_json({"name": name})
-        logging.info("[SOCKET Name] Sent Person name")
-
-    # saves owner images and sends Frame
-    def save_owner(self, imagepath, imagename, frame):
-        cv2.imwrite(imagepath + imagename + ".jpg", frame)
-
-    def save_user(self, imagePath, imagename, frame):
-        cv2.imwrite(imagePath + "user" + imagename + ".jpg", frame)
-
-    def save_unknown(self, imagepath, imagename, frame):
-        cv2.imwrite(imagepath + "unKnownPerson" + imagename + ".jpg", frame)
-
-    def save_group(self, imagepath, imagename, frame):
-        cv2.imwrite(imagepath + "Group" + imagename + ".jpg", frame)
-
-    
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
     def UserDataList(self):
         i = 0
@@ -142,7 +102,9 @@ class VideoProsessing(object):
                          str(userData['image']+"at" + filepath))
 
         # this function will load and prepare face encodes  for
-    
+    # saves owner images and sends Frame
+    def saveImage(self,imagepath, imagename, frame):
+        cv2.imwrite(imagepath + imagename + ".jpg", frame)
     
 
     # Fully Downloades USer Images and Returns No data
@@ -274,12 +236,12 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # sends Image and saves image to disk
-                if(not os.path.exists(self.imagePath+self.imagename+".jpg")):
+                if(not os.path.exists(self.imagePath+"Admin/"+self.imagename+".jpg")):
 
-                    self.save_owner(self.imagePath,self.imagename, frame)
+                    self.saveImage(self.imagePath+"Admin/",self.imagename,frame)
 
                     # sends person info
-                    self.send_person_name(sock, name)
+                    filehandler.send_person_name(sock, name,logging)
                     # send_group_status(sock,"owner")
                   
 
@@ -324,16 +286,15 @@ class VideoProsessing(object):
                         (255, 255, 255),
                         1,
                     )
-                    logging.warning("letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath+"user"+self.imagename+".jpg")):
+                    if(not os.path.exists(self.imagePath+"User/"+self.imagename+".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_user(self.imagePath, self.imagename, frame)
+                        self.saveImage(self.imagePath+"User/", self.imagename, frame)
 
                         # sends person info
-                        self.send_person_name(sock, name)
+                        filehandler.send_person_name(sock, name,logging)
                     # 
 
                 if (status == 'Unwanted'):
@@ -352,13 +313,13 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath + "unKnownPerson" + self.imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath+"UnWanted/" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_unknown(self.imagePath, self.imagename, frame)
+                        self.saveImage(self.imagePath+"UnWanted/",self.imagename, frame)
 
                         # sends person info
-                        self.send_person_name(sock, name)
+                        filehandler.send_person_name(sock, name,logging)
                         # send_group_status(sock,"Unknown")
                 elif (
                     len(predictions) >= 2
@@ -396,13 +357,13 @@ class VideoProsessing(object):
 
                     logging.warning("Letting in group")
 
-                    if(not os.path.exists(self.imagePath + "Group" + self.imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "Group/" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.save_group(self.imagePath, self.imagename, frame)
+                        self.saveImage(self.imagePath + "Group/", self.imagename, frame)
 
                         # sends person info
-                        self.send_person_name(sock, name)
+                        filehandler.send_person_name(sock, name,logging)
 
                 elif (name == opencvconfig['unreconizedPerson'] or status == None):
                     font = cv2.FONT_HERSHEY_DUPLEX
@@ -417,12 +378,12 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath + "unKnownPerson" + self.imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "unKnownPerson/" + self.imagename + ".jpg")):
                         # sends Image and saves image to disk
-                        self.save_unknown(self.imagePath, self.imagename, frame)
+                        self.saveImage(self.imagePath, self.imagename, frame)
 
                         # sends person info
-                        self.send_person_name(sock, name)
+                        filehandler.send_person_name(sock, name,logging)
                         # send_group_status(sock,"Unknown")
 
 

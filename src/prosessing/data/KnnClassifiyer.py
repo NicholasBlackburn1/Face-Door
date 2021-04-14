@@ -6,6 +6,7 @@ import math
 import os
 import pickle
 import face_recognition
+
 class KnnClassifiyer():
     def train(self,train_dir,image_files_in_folder, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
         """
@@ -85,7 +86,7 @@ class KnnClassifiyer():
             with open(model_path, 'rb') as f:
                 knn_clf = pickle.load(f)
 
-        wX_face_locations = face_recognition.face_locations(X_frame)
+        X_face_locations = face_recognition.face_locations(X_frame)
 
         # If no faces are found in the image, return an empty result.
         if len(X_face_locations) == 0:

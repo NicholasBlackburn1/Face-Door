@@ -15,7 +15,7 @@ import subprocess
 
 # Set these variables 
 
-PHONE_NUMBER = "4123891615" # Enter the Phone number that you want to dial
+PHONE_NUMBER = " # Enter the Phone number that you want to dial
 DTMF_DIGITS = "901" # Enter the DTMF digits that you want to pass (valid options: 0-9, * and #)
 
 
