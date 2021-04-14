@@ -39,7 +39,7 @@ import pathlib
 from configparser import ConfigParser
 from PIL import Image
 from prosessing.data.DataClass import UserData
-from prosessing.data.KnnClassifiyer import KnnClassifiyer
+import prosessing.data.KnnClassifiyer as Knn
 
 
 class VideoProsessing(object):
@@ -146,6 +146,7 @@ class VideoProsessing(object):
 
 
 
+
         logging.basicConfig(filename=configPath+logconfig['filename'] + datetime.now().strftime(
         "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
@@ -225,8 +226,7 @@ class VideoProsessing(object):
         self.downloadUserFaces(imagePathusers)
         
         #Trains Knn
-        #KnnClassifiyer.train("/mnt/user/train",image_files_in_folder,face_recognition,neighbors)
-    
+        Knn.train(train_dir=imagePathusers,model_save_path=imagePathusers+"Face_Rec.model")
         logging.info("Cv setup")
 
         sock.send(b"starting")
@@ -256,8 +256,10 @@ class VideoProsessing(object):
             # Resize frame of video to 1/4 size for faster face detection processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
-            predictions =KnnClassifiyer.predict(X_frame=small_frame)
-            # Loads Status of people 
+            predictions =Knn.predict(X_frame=small_frame)
+
+            # Loads Users from UserdataLisr
+            
             
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
@@ -290,14 +292,14 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # sends Image and saves image to disk
-                if(not os.path.exists(imagePath+"Admin/"+self.imagename+".jpg")):
+                    if(not os.path.exists(imagePath+"Admin/"+self.imagename+".jpg")):
 
-                    self.saveImage(imagePath+"Admin/",self.imagename,frame)
+                        self.saveImage(imagePath+"Admin/",self.imagename,frame)
 
-                    # sends person info
-                    filehandler.send_person_name(sock, name,logging)
-                    # send_group_status(sock,"owner")
-                  
+                        # sends person info
+                        filehandler.send_person_name(sock, name,logging)
+                        # send_group_status(sock,"owner")
+                    
 
                 # Adult Section add names to here for more adults
                 if (status == 'User'):
