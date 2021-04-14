@@ -250,8 +250,10 @@ class VideoProsessing(object):
             # checks to see if frames are vaild not black or empty
             if(frame == None):
                 logging.warning(str(current_time) +"Frame is Not Vaild Skiping...")
+
             if np.sum(frame) == 0:
                 logging.warning(str(current_time) +"Frame is all black Skiping...")
+
             if (width > 0 and height > 0):
                 logging.warn("cannot open Non exsting image")
                 print("Broaking Image Uwu It does not Exsit fix")
@@ -267,15 +269,21 @@ class VideoProsessing(object):
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
+            i=0
+            status = None
             # Display the results
             for name,(top, right, bottom, left) in predictions:
+               
+                # Should return user status based on the name linked to user uuid 
+                if(name == VideoProsessing.user_Array[db.getUserUUID(db.getFaces(),i)].user):
+                    status == VideoProsessing.user_Array[db.getUserUUID(db.getFaces(),i)].status
                 
                 # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                 top *= 4
                 right *= 4
                 bottom *= 4
                 left *= 4
-                i = 1
+
                 if (status == 'Admin'):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top),
@@ -304,7 +312,7 @@ class VideoProsessing(object):
                         # send_group_status(sock,"owner")
                     
 
-                # Adult Section add names to here for more adults
+                # User Grade Status 
                 if (status == 'User'):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top),
@@ -444,7 +452,7 @@ class VideoProsessing(object):
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
                         # send_group_status(sock,"Unknown")
-
+                    
 
                 # Display the resulting image
                 cv2.imshow("Video", frame)
