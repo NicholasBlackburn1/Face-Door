@@ -6,9 +6,11 @@ import math
 import os
 import pickle
 import face_recognition
+from face_recognition.face_recognition_cli import image_files_in_folder
+from sklearn import neighbors
 
 class KnnClassifiyer():
-    def train(self,train_dir,image_files_in_folder, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
+    def train(self,train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
         """
         Trains a k-nearest neighbors classifier for face recognition.
         :param train_dir: directory that contains a sub-directory for each known person, with its name.
@@ -67,7 +69,7 @@ class KnnClassifiyer():
                 pickle.dump(knn_clf, f)
 
 
-    def predict(self,X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):
+    def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):
         """
         Recognizes faces in given image using a trained KNN classifier
         :param X_frame: frame to do the prediction on.

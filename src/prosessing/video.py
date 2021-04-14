@@ -39,8 +39,7 @@ import pathlib
 from configparser import ConfigParser
 from PIL import Image
 from prosessing.data.DataClass import UserData
-
-#import KnnClassifiyer
+from prosessing.data.KnnClassifiyer import KnnClassifiyer
 
 
 class VideoProsessing(object):
@@ -257,7 +256,7 @@ class VideoProsessing(object):
             # Resize frame of video to 1/4 size for faster face detection processing
             small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
-            #redictions =KnnClassifiyer.predict(small_frame)
+            predictions =KnnClassifiyer.predict(X_frame=small_frame)
             # Loads Status of people 
             
             """
