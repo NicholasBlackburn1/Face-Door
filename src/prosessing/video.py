@@ -45,12 +45,12 @@ from prosessing.data.DataClass import UserData
 
 
 class VideoProsessing(object):
-    logging.basicConfig(filename="/mnt/user/logs/" + datetime.now().strftime(
-        "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
-
+   
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
-    imagePath = "/mnt/user/CaughtImages/"
-    imagePathusers = "/mnt/user/people/"
+    rootDirPath = "/mnt/secu"
+    configPath = "/mnt/secu/config"
+    imagePath = "/mnt/secu/user/CaughtImages/"
+    imagePathusers = "/mnt/secu/user/people/"
 
 
 
@@ -129,6 +129,55 @@ class VideoProsessing(object):
         '''
 
     def ProcessVideo(self):
+
+        logging.basicConfig(filename="/mnt/user/logs/" + datetime.now().strftime(
+        "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
+
+        # Checks To see if Folder Paths Exists For All the File Storages
+        logging.warning("UwU Creating Files Dirs")
+
+        if(not os.path.exists(self.rootDirPath)):
+            os.makedirs(self.rootDirPath)
+            logging.info("Creating Root Dir of Program")
+
+            if(not os.path.exists(self.imagePath)):
+                os.makedirs(self.imagePath)
+                logging.info("created Caputered Image Local")
+            
+            if(not os.path.exists(self.imagePath+"Admin/")):
+                os.makedirs(self.imagePath+"Admin/")
+                logging.info("created  Admin Image Local")
+
+            if(not os.path.exists(self.imagePath+"User/")):
+                os.makedirs(self.imagePath+"User/")
+                logging.info("created  User Image Local")
+
+            if(not os.path.exists(self.imagePath+"Unwanted/")):
+                os.makedirs(self.imagePath+"Unwanted/")
+                logging.info("created  Unwanted Image Local")
+            
+            if(not os.path.exists(self.imagePath+"Unwated/")):
+                os.makedirs(self.imagePath+"Unwanted/")
+                logging.info("created  Unwanted Image Local")
+
+            if(not os.path.exists(self.imagePath+"Group/")):
+                os.makedirs(self.imagePath+"Group/")
+                logging.info("created  Group Image Local")
+
+            if(not os.path.exists(self.imagePath+"unknown/")):
+                os.makedirs(self.imagePath+"unknown/")
+                logging.info("created  unknown Image Local")
+            
+            logging.warn("Created File Dir's")
+
+        if(os.path.exists(self.rootDirPath)):
+            logging.info("Paths created Skipping creating newOnes")
+            
+
+                
+
+
+
         # Sends Sms Message Saying Starting Server
         
         # sets rtsp vsr in python
@@ -313,10 +362,10 @@ class VideoProsessing(object):
                     logging.warning("not letting in" + name)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath+"UnWanted/" + self.imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath+"Unwanted/" + self.imagename + ".jpg")):
 
                         # sends Image and saves image to disk
-                        self.saveImage(self.imagePath+"UnWanted/",self.imagename, frame)
+                        self.saveImage(self.imagePath+"Unwanted/",self.imagename, frame)
 
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
@@ -378,9 +427,9 @@ class VideoProsessing(object):
                                 0.5, (255, 255, 255), 1)
 
                     # checks to see if image exsitis
-                    if(not os.path.exists(self.imagePath + "unKnownPerson/" + self.imagename + ".jpg")):
+                    if(not os.path.exists(self.imagePath + "unknown/" + self.imagename + ".jpg")):
                         # sends Image and saves image to disk
-                        self.saveImage(self.imagePath, self.imagename, frame)
+                        self.saveImage(self.imagePath+"unknown/", self.imagename, frame)
 
                         # sends person info
                         filehandler.send_person_name(sock, name,logging)
