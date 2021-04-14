@@ -117,7 +117,9 @@ class VideoProsessing(object):
             # adds Local data key into usr dict
             VideoProsessing.userArray.extend(localData)
 
-            print(VideoProsessing.userArray)
+
+
+            print(VideoProsessing.userArray[0])
             i += 1
 
             # Checks to see if i == the database amount hehe
@@ -162,27 +164,6 @@ class VideoProsessing(object):
                 logging.info("Done Downloading Images UWU....")
                 return
    
-    # gets USer name from Json String 
-    def getUserNames(self, datalist):
-
-        i = 0 
-
-        logging.info("Decoding Json String for user name...")
-        while True:
-            # interpates json string 
-            decodedstring = self.UserDataList()()
-
-            if decodedstring is not None:
-                logging.info("Done decoding string sending name to other code...")
-                return decodedstring['']
-            i+=1
-            
-            if(i == db.getAmountOfEntrys):
-                logging.info("Done decoding string sending name to other code returning to main code UWU...")
-                return
-
-        
-                
                 # Add names of the ecodings to thw end of list
         '''
         This Function is the Bulk of the Openv Image Prossesing Code

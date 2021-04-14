@@ -306,6 +306,7 @@ def adduser():
         user = Face(**request.form)
         user.image = output_name
         user.imageurl = tempfile_url
+        user.useruuid = str(uuid.uuid1())
         db.session.add(user)
         db.session.commit()
         ##print(image)

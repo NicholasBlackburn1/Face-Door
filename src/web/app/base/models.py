@@ -45,10 +45,11 @@ class Face(db.Model, UserMixin):
     __tablename__ = 'Face'
 
     id = Column(Integer, primary_key=True)
+    useruuid = Column(String, unique=True)
     user = Column(String, unique=True)
     group = Column(String)
-    image = Column(String(1000))
-    imageurl = Column(String(1000))
+    image = Column(String(1000),unique=True)
+    imageurl = Column(String(1000),unique=True)
     seen = Column(Integer)
 
     def __init__(self, **kwargs):
