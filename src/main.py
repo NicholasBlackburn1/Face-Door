@@ -8,15 +8,12 @@ This will Check to see if any of the MicroServices are Already running and will 
 from datetime import datetime
 import os
 import shutil
-
+import prosessing.video as cvVideo
 import web.run as webServer
 import threading
 import pathlib
 import logging
 import configparser
-
-# Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-
 
 
 prefix = "[SecuServe-Launcher]  "
@@ -107,9 +104,13 @@ def main():
     logging.debug("+= Launcher Log UwU!  Heres My Output Down below =+\n")
     logging.debug("===================================================\n")
 
-    logging.info(
-        prefix + "Time to Begin setting up Miro service Treads! UwU\n")
-    logging.info(prefix + "Are there any Threads alive?"+" "+"Opencv"+" " +str(cv_thread.is_alive())+" " + "WebServer?"+" " + str(webserver_thread.isAlive())+"\n")
+    logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
+
+    # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
+
+
+
+    logging.info(prefix + "Are there any Threads alive?"+" "+"Opencv"+" " +str(cv_thread.is_alive())+" " + "WebServer?"+" ")
 
             
 
