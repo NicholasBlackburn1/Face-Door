@@ -203,17 +203,6 @@ def register():
         return render_template("accounts/register.html", form=create_account_form)
 
 
-@blueprint.route("/logout", methods=["GET", "POST"])
-def logout():
-    logout_user()
-    return redirect(url_for("base_blueprint.login"))
-
-
-@login_manager.unauthorized_handler
-def unauthorized_handler():
-    return render_template("errors/403.html"), 403
-
-
 @blueprint.errorhandler(403)
 def access_forbidden(error):
     return render_template("errors/403.html"), 403
