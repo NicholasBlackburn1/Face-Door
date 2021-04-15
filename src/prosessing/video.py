@@ -142,14 +142,14 @@ class VideoProsessing(object):
         rootDirPath = fileconfig['rootDirPath']
         configPath = fileconfig['rootDirPath']+fileconfig['configPath']
         imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
-        imagePathusers = fileconfig['rootDirPath'] + \
-            fileconfig['imagePathusers']
+        imagePathusers = fileconfig['rootDirPath'] +fileconfig['imagePathusers']
 
         logging.basicConfig(filename=configPath+logconfig['filename'] + datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
-        # Checks To see if Folder Paths Exists For All the File Storages
-        logging.warning("UwU Creating Files Dirs")
+        if(self.video_capture == None):
+            logging.error(Exception("Camera Not Found! Sorry Master.... i Faild you"))
+            return
 
 # connects to database
         # Database connection handing
