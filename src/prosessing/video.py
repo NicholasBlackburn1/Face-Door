@@ -82,7 +82,9 @@ class VideoProsessing(object):
     # saves downloaded Image Converted to black and white
     def downloadFacesAndProssesThem(self, logging, userData, filepath):
         # Main Storage Array for json strings
-
+        if(not os.path.exists(filepath)):
+            os.mkdir(filepath)
+            
         print(" this is the data yaya" + str(userData))
 
         if(not os.path.exists(filepath+userData['image']+".jpg")):
@@ -166,6 +168,7 @@ class VideoProsessing(object):
         sock.bind(ZMQURI)
         logging.info("conneted to zmq")
 
+        
 
 # sends setup message and sets base image name to the current date mills and image storage path
         sock.send(b"setup")
