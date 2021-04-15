@@ -18,7 +18,7 @@ import configparser
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
 cv_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo)
-
+webServer_thead=threading.Thread(target=webServer.StartWebServer)
 
 prefix = "[SecuServe-Launcher]  "
 broken = "(Sad UwU Noises).... Im sorry Master but, I broke Stuff Again, Please Dont hate me..."
@@ -109,8 +109,7 @@ def main():
     logging.debug("===================================================\n")
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
-
-    logging.info(prefix + "Are there any Threads alive?"+" "+"Opencv"+" " +str(cv_thread.is_alive())+" " + "WebServer?"+" ")
+    logging.info(prefix + "Are there any Threads alive?"+" "+"Opencv"+" " +str(cv_thread.is_alive())+" " + "WebServer?"+" "+str(webServer_thead.is_alive()))
 
             
 
