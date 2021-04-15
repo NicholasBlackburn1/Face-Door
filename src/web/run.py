@@ -8,10 +8,14 @@ from flask_migrate import Migrate
 from os import environ
 from sys import exit
 from decouple import config
-from web.app.init import create_app, db
+from app import create_app, db
 from configparser import ConfigParser
+import webconfig
+
 
 import pathlib
+
+
 def getFlaskConfig():
     print("Flask config"+str(pathlib.Path().absolute())+"/"+"Config.ini")
     # Read config.ini file
@@ -25,15 +29,24 @@ def getFlaskConfig():
     print("https://"+flask['ip']+":"+flask['port'])
     return flask
 
-def StartWebServer():
-    # WARNING: Don't run with debug turned on in production!
+
+# WARNING: Don't run with debug turned on in production!
+try:
     DEBUG = config('DEBUG', default=True)
+    get_config_mode = 'Debug' if DEBUG else 'Production'
+    # Load all possible configurations
+    config_dict = {
+        'Production': webconfig.ProductionConfig,
+        'Debug'     : webconfig.DebugConfig
+    }
 
-    # The configuration
-    get_config_mode = 'Debug'
+    # Load the configuration using the default values
+    app_config =config_dict[get_config_mode]
 
-    
-    app = create_app() 
-    Migrate(app, db)
+except KeyError:
+    exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
 
-    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)
+app = create_app( app_config ) 
+Migrate(app, db)
+
+app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)

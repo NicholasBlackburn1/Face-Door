@@ -11,7 +11,7 @@ import os
 import shutil
 import subprocess
 import prosessing.video as cvVideo
-import web.run as webServer
+#import web.run as webServer
 import threading
 import pathlib
 import logging
@@ -19,8 +19,8 @@ import configparser
 
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-cv_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo)
-webServer_thead=threading.Thread(target=webServer.StartWebServer)
+opencv_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo)
+#webServer_thead=threading.Thread(target=webServer.StartWeb)
 
 prefix = "[SecuServe-Launcher]  "
 broken = "(Sad UwU Noises).... Im sorry Master but, I broke Stuff Again, Please Dont hate me..."
@@ -31,9 +31,6 @@ this allows the program to create all the file folders for the program
 """
 
 
-def CreateFolders(rootDirPath, configPath, imagePathusers, imagePath, loggingPath):
-      subprocess.call("CreateFileDirs.sh")
-  
 """
 Main Function and thread of The whole Program
 """
@@ -66,7 +63,17 @@ def main():
     logging.debug("===================================================\n")
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
-    logging.info(prefix + "Are there any Threads alive?"+" "+"Opencv"+" " +str(cv_thread.is_alive())+" " + "WebServer?"+" "+str(webServer_thead.is_alive()))
+    
+    if(not opencv_thread.is_alive() and not webServer_thead.is_alive()):
+
+        logging.info(prefix+"Starting webserver thread")
+        #webServer_thead.start()
+        logging.info(prefix+"Started webserver thread")
+
+        logging.info(prefix+"Starting Cv thread")
+        opencv_thread.start()
+        logging.info(prefix+"Started Cv thread")
+
 
             
 
