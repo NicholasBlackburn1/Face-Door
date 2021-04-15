@@ -62,6 +62,7 @@ zmqconfig = config_object['ZMQ']
 flaskconfig = config_object['FLASK']
 versionconfig = config_object['VERSION']
 settingsconfig = config_object['AMOUNT']
+fileconfig = config_object['FILE']
    
 
 
@@ -375,10 +376,10 @@ def settings():
             }
 
         #Write changes back to file
-        with open("/mnt/user/configs/phoneNumbers"+"phonenums.json", 'w') as conf:
+        with open(fileconfig['rootDirPath']+fileconfig['configPath']+fileconfig['PhoneNumberStorage']+"PhoneNumber.json", 'w') as conf:
             json.dump(data,conf)
             
-        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, phoneForm = phone_form, msg = "updatedzmq",version = versionconfig['number'] )
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, phoneForm = phone_form, msg = "addedphone",version = versionconfig['number'] )
         
         
         

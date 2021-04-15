@@ -151,58 +151,6 @@ class VideoProsessing(object):
         # Checks To see if Folder Paths Exists For All the File Storages
         logging.warning("UwU Creating Files Dirs")
 
-        if(not os.path.exists(rootDirPath)):
-            os.makedirs(rootDirPath)
-            logging.info("Creating Root Dir of Program")
-
-            if(not os.path.exists(configPath)):
-                os.makedirs(configPath)
-                logging.info("Creating COnfig Dir of Program")
-                shutil.copyfile(str(pathlib.Path().absolute(
-                ))+"/src/prosessing/"+"Config.ini", configPath, follow_symlinks=True)
-
-            if(not os.path.exists(imagePathusers)):
-                os.makedirs(imagePathusers)
-                logging.info("Creating Training Dir For users")
-
-            if(not os.path.exists(imagePath)):
-                os.makedirs(imagePath)
-                logging.info("created Caputered Image Local")
-
-            if(not os.path.exists(imagePath+"Admin/")):
-                os.makedirs(imagePath+"Admin/")
-                logging.info("created  Admin Image Local")
-
-            if(not os.path.exists(imagePath+"User/")):
-                os.makedirs(imagePath+"User/")
-                logging.info("created  User Image Local")
-
-            if(not os.path.exists(imagePath+"Unwanted/")):
-                os.makedirs(imagePath+"Unwanted/")
-                logging.info("created  Unwanted Image Local")
-
-            if(not os.path.exists(imagePath+"Unwated/")):
-                os.makedirs(imagePath+"Unwanted/")
-                logging.info("created  Unwanted Image Local")
-
-            if(not os.path.exists(imagePath+"Group/")):
-                os.makedirs(imagePath+"Group/")
-                logging.info("created  Group Image Local")
-
-            if(not os.path.exists(imagePath+"unknown/")):
-                os.makedirs(imagePath+"unknown/")
-                logging.info("created  unknown Image Local")
-
-            logging.warn("Created File Dir's")
-
-        if(os.path.exists(rootDirPath)):
-            logging.info("Paths created Skipping creating newOnes")
-
-            if(os.path.exists(configPath)):
-                logging.info("config local Exsitis")
-                config_object.read(configPath+"Config.ini")
-                logging.info("Reloading config to The one in"+configPath)
-
 # connects to database
         # Database connection handing
         logging.info("Connecting to the Database Faces")
