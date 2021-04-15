@@ -1,9 +1,10 @@
+
 '''
 This is the Main Launcher for the SecuServe Program YaY!
 This will Check to see if any of the MicroServices are Already running and will launch the services that arnt allready running
 @author Nicholas Blackburn
 '''
-from configparser import ConfigParser
+
 from datetime import datetime
 import os
 import shutil
@@ -12,6 +13,7 @@ import web.run as webServer
 import threading
 import pathlib
 import logging
+import configparser
 
 print("SecuServe Starting UwU!....")
 
@@ -23,7 +25,7 @@ webserver_thread = threading.Thread(
 
 prefix = "[SecuServe-Launcher]  "
 broken = "(Sad UwU Noises).... Im sorry Master but, I broke Stuff Again, Please Dont hate me..."
-happy = "(Happy UwU Noises)... Both Threads Started Yay! Master Loves me Now!~💗"
+happy = str("(Happy UwU Noises)... Both Threads Started Yay! Master Loves me Now!~").encode('utf-8')
 
 """
 this allows the program to create all the file folders for the program
@@ -89,7 +91,7 @@ Main Function and thread of The whole Program
 
 def Main():
     # Reads Config
-    config_object = ConfigParser()
+    config_object = configparser.ConfigParser()
     config_object.read(str(pathlib.Path().absolute()) +
                        "prosessing/"+"Config.ini")
 
