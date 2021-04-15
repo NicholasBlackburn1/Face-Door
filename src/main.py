@@ -16,6 +16,10 @@ import logging
 import configparser
 
 
+# Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
+cv_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo)
+
+
 prefix = "[SecuServe-Launcher]  "
 broken = "(Sad UwU Noises).... Im sorry Master but, I broke Stuff Again, Please Dont hate me..."
 happy = str("(Happy UwU Noises)... Both Threads Started Yay! Master Loves me Now!~").encode('utf-8')
@@ -86,7 +90,7 @@ def main():
     configPath = fileconfig['rootDirPath']+fileconfig['configPath']
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
     imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
-
+    loggingPath = fileconfig['rootDirPath'] + fileconfig['loggingPath']
     print("Creating folders")
 
     try:
@@ -96,7 +100,7 @@ def main():
 
     print("finished Creating Folders")
 
-    logging.basicConfig(filename=configPath+logconfig['launcher'] + datetime.now(
+    logging.basicConfig(filename=loggingPath+logconfig['launcher'] + datetime.now(
     ).strftime("%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
     
 
@@ -105,10 +109,6 @@ def main():
     logging.debug("===================================================\n")
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
-
-    # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-
-
 
     logging.info(prefix + "Are there any Threads alive?"+" "+"Opencv"+" " +str(cv_thread.is_alive())+" " + "WebServer?"+" ")
 
