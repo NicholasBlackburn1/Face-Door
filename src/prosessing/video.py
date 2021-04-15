@@ -107,10 +107,8 @@ class VideoProsessing(object):
         # gets users names statuses face iamges and the urls from the tuples
         while True:
 
-            self.downloadFacesAndProssesThem(logging, VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(
-            ), index)), imagePath+VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(), index).user))
-            logging.warn("downloaded"+str(index) + "out of " +
-                         str(db.getAmountOfEntrys()))
+            self.downloadFacesAndProssesThem(logging, VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(), index)), imagePath+str(VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(), index))))
+            logging.warn("downloaded"+str(index) + "out of " +str(db.getAmountOfEntrys()))
 
             index += 1
 

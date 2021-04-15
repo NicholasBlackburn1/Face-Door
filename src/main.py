@@ -64,7 +64,7 @@ def main():
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
     
-    if(not opencv_thread.is_alive() and not webServer_thead.is_alive()):
+    if(not opencv_thread.is_alive()):
 
         logging.info(prefix+"Starting webserver thread")
         #webServer_thead.start()
