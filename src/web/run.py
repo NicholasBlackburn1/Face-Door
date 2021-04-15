@@ -8,9 +8,7 @@ from flask_migrate import Migrate
 from os import environ
 from sys import exit
 from decouple import config
-
-from config import config_dict
-from app import create_app, db
+from web.app.init import create_app, db
 from configparser import ConfigParser
 
 import pathlib
@@ -34,15 +32,8 @@ def StartWebServer():
     # The configuration
     get_config_mode = 'Debug'
 
-    try:
-        
-        # Load the configuration using the default values 
-        app_config = config_dict[get_config_mode.capitalize()]
-
-    except KeyError:
-        exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
-
-    app = create_app( app_config ) 
+    
+    app = create_app() 
     Migrate(app, db)
 
     app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)
