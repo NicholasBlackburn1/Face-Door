@@ -6,8 +6,10 @@ This will Check to see if any of the MicroServices are Already running and will 
 '''
 
 from datetime import datetime
+from genericpath import exists
 import os
 import shutil
+import subprocess
 import prosessing.video as cvVideo
 import web.run as webServer
 import threading
@@ -29,47 +31,9 @@ this allows the program to create all the file folders for the program
 """
 
 
-def CreateFolders(rootDirPath, configPath, imagePathusers, imagePath):
-    if(not os.path.exists(rootDirPath)):
-        os.makedirs(rootDirPath)
-        logging.info(prefix+"Creating Root Dir of Program")
-
-        os.makedirs(configPath)
-        logging.info(prefix+"Creating COnfig Dir of Program")
-        shutil.copyfile(str(pathlib.Path().absolute(
-         ))+"/src/prosessing/"+"Config.ini", configPath, follow_symlinks=True)
-
-        os.makedirs(imagePathusers)
-        logging.info(prefix+"Creating Training Dir For users")
-
-        os.makedirs(imagePath)
-        logging.info(prefix+"created Caputered Image Local")
-
-        os.makedirs(imagePath+"Admin/")
-        logging.info(prefix+"created  Admin Image Local")
-
-    
-        os.makedirs(imagePath+"User/")
-        logging.info(prefix+"created  User Image Local")
-
-        os.makedirs(imagePath+"Unwanted/")
-        logging.info(prefix+"created  Unwanted Image Local")
-
-      
-        os.makedirs(imagePath+"Unwanted/")
-        logging.info(prefix+"created  Unwanted Image Local")
-
-        os.makedirs(imagePath+"Group/")
-        logging.info(prefix+"created  Group Image Local")
-
-
-        os.makedirs(imagePath+"unknown/")
-        logging.info(prefix+"created  unknown Image Local")
-        logging.warn(prefix+"Created File Dir's")
-    else:
-        logging.warn(prefix + "Folders are created time to go back to main function")
-        return
-
+def CreateFolders(rootDirPath, configPath, imagePathusers, imagePath, loggingPath):
+      subprocess.call("CreateFileDirs.sh")
+  
 """
 Main Function and thread of The whole Program
 """
@@ -91,14 +55,7 @@ def main():
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
     imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
     loggingPath = fileconfig['rootDirPath'] + fileconfig['loggingPath']
-    print("Creating folders")
 
-    try:
-        CreateFolders(rootDirPath, configPath, imagePathusers, imagePath)
-    except:
-        logging.error(Exception(prefix+"cannot create folders because of they are there!"))
-
-    print("finished Creating Folders")
 
     logging.basicConfig(filename=loggingPath+logconfig['launcher'] + datetime.now(
     ).strftime("%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
