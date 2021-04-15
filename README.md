@@ -14,12 +14,12 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 ## Features
 
-<li> Sends Sms ethan and sends us messages based on the person who is recognized</li>
+<li> Sends Sms sends us messages based on the person who is recognized</li>
 <li> able to be easily Started and Stopped on a Read Only os</li>
 <li> Uses realtime Facial recognition to Recognize Authorized users and the non authorized Users</li>
 <li> Uses GPIO control to control 2 big Electromagnet </li>
 <li> Added Philips Hue Support for Visually Displaying if a Known person is here or not </li>
-<li> added an flask onepager for displaying system data to user easily and securily </li>
+<li> added an flask website for displaying system data to user easily and securily </li>
 <li> secure login for data security and privacy </li>
 <li> Easy Web enterface to see data and to add more users  to the facial reconitions </li>
 <li> respond to groups of recognized people with one unrecognized person so we don't have False alarms </li>
@@ -27,7 +27,7 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 ## Todo's
 
 <li> get data to dynamically populate the webpage without the user refreshing the page</li>
-<li> watchdog for handleing door control for raspi </li>
+<li> watchdog for handleing door control for jetson nano</li>
 <li> Writing config data from webpage and saving it & displaying it on webpage </li>
 
 
