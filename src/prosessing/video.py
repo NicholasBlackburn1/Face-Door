@@ -42,12 +42,13 @@ from PIL import Image
 from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
+import nanocamera as nano
 
 class VideoProsessing(object):
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-    video_capture = cv2.VideoCapture(0)
+    video_capture = nano.Camera(camera_type=1, device_id=1, width=640, height=480, fps=30)
     
     userList = []
 
@@ -183,17 +184,17 @@ class VideoProsessing(object):
         logging.info("Cv setup")
 
         sock.send(b"starting")
-
+       
         while True:
 
             # graps image to read
-            ret, frame = VideoProsessing.video_capture.read()
+            s,frame = self.video_capture.cap.read()
 
             # gets video
-            fps = int(VideoProsessing.video_capture.get(2))
-            width = int(VideoProsessing.video_capture.get(3))   # float `width`
+            fps = int(self.video_capture.cap.get(2))
+            width = int(self.video_capture.cap.get(3))   # float `width`
             # float `height`
-            height = int(VideoProsessing.video_capture.get(4))
+            height = int(self.video_capture.cap.get(4))
 
             # checks to see if frames are vaild not black or empty
             if np.sum(frame) == 0:
@@ -203,11 +204,11 @@ class VideoProsessing(object):
             if (width > 0 and height > 0):
                 logging.warn("cannot open Non exsting image")
                 print("Broaking Image Uwu It does not Exsit fix")
-
+        
             # Resize frame of video to 1/4 size for faster face detection processing
-            small_frame = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+            small_frame = cv2.resize(frame, None, fx=0.5, fy=0.5)
 
-            predictions = Knn.predict(X_frame=small_frame)
+            predictions = Knn.predict(X_frame=small_frame,model_path=imagePathusers+"Face_Rec.model")
 
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
@@ -400,6 +401,7 @@ class VideoProsessing(object):
                         # sends person info
                         filehandler.send_person_name(sock, name, logging)
                         # send_group_status(sock,"Unknown")
+                i +=1
 
                 # Display the resulting image
                 cv2.imshow("Video", frame)
