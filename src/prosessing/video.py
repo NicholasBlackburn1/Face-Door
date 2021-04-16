@@ -7,6 +7,7 @@ TODO: ASSINE USERS UUIDS TO MAKE IT EASER
 """
 
 
+from os import path
 from uuid import uuid1
 import uuid
 import ast
@@ -40,7 +41,7 @@ from configparser import ConfigParser
 from PIL import Image
 from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
-
+from pathlib import Path
 
 class VideoProsessing(object):
 
@@ -78,18 +79,17 @@ class VideoProsessing(object):
 
     # saves downloaded Image Converted to black and white
     def downloadFacesAndProssesThem(self, logging, userData, filepath):
-        # Main Storage Array for json strings
-        if(not os.path.exists(filepath)):
-            os.mkdir(filepath)
-            
+       
+        Path(filepath+"/").mkdir(parents=True, exist_ok=True)
+
         print(" this is the data yaya" + str(userData))
 
-        if(not os.path.exists(filepath+userData['image']+".jpg")):
-            wget.download(userData['download_Url'], str(filepath))
+        if(not os.path.exists(filepath+userData.image+".jpg")):
+            wget.download(userData.downloadUrl, str(filepath))
             logging.info('Downloading ' +
-                         str(userData['image'])+', this may take a while...')
+                         str(userData.image)+', this may take a while...')
             logging.info("output file" +
-                         str(userData['image']+"at" + filepath))
+                         str(userData.image+"at" + filepath))
 
         # this function will load and prepare face encodes  for
     # saves owner images and sends Frame
@@ -101,10 +101,14 @@ class VideoProsessing(object):
     def downloadUserFaces(self, imagePath):
 
         index = 0
+        
         # gets users names statuses face iamges and the urls from the tuples
         while True:
-            print("Some Initerable data"+ str(self.userList[0][db.getUserUUID(db.getFaces(), 0)]))
-            self.downloadFacesAndProssesThem(logging, self.userList[db.getUserUUID(db.getFaces(), index)], imagePath+str(self.userList[(db.getUserUUID(db.getFaces(), index))].name))
+            userinfo = self.userList[index][db.getUserUUID(db.getFaces(), index)]
+
+            print("Some Initerable data"+ str(userinfo))
+
+            self.downloadFacesAndProssesThem(logging, self.userList[index][db.getUserUUID(db.getFaces(), index)], imagePath+str(userinfo.user))
             logging.warn("downloaded"+str(index) + "out of " +str(db.getAmountOfEntrys()))
             
             index += 1
