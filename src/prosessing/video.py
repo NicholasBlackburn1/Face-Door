@@ -196,10 +196,6 @@ class VideoProsessing(object):
             height = int(VideoProsessing.video_capture.get(4))
 
             # checks to see if frames are vaild not black or empty
-            if(frame == None):
-                logging.warning(str(current_time) +
-                                "Frame is Not Vaild Skiping...")
-
             if np.sum(frame) == 0:
                 logging.warning(str(current_time) +
                                 "Frame is all black Skiping...")
@@ -222,8 +218,8 @@ class VideoProsessing(object):
             for name, (top, right, bottom, left) in predictions:
 
                 # Should return user status based on the name linked to user uuid
-                if(name == VideoProsessing.user_Array[db.getUserUUID(db.getFaces(), i)].user):
-                    status == VideoProsessing.user_Array[db.getUserUUID(
+                if(name == self.userList[db.getUserUUID(db.getFaces(), i)].user):
+                    status == VideoProsessing.userList[db.getUserUUID(
                         db.getFaces(), i)].status
 
                 # Scale back up face locations since the frame we detected in was scaled to 1/4 size
