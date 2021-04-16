@@ -45,30 +45,27 @@ import prosessing.data.KnnClassifiyer as Knn
 class VideoProsessing(object):
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
-
-    user_Array = {}
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-
     video_capture = cv2.VideoCapture(0)
+    
+    userList = []
 
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
 
     def UserDataList(self):
         i = 0
-
+        
         while True:
             # example Json string  [{"uuid":"Tesla", "name":2, "status":"New York",image:none, url:}]
             print(str("Data index ")+str(i))
 
             # this is Where the Data gets Wrapped into am DataList with uuid First key
             local_data = {
-                uuid.uuid1(db.getUserUUID(db.getFaces(), i)): UserData(db.getName(db.getFaces(), i), db.getStatus(db.getFaces(), i), db.getImageName(db.getFaces(), i), db.getImageUrl(db.getFaces(), i))
+                db.getUserUUID(db.getFaces(), i): UserData(db.getName(db.getFaces(), i), db.getStatus(db.getFaces(), i), db.getImageName(db.getFaces(), i), db.getImageUrI(db.getFaces(), i))
             }
 
-            VideoProsessing.user_Array[local_data]
-            print(VideoProsessing.user_Array.get(
-                db.getUserUUID(db.getFaces(), i)))
-
+            self.userList.append(local_data)
+         
             i += 1
 
             # Checks to see if i == the database amount hehe
@@ -106,10 +103,10 @@ class VideoProsessing(object):
         index = 0
         # gets users names statuses face iamges and the urls from the tuples
         while True:
-
-            self.downloadFacesAndProssesThem(logging, VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(), index)), imagePath+str(VideoProsessing.user_Array.get(db.getUserUUID(db.getFaces(), index))))
+            print("Some Initerable data"+ str(self.userList[0][db.getUserUUID(db.getFaces(), 0)]))
+            self.downloadFacesAndProssesThem(logging, self.userList[db.getUserUUID(db.getFaces(), index)], imagePath+str(self.userList[(db.getUserUUID(db.getFaces(), index))].name))
             logging.warn("downloaded"+str(index) + "out of " +str(db.getAmountOfEntrys()))
-
+            
             index += 1
 
             if(index == db.getAmountOfEntrys()):
@@ -165,10 +162,11 @@ class VideoProsessing(object):
         sock = ctx.socket(zmq.PUB)
         sock.bind(ZMQURI)
         logging.info("conneted to zmq")
-
         
+        #Updates Data in the Usable data list uwu
+        self.UserDataList()
 
-# sends setup message and sets base image name to the current date mills and image storage path
+        # sends setup message and sets base image name to the current date mills and image storage path
         sock.send(b"setup")
         logging.info("Setting up cv")
 
