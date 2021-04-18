@@ -8,7 +8,7 @@ import pickle
 import face_recognition
 from face_recognition.face_recognition_cli import image_files_in_folder
 from sklearn import neighbors
-
+import logging
 
 def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
 
@@ -68,6 +68,8 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
         if model_save_path is not None:
             with open(model_save_path, 'wb') as f:
                 pickle.dump(knn_clf, f)
+                print("training complete...")
+                logging.info("Done training .............")
 
 
 def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):

@@ -179,6 +179,8 @@ class VideoProsessing(object):
         self.downloadUserFaces(imagePathusers)
 
         # Trains Knn
+        print("Training Model.....")
+        logging.info('Training Model....')
         Knn.train(train_dir=imagePathusers,
                   model_save_path=imagePathusers+"Face_Rec.model")
         logging.info("Cv setup")
