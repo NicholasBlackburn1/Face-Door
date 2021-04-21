@@ -41,13 +41,13 @@ from PIL import Image
 from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
-import nanocamera as nano
+from jetcam.usb_camera import USBCamera
 
 class VideoProsessing(object):
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-    video_capture = nano.Camera(camera_type=1, device_id=1, width=640, height=480, fps=30)
+    video_capture = cv2.VideoCapture('http://192.168.1.17:8080/video ')
     
     userList = []
 
@@ -119,14 +119,14 @@ class VideoProsessing(object):
 
                 # Add names of the ecodings to thw end of list
 
-    def fixImagesize(self,s,frame,width,height):
-        small_frame = None
-            # Only process valid image frames
+    def getSizedFrame(self,s,width, height): 
+        s, img = self.video_capture.read()
+
+        # Only process valid image frames
         if s:
+            img = cv2.resize(img, (width, height), fx=0.5, fy=0.5)
             
-            micro = cv2.resize(frame,(0, 0), fx=0.25, fy=0.25)
-            small_frame= micro[:, :, ::-1]
-        return s, small_frame    
+        return s,img
 
 
        
@@ -142,6 +142,8 @@ class VideoProsessing(object):
     '''
 
     def ProcessVideo(self):
+        
+      
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
@@ -178,6 +180,8 @@ class VideoProsessing(object):
         logging.info("connected to database Faces")
         logging.info("connecting to zmq")
 
+        Modelpath = str(imagePathusers+'rained_knn_model.clf')
+
 # inits Zmq Server
         ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
 
@@ -204,8 +208,7 @@ class VideoProsessing(object):
 
         self.sendProgramStatus(messgae="Training Models",sock=sock, logging=logging)
 
-        Knn.train(train_dir=imagePathusers,
-                  model_save_path=imagePathusers+"Face_Rec.model")
+        Knn.train(train_dir=imagePathusers,model_save_path=Modelpath,n_neighbors=2)
             
         self.sendProgramStatus(messgae="Done Training Models",sock=sock, logging=logging)
 
@@ -213,37 +216,34 @@ class VideoProsessing(object):
         
         self.sendProgramStatus(messgae="Starting CV backend...",sock=sock, logging=logging)
 
+        i = 0
+        status = None
        
         while True:
-
+          
             # graps image to read
-            s,frame = self.video_capture.cap.read()
+            s,frame = self.video_capture.read()
 
             # gets video
-            fps = int(self.video_capture.cap.get(2))
-            width = int(self.video_capture.cap.get(3))   # float `width`
+            fps = int(self.video_capture.get(2))
+            width = int(self.video_capture.get(3))   # float `width`
             # float `height`
-            height = int(self.video_capture.cap.get(4))
+            height = int(self.video_capture.get(4))
 
             # checks to see if frames are vaild not black or empty
-            if np.sum(frame) == 0:
-                logging.warning(str(current_time) +
-                                "Frame is all black Skiping...")
 
             if (width > 0 and height > 0):
                 logging.warn("cannot open Non exsting image")
                 print("Broaking Image Uwu It does not Exsit fix")
+            
+            img = cv2.resize(img, (width, height), fx=0.5, fy=0.5)
 
-            s, small_frame =self.fixImagesize(s,frame,width,height)
-         
-
-            predictions = Knn.predict(X_frame=small_frame,model_path=imagePathusers+"Face_Rec.model")
+            predictions = Knn.predict(X_img_path=img,model_path=Modelpath)
 
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
-            i = 0
-            status = None
+           
             # Display the results
             for name, (top, right, bottom, left) in predictions:
 
@@ -410,7 +410,7 @@ class VideoProsessing(object):
                                        self.imagename, frame)
 
                         # sends person info
-                        filehandler.send_person_name(sock, name, logging)
+                       
 
                 elif (name == opencvconfig['unreconizedPerson'] or status == None):
                     font = cv2.FONT_HERSHEY_DUPLEX
