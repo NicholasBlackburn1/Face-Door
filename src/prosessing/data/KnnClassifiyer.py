@@ -43,7 +43,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
             # Loop through each training image for the current person
             for img_path in image_files_in_folder(os.path.join(train_dir, class_dir)):
                 image = face_recognition.load_image_file(img_path)
-                face_bounding_boxes = face_recognition.face_locations(image)
+                face_bounding_boxes = face_recognition.face_locations(image,model="cnn")
 
                 if len(face_bounding_boxes) != 1:
                     # If there are no people (or too many people) in a training image, skip the image.
@@ -91,7 +91,7 @@ def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):
             with open(model_path, 'rb') as f:
                 knn_clf = pickle.load(f)
 
-        X_face_locations = face_recognition.face_locations(X_frame)
+        X_face_locations = face_recognition.face_locations(X_frame, model="cnn")
 
         # If no faces are found in the image, return an empty result.
         if len(X_face_locations) == 0:

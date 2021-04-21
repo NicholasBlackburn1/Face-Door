@@ -3,8 +3,6 @@ This class is for Handling Cv Files and etc
 """
 
 
-class CvFileHandler():
-
 # handles adding data to lists so i can tuppleize it
 
     # sends Person count info to subscribers
@@ -23,11 +21,5 @@ class CvFileHandler():
         sock.send_json({"compare": face_distance})
         logging.info("[SOCKET FACEMATCH] Sent Seen Persons")
 
-    # sends person name to subsecriber
-    def send_person_name(sock, name,logging):
-        logging.info("[SOCKET Name] Sending person seen name")
-        sock.send_string("NAME")
-        sock.send_json({"name": name})
-        logging.info("[SOCKET Name] Sent Person name")
-
+ 
    

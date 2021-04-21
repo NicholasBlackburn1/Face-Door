@@ -76,7 +76,7 @@ class VideoProsessing(object):
                     "Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
                 return
 
-    #
+    
 
     # saves downloaded Image Converted to black and white
     def downloadFacesAndProssesThem(self, logging, userData, filepath):
@@ -119,9 +119,28 @@ class VideoProsessing(object):
                 return
 
                 # Add names of the ecodings to thw end of list
-        '''
-        This Function is the Bulk of the Openv Image Prossesing Code
-        '''
+
+    def fixImagesize(self,s,frame,width,height):
+        small_frame = None
+            # Only process valid image frames
+        if s:
+            
+            micro = cv2.resize(frame,(0, 0), fx=0.25, fy=0.25)
+            small_frame= micro[:, :, ::-1]
+        return s, small_frame    
+
+
+       
+    def sendProgramStatus(self,messgae,sock,logging):
+        logging.info("[SOCKET Messgae]")
+        sock.send_string("StatusMessage")
+        sock.send_json({"message": str(messgae)})
+        logging.info("[SOCKET Messafe] s")
+
+
+    '''
+    This Function is the Bulk of the Openv Image Prossesing Code
+    '''
 
     def ProcessVideo(self):
         # sets rtsp vsr in python
@@ -167,12 +186,14 @@ class VideoProsessing(object):
         sock = ctx.socket(zmq.PUB)
         sock.bind(ZMQURI)
         logging.info("conneted to zmq")
+
+        self.sendProgramStatus(messgae="Starting Presetup",sock=sock, logging=logging)
         
         #Updates Data in the Usable data list uwu
         self.UserDataList()
 
         # sends setup message and sets base image name to the current date mills and image storage path
-        sock.send(b"setup")
+        self.sendProgramStatus(messgae="Started setup",sock=sock, logging=logging)
         logging.info("Setting up cv")
 
         # Downlaods all the Faces
@@ -181,11 +202,18 @@ class VideoProsessing(object):
         # Trains Knn
         print("Training Model.....")
         logging.info('Training Model....')
+
+        self.sendProgramStatus(messgae="Training Models",sock=sock, logging=logging)
+
         Knn.train(train_dir=imagePathusers,
                   model_save_path=imagePathusers+"Face_Rec.model")
-        logging.info("Cv setup")
 
-        sock.send(b"starting")
+        self.sendProgramStatus(messgae="Done Training Models",sock=sock, logging=logging)
+
+        logging.info("Cv setup")
+        
+        self.sendProgramStatus(messgae="Starting CV backend...",sock=sock, logging=logging)
+
        
         while True:
 
@@ -206,9 +234,9 @@ class VideoProsessing(object):
             if (width > 0 and height > 0):
                 logging.warn("cannot open Non exsting image")
                 print("Broaking Image Uwu It does not Exsit fix")
-        
-            # Resize frame of video to 1/4 size for faster face detection processing
-            small_frame = cv2.resize(frame, None, fx=0.5, fy=0.5)
+
+            s, small_frame =self.fixImagesize(s,frame,width,height)
+         
 
             predictions = Knn.predict(X_frame=small_frame,model_path=imagePathusers+"Face_Rec.model")
 
@@ -247,6 +275,9 @@ class VideoProsessing(object):
                     cv2.putText(frame, status, (0, 450),
                                 font, 0.5, (255, 255, 255), 1)
                     cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
+
+                    cv2.putText(frame, cam, (0, 100), font,
                                 0.5, (255, 255, 255), 1)
 
                     # sends Image and saves image to disk
