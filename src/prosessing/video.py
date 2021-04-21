@@ -35,7 +35,6 @@ import json
 import math
 import prosessing.data.Database as db
 import wget
-from prosessing.data.CvFileHandler import CvFileHandler as filehandler
 import pathlib
 from configparser import ConfigParser
 from PIL import Image
@@ -207,7 +206,7 @@ class VideoProsessing(object):
 
         Knn.train(train_dir=imagePathusers,
                   model_save_path=imagePathusers+"Face_Rec.model")
-
+            
         self.sendProgramStatus(messgae="Done Training Models",sock=sock, logging=logging)
 
         logging.info("Cv setup")

@@ -51,7 +51,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
                         print("Image {} not suitable for training: {}".format(img_path, "Didn't find a face" if len(face_bounding_boxes) < 1 else "Found more than one face"))
                 else:
                     # Add face encoding for current image to the training set
-                    X.append(face_recognition.face_encodings(image, known_face_locations=face_bounding_boxes)[0])
+                    X.append(face_recognition.face_encodings(face_image=image, num_jitters = 1, known_face_locations=face_bounding_boxes)[0])
                     y.append(class_dir)
 
         # Determine how many neighbors to use for weighting in the KNN classifier
@@ -91,7 +91,7 @@ def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):
             with open(model_path, 'rb') as f:
                 knn_clf = pickle.load(f)
 
-        X_face_locations = face_recognition.face_locations(X_frame, model="cnn")
+        X_face_locations = face_recognition.face_locations(number_of_times_to_upsample=0,img=X_frame, model="cnn")
 
         # If no faces are found in the image, return an empty result.
         if len(X_face_locations) == 0:
