@@ -236,7 +236,7 @@ class VideoProsessing(object):
                 logging.warn("cannot open Non exsting image")
                 print("Broaking Image Uwu It does not Exsit fix")
             
-            img = cv2.resize(img, (width, height), fx=0.5, fy=0.5)
+            img = cv2.resize(frame, (width, height), fx=0.5, fy=0.5)
 
             predictions = Knn.predict(X_img_path=img,model_path=Modelpath)
 
