@@ -85,7 +85,7 @@ def main():
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
     imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
     loggingPath = fileconfig['rootDirPath'] + fileconfig['loggingPath']
-
+    smsconfig = config_object['SMS']
 
     logging.basicConfig(filename=loggingPath+logconfig['launcher'] + datetime.now(
     ).strftime("%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
@@ -102,12 +102,16 @@ def main():
         
         if(not opencv_face_thread.is_alive()):
             wasStarted = True
+            sendMessageToClient(logging,smsconfig['userphonenum'],"Starting Opencv Thread")
             logging.info(prefix+"Starting Cv thread")
             opencv_face_thread.start()
             logging.info(prefix+"Started Cv thread")
+            sendMessageToClient(logging,smsconfig['userphonenum'],"Started Opencv Thread")
+            
 
          
         if(not opencv_face_thread.is_alive() and wasStarted):
+             sendMessageToClient(logging,smsconfig['userphonenum'],"Thread Opencv Was Killed Unexpectinly Check Logs For more Info")
             
     
 
