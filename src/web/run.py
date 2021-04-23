@@ -29,6 +29,27 @@ def getFlaskConfig():
     print("https://"+flask['ip']+":"+flask['port'])
     return flask
 
+def Start():
+    # WARNING: Don't run with debug turned on in production!
+    try:
+        DEBUG = config('DEBUG', default=True)
+        get_config_mode = 'Debug' if DEBUG else 'Production'
+        # Load all possible configurations
+        config_dict = {
+            'Production': webconfig.ProductionConfig,
+            'Debug'     : webconfig.DebugConfig
+        }
+
+        # Load the configuration using the default values
+        app_config =config_dict[get_config_mode]
+
+    except KeyError:
+        exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
+
+    app = create_app( app_config ) 
+    Migrate(app, db)
+
+    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)
 
 # WARNING: Don't run with debug turned on in production!
 try:

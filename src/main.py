@@ -9,26 +9,58 @@ from datetime import datetime
 from genericpath import exists
 import os
 import shutil
+import smtplib
 import subprocess
 import prosessing.video as cvVideo
-#import web.run as webServer
 import threading
 import pathlib
 import logging
 import configparser
 
-
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-opencv_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo)
-#webServer_thead=threading.Thread(target=webServer.StartWeb)
+opencv_face_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo())
+#webServer_thead=threading.Thread(target=webServer.Start)
 
 prefix = "[SecuServe-Launcher]  "
 broken = "(Sad UwU Noises).... Im sorry Master but, I broke Stuff Again, Please Dont hate me..."
 happy = str("(Happy UwU Noises)... Both Threads Started Yay! Master Loves me Now!~").encode('utf-8')
 
+
 """
-this allows the program to create all the file folders for the program
+Handles Sms Messaging for Thread Status 
 """
+
+# Sends Email to sms Gateway
+def sendMessageToClient(logging,usrnumber,message):
+
+
+    print("path of config"+str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini\n")
+    # Reads Config
+    config_object = configparser.ConfigParser()
+    config_object.read(str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini")
+
+    smsconfig = config_object['SMS']
+
+    try:
+        logging.info("starting to connect to server network")
+
+        #Connects to gmail and sends hello ping
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        logging.info(server.ehlo())
+
+        if(server.ehlo() is not None):
+            server.starttls()
+            server.login(smsconfig['gatwayemail'], smsconfig['gatewaypass'])
+            server.sendmail(smsconfig['sendername'], str(usrnumber)+smsconfig['gatewayOutEmail'], str(message)+smsconfig['endingmessage'])
+            logging.warn("Sent Email to"+usrnumber)
+            server.close()
+            logging.info("Closed connection to email server email sent UWU")
+            return
+    except:
+        logging.warning("Could not send email!!!!! maby check address?")
+        return
+
+
 
 
 """
@@ -36,6 +68,7 @@ Main Function and thread of The whole Program
 """
 def main():
     
+    wasStarted = False
     print("SecuServe Starting UwU!....\n")
 
     print("path of config"+str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini\n")
@@ -63,19 +96,26 @@ def main():
     logging.debug("===================================================\n")
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
-    
-    if(not opencv_thread.is_alive()):
+    while True:
 
-        logging.info(prefix+"Starting webserver thread")
-        #webServer_thead.start()
-        logging.info(prefix+"Started webserver thread")
+        
+        
+        if(not opencv_face_thread.is_alive()):
+            wasStarted = True
+            logging.info(prefix+"Starting Cv thread")
+            opencv_face_thread.start()
+            logging.info(prefix+"Started Cv thread")
 
-        logging.info(prefix+"Starting Cv thread")
-        opencv_thread.start()
-        logging.info(prefix+"Started Cv thread")
-
-
+         
+        if(not opencv_face_thread.is_alive() and wasStarted):
             
+    
+
+       
+        
+
+
+                
 
 
 

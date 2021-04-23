@@ -41,13 +41,12 @@ from PIL import Image
 from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
-from jetcam.usb_camera import USBCamera
 
 class VideoProsessing(object):
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-    video_capture = cv2.VideoCapture('http://192.168.1.17:8080/video ')
+    video_capture = cv2.VideoCapture('rtsp://192.168.1.17:8080/video ')
     
     userList = []
 
@@ -166,7 +165,7 @@ class VideoProsessing(object):
         imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
         imagePathusers = fileconfig['rootDirPath'] +fileconfig['imagePathusers']
 
-        logging.basicConfig(filename=configPath+logconfig['filename'] + datetime.now().strftime(
+        logging.basicConfig(filename=configPath+logconfig['filename'] +datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
         if(self.video_capture == None):
@@ -232,13 +231,14 @@ class VideoProsessing(object):
 
             # checks to see if frames are vaild not black or empty
 
-            if (width > 0 and height > 0):
+            if (width is 0 or height is 0):
                 logging.warn("cannot open Non exsting image")
-                print("Broaking Image Uwu It does not Exsit fix")
-            
-            img = cv2.resize(frame, (width, height), fx=0.5, fy=0.5)
+                logging.error(Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+                print(Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
 
-            predictions = Knn.predict(X_img_path=img,model_path=Modelpath)
+            print("Frame Hight:"+str(height)+" "+"Frame Width"+str(width))
+            
+            predictions = Knn.predict(X_img_path=frame,model_path=Modelpath)
 
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag

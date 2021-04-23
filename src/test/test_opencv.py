@@ -1,29 +1,24 @@
 
+import cv2
 
-import uuid
-import prosessing.Database as db
-import prosessing.dataclass as data
+cap = cv2.VideoCapture('rtspsrcsynk location=rtsp://192.168.1.17:8080/h264_ulaw.sdp ! decodebin ! gtksink')
+ret,frame = cap.read()
 
+while(True):
 
-user_Array=[]
- #Encodes all the Nessiscary User info into Json String so it can be easly moved arroun
-i = 0
+    ret, frame = cap.read()
+    #img = cv2.resize(frame, (0,0), fx=0.5, fy=0.5)
 
-while True:
-    # example Json string  [{"uuid":"Tesla", "name":2, "status":"New York",image:none, url:}]
-    print(str("Data index ")+str(i))
+    cv2.imshow('Stream IP Camera OpenCV',frame)
+    cv2.imshow('Small',frame)
 
-                # this is Where the Data gets Wrapped into am DataList with uuid First key
-    local_data = {
-                    uuid.uuid1(db.getUserUUID(db.getFaces(),i)):data.UserData(db.getName(db.getFaces(),i),db.getStatus(db.getFaces(),i),db.getImageName(db.getFaces(),i),db.getImageUrl(db.getFaces(),i))
-                }
-
-    user_Array.extend(local_data)
-    print(user_Array[db.getUserUUID(db.getFaces(),i)])
-                
-    i += 1
-
-    # Checks to see if i == the database amount hehe
-    if(i == db.getAmountOfEntrys()):
-        print(db.getAmountOfEntrys())
+    if cv2.waitKey(1) & 0xFF == ord('q'):
         break
+
+cap.release()
+cv2.destroyAllWindows()
+
+
+
+
+
