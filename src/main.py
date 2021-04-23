@@ -12,13 +12,13 @@ import shutil
 import smtplib
 import subprocess
 import prosessing.video as cvVideo
-import threading
+import multiprocessing
 import pathlib
 import logging
 import configparser
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-opencv_face_thread=threading.Thread(target=cvVideo.VideoProsessing().ProcessVideo())
+opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().ProcessVideo)
 #webServer_thead=threading.Thread(target=webServer.Start)
 
 prefix = "[SecuServe-Launcher]  "
@@ -27,7 +27,7 @@ happy = str("(Happy UwU Noises)... Both Threads Started Yay! Master Loves me Now
 
 
 """
-Handles Sms Messaging for Thread Status 
+Handles Sms Messaging for Thread Status and Errors
 """
 
 # Sends Email to sms Gateway
@@ -45,14 +45,14 @@ def sendMessageToClient(logging,usrnumber,message):
         logging.info("starting to connect to server network")
 
         #Connects to gmail and sends hello ping
-        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server = smtplib.SMTP(smsconfig['smtpserver'], int(smsconfig['smtpport']))
         logging.info(server.ehlo())
 
         if(server.ehlo() is not None):
             server.starttls()
             server.login(smsconfig['gatwayemail'], smsconfig['gatewaypass'])
             server.sendmail(smsconfig['sendername'], str(usrnumber)+smsconfig['gatewayOutEmail'], str(message)+smsconfig['endingmessage'])
-            logging.warn("Sent Email to"+usrnumber)
+            logging.warn("Sent Email to"+usrnumber+smsconfig['gatewayOutEmail'])
             server.close()
             logging.info("Closed connection to email server email sent UWU")
             return
@@ -102,16 +102,15 @@ def main():
         
         if(not opencv_face_thread.is_alive()):
             wasStarted = True
-            sendMessageToClient(logging,smsconfig['userphonenum'],"Starting Opencv Thread")
+            #sendMessageToClient(logging,smsconfig['userphonenum'],"Starting Opencv Thread")
             logging.info(prefix+"Starting Cv thread")
             opencv_face_thread.start()
-            logging.info(prefix+"Started Cv thread")
-            sendMessageToClient(logging,smsconfig['userphonenum'],"Started Opencv Thread")
-            
+        else:
+                return
 
          
         if(not opencv_face_thread.is_alive() and wasStarted):
-             sendMessageToClient(logging,smsconfig['userphonenum'],"Thread Opencv Was Killed Unexpectinly Check Logs For more Info")
+             #sendMessageToClient(logging,smsconfig['userphonenum'],"Thread Opencv Was Killed Unexpectinly Check Logs For more Info")
             
     
 
@@ -123,4 +122,5 @@ def main():
 
 
 
-main()
+if __name__ == '__main__':
+    main()
