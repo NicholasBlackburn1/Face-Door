@@ -50,7 +50,7 @@
               <div class="col-9">
                 <div class="d-flex align-items-center align-self-start">
                   <h3 id="unique_people"class="mb-0">{{ lifetime_people }} </h3>
-                  <p class="text-success ml-2 mb-0 font-weight-medium">+{{ lifetime_people  }} persons</p>
+                  <p class="text-success ml-2 mb-0 font-weight-medium">+{{total_people}} persons</p>
                 </div>
               </div>
               <div class="col-3">
@@ -70,7 +70,7 @@
               <div class="col-9">
                 <div class="d-flex align-items-center align-self-start">
                   <h3 class="mb-0">{{ authorized }}</h3>
-                  <p class="text-success ml-2 mb-0 font-weight-medium">+{{ authpre }} person</p>
+                  <p class="text-success ml-2 mb-0 font-weight-medium">+{{ authtotal }} person</p>
                 </div>
               </div>
               <div class="col-3">
@@ -91,7 +91,7 @@
                 <div class="d-flex align-items-center align-self-start">
                   
                   <h3 id="unknown"class="mb-0">{{ unknown }}</h3>
-                  <p class="text-danger ml-2 mb-0 font-weight-medium">+ {{ unauthpre }} person</p>
+                  <p class="text-danger ml-2 mb-0 font-weight-medium">+ {{ unauthtotal }} person</p>
                 </div>
               </div>
               <div class="col-3">
@@ -101,6 +101,26 @@
               </div>
             </div>
             <h6 class="text-muted font-weight-normal">Unknown People Spotted</h6>
+          </div>
+        </div>
+      </div>
+      <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
+        <div class="card">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-9">
+                <div class="d-flex align-items-center align-self-start">
+                  <h3 class="mb-0">{{ plates }}</h3>
+                  <p class="text-success ml-2 mb-0 font-weight-medium">+{{ platestotal }} person</p>
+                </div>
+              </div>
+              <div class="col-3">
+                <div class="icon icon-box-success">
+                  <span class="mdi mdi-arrow-top-right icon-item"></span>
+                </div>
+              </div>
+            </div>
+            <h6 class="text-muted font-weight-normal"> Detected Licence Plates</h6>
           </div>
         </div>
       </div>

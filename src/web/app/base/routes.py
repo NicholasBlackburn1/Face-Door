@@ -71,44 +71,6 @@ fileconfig = config_object['FILE']
 '''
 TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
 '''
-# image = client.recv_pyobj()
-# unigue_people ->  Unique People Spotted box
-# uniquespotted -> presentage og Unique
-
-# authorized -> displayed in the box
-# authpre -> presentage of authorizes people
-
-# unknown ->  displayes uknown people in box
-# unknown pre ->  presentage of unknown people seen
-
-# errors -> displayes errors accrued
-# unotherized displays data in graph
-
-# group -> group displays data from group
-# date -. Displays the Current date on the webpage
-
-# Notfication1 =for notitication one tile
-# Notification1_data = data for notification 2
-
-# Notification2 = title for notification 2
-# Notification2_data= data for notification 2
-
-# Notification3= title for notifcation 3
-# Notifcation3_data= data for notifcation3
-
-# Notifcation4 data for title
-# Notification4_data for
-
-# Temp -. display for tempature coard
-# temppre -> the temp presentage
-
-# uptime -> time that raspi is on uptime
-# cpuload -> displays cpu useage dat a
-# cpulpre -> cpu useage present
-
-# ownerimg - > displays current image taken of owners from opencv
-# parentimg -> displase image of parent taken from fopencv
-# unknownimgs
 
 logging.basicConfig(
     filename=logconfig['name'],
