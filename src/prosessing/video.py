@@ -42,6 +42,7 @@ from PIL import Image
 from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
+import face_recognition
 
 class VideoProsessing(object):
 
@@ -118,7 +119,7 @@ class VideoProsessing(object):
 
                 # Add names of the ecodings to thw end of list
 
- 
+    
      # sends person name to subsecriber
     def send_person_name(self, sock, name):
         logging.info("[SOCKET Name] Sending person seen name")
@@ -132,6 +133,25 @@ class VideoProsessing(object):
         sock.send_string("StatusMessage")
         sock.send_json({"message": str(messgae)})
         logging.info("[SOCKET Messafe] s")
+
+          # sends Currenly Seen Faces to subsecriber
+    def sendCurrentSeenFacesAmount(self, sock, faceAmount):
+        logging.info("[SOCKET Amount] Sending Face Amount")
+        sock.send_string("FaceAmount")
+        sock.send_json({"amount": faceAmount})
+        logging.info("[SOCKET Amount] Sent Face Amount")
+
+    # sends Life time Face ammount to subsecriber
+    def sendLifeTimeFacesAmount(self, sock, faceAmount):
+        logging.info("[SOCKET Life Time Amount] Sending Face Amount")
+        sock.send_string("LifeTimeFaceAmount")
+        sock.send_json({"amount": faceAmount})
+        logging.info("[SOCKET Life Time Amount] Sent Face Amount")
+
+    # Get Amout Of Faces In Frame
+    def getAmountofFaces(self,rec,frame):
+        face_bounding_boxes = rec.face_locations(frame)
+        return len(face_bounding_boxes)
 
 
     '''
@@ -241,10 +261,13 @@ class VideoProsessing(object):
             
             predictions = Knn.predict(X_img_path=frame,model_path=Modelpath)
 
+            # Get Current amount Amout of Faces in image
+            self.sendCurrentSeenFacesAmount(sock,self.getAmountofFaces(face_recognition,frame))
+
             """
             This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
-           
+            
             # Display the results
             for name, (top, right, bottom, left) in predictions:
 

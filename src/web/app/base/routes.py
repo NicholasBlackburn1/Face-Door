@@ -179,13 +179,15 @@ def internal_error(error):
     return render_template("errors/500.html"), 500
 
 
+'''
+TODO: Get People Seen and reconized to be Read and cal amout of people seen
+'''
 @blueprint.route("/", methods=["GET", "POST"])
 def index():
 
     
     return render_template(
         "index.html",
-        version = 0,
         cpuload= psutil.cpu_percent(),
         Ram=psutil.virtual_memory().percent,
         uptime=datetime.now().strftime("%H:%M:%S")
@@ -194,9 +196,6 @@ def index():
 
 
     
-'''
-TODO: need to Read from a temp dir for flask to send images from upload dir to Opencv proessing client and save them to opencv local dir  
-'''
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
  
