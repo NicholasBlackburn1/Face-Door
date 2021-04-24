@@ -16,6 +16,15 @@ import multiprocessing
 import pathlib
 import logging
 import configparser
+    # Import smtplib for the actual sending function
+import smtplib
+
+# And imghdr to find the types of our images
+import imghdr
+
+# Here are the email package modules we'll need
+from email.message import EmailMessage
+
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
 opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().ProcessVideo)
@@ -24,43 +33,6 @@ opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().Proc
 prefix = "[SecuServe-Launcher]  "
 broken = "(Sad UwU Noises).... Im sorry Master but, I broke Stuff Again, Please Dont hate me..."
 happy = str("(Happy UwU Noises)... Both Threads Started Yay! Master Loves me Now!~").encode('utf-8')
-
-
-"""
-Handles Sms Messaging for Thread Status and Errors
-"""
-
-# Sends Email to sms Gateway
-def sendMessageToClient(logging,usrnumber,message):
-
-
-    print("path of config"+str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini\n")
-    # Reads Config
-    config_object = configparser.ConfigParser()
-    config_object.read(str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini")
-
-    smsconfig = config_object['SMS']
-
-    try:
-        logging.info("starting to connect to server network")
-
-        #Connects to gmail and sends hello ping
-        server = smtplib.SMTP(smsconfig['smtpserver'], int(smsconfig['smtpport']))
-        logging.info(server.ehlo())
-
-        if(server.ehlo() is not None):
-            server.starttls()
-            server.login(smsconfig['gatwayemail'], smsconfig['gatewaypass'])
-            server.sendmail(smsconfig['sendername'], str(usrnumber)+smsconfig['gatewayOutEmail'], str(message)+smsconfig['endingmessage'])
-            logging.warn("Sent Email to"+usrnumber+smsconfig['gatewayOutEmail'])
-            server.close()
-            logging.info("Closed connection to email server email sent UWU")
-            return
-    except:
-        logging.warning("Could not send email!!!!! maby check address?")
-        return
-
-
 
 
 """
@@ -99,10 +71,9 @@ def main():
     while True:
 
         
-        
+
         if(not opencv_face_thread.is_alive()):
             wasStarted = True
-            #sendMessageToClient(logging,smsconfig['userphonenum'],"Starting Opencv Thread")
             logging.info(prefix+"Starting Cv thread")
             opencv_face_thread.start()
         else:
@@ -110,17 +81,6 @@ def main():
 
          
         if(not opencv_face_thread.is_alive() and wasStarted):
-             #sendMessageToClient(logging,smsconfig['userphonenum'],"Thread Opencv Was Killed Unexpectinly Check Logs For more Info")
+            pass
             
-    
-
-       
-        
-
-
-                
-
-
-
-if __name__ == '__main__':
-    main()
+main()

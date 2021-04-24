@@ -42,6 +42,30 @@ def addImageToEmail(file,msg,usrnumber,messagefromprogram,smsconfig):
         msg.add_attachment(img_data, maintype='image',subtype=imghdr.what(None, img_data))
 
 
+def sendSms(sender, to,ip, port,pngfiles,):
+
+    # Create the container email message.
+    msg = EmailMessage()
+    msg['Subject'] = 
+    # me == the sender's email address
+    # family = the list of all recipients' email addresses
+    msg['From'] = sender
+    msg['To'] = ', '.join(to)
+    msg.preamble = 'You will not see this in a MIME-aware mail reader.\n'
+
+    # Open the files in binary mode.  Use imghdr to figure out the
+    # MIME subtype for each specific image.
+    for file in pngfiles:
+        with open(file, 'rb') as fp:
+            img_data = fp.read()
+        msg.add_attachment(img_data, maintype='image',
+                                    subtype=imghdr.what(None, img_data))
+
+    # Send the email via our own SMTP server.
+    with smtplib.SMTP(ip, port) as s:
+        s.send_message(msg)
+
+
 
 # Sends Email to sms Gateway
 def sendMessageToClient(logging,usrnumber,message):
