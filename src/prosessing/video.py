@@ -7,6 +7,7 @@ TODO: ASSINE USERS UUIDS TO MAKE IT EASER
 """
 
 
+from asyncio.log import logger
 from os import path
 from uuid import uuid1
 import uuid
@@ -127,6 +128,12 @@ class VideoProsessing(object):
             
         return s,img
 
+     # sends person name to subsecriber
+    def send_person_name(self, sock, name):
+        logging.info("[SOCKET Name] Sending person seen name")
+        sock.send_string("NAME")
+        sock.send_json({"name": name})
+        logging.info("[SOCKET Name] Sent Person name")
 
        
     def sendProgramStatus(self,messgae,sock,logging):
@@ -286,7 +293,7 @@ class VideoProsessing(object):
                                        self.imagename, frame)
 
                         # sends person info
-                        filehandler.send_person_name(sock, name, logging)
+                        self.send_person_name(sock, name)
                         # send_group_status(sock,"owner")
 
                 # User Grade Status
@@ -339,7 +346,7 @@ class VideoProsessing(object):
                                        self.imagename, frame)
 
                         # sends person info
-                        filehandler.send_person_name(sock, name, logging)
+                        self.send_person_name(sock, name)
                     #
 
                 if (status == 'Unwanted'):
@@ -365,7 +372,7 @@ class VideoProsessing(object):
                                        self.imagename, frame)
 
                         # sends person info
-                        filehandler.send_person_name(sock, name, logging)
+                        self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
                 elif (
                     len(predictions) >= 2
@@ -408,6 +415,7 @@ class VideoProsessing(object):
                         # sends Image and saves image to disk
                         self.saveImage(imagePath + "Group/",
                                        self.imagename, frame)
+                        self.send_person_name(sock, name)
 
                         # sends person info
                        
@@ -431,7 +439,7 @@ class VideoProsessing(object):
                                        self.imagename, frame)
 
                         # sends person info
-                        filehandler.send_person_name(sock, name, logging)
+                        self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
                 i +=1
 

@@ -81,6 +81,6 @@ def main():
 
          
         if(not opencv_face_thread.is_alive() and wasStarted):
-            pass
+           Exception("Thread Quit for some unknown reason")
             
 main()
