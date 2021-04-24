@@ -44,6 +44,7 @@ import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
 import face_recognition
 
+
 class VideoProsessing(object):
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
@@ -261,6 +262,7 @@ class VideoProsessing(object):
             
             predictions = Knn.predict(X_img_path=frame,model_path=Modelpath)
 
+            
             # Get Current amount Amout of Faces in image
             self.sendCurrentSeenFacesAmount(sock,self.getAmountofFaces(face_recognition,frame))
 

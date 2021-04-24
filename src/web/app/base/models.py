@@ -41,7 +41,6 @@ class User(db.Model, UserMixin):
         return str(self.username)
 
 
-
 class Face(db.Model, UserMixin):
 
     __tablename__ = 'Face'

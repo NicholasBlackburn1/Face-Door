@@ -68,6 +68,7 @@ fileconfig = config_object['FILE']
    
 
 
+
 '''
 TODO: add Reading From Config.ini for Configuring ip and port of flask and more!
 '''
@@ -188,6 +189,7 @@ def index():
     
     return render_template(
         "index.html",
+        lifetime_people=
         cpuload= psutil.cpu_percent(),
         Ram=psutil.virtual_memory().percent,
         uptime=datetime.now().strftime("%H:%M:%S")
