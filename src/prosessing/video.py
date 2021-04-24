@@ -47,7 +47,6 @@ class VideoProsessing(object):
 
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
-    video_capture = cv2.VideoCapture('rtsp://192.168.1.17:8080/video ')
     
     userList = []
 
@@ -119,15 +118,7 @@ class VideoProsessing(object):
 
                 # Add names of the ecodings to thw end of list
 
-    def getSizedFrame(self,s,width, height): 
-        s, img = self.video_capture.read()
-
-        # Only process valid image frames
-        if s:
-            img = cv2.resize(img, (width, height), fx=0.5, fy=0.5)
-            
-        return s,img
-
+ 
      # sends person name to subsecriber
     def send_person_name(self, sock, name):
         logging.info("[SOCKET Name] Sending person seen name")
@@ -135,7 +126,7 @@ class VideoProsessing(object):
         sock.send_json({"name": name})
         logging.info("[SOCKET Name] Sent Person name")
 
-       
+    # Sends Opencv Stats To Launces
     def sendProgramStatus(self,messgae,sock,logging):
         logging.info("[SOCKET Messgae]")
         sock.send_string("StatusMessage")
@@ -174,12 +165,15 @@ class VideoProsessing(object):
 
         logging.basicConfig(filename=configPath+logconfig['filename'] +datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
+        
+        # Camera Stream
+        video_capture = cv2.VideoCapture(str('rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
 
-        if(self.video_capture == None):
+        if(video_capture == None):
             logging.error(Exception("Camera Not Found! Sorry Master.... i Faild you"))
             return
 
-# connects to database
+        # connects to database
         # Database connection handing
         logging.info("Connecting to the Database Faces")
         logging.debug(db.getFaces())
@@ -228,13 +222,13 @@ class VideoProsessing(object):
         while True:
           
             # graps image to read
-            s,frame = self.video_capture.read()
+            s,frame = video_capture.read()
 
             # gets video
-            fps = int(self.video_capture.get(2))
-            width = int(self.video_capture.get(3))   # float `width`
+            fps = int(video_capture.get(2))
+            width = int(video_capture.get(3))   # float `width`
             # float `height`
-            height = int(self.video_capture.get(4))
+            height = int(video_capture.get(4))
 
             # checks to see if frames are vaild not black or empty
 
@@ -444,7 +438,7 @@ class VideoProsessing(object):
                 i +=1
 
                 # Display the resulting image
-                cv2.imshow("Video", frame)
+                #cv2.imshow("Video", frame)
 
                 # Hit 'q' on the keyboard to quit!
             if cv2.waitKey(1) & 0xFF == ord("q"):
