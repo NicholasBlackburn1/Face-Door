@@ -2,6 +2,8 @@
 """
 MIT License
 Copyright (c) 2019 - present AppSeed.us
+
+TODO: add Live camera Displays and minize Non Nessiary data output to main page 
 """
 
 
@@ -118,10 +120,6 @@ authpeople = None
 STATIC_FOLDER = "/mnt/user"
 
 
-@blueprint.route("/")
-def route_default():
-    return redirect(url_for("base_blueprint.index"))
-
 
 @blueprint.route("/error-<error>")
 def route_errors(error):
@@ -219,23 +217,13 @@ def internal_error(error):
     return render_template("errors/500.html"), 500
 
 
-@blueprint.route("/index", methods=["GET", "POST"])
+@blueprint.route("/", methods=["GET", "POST"])
 def index():
 
-    zmq_ip = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
-    context = zmq.Context()
-
-    client = context.socket(zmq.SUB)
-    client.setsockopt_string(zmq.SUBSCRIBE, "")
-    client.connect(zmq_ip)
-
-    starter = client.recv_string()
-    message = client.recv_json()
-    
     
     return render_template(
         "index.html",
-        version = versionconfig['number'],
+        version = 0,
         cpuload= psutil.cpu_percent(),
         Ram=psutil.virtual_memory().percent,
         uptime=datetime.now().strftime("%H:%M:%S")
