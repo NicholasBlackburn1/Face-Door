@@ -183,7 +183,7 @@ class VideoProsessing(object):
         return len(face_bounding_boxes)
 
 
-    def addInfoToPlateWindow(self,frame,plateNumber,fps,font):
+    def addInfoToPlateWindow(self,frame,plateNumber,date,font):
 
         # plate number
         cv2.putText(
@@ -198,7 +198,7 @@ class VideoProsessing(object):
 
         cv2.putText(
             frame,
-            fps,
+            date,
             (474, 450),
             font,
             0.5,
@@ -584,7 +584,7 @@ class VideoProsessing(object):
         text=pytesseract.image_to_string(Cropped_loc,lang='eng') #converts image characters to string
 
         #DisPlays Plate info into window
-        self.addInfoToPlateWindow(img,text,fps,font)
+        self.addInfoToPlateWindow(img,text,self.current_time,font)
         logging.info("[PLATE DETECT]"+"Number is:" ,text)
 
         # Saves Plate Images 
