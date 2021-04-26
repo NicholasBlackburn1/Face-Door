@@ -11,6 +11,7 @@ import os
 import shutil
 import smtplib
 import subprocess
+from threading import Thread
 import prosessing.video as cvVideo
 import multiprocessing
 import pathlib
@@ -27,8 +28,8 @@ from email.message import EmailMessage
 
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().ProcessFaceVideo)
-opencv_plate_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().processPlate)
+opencv_face_thread=Thread(target=cvVideo.VideoProsessing().ProcessFaceVideo)
+opencv_plate_thread=Thread(target=cvVideo.VideoProsessing().processPlate)
 #webServer_thead=threading.Thread(target=webServer.Start)
 
 prefix = "[SecuServe-Launcher]  "
@@ -78,16 +79,13 @@ def main():
         else:
                 return
 
-
+"""
         if(not opencv_face_thread.is_alive()):
             wasStarted = True
             logging.info(prefix+"Starting Cv thread")
             opencv_face_thread.start()
         else:
                 return
-
-         
-        if(not opencv_face_thread.is_alive() and wasStarted):
-           Exception("Thread Quit for some unknown reason")
-            
+"""
+   
 main()
