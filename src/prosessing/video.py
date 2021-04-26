@@ -72,6 +72,7 @@ class VideoProsessing(object):
     configPath = fileconfig['rootDirPath']+fileconfig['configPath']
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
     imagePathusers = fileconfig['rootDirPath'] +fileconfig['imagePathusers']
+    plateImagePath = fileconfig['rootDirPath'] +fileconfig['platePath']
 
       # Camera Stream
     video_capture = cv2.VideoCapture(str('rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
@@ -180,6 +181,31 @@ class VideoProsessing(object):
     def getAmountofFaces(self,rec,frame):
         face_bounding_boxes = rec.face_locations(frame)
         return len(face_bounding_boxes)
+
+
+    def addInfoToPlateWindow(self,frame,plateNumber,fps,font):
+
+        # plate number
+        cv2.putText(
+            frame,
+            plateNumber
+            (474, 430),
+            font,
+            0.5,
+            (255, 255, 255),
+            1,
+            )
+
+        cv2.putText(
+            frame,
+            fps,
+            (474, 450),
+            font,
+            0.5,
+            (255, 255, 255),
+            (255, 255, 255),
+            1,
+        )
 
 
     '''
@@ -498,11 +524,14 @@ class VideoProsessing(object):
     
     def processPlate(self):
 
+        logging.warn("________________________________")
+        logging.warn("Plate Detection")
+        logging.warn("________________________________")
+
         if(self.video_capture == None):
             logging.error(Exception("Camera Not Found! Sorry Master.... i Faild you"))
             return
-
-
+        font = cv2.FONT_HERSHEY_DUPLEX
         # graps image to read
         s,frame = self.video_capture.read()
 
@@ -519,7 +548,6 @@ class VideoProsessing(object):
             logging.error(Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
             print(Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
 
-
         img = frame
         img = imutils.resize(img, width=500 )
 
@@ -531,12 +559,12 @@ class VideoProsessing(object):
         cnts,new = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
         img1=img.copy()
         cv2.drawContours(img1,cnts,-1,(0,255,0),3)
+
         #sorts contours based on minimum area 30 and ignores the ones below that
         cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:30]
         screenCnt = None #will store the number plate contour
         img2 = img.copy()
         cv2.drawContours(img2,cnts,-1,(0,255,0),3) 
-        count=0
             
         idx=7
         # loop over contours
@@ -555,10 +583,14 @@ class VideoProsessing(object):
         cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
         text=pytesseract.image_to_string(Cropped_loc,lang='eng') #converts image characters to string
 
-        
+        #DisPlays Plate info into window
+        self.addInfoToPlateWindow(img,text,fps,font)
         logging.info("[PLATE DETECT]"+"Number is:" ,text)
-        cv2.imshow("img1",img1)
-        cv2.imshow("img2",img2) #top 30 contours
-        cv2.imshow("cropped",cv2.imread(Cropped_loc)) 
-        cv2.imshow("Final image with plate detected",img)
+
+        # Saves Plate Images 
+        # checks to see if image exsitis
+        if(not os.path.exists((self.imagePath + self.plateImagePath+ "CaughtPlate"+" "+self.current_time+".jpg"))):
+                logging.warn("Saving Plate image to" + "CaughtPlate"+" "+self.current_time+'.jpg')
+                self.saveImage(self.imagePath + self.plateImagePath, "CaughtPlate"+" "+self.current_time+".jpg",img)
+    
         cv2.waitKey(0)
