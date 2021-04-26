@@ -27,7 +27,8 @@ from email.message import EmailMessage
 
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().ProcessVideo)
+opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().ProcessFaceVideo)
+opencv_plate_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().processPlate)
 #webServer_thead=threading.Thread(target=webServer.Start)
 
 prefix = "[SecuServe-Launcher]  "
@@ -70,7 +71,13 @@ def main():
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
     while True:
 
-        
+        if(not opencv_plate_thread.is_alive()):
+            wasStarted = True
+            logging.info(prefix+"Starting Cv thread")
+            opencv_plate_thread.start()
+        else:
+                return
+
 
         if(not opencv_face_thread.is_alive()):
             wasStarted = True
