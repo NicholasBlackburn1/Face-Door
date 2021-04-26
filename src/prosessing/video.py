@@ -43,6 +43,8 @@ from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
 import face_recognition
+import pytesseract
+import imutils
 
 
 class VideoProsessing(object):
@@ -50,6 +52,31 @@ class VideoProsessing(object):
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
     
+
+
+        # gets Config file
+    print("Example Config"+str(pathlib.Path().absolute()) +
+              "/src/prosessing/"+"Config.ini")
+        # Read config.ini file
+    config_object = ConfigParser()
+    config_object.read(str(pathlib.Path().absolute()) +
+                           "/src/prosessing/"+"Config.ini")
+
+    logconfig = config_object['LOGGING']
+    zmqconfig = config_object['ZMQ']
+    opencvconfig = config_object['OPENCV']
+    fileconfig = config_object['FILE']
+    current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
+
+    rootDirPath = fileconfig['rootDirPath']
+    configPath = fileconfig['rootDirPath']+fileconfig['configPath']
+    imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
+    imagePathusers = fileconfig['rootDirPath'] +fileconfig['imagePathusers']
+
+      # Camera Stream
+    video_capture = cv2.VideoCapture(str('rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
+
+
     userList = []
 
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
@@ -159,7 +186,7 @@ class VideoProsessing(object):
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
 
-    def ProcessVideo(self):
+    def ProcessFaceVideo(self):
         
       
         # sets rtsp vsr in python
@@ -461,10 +488,77 @@ class VideoProsessing(object):
                         self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
                 i +=1
+                cv2.waitKey(0)
 
-                # Display the resulting image
-                #cv2.imshow("Video", frame)
 
-                # Hit 'q' on the keyboard to quit!
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
+        
+    '''
+    Bulk Plate Prosessing Code
+    '''
+    
+    def processPlate(self):
+
+        if(self.video_capture == None):
+            logging.error(Exception("Camera Not Found! Sorry Master.... i Faild you"))
+            return
+
+
+        # graps image to read
+        s,frame = self.video_capture.read()
+
+        # gets video
+        fps = int(self.video_capture.get(2))
+        width = int(self.video_capture.get(3))   # float `width`
+        # float `height`
+        height = int(self.video_capture.get(4))
+
+        # checks to see if frames are vaild not black or empty
+
+        if (width is 0 or height is 0):
+            logging.warn("cannot open Non exsting image")
+            logging.error(Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+            print(Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+
+
+        img = frame
+        img = imutils.resize(img, width=500 )
+
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) #convert to grey scale
+        gray = cv2.bilateralFilter(gray, 11, 17, 17) #Blur to reduce noise
+        edged = cv2.Canny(gray, 30, 200) #Perform Edge detection
+        
+        #finds Contors In mage
+        cnts,new = cv2.findContours(edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
+        img1=img.copy()
+        cv2.drawContours(img1,cnts,-1,(0,255,0),3)
+        #sorts contours based on minimum area 30 and ignores the ones below that
+        cnts = sorted(cnts, key = cv2.contourArea, reverse = True)[:30]
+        screenCnt = None #will store the number plate contour
+        img2 = img.copy()
+        cv2.drawContours(img2,cnts,-1,(0,255,0),3) 
+        count=0
+            
+        idx=7
+        # loop over contours
+        for c in cnts:
+        # approximate the contour
+                peri = cv2.arcLength(c, True)
+                approx = cv2.approxPolyDP(c, 0.018 * peri, True)
+                if len(approx) == 4: #chooses contours with 4 corners
+                        screenCnt = approx
+                        x,y,w,h = cv2.boundingRect(c) #finds co-ordinates of the plate
+                        new_img=img[y:y+h,x:x+w]
+                        cv2.imwrite('./'+str(idx)+'.png',new_img) #stores the new image
+                        idx+=1
+                        break
+                    
+        cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
+        text=pytesseract.image_to_string(Cropped_loc,lang='eng') #converts image characters to string
+
+        
+        logging.info("[PLATE DETECT]"+"Number is:" ,text)
+        cv2.imshow("img1",img1)
+        cv2.imshow("img2",img2) #top 30 contours
+        cv2.imshow("cropped",cv2.imread(Cropped_loc)) 
+        cv2.imshow("Final image with plate detected",img)
+        cv2.waitKey(0)
