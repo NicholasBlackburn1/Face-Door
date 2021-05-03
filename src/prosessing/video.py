@@ -238,7 +238,8 @@ class VideoProsessing(object):
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
         # Camera Stream
-        video_capture = cv2.VideoCapture(str('rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
+        video_capture = cv2.VideoCapture(str(
+            'rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
 
         if(video_capture == None):
             logging.error(
@@ -253,6 +254,7 @@ class VideoProsessing(object):
         logging.info("connecting to zmq")
 
         Modelpath = str(imagePathusers+'rained_knn_model.clf')
+        allthefaces = 0
 
 # inits Zmq Server
         ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
@@ -283,8 +285,8 @@ class VideoProsessing(object):
         self.sendProgramStatus(messgae="Training Models",
                                sock=sock, logging=logging)
 
-        Knn.train(train_dir=imagePathusers,model_save_path=Modelpath,n_neighbors=2)
-        
+        Knn.train(train_dir=imagePathusers,
+                  model_save_path=Modelpath, n_neighbors=2)
 
         self.sendProgramStatus(
             messgae="Done Training Models", sock=sock, logging=logging)
@@ -318,20 +320,20 @@ class VideoProsessing(object):
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
 
             print("Frame Hight:"+str(height)+" "+"Frame Width"+str(width))
-            
+
             predictions = Knn.predict(X_img_path=frame, model_path=Modelpath)
 
             # Get Current amount Amout of Faces in image
             self.sendCurrentSeenFacesAmount(
-                 sock, self.getAmountofFaces(face_recognition, frame))
+                sock, self.getAmountofFaces(face_recognition, frame))
 
             """
                 This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
-            encode,X_face_locations,are_matches = predictions
-              # Display the results
+            encode, X_face_locations, are_matches = predictions
+            # Display the results
             for name, (top, right, bottom, left) in predictions:
-                
+
                 # Should return user status based on the name linked to user uuid
                 if(name == self.userList[db.getUserUUID(db.getFaces(), i)].user):
                     status == VideoProsessing.userList[db.getUserUUID(
@@ -343,14 +345,18 @@ class VideoProsessing(object):
                 bottom *= 4
                 left *= 4
 
-                if(len(X_face_locations) > 0 ):
-                    db.setLifetimeFaceCount(db.getLifetime(),len(X_face_locations))
-                    
+                # This increaments Global Face Tracker
+                if(len(X_face_locations) > 0):
+                    if(len(X_face_locations) == db.getLifefaces(db.getLifetime(), 1)):
+                        logging.warn(
+                            "faces are equle to data base ammount not adding more image")
+                    allthefaces += len(X_face_locations)
+                    db.setLifetimeFaceCount(db.getLifetime(), allthefaces)
 
                 if (status == 'Admin'):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top),
-                                    (right, bottom), (0, 255, 0), 2)
+                                  (right, bottom), (0, 255, 0), 2)
 
                     font = cv2.FONT_HERSHEY_DUPLEX
 
@@ -358,7 +364,7 @@ class VideoProsessing(object):
                                 font, 0.5, (255, 255, 255), 1)
                     cv2.putText(
                         frame, "Known Person..", (0,
-                                                    430), font, 0.5, (255, 255, 255), 1
+                                                  430), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(frame, status, (0, 450),
                                 font, 0.5, (255, 255, 255), 1)
@@ -372,7 +378,7 @@ class VideoProsessing(object):
                     if(not os.path.exists(imagePath+"Admin/"+self.imagename+".jpg")):
 
                         self.saveImage(imagePath+"Admin/",
-                                        self.imagename, frame)
+                                       self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -382,7 +388,7 @@ class VideoProsessing(object):
                 if (status == 'User'):
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top),
-                                    (right, bottom), (255, 255, 0), 2)
+                                  (right, bottom), (255, 255, 0), 2)
 
                     font = cv2.FONT_HERSHEY_DUPLEX
 
@@ -390,7 +396,7 @@ class VideoProsessing(object):
                                 font, 0.5, (255, 255, 255), 1)
                     cv2.putText(
                         frame, "Known Person..", (0,
-                                                    430), font, 0.5, (255, 255, 255), 1
+                                                  430), font, 0.5, (255, 255, 255), 1
                     )
                     cv2.putText(
                         frame, status, (0,
@@ -425,7 +431,7 @@ class VideoProsessing(object):
 
                         # sends Image and saves image to disk
                         self.saveImage(imagePath+"User/",
-                                        self.imagename, frame)
+                                       self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -435,7 +441,7 @@ class VideoProsessing(object):
 
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top),
-                                    (right, bottom), (0, 0, 255), 2)
+                                  (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top),
                                 font, 0.5, (255, 255, 255), 1)
                     # Distance info
@@ -451,7 +457,7 @@ class VideoProsessing(object):
 
                         # sends Image and saves image to disk
                         self.saveImage(imagePath+"Unwanted/",
-                                        self.imagename, frame)
+                                       self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -462,7 +468,7 @@ class VideoProsessing(object):
 
                     cv2.rectangle(
                         frame, (left, top), (right,
-                                                bottom), (255, 0, 255), 2
+                                             bottom), (255, 0, 255), 2
                     )
 
                     font = cv2.FONT_HERSHEY_DUPLEX
@@ -496,7 +502,7 @@ class VideoProsessing(object):
 
                         # sends Image and saves image to disk
                         self.saveImage(imagePath + "Group/",
-                                        self.imagename, frame)
+                                       self.imagename, frame)
                         self.send_person_name(sock, name)
 
                         # sends person info
@@ -504,7 +510,7 @@ class VideoProsessing(object):
                 elif (name == opencvconfig['unreconizedPerson'] or status == None):
                     font = cv2.FONT_HERSHEY_DUPLEX
                     cv2.rectangle(frame, (left, top),
-                                    (right, bottom), (0, 0, 255), 2)
+                                  (right, bottom), (0, 0, 255), 2)
                     cv2.putText(frame, name, (left, top),
                                 font, 0.5, (255, 255, 255), 1)
                     # Distance info
@@ -517,7 +523,7 @@ class VideoProsessing(object):
                     if(not os.path.exists(imagePath + "unknown/" + self.imagename + ".jpg")):
                         # sends Image and saves image to disk
                         self.saveImage(imagePath+"unknown/",
-                                        self.imagename, frame)
+                                       self.imagename, frame)
 
                         # sends person info
                         self.send_person_name(sock, name)
@@ -533,7 +539,6 @@ class VideoProsessing(object):
 
         video_capture = cv2.VideoCapture('http://192.168.1.17/video')
 
-
         logging.warn("________________________________")
         logging.warn("Plate Detection")
         logging.warn("________________________________")
@@ -544,7 +549,7 @@ class VideoProsessing(object):
             return
         font = cv2.FONT_HERSHEY_DUPLEX
         video_capture.set(cv2.CAP_PROP_POS_FRAMES, 10)
-        
+
         try:
             # graps image to read
             s, frame = video_capture.read()
@@ -576,13 +581,13 @@ class VideoProsessing(object):
             cnts, new = cv2.findContours(
                 edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
             img1 = img.copy()
-            cv2.drawContours(img1, cnts, -1, (0, 255,0),3)
+            cv2.drawContours(img1, cnts, -1, (0, 255, 0), 3)
 
             # sorts contours based on minimum area 30 and ignores the ones below that
             cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:30]
             screenCnt = None  # will store the number plate contour
             img2 = img.copy()
-            cv2.drawContours(img2, cnts, -1, (0, 255,0),3) 
+            cv2.drawContours(img2, cnts, -1, (0, 255, 0), 3)
 
             idx = 7
             # loop over contours
@@ -592,7 +597,8 @@ class VideoProsessing(object):
                 approx = cv2.approxPolyDP(c, 0.018 * peri, True)
                 if len(approx) == 4:  # chooses contours with 4 corners
                     screenCnt = approx
-                    x, y, w, h = cv2.boundingRect(c)  # finds co-ordinates of the plate
+                    # finds co-ordinates of the plate
+                    x, y, w, h = cv2.boundingRect(c)
                     new_img = img[y:y+h, x:x+w]
                     # stores the new image
                     cv2.imwrite('./'+str(idx)+'.png', new_img)
