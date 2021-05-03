@@ -53,7 +53,7 @@ def Start():
 
 # WARNING: Don't run with debug turned on in production!
 try:
-    DEBUG = config('DEBUG', default=True)
+    DEBUG = config('Production', default=True)
     get_config_mode = 'Debug' if DEBUG else 'Production'
     # Load all possible configurations
     config_dict = {

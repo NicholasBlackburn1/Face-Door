@@ -185,13 +185,23 @@ TODO: Get People Seen and reconized to be Read and cal amout of people seen
 '''
 @blueprint.route("/", methods=["GET", "POST"])
 def index():
-    life = lifetime.query.filter_by().first()
+    people = None
+    plate = None
 
-    
+    if(lifetime.query.get(1) is None):
+        people = 0
+    else:
+        people = int(lifetime.query.get(1))
+
+    if (lifetime.query.get(2) is None):
+        plate = 0
+    else: 
+        plate = int(lifetime.query.get(2)) 
+
     return render_template(
         "index.html",
-        lifetime_people= life.seenFaces,
-        platestotal= life.seenPlates
+        lifetime_people= people,
+        platestotal= plate
         
     )   
 
