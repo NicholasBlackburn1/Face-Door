@@ -238,8 +238,7 @@ class VideoProsessing(object):
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
         # Camera Stream
-        video_capture = cv2.VideoCapture(str(
-            'rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
+        video_capture = cv2.VideoCapture(str('rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
 
         if(video_capture == None):
             logging.error(
@@ -284,7 +283,8 @@ class VideoProsessing(object):
         self.sendProgramStatus(messgae="Training Models",
                                sock=sock, logging=logging)
 
-        # Knn.train(train_dir=imagePathusers,model_save_path=Modelpath,n_neighbors=2)
+        Knn.train(train_dir=imagePathusers,model_save_path=Modelpath,n_neighbors=2)
+        
 
         self.sendProgramStatus(
             messgae="Done Training Models", sock=sock, logging=logging)
@@ -297,7 +297,6 @@ class VideoProsessing(object):
         i = 0
         status = None
         video_capture.set(cv2.CAP_PROP_POS_FRAMES, 15)
-
         while True:
 
             # graps image to read
@@ -333,201 +332,204 @@ class VideoProsessing(object):
               # Display the results
             for name, (top, right, bottom, left) in predictions:
 
-                   # Should return user status based on the name linked to user uuid
-                   if(name == self.userList[db.getUserUUID(db.getFaces(), i)].user):
-                        status == VideoProsessing.userList[db.getUserUUID(
-                            db.getFaces(), i)].status
+                # Should return user status based on the name linked to user uuid
+                if(name == self.userList[db.getUserUUID(db.getFaces(), i)].user):
+                    status == VideoProsessing.userList[db.getUserUUID(
+                        db.getFaces(), i)].status
 
-                    # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-                    top *= 4
-                    right *= 4
-                    bottom *= 4
-                    left *= 4
+                # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+                top *= 4
+                right *= 4
+                bottom *= 4
+                left *= 4
 
-                    if (status == 'Admin'):
-                        # Draw a box around the face
-                        cv2.rectangle(frame, (left, top),
-                                      (right, bottom), (0, 255, 0), 2)
+                if (status == 'Admin'):
+                    # Draw a box around the face
+                    cv2.rectangle(frame, (left, top),
+                                    (right, bottom), (0, 255, 0), 2)
 
-                        font = cv2.FONT_HERSHEY_DUPLEX
+                    font = cv2.FONT_HERSHEY_DUPLEX
 
-                        cv2.putText(frame, name, (left, top),
-                                    font, 0.5, (255, 255, 255), 1)
-                        cv2.putText(
-                            frame, "Known Person..", (0,
-                                                      430), font, 0.5, (255, 255, 255), 1
-                        )
-                        cv2.putText(frame, status, (0, 450),
-                                    font, 0.5, (255, 255, 255), 1)
-                        cv2.putText(frame, name, (0, 470), font,
-                                    0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (left, top),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(
+                        frame, "Known Person..", (0,
+                                                    430), font, 0.5, (255, 255, 255), 1
+                    )
+                    cv2.putText(frame, status, (0, 450),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
 
-                        cv2.putText(frame, cam, (0, 100), font,
-                                    0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, cam, (0, 100), font,
+                                0.5, (255, 255, 255), 1)
+
+                    # sends Image and saves image to disk
+                    if(not os.path.exists(imagePath+"Admin/"+self.imagename+".jpg")):
+
+                        self.saveImage(imagePath+"Admin/",
+                                        self.imagename, frame)
+
+                        # sends person info
+                        self.send_person_name(sock, name)
+                        # send_group_status(sock,"owner")
+
+                # User Grade Status
+                if (status == 'User'):
+                    # Draw a box around the face
+                    cv2.rectangle(frame, (left, top),
+                                    (right, bottom), (255, 255, 0), 2)
+
+                    font = cv2.FONT_HERSHEY_DUPLEX
+
+                    cv2.putText(frame, name, (left, top),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(
+                        frame, "Known Person..", (0,
+                                                    430), font, 0.5, (255, 255, 255), 1
+                    )
+                    cv2.putText(
+                        frame, status, (0,
+                                        450), font, 0.5, (255, 255, 255), 1
+                    )
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
+
+                    # Distance info
+                    cv2.putText(
+                        frame,
+                        "T&B" + str(top) + "," + str(bottom),
+                        (474, 430),
+                        font,
+                        0.5,
+                        (255, 255, 255),
+                        1,
+                    )
+                    cv2.putText(
+                        frame,
+                        "L&R" + str(left) + "," + str(right),
+                        (474, 450),
+                        font,
+                        0.5,
+                        (255, 255, 255),
+                        (255, 255, 255),
+                        1,
+                    )
+
+                    # checks to see if image exsitis
+                    if(not os.path.exists(imagePath+"User/"+self.imagename+".jpg")):
 
                         # sends Image and saves image to disk
-                        if(not os.path.exists(imagePath+"Admin/"+self.imagename+".jpg")):
+                        self.saveImage(imagePath+"User/",
+                                        self.imagename, frame)
 
-                            self.saveImage(imagePath+"Admin/",
-                                           self.imagename, frame)
+                        # sends person info
+                        self.send_person_name(sock, name)
+                    #
 
-                            # sends person info
-                            self.send_person_name(sock, name)
-                            # send_group_status(sock,"owner")
+                if (status == 'Unwanted'):
 
-                    # User Grade Status
-                    if (status == 'User'):
-                        # Draw a box around the face
-                        cv2.rectangle(frame, (left, top),
-                                      (right, bottom), (255, 255, 0), 2)
+                    font = cv2.FONT_HERSHEY_DUPLEX
+                    cv2.rectangle(frame, (left, top),
+                                    (right, bottom), (0, 0, 255), 2)
+                    cv2.putText(frame, name, (left, top),
+                                font, 0.5, (255, 255, 255), 1)
+                    # Distance info
+                    cv2.putText(frame, status, (0, 450),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
 
-                        font = cv2.FONT_HERSHEY_DUPLEX
+                    logging.warning("not letting in" + name)
 
-                        cv2.putText(frame, name, (left, top),
-                                    font, 0.5, (255, 255, 255), 1)
-                        cv2.putText(
-                            frame, "Known Person..", (0,
-                                                      430), font, 0.5, (255, 255, 255), 1
-                        )
-                        cv2.putText(
-                            frame, status, (0,
-                                            450), font, 0.5, (255, 255, 255), 1
-                        )
-                        cv2.putText(frame, name, (0, 470), font,
-                                    0.5, (255, 255, 255), 1)
+                    # checks to see if image exsitis
+                    if(not os.path.exists(imagePath+"Unwanted/" + self.imagename + ".jpg")):
 
-                        # Distance info
-                        cv2.putText(
-                            frame,
-                            "T&B" + str(top) + "," + str(bottom),
-                            (474, 430),
-                            font,
-                            0.5,
-                            (255, 255, 255),
-                            1,
-                        )
-                        cv2.putText(
-                            frame,
-                            "L&R" + str(left) + "," + str(right),
-                            (474, 450),
-                            font,
-                            0.5,
-                            (255, 255, 255),
-                            (255, 255, 255),
-                            1,
-                        )
+                        # sends Image and saves image to disk
+                        self.saveImage(imagePath+"Unwanted/",
+                                        self.imagename, frame)
 
-                        # checks to see if image exsitis
-                        if(not os.path.exists(imagePath+"User/"+self.imagename+".jpg")):
+                        # sends person info
+                        self.send_person_name(sock, name)
+                        # send_group_status(sock,"Unknown")
+                elif (
+                    len(predictions) >= 2
+                ):
 
-                            # sends Image and saves image to disk
-                            self.saveImage(imagePath+"User/",
-                                           self.imagename, frame)
+                    cv2.rectangle(
+                        frame, (left, top), (right,
+                                                bottom), (255, 0, 255), 2
+                    )
 
-                            # sends person info
-                            self.send_person_name(sock, name)
-                        #
+                    font = cv2.FONT_HERSHEY_DUPLEX
 
-                    if (status == 'Unwanted'):
+                    cv2.putText(frame, name, (left, top),
+                                font, 0.5, (255, 255, 255), 1)
 
-                        font = cv2.FONT_HERSHEY_DUPLEX
-                        cv2.rectangle(frame, (left, top),
-                                      (right, bottom), (0, 0, 255), 2)
-                        cv2.putText(frame, name, (left, top),
-                                    font, 0.5, (255, 255, 255), 1)
-                        # Distance info
-                        cv2.putText(frame, status, (0, 450),
-                                    font, 0.5, (255, 255, 255), 1)
-                        cv2.putText(frame, name, (0, 470), font,
-                                    0.5, (255, 255, 255), 1)
+                    # Distance info
+                    cv2.putText(
+                        frame,
+                        "There's a group..",
+                        (474, 430),
+                        font,
+                        0.5,
+                        (255, 255, 255),
+                        1,
+                    )
+                    cv2.putText(
+                        frame,
+                        "be carfull now!",
+                        (474, 450),
+                        font,
+                        0.5,
+                        (255, 255, 255),
+                        1,
+                    )
 
-                        logging.warning("not letting in" + name)
+                    logging.warning("Letting in group")
 
-                        # checks to see if image exsitis
-                        if(not os.path.exists(imagePath+"Unwanted/" + self.imagename + ".jpg")):
+                    if(not os.path.exists(imagePath + "Group/" + self.imagename + ".jpg")):
 
-                            # sends Image and saves image to disk
-                            self.saveImage(imagePath+"Unwanted/",
-                                           self.imagename, frame)
+                        # sends Image and saves image to disk
+                        self.saveImage(imagePath + "Group/",
+                                        self.imagename, frame)
+                        self.send_person_name(sock, name)
 
-                            # sends person info
-                            self.send_person_name(sock, name)
-                            # send_group_status(sock,"Unknown")
-                    elif (
-                        len(predictions) >= 2
-                    ):
+                        # sends person info
 
-                        cv2.rectangle(
-                            frame, (left, top), (right,
-                                                 bottom), (255, 0, 255), 2
-                        )
+                elif (name == opencvconfig['unreconizedPerson'] or status == None):
+                    font = cv2.FONT_HERSHEY_DUPLEX
+                    cv2.rectangle(frame, (left, top),
+                                    (right, bottom), (0, 0, 255), 2)
+                    cv2.putText(frame, name, (left, top),
+                                font, 0.5, (255, 255, 255), 1)
+                    # Distance info
+                    cv2.putText(frame, opencvconfig['unreconizedPerson'], (0, 450),
+                                font, 0.5, (255, 255, 255), 1)
+                    cv2.putText(frame, name, (0, 470), font,
+                                0.5, (255, 255, 255), 1)
 
-                        font = cv2.FONT_HERSHEY_DUPLEX
+                    # checks to see if image exsitis
+                    if(not os.path.exists(imagePath + "unknown/" + self.imagename + ".jpg")):
+                        # sends Image and saves image to disk
+                        self.saveImage(imagePath+"unknown/",
+                                        self.imagename, frame)
 
-                        cv2.putText(frame, name, (left, top),
-                                    font, 0.5, (255, 255, 255), 1)
-
-                        # Distance info
-                        cv2.putText(
-                            frame,
-                            "There's a group..",
-                            (474, 430),
-                            font,
-                            0.5,
-                            (255, 255, 255),
-                            1,
-                        )
-                        cv2.putText(
-                            frame,
-                            "be carfull now!",
-                            (474, 450),
-                            font,
-                            0.5,
-                            (255, 255, 255),
-                            1,
-                        )
-
-                        logging.warning("Letting in group")
-
-                        if(not os.path.exists(imagePath + "Group/" + self.imagename + ".jpg")):
-
-                            # sends Image and saves image to disk
-                            self.saveImage(imagePath + "Group/",
-                                           self.imagename, frame)
-                            self.send_person_name(sock, name)
-
-                            # sends person info
-
-                    elif (name == opencvconfig['unreconizedPerson'] or status == None):
-                        font = cv2.FONT_HERSHEY_DUPLEX
-                        cv2.rectangle(frame, (left, top),
-                                      (right, bottom), (0, 0, 255), 2)
-                        cv2.putText(frame, name, (left, top),
-                                    font, 0.5, (255, 255, 255), 1)
-                        # Distance info
-                        cv2.putText(frame, opencvconfig['unreconizedPerson'], (0, 450),
-                                    font, 0.5, (255, 255, 255), 1)
-                        cv2.putText(frame, name, (0, 470), font,
-                                    0.5, (255, 255, 255), 1)
-
-                        # checks to see if image exsitis
-                        if(not os.path.exists(imagePath + "unknown/" + self.imagename + ".jpg")):
-                            # sends Image and saves image to disk
-                            self.saveImage(imagePath+"unknown/",
-                                           self.imagename, frame)
-
-                            # sends person info
-                            self.send_person_name(sock, name)
-                            # send_group_status(sock,"Unknown")
-                    i += 1
-                    cv2.waitKey(0)
+                        # sends person info
+                        self.send_person_name(sock, name)
+                        # send_group_status(sock,"Unknown")
+                i += 1
+                cv2.waitKey(0)
 
     '''
     Bulk Plate Prosessing Code
     '''
 
     def processPlate(self):
-        video_capture = cv2.VideoCapture('http://192.168.1.17:8080/video')
+
+        video_capture = cv2.VideoCapture('http://192.168.1.17/video')
+
+
         logging.warn("________________________________")
         logging.warn("Plate Detection")
         logging.warn("________________________________")
@@ -538,7 +540,7 @@ class VideoProsessing(object):
             return
         font = cv2.FONT_HERSHEY_DUPLEX
         video_capture.set(cv2.CAP_PROP_POS_FRAMES, 10)
-
+        
         try:
             # graps image to read
             s, frame = video_capture.read()

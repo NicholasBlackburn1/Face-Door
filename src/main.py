@@ -14,6 +14,7 @@ import subprocess
 from threading import Thread
 import prosessing.video as cvVideo
 import multiprocessing
+import web.run
 import pathlib
 import logging
 import configparser
@@ -28,8 +29,9 @@ from email.message import EmailMessage
 
 
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managemnet
-opencv_face_thread=Thread(target=cvVideo.VideoProsessing().ProcessFaceVideo)
-opencv_plate_thread=Thread(target=cvVideo.VideoProsessing().processPlate)
+opencv_face_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().ProcessFaceVideo)
+opencv_plate_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().processPlate)
+webserver_thread = multiprocessing.Process(target= web.run.Start)
 #webServer_thead=threading.Thread(target=webServer.Start)
 
 prefix = "[SecuServe-Launcher]  "
@@ -72,20 +74,12 @@ def main():
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
     while True:
 
+    
         if(not opencv_plate_thread.is_alive()):
             wasStarted = True
             logging.info(prefix+"Starting Cv thread")
             opencv_plate_thread.start()
         else:
                 return
-
-"""
-        if(not opencv_face_thread.is_alive()):
-            wasStarted = True
-            logging.info(prefix+"Starting Cv thread")
-            opencv_face_thread.start()
-        else:
-                return
-"""
    
 main()

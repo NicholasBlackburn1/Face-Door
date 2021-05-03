@@ -7,12 +7,10 @@ import os
 import pickle
 import face_recognition
 from face_recognition.face_recognition_cli import image_files_in_folder
-from sklearn import neighbors
+from skleuarn import neighbors
 import logging
 
 import face_recognition
-from face_recognition.face_recognition_cli import image_files_in_folder
-
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 
@@ -56,7 +54,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
                 pickle.dump(knn_clf, f)
 
         return knn_clf
-        execpt:
+        
 
 
 def predict(X_img_path, knn_clf=None, model_path=None, distance_threshold=0.6):

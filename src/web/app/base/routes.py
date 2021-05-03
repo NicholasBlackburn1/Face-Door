@@ -191,9 +191,6 @@ def index():
         "index.html",
         lifetime_people= "Not imp",
         platestotal= "",
-        cpuload= psutil.cpu_percent(),
-        Ram=psutil.virtual_memory().percent,
-        uptime=datetime.now().strftime("%H:%M:%S")
     )   
 
 
