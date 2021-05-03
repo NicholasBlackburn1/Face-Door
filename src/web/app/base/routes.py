@@ -27,7 +27,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from app import db, login_manager
 from app.base import blueprint
 from app.base.forms import LoginForm, CreateAccountForm,AddFaceForm,RemoveFaceForm,ServerSettings,ZmqServerSettings,AlertPhoneNumberSettings
-from app.base.models import User,Face
+from app.base.models import User,Face,lifetime
 from app.base.util import verify_pass
 import queue
 import zmq
@@ -185,12 +185,14 @@ TODO: Get People Seen and reconized to be Read and cal amout of people seen
 '''
 @blueprint.route("/", methods=["GET", "POST"])
 def index():
+    life = lifetime.query.filter_by().first()
 
     
     return render_template(
         "index.html",
-        lifetime_people= "Not imp",
-        platestotal= "",
+        lifetime_people= life.seenFaces,
+        platestotal= life.seenPlates
+        
     )   
 
 
