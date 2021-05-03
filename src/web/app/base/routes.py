@@ -188,6 +188,8 @@ def index():
     people = None
     plate = None
 
+    if()
+
     if(lifetime.query.get(1) is None):
         people = 0
     else:

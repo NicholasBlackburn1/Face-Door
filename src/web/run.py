@@ -8,6 +8,7 @@ from flask_migrate import Migrate
 from os import environ
 from sys import exit
 from decouple import config
+import zmq
 from app import create_app, db
 from configparser import ConfigParser
 import webconfig
@@ -25,8 +26,12 @@ def getFlaskConfig():
 
     # Get the password
     flask = config_object['FLASK']
+    zmqconfig = config_object['ZMQ']
     
     print("https://"+flask['ip']+":"+flask['port'])
+
+        # Socket to talk to server
+   
     return flask
 
 def Start():
@@ -53,6 +58,14 @@ def Start():
 
 # WARNING: Don't run with debug turned on in production!
 try:
+    config_object = ConfigParser()
+    config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
+    zmqconfig = config_object['ZMQ']
+
+    context = zmq.Context() 
+    socket = context.socket(zmq.SUB)
+    socket.connect ("tcp://"+zmqconfig['ip']+":%s" % zmqconfig['port'])
+
     DEBUG = config('Production', default=True)
     get_config_mode = 'Debug' if DEBUG else 'Production'
     # Load all possible configurations
