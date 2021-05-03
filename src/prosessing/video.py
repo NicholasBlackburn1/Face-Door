@@ -328,10 +328,10 @@ class VideoProsessing(object):
             """
                 This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
-
+            encode,X_face_locations,are_matches = predictions
               # Display the results
             for name, (top, right, bottom, left) in predictions:
-
+                
                 # Should return user status based on the name linked to user uuid
                 if(name == self.userList[db.getUserUUID(db.getFaces(), i)].user):
                     status == VideoProsessing.userList[db.getUserUUID(
@@ -342,6 +342,10 @@ class VideoProsessing(object):
                 right *= 4
                 bottom *= 4
                 left *= 4
+
+                if(len(X_face_locations) > 0 ):
+                    db.setLifetimeFaceCount(db.getLifetime(),len(X_face_locations))
+                    
 
                 if (status == 'Admin'):
                     # Draw a box around the face
@@ -453,7 +457,7 @@ class VideoProsessing(object):
                         self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
                 elif (
-                    len(predictions) >= 2
+                    len(X_face_locations) >= 2
                 ):
 
                     cv2.rectangle(
