@@ -48,6 +48,8 @@ class lifetime(db.Model, UserMixin):
     id = Column(Integer, primary_key=True)
     seenFaces = Column(Integer)
     seenPlates = Column(Integer)
+    seenReconized = Column(Integer)
+    seenUnReconized = Column(Integer)
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():

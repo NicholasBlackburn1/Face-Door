@@ -16,6 +16,8 @@ import webconfig
 
 import pathlib
 
+context = zmq.Context() 
+socket = context.socket(zmq.SUB)
 
 def getFlaskConfig():
     print("Flask config"+str(pathlib.Path().absolute())+"/"+"Config.ini")
@@ -61,9 +63,6 @@ try:
     config_object = ConfigParser()
     config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
     zmqconfig = config_object['ZMQ']
-
-    context = zmq.Context() 
-    socket = context.socket(zmq.SUB)
     socket.connect ("tcp://"+zmqconfig['ip']+":%s" % zmqconfig['port'])
 
     DEBUG = config('Production', default=True)

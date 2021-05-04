@@ -187,8 +187,9 @@ TODO: Get People Seen and reconized to be Read and cal amout of people seen
 def index():
     people = None
     plate = None
-
-    if()
+    unrec = None
+    rec = None
+    
 
     if(lifetime.query.get(1) is None):
         people = 0
@@ -200,10 +201,23 @@ def index():
     else: 
         plate = int(lifetime.query.get(2)) 
 
+
+    if(lifetime.query.get(3) is None):
+        rec = 0
+    else:
+        rec = int(lifetime.query.get(3))
+
+    if(lifetime.query.get(4) is None):
+        unrec = 0
+    else:
+        unrec = int(lifetime.query.get(4))
+
     return render_template(
         "index.html",
         lifetime_people= people,
-        platestotal= plate
+        platestotal= plate,
+        unknown = unrec,
+        authorized = rec,
         
     )   
 
