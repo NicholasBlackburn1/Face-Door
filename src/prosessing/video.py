@@ -231,15 +231,13 @@ class VideoProsessing(object):
         rootDirPath = fileconfig['rootDirPath']
         configPath = fileconfig['rootDirPath']+fileconfig['configPath']
         imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
-        imagePathusers = fileconfig['rootDirPath'] + \
-            fileconfig['imagePathusers']
+        imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
 
         logging.basicConfig(filename=configPath+logconfig['filename'] + datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
         # Camera Stream
-        video_capture = cv2.VideoCapture(str(
-            'rstp://'+opencvconfig['Stream_domain']+':'+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
+        video_capture = cv2.VideoCapture('rtsp://192.168.5.27:554/out.h264')
 
         if(video_capture == None):
             logging.error(
@@ -302,7 +300,7 @@ class VideoProsessing(object):
         while True:
 
             # graps image to read
-            s, frame = video_capture.read()
+            ret, frame = video_capture.read()
 
             # gets video
             fps = int(video_capture.get(2))
@@ -319,10 +317,12 @@ class VideoProsessing(object):
                 print(
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
 
-            print("Frame Hight:"+str(height)+" "+"Frame Width"+str(width))
+            
 
-            predictions = Knn.predict(X_img_path=frame, model_path=Modelpath)
+            img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
+            predictions = Knn.predict(img, model_path=Modelpath)
+            
             # Get Current amount Amout of Faces in image
             self.sendCurrentSeenFacesAmount(
                 sock, self.getAmountofFaces(face_recognition, frame))
@@ -330,15 +330,11 @@ class VideoProsessing(object):
             """
                 This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
-            encode, X_face_locations, are_matches = predictions
             # Display the results
             for name, (top, right, bottom, left) in predictions:
 
                 # Should return user status based on the name linked to user uuid
-                if(name == self.userList[db.getUserUUID(db.getFaces(), i)].user):
-                    status == VideoProsessing.userList[db.getUserUUID(
-                        db.getFaces(), i)].status
-
+                print(name)
                 # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                 top *= 4
                 right *= 4
@@ -354,6 +350,7 @@ class VideoProsessing(object):
                     db.setLifetimeFaceCount(db.getLifetime(), allthefaces)
 
                 if (status == 'Admin'):
+                    print(status)
                     # Draw a box around the face
                     cv2.rectangle(frame, (left, top),
                                   (right, bottom), (0, 255, 0), 2)
@@ -530,97 +527,3 @@ class VideoProsessing(object):
                         # send_group_status(sock,"Unknown")
                 i += 1
                 cv2.waitKey(0)
-
-    '''
-    Bulk Plate Prosessing Code
-    '''
-
-    def processPlate(self):
-
-        video_capture = cv2.VideoCapture('http://192.168.1.17/video')
-
-        logging.warn("________________________________")
-        logging.warn("Plate Detection")
-        logging.warn("________________________________")
-
-        if(video_capture == None):
-            logging.error(
-                Exception("Camera Not Found! Sorry Master.... i Faild you"))
-            return
-        font = cv2.FONT_HERSHEY_DUPLEX
-        video_capture.set(cv2.CAP_PROP_POS_FRAMES, 10)
-
-        try:
-            # graps image to read
-            s, frame = video_capture.read()
-
-            # gets video
-            fps = int(video_capture.get(2))
-            width = int(video_capture.get(3))   # float `width`
-            # float `height`
-            height = int(video_capture.get(4))
-
-            # checks to see if frames are vaild not black or empty
-
-            if (width is 0 or height is 0):
-                logging.warn("cannot open Non exsting image")
-                logging.error(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-                print(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-
-            img = frame
-
-            # convert to grey scale
-            gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-            gray = cv2.bilateralFilter(
-                gray, 11, 17, 17)  # Blur to reduce noise
-            edged = cv2.Canny(gray, 30, 200)  # Perform Edge detection
-
-            # finds Contors In mage
-            cnts, new = cv2.findContours(
-                edged.copy(), cv2.RETR_LIST, cv2.CHAIN_APPROX_SIMPLE)
-            img1 = img.copy()
-            cv2.drawContours(img1, cnts, -1, (0, 255, 0), 3)
-
-            # sorts contours based on minimum area 30 and ignores the ones below that
-            cnts = sorted(cnts, key=cv2.contourArea, reverse=True)[:30]
-            screenCnt = None  # will store the number plate contour
-            img2 = img.copy()
-            cv2.drawContours(img2, cnts, -1, (0, 255, 0), 3)
-
-            idx = 7
-            # loop over contours
-            for c in cnts:
-                # approximate the contour
-                peri = cv2.arcLength(c, True)
-                approx = cv2.approxPolyDP(c, 0.018 * peri, True)
-                if len(approx) == 4:  # chooses contours with 4 corners
-                    screenCnt = approx
-                    # finds co-ordinates of the plate
-                    x, y, w, h = cv2.boundingRect(c)
-                    new_img = img[y:y+h, x:x+w]
-                    # stores the new image
-                    cv2.imwrite('./'+str(idx)+'.png', new_img)
-                    idx += 1
-                    break
-
-            cv2.drawContours(img, [screenCnt], -1, (0, 255, 0), 3)
-            # converts image characters to string
-            text = pytesseract.image_to_string(Cropped_loc, lang='eng')
-
-            # DisPlays Plate info into window
-            self.addInfoToPlateWindow(img, text, self.current_time, font)
-            logging.info("[PLATE DETECT]"+"Number is:", text)
-
-            # Saves Plate Images
-            # checks to see if image exsitis
-            if(not os.path.exists((self.imagePath + self.plateImagePath + "CaughtPlate"+" "+self.current_time+".jpg"))):
-                logging.warn("Saving Plate image to" +
-                             "CaughtPlate"+" "+self.current_time+'.jpg')
-                self.saveImage(self.imagePath + self.plateImagePath,
-                               "CaughtPlate"+" "+self.current_time+".jpg", img)
-
-            cv2.waitKey(0)
-        except:
-            pass
