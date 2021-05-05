@@ -294,9 +294,11 @@ class VideoProsessing(object):
         self.sendProgramStatus(
             messgae="Starting CV backend...", sock=sock, logging=logging)
 
+        print("Done Training Model.....")
+        logging.info('Done Training Model....')
+
         i = 0
         status = None
-        video_capture.set(cv2.CAP_PROP_POS_FRAMES, 15)
         while True:
 
             # graps image to read
@@ -317,7 +319,7 @@ class VideoProsessing(object):
                 print(
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
 
-            
+        
 
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
@@ -330,25 +332,21 @@ class VideoProsessing(object):
             """
                 This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
             """
+        
             # Display the results
-            for name, (top, right, bottom, left) in predictions:
-
+            for name,(top, right, bottom, left) in predictions:
+                print (name)
                 # Should return user status based on the name linked to user uuid
-                print(name)
+                if(str(name) == self.userList[db.getUserUUID(db.getFaces(), i)].user):
+                    status == VideoProsessing.userList[db.getUserUUID(
+                        db.getFaces(), i)].status
+
                 # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                 top *= 4
                 right *= 4
                 bottom *= 4
                 left *= 4
-
-                # This increaments Global Face Tracker
-                if(len(X_face_locations) > 0):
-                    if(len(X_face_locations) == db.getLifefaces(db.getLifetime(), 1)):
-                        logging.warn(
-                            "faces are equle to data base ammount not adding more image")
-                    allthefaces += len(X_face_locations)
-                    db.setLifetimeFaceCount(db.getLifetime(), allthefaces)
-
+                
                 if (status == 'Admin'):
                     print(status)
                     # Draw a box around the face
@@ -526,4 +524,9 @@ class VideoProsessing(object):
                         self.send_person_name(sock, name)
                         # send_group_status(sock,"Unknown")
                 i += 1
-                cv2.waitKey(0)
+                k =cv2.waitKey(0)
+                if k==27:    # Esc key to stop
+                    break
+                elif k==-1:  # normally -1 returned,so don't print it
+                    continue
+
