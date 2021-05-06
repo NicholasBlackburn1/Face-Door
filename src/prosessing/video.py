@@ -45,6 +45,7 @@ from pathlib import Path
 import face_recognition
 import pytesseract
 import imutils
+import prosessing.data.UsersStat as Stat
 
 
 class VideoProsessing(object):
@@ -335,14 +336,27 @@ class VideoProsessing(object):
                         status = userinfo.status
                         name = userinfo.user
                         print("userName:"+str(name)+ "  "+"status:"+str(status))
-                        i +=1
 
-                        
-
+                        # this is for handling User Sections in a clean whay
                         faces = self.getAmountofFaces(face_recognition, frame)
+
+                        Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                        Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                        Stat.userUnwantedOrGroup(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                        
+                        if(faces == len(self.userList[i])):
+                            print("not going to incrament because I dont want outof bpunds")
+                            logging.info("should not count up because it will through out of bounds")
+                        else:
+                            if(i >= len(self.userList[i])):
+                                i +=1
+                            else:
+                                logging.info("not going to incrament because its equle")
+                                print("not going to incrament because I dont want outof bpunds")
+
                     
-                
-                  
+                    Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+
                     cv2.imshow("frame",frame)
                 k = cv2.waitKey(22)
                 if k == 22:
