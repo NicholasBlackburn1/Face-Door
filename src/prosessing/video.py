@@ -168,33 +168,8 @@ class VideoProsessing(object):
 
     # Get Amout Of Faces In Frame
     def getAmountofFaces(self, rec, frame):
-        face_bounding_boxes = rec.face_locations(frame)
+        face_bounding_boxes = rec.face_locations(frame,model="cnn")
         return len(face_bounding_boxes)
-
-    # Text on Opencv Dislapl
-    def addInfoToPlateWindow(self, frame, plateNumber, date, font):
-
-        # plate number
-        cv2.putText(
-            frame,
-            plateNumber
-            (474, 430),
-            font,
-            0.5,
-            (255, 255, 255),
-            1,
-        )
-
-        cv2.putText(
-            frame,
-            date,
-            (474, 450),
-            font,
-            0.5,
-            (255, 255, 255),
-            (255, 255, 255),
-            1,
-        )
 
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
@@ -242,7 +217,7 @@ class VideoProsessing(object):
         logging.info("connected to database Faces")
         logging.info("connecting to zmq")
 
-        Modelpath = str(imagePathusers+'rained_knn_model.clf')
+        Modelpath = str(imagePathusers+'UwU.clf')
         allthefaces = 0
 
 # inits Zmq Server
@@ -267,53 +242,53 @@ class VideoProsessing(object):
         # Downlaods all the Faces
         self.downloadUserFaces(imagePathusers)
 
-        # Trains Knn
+     
+        #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
+        '''
+         # Trains Knn
         print("Training Model.....")
         logging.info('Training Model....')
 
         self.sendProgramStatus(messgae="Training Models",
                                sock=sock, logging=logging)
-
         Knn.train(train_dir=imagePathusers,
                   model_save_path=Modelpath, n_neighbors=2)
-
-        self.sendProgramStatus(
-            messgae="Done Training Models", sock=sock, logging=logging)
-
-        logging.info("Cv setup")
-
-        self.sendProgramStatus(
-            messgae="Starting CV backend...", sock=sock, logging=logging)
-
         print("Done Training Model.....")
         logging.info('Done Training Model....')
 
+        '''
+        logging.info("Cv setup")
+
+     
         i = 0
+        process_this_frame = 29
         status = None
         while 0 < 1:
 
             # graps image to read
             ret, frame = video_capture.read()
-            if ret:
-                # gets video
-                fps = int(video_capture.get(2))
-                width = int(video_capture.get(3))   # float `width`
-                # float `height`
-                height = int(video_capture.get(4))
+           
+            # gets video
+            fps = int(video_capture.get(2))
+            width = int(video_capture.get(3))   # float `width`
+            # float `height`
+            height = int(video_capture.get(4))
 
-                # checks to see if frames are vaild not black or empty
+            # checks to see if frames are vaild not black or empty
 
-                if (width is 0 or height is 0):
-                    logging.warn("cannot open Non exsting image")
-                    logging.error(
-                        Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-                    print(
-                        Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+            if (width is 0 or height is 0):
+                logging.warn("cannot open Non exsting image")
+                logging.error(
+                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+                print(
+                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
 
-            
+        
 
-                img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+            img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
+            process_this_frame = process_this_frame + 1
+            if process_this_frame % 30 == 0:
                 predictions = Knn.predict(img, model_path=Modelpath)
             
                 print("Looking for faces...")
@@ -324,17 +299,18 @@ class VideoProsessing(object):
                 # Display the results
                 for name,(top, right, bottom, left) in predictions:
 
-                     # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+                        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                     top *= 4
                     right *= 4
                     bottom *= 4
                     left *= 4
 
                     print("predicting Faces..." )
-                    if(name == db.getUserUUID(db.getFaces(), i)):
+                    if(name == self.userList[i]):
                         userinfo = self.userList[i][db.getUserUUID(db.getFaces(), i)]
                         status = userinfo.status
                         name = userinfo.user
+                        
                         print("userName:"+str(name)+ "  "+"status:"+str(status))
 
                         # this is for handling User Sections in a clean whay
@@ -353,13 +329,11 @@ class VideoProsessing(object):
                             else:
                                 logging.info("not going to incrament because its equle")
                                 print("not going to incrament because I dont want outof bpunds")
-
                     
-                    Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                        Stat.userGroup(sock,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                        Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
 
                     cv2.imshow("frame",frame)
-                k = cv2.waitKey(22)
-                if k == 22:
-                    exit()
-            
-
+                if ord('q') == cv2.waitKey(10):
+                    cv2.destroyAllWindows()
+                    exit(0)

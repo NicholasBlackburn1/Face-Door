@@ -130,18 +130,39 @@ def userUnwantedOrGroup(sock,status,name,frame,faces,font,imagename,imagePath,le
                 # sends person info
                 send_person_name(sock, name)
                 # send_group_status(sock,"Unknown")
-        elif (
-            faces >= 2
-        ):
+
+# Handles unKnown User
+def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
+    if (name == opencvconfig['unreconizedPerson'] or status == None):
+            
+            cv2.rectangle(frame, (left, top),
+                        (right, bottom), (0, 0, 255), 2)
+            cv2.putText(frame, name, (left, top),
+                        font, 0.5, (255, 255, 255), 1)
+            # Distance info
+            cv2.putText(frame, opencvconfig['unreconizedPerson'], (0, 450),
+                        font, 0.5, (255, 255, 255), 1)
+            cv2.putText(frame, name, (0, 470), font,
+                        0.5, (255, 255, 255), 1)
+
+            # checks to see if image exsitis
+            if(not os.path.exists(imagePath + "unknown/" +imagename + ".jpg")):
+                # sends Image and saves image to disk
+                saveImage(imagePath+"unknown/",imagename, frame)
+
+                # sends person info
+                send_person_name(sock, name)
+                # send_group_status(sock,"Unknown")
+                            
+# User Groups 
+def userGroup(sock,frame,faces,font,imagePath,imagename,left,right,bottom,top):
+    if (faces >= 2 ):
 
             cv2.rectangle(
                 frame, (left, top), (right,
                                     bottom), (255, 0, 255), 2
             )
-
-            font = cv2.FONT_HERSHEY_DUPLEX
-
-            cv2.putText(frame, name, (left, top),
+            cv2.putText(frame, "Group", (left, top),
                         font, 0.5, (255, 255, 255), 1)
 
             # Distance info
@@ -171,33 +192,7 @@ def userUnwantedOrGroup(sock,status,name,frame,faces,font,imagename,imagePath,le
                 # sends Image and saves image to disk
                 saveImage(imagePath + "Group/",
                             imagename, frame)
-                send_person_name(sock, name)
+                send_person_name(sock, "Group")
 
                 # sends person info
-
-
-
-
-# Handles unKnown User
-def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
-    if (name == opencvconfig['unreconizedPerson'] or status == None):
-                            
-                            cv2.rectangle(frame, (left, top),
-                                        (right, bottom), (0, 0, 255), 2)
-                            cv2.putText(frame, name, (left, top),
-                                        font, 0.5, (255, 255, 255), 1)
-                            # Distance info
-                            cv2.putText(frame, opencvconfig['unreconizedPerson'], (0, 450),
-                                        font, 0.5, (255, 255, 255), 1)
-                            cv2.putText(frame, name, (0, 470), font,
-                                        0.5, (255, 255, 255), 1)
-
-                            # checks to see if image exsitis
-                            if(not os.path.exists(imagePath + "unknown/" +imagename + ".jpg")):
-                                # sends Image and saves image to disk
-                                saveImage(imagePath+"unknown/",imagename, frame)
-
-                                # sends person info
-                                send_person_name(sock, name)
-                                # send_group_status(sock,"Unknown")
-                            
+                    

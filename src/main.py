@@ -71,7 +71,6 @@ def main():
     logging.debug("===================================================\n")
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
-    pr = cProfile.Profile()
-    pr.enable()
+
     cvVideo.VideoProsessing().ProcessFaceVideo()
 main()
