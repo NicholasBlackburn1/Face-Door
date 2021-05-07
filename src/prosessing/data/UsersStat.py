@@ -133,7 +133,7 @@ def userUnwantedOrGroup(sock,status,name,frame,faces,font,imagename,imagePath,le
 
 # Handles unKnown User
 def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
-    if (name == opencvconfig['unreconizedPerson'] or status == None):
+    if (name == 'unknown' or status == None):
             
             cv2.rectangle(frame, (left, top),
                         (right, bottom), (0, 0, 255), 2)

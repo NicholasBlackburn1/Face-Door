@@ -300,38 +300,46 @@ class VideoProsessing(object):
                 for name,(top, right, bottom, left) in predictions:
 
                         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-                    top *= 4
-                    right *= 4
-                    bottom *= 4
-                    left *= 4
-
-                    print("predicting Faces..." )
-                    if(name == self.userList[i]):
-                        userinfo = self.userList[i][db.getUserUUID(db.getFaces(), i)]
-                        status = userinfo.status
-                        name = userinfo.user
-                        
-                        print("userName:"+str(name)+ "  "+"status:"+str(status))
-
-                        # this is for handling User Sections in a clean whay
-                        faces = self.getAmountofFaces(face_recognition, frame)
-
-                        Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                        Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                        Stat.userUnwantedOrGroup(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
-                        
-                        if(faces == len(self.userList[i])):
-                            print("not going to incrament because I dont want outof bpunds")
-                            logging.info("should not count up because it will through out of bounds")
-                        else:
-                            if(i >= len(self.userList[i])):
-                                i +=1
-                            else:
-                                logging.info("not going to incrament because its equle")
-                                print("not going to incrament because I dont want outof bpunds")
+                    top *= 2
+                    right *= 2
+                    bottom *= 2
+                    left *= 2
                     
-                        Stat.userGroup(sock,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                    print("predicting Faces..." )
+                    print(name)
+                    
+                    if(name == 'unknown'):
                         Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                        print("User UUID:"+str(self.userList[i]))
+                    else:
+                            
+
+                        if ( name == self.userList[i]):
+                            userinfo = self.userList[i][db.getUserUUID(db.getFaces(), i)]
+                            status = userinfo.status
+                            name = userinfo.user
+                            
+                            print("userName:"+str(name)+ "  "+"status:"+str(status))
+
+                            # this is for handling User Sections in a clean whay
+                            faces = self.getAmountofFaces(face_recognition, frame)
+
+                            Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                            Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                            Stat.userUnwantedOrGroup(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                            
+                            if(faces == len(self.userList[i])):
+                                print("not going to incrament because I dont want outof bpunds")
+                                logging.info("should not count up because it will through out of bounds")
+                            else:
+                                if(i >= len(self.userList[i])):
+                                    i +=1
+                                else:
+                                    logging.info("not going to incrament because its equle")
+                                    print("not going to incrament because I dont want outof bpunds")
+                        
+                            Stat.userGroup(sock,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                        
 
                     cv2.imshow("frame",frame)
                 if ord('q') == cv2.waitKey(10):
