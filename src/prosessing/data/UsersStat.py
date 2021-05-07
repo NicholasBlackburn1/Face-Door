@@ -106,7 +106,7 @@ def userUser(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,t
 
 
 # Handles Unwanted Usr Stats
-def userUnwantedOrGroup(sock,status,name,frame,faces,font,imagename,imagePath,left,right,bottom,top):
+def userUnwanted(sock,status,name,frame,faces,font,imagename,imagePath,left,right,bottom,top):
     
         cv2.rectangle(frame, (left, top),
                     (right, bottom), (0, 0, 255), 2)
@@ -154,9 +154,8 @@ def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,lef
             # send_group_status(sock,"Unknown")
                         
 # User Groups 
-def userGroup(sock,frame,faces,font,imagePath,imagename,left,right,bottom,top):
-    if (faces >= 2 ):
-
+def userGroup(sock,frame,font,imagePath,imagename,left,right,bottom,top):
+    
             cv2.rectangle(
                 frame, (left, top), (right,
                                     bottom), (255, 0, 255), 2
