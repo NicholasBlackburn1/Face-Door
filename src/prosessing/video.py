@@ -330,11 +330,11 @@ class VideoProsessing(object):
                             Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
 
                         if (self.userList[i][name].status == 'User'):
-                            logging.info("got an User The name is"+str(name))
+                            logging.info("got an User Human The name is"+str(name))
                             Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
 
                         if (self.userList[i][name].status == 'Unwanted'):
-                            logging.info("got an User The name is"+str(name))
+                            logging.info("got an Unwanted Human The name is"+str(name))
                             Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
                         
                         if(faces >= 2):
