@@ -304,18 +304,18 @@ class VideoProsessing(object):
                     right *= 2
                     bottom *= 2
                     left *= 2
-                    
+
                     print("predicting Faces..." )
                     print(name)
                     
                     if(name == 'unknown'):
                         Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                        print("User UUID:"+str(self.userList[i]))
+                        logging.info("unknowns Here UwU!")
                     else:
                             
-
-                        if ( name == self.userList[i]):
-                            userinfo = self.userList[i][db.getUserUUID(db.getFaces(), i)]
+                        print(str(self.userList[i][name]))
+                        if (self.userList[i][name].status == 'Admin'):
+                            userinfo = self.userList[i][name]
                             status = userinfo.status
                             name = userinfo.user
                             
@@ -325,8 +325,7 @@ class VideoProsessing(object):
                             faces = self.getAmountofFaces(face_recognition, frame)
 
                             Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                            Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                            Stat.userUnwantedOrGroup(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                            
                             
                             if(faces == len(self.userList[i])):
                                 print("not going to incrament because I dont want outof bpunds")
