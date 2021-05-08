@@ -288,7 +288,7 @@ class VideoProsessing(object):
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
             process_this_frame = process_this_frame + 1
-            if process_this_frame % 30 == 0:
+            if process_this_frame % 20 == 0:
                 predictions = Knn.predict(img, model_path=Modelpath)
             
                 print("Looking for faces...")
@@ -315,7 +315,6 @@ class VideoProsessing(object):
                             
                         print(str(self.userList[i][name]))
 
-
                         userinfo = self.userList[i][name]
                         status = userinfo.status
                         name = userinfo.user
@@ -325,15 +324,15 @@ class VideoProsessing(object):
                         # this is for handling User Sections in a clean whay
                         faces = self.getAmountofFaces(face_recognition, frame)
                         
-                        if (self.userList[i][name].status == 'Admin'):
+                        if (status == 'Admin'):
                             logging.info("got an Admin The name is"+str(name))
                             Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
 
-                        if (self.userList[i][name].status == 'User'):
+                        if (status == 'User'):
                             logging.info("got an User Human The name is"+str(name))
                             Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
 
-                        if (self.userList[i][name].status == 'Unwanted'):
+                        if (status == 'Unwanted'):
                             logging.info("got an Unwanted Human The name is"+str(name))
                             Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
                         
@@ -351,7 +350,7 @@ class VideoProsessing(object):
                                 logging.info("not going to incrament because its equle")
                                 print("not going to incrament because I dont want outof bpunds")
                     
-                cv2.imshow("frame",frame)
+                cv2.imshow("output",frame)
             if ord('q') == cv2.waitKey(10):
                 cv2.destroyAllWindows()
                 exit(0)
