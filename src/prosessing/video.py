@@ -309,9 +309,7 @@ class VideoProsessing(object):
                         userinfo = self.userList[i][name]
                         status = userinfo.status
                         name = userinfo.user
-                        
-                        print("userName:"+str(name)+ "  "+"status:"+str(status))
-
+                    
                         # this is for handling User Sections in a clean whay
                         faces = self.getAmountofFaces(face_recognition, frame)
                         
