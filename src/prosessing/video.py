@@ -171,6 +171,20 @@ class VideoProsessing(object):
         face_bounding_boxes = rec.face_locations(frame,model="cnn")
         return len(face_bounding_boxes)
 
+
+    def training(self,sock,imagePathusers,Modelpath):
+        print("Training Model.....")
+        logging.info('Training Model....')
+
+        self.sendProgramStatus(messgae="Training Models",
+                               sock=sock, logging=logging)
+        Knn.train(train_dir=imagePathusers,
+                  model_save_path=Modelpath, n_neighbors=2)
+        print("Done Training Model.....")
+        logging.info('Done Training Model....')
+
+        logging.info("Cv setup")
+
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
@@ -244,22 +258,8 @@ class VideoProsessing(object):
 
      
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
-        '''
-         # Trains Knn
-        print("Training Model.....")
-        logging.info('Training Model....')
+        self.training(sock,self.imagePath,Modelpath)  
 
-        self.sendProgramStatus(messgae="Training Models",
-                               sock=sock, logging=logging)
-        Knn.train(train_dir=imagePathusers,
-                  model_save_path=Modelpath, n_neighbors=2)
-        print("Done Training Model.....")
-        logging.info('Done Training Model....')
-
-        '''
-        logging.info("Cv setup")
-
-     
         i = 0
         process_this_frame = 29
         status = None
@@ -288,7 +288,7 @@ class VideoProsessing(object):
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
 
             process_this_frame = process_this_frame + 1
-            if process_this_frame % 20 == 0:
+            if process_this_frame % 30 == 0:
                 predictions = Knn.predict(img, model_path=Modelpath)
             
                 print("Looking for faces...")
@@ -306,15 +306,11 @@ class VideoProsessing(object):
                     left *= 2
 
                     print("predicting Faces..." )
-                    print(name)
                     
                     if(name == 'unknown'):
                         Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
                         logging.info("unknowns Here UwU!")
                     else:
-                            
-                        print(str(self.userList[i][name]))
-
                         userinfo = self.userList[i][name]
                         status = userinfo.status
                         name = userinfo.user
@@ -350,7 +346,6 @@ class VideoProsessing(object):
                                 logging.info("not going to incrament because its equle")
                                 print("not going to incrament because I dont want outof bpunds")
                     
-                cv2.imshow("output",frame)
             if ord('q') == cv2.waitKey(10):
                 cv2.destroyAllWindows()
                 exit(0)
