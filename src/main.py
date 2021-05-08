@@ -5,7 +5,6 @@ This will Check to see if any of the MicroServices are Already running and will 
 @author Nicholas Blackburn
 '''
 
-import cProfile
 from datetime import datetime
 from genericpath import exists
 import os

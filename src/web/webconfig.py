@@ -23,7 +23,7 @@ class Config(object):
         config( 'DB_ENGINE'   , default='postgresql'    ),
         config( 'DB_USERNAME' , default='1234'       ),
         config( 'DB_PASS'     , default='1234'          ),
-        config( 'DB_HOST'     , default='172.0.0.1'     ),
+        config( 'DB_HOST'     , default='172.17.0.3'     ),
         config( 'DB_PORT'     , default=5432            ),
         config( 'DB_NAME'     , default='secuserve' )
     )
@@ -40,7 +40,7 @@ class ProductionConfig(Config):
         config( 'DB_ENGINE'   , default='postgresql'    ),
         config( 'DB_USERNAME' , default='1234'       ),
         config( 'DB_PASS'     , default='1234'          ),
-        config( 'DB_HOST'     , default='172.0.0.1'     ),
+        config( 'DB_HOST'     , default='172.17.0.3'     ),
         config( 'DB_PORT'     , default=5432            ),
         config( 'DB_NAME'     , default='secuserve' )
     )

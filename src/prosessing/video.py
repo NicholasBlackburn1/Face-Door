@@ -43,7 +43,6 @@ from prosessing.data.DataClass import UserData
 import prosessing.data.KnnClassifiyer as Knn
 from pathlib import Path
 import face_recognition
-import pytesseract
 import imutils
 import prosessing.data.UsersStat as Stat
 
@@ -172,19 +171,6 @@ class VideoProsessing(object):
         return len(face_bounding_boxes)
 
 
-    def training(self,sock,imagePathusers,Modelpath):
-        print("Training Model.....")
-        logging.info('Training Model....')
-
-        self.sendProgramStatus(messgae="Training Models",
-                               sock=sock, logging=logging)
-        Knn.train(train_dir=imagePathusers,
-                  model_save_path=Modelpath, n_neighbors=2)
-        print("Done Training Model.....")
-        logging.info('Done Training Model....')
-
-        logging.info("Cv setup")
-
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
@@ -258,7 +244,16 @@ class VideoProsessing(object):
 
      
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
-        self.training(sock,self.imagePath,Modelpath)  
+        print("Training Model.....")
+        logging.info('Training Model....')
+
+        self.sendProgramStatus(messgae="Training Models",
+                               sock=sock, logging=logging)
+        Knn.train(train_dir=imagePathusers,model_save_path=Modelpath, n_neighbors=2)
+        print("Done Training Model.....")
+        logging.info('Done Training Model....')
+
+        logging.info("Cv setup")
 
         i = 0
         process_this_frame = 29
@@ -345,6 +340,8 @@ class VideoProsessing(object):
                             else:
                                 logging.info("not going to incrament because its equle")
                                 print("not going to incrament because I dont want outof bpunds")
+
+                            
                     
             if ord('q') == cv2.waitKey(10):
                 cv2.destroyAllWindows()

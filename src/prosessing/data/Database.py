@@ -124,32 +124,32 @@ def getKey(result_set, i):
 
 
 def getID(result_set, i):
-    id, useruuid, user, groub, image, imageurl, seen = result_set[i]
+    id, useruuid, user, groub, image, imageurl = result_set[i]
     return id
 
     # gets Database entry name
 
 
 def getName(result_set, i):
-    id, useruuid, user, group, image, imageurl, seen = result_set[i]
+    id, useruuid, user, group, image, imageurl = result_set[i]
     return user
 
 
 def getStatus(result_set, i):
-    id, useruuid, user, group, image, imageurl, seen = result_set[i]
+    id, useruuid, user, group, image, imageurl = result_set[i]
     return group
 
 
 def getImageName(result_set, i):
-    id, useruuid,user, group, image, imageurl, seen = result_set[i]
+    id, useruuid,user, group, image, imageurl = result_set[i]
     return image
 
 def getImageUrI(result_set, i):
-    id, useruuid, user, group, image, imageurl, seen = result_set[i]
+    id, useruuid, user, group, image, imageurl = result_set[i]
     return imageurl
 
 def getUserUUID(result_set, i):
-    id, useruuid,user, group, image, imageurl, seen = result_set[i]
+    id, useruuid,user, group, image, imageurl = result_set[i]
     return useruuid
 
 
