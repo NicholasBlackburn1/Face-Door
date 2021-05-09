@@ -4,6 +4,7 @@ TODO: Finish Image Sending Function from mms gateway hehe
 """
 
 from email.header import Header
+from email.message import EmailMessage
 from email.mime.text import MIMEText
 import smtplib
 import logging

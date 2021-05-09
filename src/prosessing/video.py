@@ -162,7 +162,7 @@ class VideoProsessing(object):
     def sendLifeTimeFacesAmount(self, sock, faceAmount):
         logging.info("[SOCKET Life Time Amount] Sending Face Amount")
         sock.send_string("LifeTimeFaceAmount")
-        sock.send_json({"amount": faceAmount})
+        sock.send_json({"faces": faceAmount})
         logging.info("[SOCKET Life Time Amount] Sent Face Amount")
 
     # Get Amout Of Faces In Frame
@@ -256,6 +256,7 @@ class VideoProsessing(object):
         logging.info("Cv setup")
 
         i = 0
+        face_index =0
         process_this_frame = 29
         status = None
         while 0 < 1:
@@ -293,7 +294,7 @@ class VideoProsessing(object):
                 font = cv2.FONT_HERSHEY_DUPLEX
                 # Display the results
                 for name,(top, right, bottom, left) in predictions:
-
+                    
                         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                     top *= 2
                     right *= 2
@@ -301,6 +302,8 @@ class VideoProsessing(object):
                     left *= 2
 
                     print("predicting Faces..." )
+
+                    
                     
                     if(name == 'unknown'):
                         Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
@@ -327,7 +330,13 @@ class VideoProsessing(object):
                         
                         if(faces >= 2):
                             Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                    
+
+                        if(faces>=0 and db.getLifefaces(db.getLifetime())== 0):
+                            db.setLifetimeFaceCount(db.getLifetime(),faces)
+                        if(faces>=0):
+                            db.setLifetimeFaceCount(db.getLifetime(),db.getLifefaces(db.getLifetime())+faces)
+
+                           
 
                         if(i == len(self.userList[i]) and faces):
                             print("not going to incrament because I dont want outof bpunds")

@@ -11,6 +11,7 @@ from sqlalchemy.orm import sessionmaker
 # Gets the Face Data from the Face data
 PATH = str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini"
 
+#TODO: NEED TO ONLY USE LIFE TIME DATABASE FOR FACES 
 
 def getFaces():
     # Read config.ini file
@@ -154,8 +155,8 @@ def getUserUUID(result_set, i):
 
 
 
-def getLifefaces(result_set, i):
-    id,seenFaces,seenPlates = result_set[i]
+def getLifefaces(result_set):
+    id,seenFaces,seenPlates = result_set
     return seenFaces
 
 
