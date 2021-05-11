@@ -7,6 +7,7 @@ TODO: add Live camera Displays and minize Non Nessiary data output to main page
 """
 
 
+import glob
 import pathlib
 from sys import version
 
@@ -16,7 +17,7 @@ from werkzeug.utils import cached_property, secure_filename
 
 from zmq.sugar.frame import Message
 
-from flask import json
+from flask import json, send_file
 from flask.app import Flask
 from flask.helpers import send_from_directory
 
@@ -225,9 +226,9 @@ def index():
         
     )   
 
+ 
 
-
-    
+   
 @blueprint.route("/addFace",methods=["GET", "POST"])
 def adduser():
  
@@ -368,3 +369,64 @@ def settings():
     
     return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form,  phoneForm = phone_form, version = versionconfig['number'], port_number= flaskconfig['port'], ip_address= flaskconfig['ip'])
     
+
+@blueprint.route("/admin",methods=["GET", "POST"])
+def admin():
+
+
+    list_of_files = glob.glob("/mnt/SecuServe/caughtImages/Admin/"+"*.jpg") # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime,default=0)
+    if(latest_file == 0):
+           return render_template("page-404.html"), 404
+    print("Got Latest Image Now returning the output in "+ str(latest_file))
+    return send_file(str(latest_file), mimetype='image/gif')
+
+
+@blueprint.route("/user",methods=["GET", "POST"])
+def user():
+
+
+    list_of_files = glob.glob("/mnt/SecuServe/caughtImages/User/"+"*.jpg") # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime,default=0)
+    if(latest_file == 0):
+           return render_template("page-404.html"), 404
+    else:
+        print("Got Latest Image Now returning the output in "+ str(latest_file))
+        return send_file(str(latest_file), mimetype='image/gif')
+
+
+@blueprint.route("/unwanted",methods=["GET", "POST"])
+def unwanted():
+
+
+    list_of_files = glob.glob("/mnt/SecuServe/caughtImages/Unwanted/"+"*.jpg") # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime,default=0)
+    if(latest_file == 0):
+           return render_template("page-404.html"), 404
+    print("Got Latest Image Now returning the output in "+ str(latest_file))
+    return send_file(str(latest_file), mimetype='image/gif')
+
+
+
+@blueprint.route("/group",methods=["GET", "POST"])
+def group():
+
+
+    list_of_files = glob.glob("/mnt/SecuServe/caughtImages/Group/"+"*.jpg") # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime,default=0)
+    if(latest_file == 0):
+           return render_template("page-404.html"), 404
+    print("Got Latest Image Now returning the output in "+ str(latest_file))
+    return send_file(str(latest_file), mimetype='image/gif')
+
+
+@blueprint.route("/unknown",methods=["GET", "POST"])
+def unknown():
+
+
+    list_of_files = glob.glob("/mnt/SecuServe/caughtImages/unknown/"+"*.jpg") # * means all if need specific format then *.csv
+    latest_file = max(list_of_files, key=os.path.getctime,default=0)
+    if(latest_file == 0):
+           return render_template("page-404.html"), 404
+    print("Got Latest Image Now returning the output in "+ str(latest_file))
+    return send_file(str(latest_file), mimetype='image/gif')
