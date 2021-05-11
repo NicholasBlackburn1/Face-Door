@@ -62,4 +62,4 @@ def sendMessage(message,phoneNum):
 
 
 def sendCapturedImageMessage(message,phoneNum,url):
-    _message(default_endpoint,'apikey',phoneNum,"[SECU-SERVE-CAPUTURED]"+str("  ")+str(message)+" "+str(url))
+    _message(default_endpoint,'9922bca307918d04d792c1203234ee40a7bb393bfaGlsn8KKkjGL9Tp1b2zJZwJi',phoneNum,"[SECU-SERVE-CAPUTURED]"+str("  ")+str(message)+" "+str(url))
