@@ -47,7 +47,7 @@ def sendSms(sender, to,ip, port,pngfiles,):
 
     # Create the container email message.
     msg = EmailMessage()
-    msg['Subject'] = 
+    msg['Subject'] ="uWu"
     # me == the sender's email address
     # family = the list of all recipients' email addresses
     msg['From'] = sender
@@ -69,7 +69,7 @@ def sendSms(sender, to,ip, port,pngfiles,):
 
 
 # Sends Email to sms Gateway
-def sendMessageToClient(logging,usrnumber,message):
+def sendMessageToClient(logging,usrnumber,message,smsconfig):
     try:
         logging.info("starting to connect to server network")
 

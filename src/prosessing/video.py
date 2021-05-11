@@ -45,11 +45,12 @@ from pathlib import Path
 import face_recognition
 import imutils
 import prosessing.data.UsersStat as Stat
+import prosessing.messaging.SmsHandler as message
 
 
 class VideoProsessing(object):
 
-    imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
+    imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
     # gets Config file
@@ -75,6 +76,18 @@ class VideoProsessing(object):
     # Camera Stream
 
     userList = []
+
+
+    #Makes startup dirs
+    def makefiledirs(self):
+        logging.info("Creating Folder Dirs")
+        Path(self.rootDirPath).mkdir(parents=True, exist_ok=True)
+        Path(self.imagePathusers).mkdir(parents=True, exist_ok=True)
+        Path(self.configPath).mkdir(parents=True, exist_ok=True)
+        Path(self.plateImagePath).mkdir(parents=True, exist_ok=True)
+        logging.info("Made Folder Dirs")
+
+
 
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
 
@@ -176,7 +189,8 @@ class VideoProsessing(object):
     '''
 
     def ProcessFaceVideo(self):
-
+        # Makes Folder Dir
+        #`self.makefiledirs()
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
@@ -192,6 +206,7 @@ class VideoProsessing(object):
         zmqconfig = config_object['ZMQ']
         opencvconfig = config_object['OPENCV']
         fileconfig = config_object['FILE']
+        smsconfig =  config_object['SMS']
         current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
 
         rootDirPath = fileconfig['rootDirPath']
@@ -203,7 +218,7 @@ class VideoProsessing(object):
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
         # Camera Stream
-        video_capture = cv2.VideoCapture('rtsp://192.168.5.27:554/out.h264')
+        video_capture = cv2.VideoCapture(str(opencvconfig['Stream_intro']+opencvconfig['Stream_ip']+":"+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
 
         if(video_capture == None):
             logging.error(
@@ -247,8 +262,8 @@ class VideoProsessing(object):
         print("Training Model.....")
         logging.info('Training Model....')
 
-        self.sendProgramStatus(messgae="Training Models",
-                               sock=sock, logging=logging)
+        self.sendProgramStatus(messgae="Training Models",sock=sock, logging=logging)
+        
         Knn.train(train_dir=imagePathusers,model_save_path=Modelpath, n_neighbors=2)
         print("Done Training Model.....")
         logging.info('Done Training Model....')
@@ -302,24 +317,27 @@ class VideoProsessing(object):
                     left *= 2
 
                     print("predicting Faces..." )
-
+                    print(name)
                     
                     
                     if(name == 'unknown'):
                         Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                        print("user is unknown")
                         logging.info("unknowns Here UwU!")
+                       
                     else:
                         userinfo = self.userList[i][name]
                         status = userinfo.status
                         name = userinfo.user
-                    
+
+                        print(str(name) + "   "+ str(status))
                         # this is for handling User Sections in a clean whay
                         faces = self.getAmountofFaces(face_recognition, frame)
                         
                         if (status == 'Admin'):
                             logging.info("got an Admin The name is"+str(name))
                             Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-
+                            
                         if (status == 'User'):
                             logging.info("got an User Human The name is"+str(name))
                             Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
@@ -330,14 +348,7 @@ class VideoProsessing(object):
                         
                         if(faces >= 2):
                             Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
-
-                        if(faces>=0 and db.getLifefaces(db.getLifetime())== 0):
-                            db.setLifetimeFaceCount(db.getLifetime(),faces)
-                        if(faces>=0):
-                            db.setLifetimeFaceCount(db.getLifetime(),db.getLifefaces(db.getLifetime())+faces)
-
-                           
-
+			
                         if(i == len(self.userList[i]) and faces):
                             print("not going to incrament because I dont want outof bpunds")
                             logging.info("should not count up because it will through out of bounds")

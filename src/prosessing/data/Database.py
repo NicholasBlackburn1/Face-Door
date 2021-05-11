@@ -156,10 +156,10 @@ def getUserUUID(result_set, i):
 
 
 def getLifefaces(result_set):
-    id,seenFaces,seenPlates = result_set
+    id,seenFaces,seenPlates,seenReconized,seenUnReconized = result_set
     return seenFaces
 
 
 def getLifePlates(result_set, i):
-    id,seenFaces,seenPlates = result_set[i]
+    id,seenFaces,seenPlates,seenReconized,seenUnReconized = result_set[i]
     return seenPlates

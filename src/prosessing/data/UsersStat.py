@@ -44,10 +44,8 @@ def userAdmin(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,
 
             saveImage(imagePath+"Admin/",
                         imagename, frame)
-
-            # sends person info
-            send_person_name(sock, name)
-            # send_group_status(sock,"owner")
+            logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
 
 
  # User Grade Status
@@ -99,8 +97,8 @@ def userUser(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,t
         # sends Image and saves image to disk
         saveImage(imagePath+"User/",imagename, frame)
 
-        # sends person info
-        send_person_name(sock, name)
+        logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+        print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
     
     #
 
@@ -121,16 +119,14 @@ def userUnwanted(sock,status,name,frame,faces,font,imagename,imagePath,left,righ
         logging.warning("not letting in" + name)
 
         # checks to see if image exsitis
+        
         if(not os.path.exists(imagePath+"Unwanted/" + imagename + ".jpg")):
 
             # sends Image and saves image to disk
             saveImage(imagePath+"Unwanted/",
                         imagename, frame)
-
-            # sends person info
-            send_person_name(sock, name)
-            # send_group_status(sock,"Unknown")
-
+            logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
 # Handles unKnown User
 def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
 
@@ -143,15 +139,13 @@ def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,lef
                     font, 0.5, (255, 255, 255), 1)
         cv2.putText(frame, name, (0, 470), font,
                     0.5, (255, 255, 255), 1)
-
+        logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
         # checks to see if image exsitis
         if(not os.path.exists(imagePath + "unknown/" +imagename + ".jpg")):
             # sends Image and saves image to disk
             saveImage(imagePath+"unknown/",imagename, frame)
-
-            # sends person info
-            send_person_name(sock, name)
-            # send_group_status(sock,"Unknown")
+            print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
                         
 # User Groups 
 def userGroup(sock,frame,font,imagePath,imagename,left,right,bottom,top):
@@ -190,7 +184,5 @@ def userGroup(sock,frame,font,imagePath,imagename,left,right,bottom,top):
                 # sends Image and saves image to disk
                 saveImage(imagePath + "Group/",
                             imagename, frame)
-                send_person_name(sock, "Group")
-
-                # sends person info
+                logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
                     

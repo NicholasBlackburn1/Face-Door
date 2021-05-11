@@ -189,23 +189,26 @@ def index():
     plate = None
     unrec = None
     rec = None
-    
 
-    if(lifetime.query.get(1) is None):
+    
+    
+   
+
+    if(lifetime.query.get(0) is None):
         people = 0
     else:
         people = int(lifetime.query.get(1))
 
-    if (lifetime.query.get(2) is None):
+    if (lifetime.query.get(1) is None):
         plate = 0
     else: 
-        plate = int(lifetime.query.get(2)) 
+        plate = int(lifetime.query.get(3)) 
 
 
     if(lifetime.query.get(3) is None):
         rec = 0
     else:
-        rec = int(lifetime.query.get(3))
+        rec = int(lifetime.query.get(4))
 
     if(lifetime.query.get(4) is None):
         unrec = 0
@@ -218,6 +221,7 @@ def index():
         platestotal= plate,
         unknown = unrec,
         authorized = rec,
+        faceimg = "null"
         
     )   
 
