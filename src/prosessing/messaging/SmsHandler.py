@@ -16,8 +16,11 @@ def checkEndpoint(phoneNum,apikey):
     'message': 'Hello world This is A Test Message from SecuServe UwU',
     'key': key,
     })
+    
     print(resp.json()['success'])
     logging.info("Responce from Textbelt"+ "  "+ "Enpoint Checking  "+" "+"Was Sent"+"  "+ str(resp.json()['success']))
+
+# this is for handling sending all the messages UwU
 def _message(endpoint,apikey,phoneNum,message):
 
     phone = str("'")+str(phoneNum)+str("'")
@@ -43,7 +46,20 @@ def _message(endpoint,apikey,phoneNum,message):
         })
         logging.info("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
    
+
     
 
 
-def sendInfoMessage(message):
+# Sends life threating Info
+def sendWarnMessage(message,phoneNum):
+    _message(default_endpoint,'apikey',phoneNum,"[SECU-SERVE]"+ str(" ")+"WARNING! WARNING! WARNING!"+str("  ")+str(message))
+
+
+
+# Sends Warning threating Info
+def sendMessage(message,phoneNum):
+    _message(default_endpoint,'apikey',phoneNum,"[SECU-SERVE]"+str("  ")+str(message))
+
+
+def sendCapturedImageMessage(message,phoneNum,url):
+    _message(default_endpoint,'apikey',phoneNum,"[SECU-SERVE-CAPUTURED]"+str("  ")+str(message)+" "+str(url))
