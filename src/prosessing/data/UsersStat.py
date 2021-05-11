@@ -46,6 +46,7 @@ def userAdmin(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,
                         imagename, frame)
             logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
             print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            
 
 
  # User Grade Status
@@ -141,11 +142,11 @@ def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,lef
                     0.5, (255, 255, 255), 1)
         logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
         # checks to see if image exsitis
-        if(not os.path.exists(imagePath + "unknown/" +imagename + ".jpg")):
+        if(not os.path.exists(str(imagePath) + "unknown/" +str(imagename) + ".jpg")):
             # sends Image and saves image to disk
             saveImage(imagePath+"unknown/",imagename, frame)
-            print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
-            logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            print("Saved Image to"+ "  "+str(imagePath) + "unknown/" +str(imagename) + ".jpg")
+           
                         
 # User Groups 
 def userGroup(sock,frame,font,imagePath,imagename,left,right,bottom,top):

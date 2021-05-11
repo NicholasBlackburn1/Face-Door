@@ -259,7 +259,7 @@ class VideoProsessing(object):
 
      
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
-        print("Training Model.....")
+        print("Training Model Going to take a while UwU..... ")
         logging.info('Training Model....')
 
         self.sendProgramStatus(messgae="Training Models",sock=sock, logging=logging)
@@ -267,9 +267,10 @@ class VideoProsessing(object):
         Knn.train(train_dir=imagePathusers,model_save_path=Modelpath, n_neighbors=2)
         print("Done Training Model.....")
         logging.info('Done Training Model....')
+        logging.info("Looking for faces.....")
 
-        logging.info("Cv setup")
-
+        print("Looking for Faces...")
+     
         i = 0
         face_index =0
         process_this_frame = 29
@@ -302,7 +303,6 @@ class VideoProsessing(object):
             if process_this_frame % 30 == 0:
                 predictions = Knn.predict(img, model_path=Modelpath)
             
-                print("Looking for faces...")
                 """
                     This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
                 """
@@ -315,51 +315,52 @@ class VideoProsessing(object):
                     right *= 2
                     bottom *= 2
                     left *= 2
-
-                    print("predicting Faces..." )
                     print(name)
-                    
-                    
-                    if(name == 'unknown'):
-                        Stat.userUnknown(sock,status,opencvconfig,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                        print("user is unknown")
-                        logging.info("unknowns Here UwU!")
-                       
-                    else:
-                        userinfo = self.userList[i][name]
-                        status = userinfo.status
-                        name = userinfo.user
 
-                        print(str(name) + "   "+ str(status))
-                        # this is for handling User Sections in a clean whay
-                        faces = self.getAmountofFaces(face_recognition, frame)
+                    
+                    if(name != None):
                         
-                        if (status == 'Admin'):
-                            logging.info("got an Admin The name is"+str(name))
-                            Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                            
-                        if (status == 'User'):
-                            logging.info("got an User Human The name is"+str(name))
-                            Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-
-                        if (status == 'Unwanted'):
-                            logging.info("got an Unwanted Human The name is"+str(name))
-                            Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
                         
-                        if(faces >= 2):
-                            Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
-			
-                        if(i == len(self.userList[i]) and faces):
-                            print("not going to incrament because I dont want outof bpunds")
-                            logging.info("should not count up because it will through out of bounds")
+                        if(name == 'unknown'):
+                            Stat.userUnknown(sock,status,opencvconfig,name,frame,font,imagename =self.imagename,imagePath=imagePath,left = left,right =right,bottom =bottom,top =top)
+                            print("user is unknown")
+                            logging.info("unknowns Here UwU!")
+                        
                         else:
-                            if(i >= len(self.userList[i])):
-                                i +=1
-                            else:
-                                logging.info("not going to incrament because its equle")
-                                print("not going to incrament because I dont want outof bpunds")
+                            userinfo = self.userList[i][name]
+                            status = userinfo.status
+                            name = userinfo.user
 
+                            print(str(name) + "   "+ str(status))
+                            # this is for handling User Sections in a clean whay
+                            faces = self.getAmountofFaces(face_recognition, frame)
                             
+                            if (status == 'Admin'):
+                                logging.info("got an Admin The name is"+str(name))
+                                Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                                
+                            if (status == 'User'):
+                                logging.info("got an User Human The name is"+str(name))
+                                Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+
+                            if (status == 'Unwanted'):
+                                logging.info("got an Unwanted Human The name is"+str(name))
+                                Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                            
+                            if(faces >= 2):
+                                Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                
+                            if(i == len(self.userList[i]) and faces):
+                                print("not going to incrament because I dont want outof bpunds")
+                                logging.info("should not count up because it will through out of bounds")
+                            else:
+                                if(i >= len(self.userList[i])):
+                                    i +=1
+                                else:
+                                    logging.info("not going to incrament because its equle")
+                                    print("not going to incrament because I dont want outof bpunds")
+
+                                
                     
             if ord('q') == cv2.waitKey(10):
                 cv2.destroyAllWindows()
