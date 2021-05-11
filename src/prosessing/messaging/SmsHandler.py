@@ -5,7 +5,7 @@ TODO: Get Custom Textbelt Gateway to work so i dont have to charge users to use 
 import requests
 import logging
 
-
+default_endpoint ='https://textbelt.com/text'
 
 # this Sends and checks to see if the endpoint works
 def checkEndpoint(phoneNum,apikey):
@@ -17,7 +17,33 @@ def checkEndpoint(phoneNum,apikey):
     'key': key,
     })
     print(resp.json()['success'])
+    logging.info("Responce from Textbelt"+ "  "+ "Enpoint Checking  "+" "+"Was Sent"+"  "+ str(resp.json()['success']))
+def _message(endpoint,apikey,phoneNum,message):
 
+    phone = str("'")+str(phoneNum)+str("'")
+    key = str(apikey)
+    msg = str(message)
+    resp = requests.post(endpoint, {
+    'phone': phone,
+    'message': msg,
+    'key': key,
+    })
+    logging.warn("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
+  
+    # if the custom endpoint fails, Use Default one
+    if(resp.json()['success'] == False):
+        logging.warn("Faild to send message via the first endpoint now sending it with the Default one")
+        phone = str("'")+str(phoneNum)+str("'")
+        key = str(apikey)
+        msg = str(message)
+        resp = requests.post(default_endpoint, {
+        'phone': phone,
+        'message': msg,
+        'key': key,
+        })
+        logging.info("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
+   
     
 
 
+def sendInfoMessage(message):
