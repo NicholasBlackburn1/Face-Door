@@ -45,9 +45,6 @@ import face_recognition
 import imutils
 import prosessing.data.UsersStat as Stat
 import prosessing.messaging.SmsHandler as message
-import queue
-import time
-import threading
 
 
 class VideoProsessing(object):
@@ -78,7 +75,6 @@ class VideoProsessing(object):
     # Camera Stream
 
     userList = []
-    q = queue.Queue()
 
 
     #Makes startup dirs
@@ -187,112 +183,6 @@ class VideoProsessing(object):
         return len(face_bounding_boxes)
 
 
-    # Splits into camrea Recive Code 
-    def ReceiveVideo(self,video_capture):
-                # graps image to read
-            ret, frame = video_capture.read()
-           
-            # gets video
-            fps = int(video_capture.get(2))
-            width = int(video_capture.get(3))   # float `width`
-            # float `height`
-            height = int(video_capture.get(4))
-
-            # checks to see if frames are vaild not black or empty
-
-            if (width is 0 or height is 0):
-                logging.warn("cannot open Non exsting image")
-                logging.error(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-                print(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-
-            while ret:
-                self.q.put(frame)
-
-
-    def ProcessVideo(self,Modelpath,sock,opencvconfig,imagePath):
-        i = 0
-        face_index =0
-        process_this_frame = 29
-
-        status = None
-        while 0 < 1:
-
-            if self.q.empty() !=True:
-
-                frame =self.q.get()
-                img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-
-                process_this_frame = process_this_frame + 1
-                if process_this_frame % 30 == 0:
-                    predictions = Knn.predict(img, model_path=Modelpath)
-                
-                    """
-                        This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
-                    """
-                    font = cv2.FONT_HERSHEY_DUPLEX
-                    # Display the results
-                    for name,(top, right, bottom, left) in predictions:
-                        
-                            # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-                        top *= 2
-                        right *= 2
-                        bottom *= 2
-                        left *= 2
-                        print(name)
-
-                        
-                        if(name != None):
-                            
-                            
-                            if(name == 'unknown'):
-                                Stat.userUnknown(sock,status,opencvconfig,name,frame,font,imagename =self.imagename,imagePath=imagePath,left = left,right =right,bottom =bottom,top =top)
-                                print("user is unknown")
-                                logging.info("unknowns Here UwU!")
-                                message.sendCapturedImageMessage("eeeep there is an unknown Person here",4123891615,'http://192.168.5.7:2000/unknown')
-                            
-                            else:
-                                userinfo = self.userList[i][name]
-                                status = userinfo.status
-                                name = userinfo.user
-
-                                print(str(name) + "   "+ str(status))
-                                # this is for handling User Sections in a clean whay
-                                faces = self.getAmountofFaces(face_recognition, img)
-                                
-                                if (status == 'Admin'):
-                                    logging.info("got an Admin The name is"+str(name))
-                                    Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                                    message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good",4123891615,'http://192.168.5.7:2000/admin')
-                                    
-                                if (status == 'User'):
-                                    logging.info("got an User Human The name is"+str(name))
-                                    Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
-
-                                if (status == 'Unwanted'):
-                                    logging.info("got an Unwanted Human The name is"+str(name))
-                                    Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
-                                
-                                if(faces >= 2):
-                                    Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
-                    
-                                if(i == len(self.userList[i]) and faces):
-                                    print("not going to incrament because I dont want outof bpunds")
-                                    logging.info("should not count up because it will through out of bounds")
-                                else:
-                                    if(i >= len(self.userList[i])):
-                                        i +=1
-                                    else:
-                                        logging.info("not going to incrament because its equle")
-                                        print("not going to incrament because I dont want outof bpunds")
-
-                                    
-                        
-                if ord('q') == cv2.waitKey(10):
-                    cv2.destroyAllWindows()
-                    exit(0)
-
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
@@ -379,12 +269,101 @@ class VideoProsessing(object):
         logging.info("Looking for faces.....")
 
         print("Looking for Faces...")
-
-        p1=threading.Thread(target=self.ReceiveVideo(video_capture))
-        p2 =threading.Thread(target=self.ProcessVideo(Modelpath,sock,opencvconfig,imagePath))
-        p1.start()
-        p2.start()
-
      
-       
-       
+        i = 0
+        face_index =0
+        process_this_frame = 29
+        status = None
+        while 0 < 1:
+
+            # graps image to read
+            ret, frame = video_capture.read()
+           
+            # gets video
+            fps = int(video_capture.get(2))
+            width = int(video_capture.get(3))   # float `width`
+            # float `height`
+            height = int(video_capture.get(4))
+
+            # checks to see if frames are vaild not black or empty
+
+            if (width is 0 or height is 0):
+                logging.warn("cannot open Non exsting image")
+                logging.error(
+                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+                print(
+                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+
+        
+
+            img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+
+            
+            process_this_frame = process_this_frame + 1
+            if process_this_frame % 30 == 0:
+                predictions = Knn.predict(img, model_path=Modelpath)
+            
+                """
+                    This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
+                """
+                font = cv2.FONT_HERSHEY_DUPLEX
+                # Display the results
+                for name,(top, right, bottom, left) in predictions:
+                    
+                        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+                    top *= 2
+                    right *= 2
+                    bottom *= 2
+                    left *= 2
+                    print(name)
+
+                    
+                    if(name != None):
+                        
+                        
+                        if(name == 'unknown'):
+                            Stat.userUnknown(sock,status,opencvconfig,name,frame,font,imagename =self.imagename,imagePath=imagePath,left = left,right =right,bottom =bottom,top =top)
+                            print("user is unknown")
+                            logging.info("unknowns Here UwU!")
+                            message.sendCapturedImageMessage("eeeep there is an unknown Person here",4123891615,'http://192.168.5.7:2000/unknown')
+                        
+                        else:
+                            userinfo = self.userList[i][name]
+                            status = userinfo.status
+                            name = userinfo.user
+
+                            print(str(name) + "   "+ str(status))
+                            # this is for handling User Sections in a clean whay
+                            faces = self.getAmountofFaces(face_recognition, frame)
+                            
+                            if (status == 'Admin'):
+                                logging.info("got an Admin The name is"+str(name))
+                                Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good",4123891615,'http://192.168.5.7:2000/admin')
+                                
+                            if (status == 'User'):
+                                logging.info("got an User Human The name is"+str(name))
+                                Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+
+                            if (status == 'Unwanted'):
+                                logging.info("got an Unwanted Human The name is"+str(name))
+                                Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                            
+                            if(faces >= 2):
+                                Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                
+                            if(i == len(self.userList[i]) and faces):
+                                print("not going to incrament because I dont want outof bpunds")
+                                logging.info("should not count up because it will through out of bounds")
+                            else:
+                                if(i >= len(self.userList[i])):
+                                    i +=1
+                                else:
+                                    logging.info("not going to incrament because its equle")
+                                    print("not going to incrament because I dont want outof bpunds")
+
+                                
+                    
+            if ord('q') == cv2.waitKey(10):
+                cv2.destroyAllWindows()
+                exit(0)
