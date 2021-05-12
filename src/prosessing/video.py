@@ -330,17 +330,17 @@ class VideoProsessing(object):
                             if (status == 'Admin'):
                                 logging.info("got an Admin The name is"+str(name))
                                 Stat.userAdmin(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good",phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
+                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
                                 
                             if (status == 'User'):
                                 logging.info("got an User Human The name is"+str(name))
                                 Stat.userUser(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in",phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
+                                message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
 
                             if (status == 'Unwanted'):
                                 logging.info("got an Unwanted Human The name is"+str(name))
                                 Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!",phone,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
+                                message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
 
                             if(faces > 1):
                                 Stat.userGroup(sock,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
