@@ -24,6 +24,7 @@ class CreateAccountForm(FlaskForm):
 
 
 class AddFaceForm(FlaskForm):
+    phone = TextField('PhoneNumber', id='phone'   , validators=[DataRequired()])
     user = TextField('name', id='name'   , validators=[DataRequired()])
     files = FileField('files', id='files', validators=[DataRequired()] )
     group = SelectField('group', id='drop', validators=[DataRequired()],choices=[
@@ -32,6 +33,7 @@ class AddFaceForm(FlaskForm):
             ('Unwanted', 'unwanted')
         ]
     )
+
     # enables removal of a database entry from the webpage
 class RemoveFaceForm(FlaskForm):
     user = TextField('name', id='name'   , validators=[DataRequired()])

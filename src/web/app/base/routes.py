@@ -248,11 +248,12 @@ def adduser():
         
         tempfile_url = str('http://'+flaskconfig['ip']+':'+flaskconfig['port']+"/static/assets/tmp/"+output_name)
         
-
+        phonenum = request.form["phone"]
         print(username)
         print(group)
         print(imagename)
         print(tempfile_url)
+        print(phonenum)
         
         # saves uploaded image to a temp file dir for sending to opencv client 
         file.save(tempfile_path+output_name)
@@ -279,6 +280,7 @@ def adduser():
         user.image = output_name
         user.imageurl = tempfile_url
         user.useruuid = str(uuid.uuid1())
+        user.phonenum = phonenum
         db.session.add(user)
         db.session.commit()
         ##print(image)

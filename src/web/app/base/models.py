@@ -76,6 +76,7 @@ class Face(db.Model, UserMixin):
     group = Column(String)
     image = Column(String(1000),unique=True)
     imageurl = Column(String(1000),unique=True)
+    phonenum =  Column(String(1000),unique=True)
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():

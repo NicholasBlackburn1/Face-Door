@@ -106,7 +106,7 @@ class VideoProsessing(object):
 
             # this is Where the Data gets Wrapped into am DataList with uuid First key
             local_data = {
-                db.getUserUUID(db.getFaces(), i): UserData(db.getName(db.getFaces(), i), db.getStatus(db.getFaces(), i), db.getImageName(db.getFaces(), i), db.getImageUrI(db.getFaces(), i))
+                db.getUserUUID(db.getFaces(), i): UserData(db.getName(db.getFaces(), i), db.getStatus(db.getFaces(), i), db.getImageName(db.getFaces(), i), db.getImageUrI(db.getFaces(), i), db.getPhoneNum(db.getFaces(), i))
             }
 
             self.userList.append(local_data)

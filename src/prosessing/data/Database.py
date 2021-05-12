@@ -153,7 +153,9 @@ def getUserUUID(result_set, i):
     id, useruuid,user, group, image, imageurl = result_set[i]
     return useruuid
 
-
+def getPhoneNum(result_set, i):
+    id, useruuid, user, group, image, imageurl,phoneNum = result_set[i]
+    return phoneNum
 
 def getLifefaces(result_set):
     id,seenFaces,seenPlates,seenReconized,seenUnReconized = result_set
