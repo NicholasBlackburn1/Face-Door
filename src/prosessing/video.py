@@ -45,7 +45,7 @@ import face_recognition
 import imutils
 import prosessing.data.UsersStat as Stat
 import prosessing.messaging.SmsHandler as message
-
+import prosessing.videoThread
 
 class VideoProsessing(object):
 
@@ -72,7 +72,12 @@ class VideoProsessing(object):
     imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
     plateImagePath = fileconfig['rootDirPath'] + fileconfig['platePath']
 
+    Modelpath = str(imagePathusers+'UwU.clf')
+
     # Camera Stream
+    vs = prosessing.videoThread.ThreadingClass(str(opencvconfig['Stream_intro']+opencvconfig['Stream_ip']+":"+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
+   
+
 
     userList = []
 
@@ -183,6 +188,28 @@ class VideoProsessing(object):
         return len(face_bounding_boxes)
 
 
+    def rtspRecive(self,q):
+            
+            # graps image to read
+            ret, frame = self.vs.read()
+            self.vs.cap(cv2.CAP_PROP_BUFFERSIZE, 2)
+
+            img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+
+            width = int(self.vs.get(3))   # float `width`
+            height = int(self.vs.get(4))  # float `height`
+
+            # checks to see if frames are vaild not black or empty
+
+            if (width is 0 or height is 0):
+                logging.warn("cannot open Non exsting image")
+                logging.error(
+                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+                print(
+                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+        
+
+
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
@@ -201,28 +228,10 @@ class VideoProsessing(object):
         config_object.read(str(pathlib.Path().absolute()) +
                            "/src/prosessing/"+"Config.ini")
 
-        logconfig = config_object['LOGGING']
-        zmqconfig = config_object['ZMQ']
-        opencvconfig = config_object['OPENCV']
-        fileconfig = config_object['FILE']
-        smsconfig =  config_object['SMS']
         current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
 
-        rootDirPath = fileconfig['rootDirPath']
-        configPath = fileconfig['rootDirPath']+fileconfig['configPath']
-        imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
-        imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
-
-        logging.basicConfig(filename=configPath+logconfig['filename'] + datetime.now().strftime(
+        logging.basicConfig(filename=self.configPath+self.logconfig['filename'] + datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
-
-        # Camera Stream
-        video_capture = cv2.VideoCapture(str(opencvconfig['Stream_intro']+opencvconfig['Stream_ip']+":"+opencvconfig['Stream_port']+opencvconfig['Stream_local']))
-
-        if(video_capture == None):
-            logging.error(
-                Exception("Camera Not Found! Sorry Master.... i Faild you"))
-            return
 
         # connects to database
         # Database connection handing
@@ -231,11 +240,11 @@ class VideoProsessing(object):
         logging.info("connected to database Faces")
         logging.info("connecting to zmq")
 
-        Modelpath = str(imagePathusers+'UwU.clf')
+        
         allthefaces = 0
 
 # inits Zmq Server
-        ZMQURI = str("tcp://"+zmqconfig['ip']+":"+zmqconfig['port'])
+        ZMQURI = str("tcp://"+self.zmqconfig['ip']+":"+self.zmqconfig['port'])
 
         ctx = zmq.Context()
         sock = ctx.socket(zmq.PUB)
@@ -254,7 +263,7 @@ class VideoProsessing(object):
         logging.info("Setting up cv")
 
         # Downlaods all the Faces
-        self.downloadUserFaces(imagePathusers)
+        self.downloadUserFaces(self.imagePathusers)
 
      
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
@@ -263,7 +272,7 @@ class VideoProsessing(object):
 
         self.sendProgramStatus(messgae="Training Models",sock=sock, logging=logging)
         
-        Knn.train(train_dir=imagePathusers,model_save_path=Modelpath, n_neighbors=2)
+        Knn.train(train_dir=self.imagePathusers,model_save_path=self.Modelpath, n_neighbors=2)
         print("Done Training Model.....")
         logging.info('Done Training Model....')
         logging.info("Looking for faces.....")
@@ -275,33 +284,13 @@ class VideoProsessing(object):
         process_this_frame = 29
         status = None
         while 0 < 1:
-
-            # graps image to read
-            ret, frame = video_capture.read()
-           
-            # gets video
-            fps = int(video_capture.get(2))
-            width = int(video_capture.get(3))   # float `width`
-            # float `height`
-            height = int(video_capture.get(4))
-
-            # checks to see if frames are vaild not black or empty
-
-            if (width is 0 or height is 0):
-                logging.warn("cannot open Non exsting image")
-                logging.error(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-                print(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-
-        
+            frame = self.vs.read()
 
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-
             
             process_this_frame = process_this_frame + 1
             if process_this_frame % 30 == 0:
-                predictions = Knn.predict(img, model_path=Modelpath)
+                predictions = Knn.predict(img, model_path=self.Modelpath)
             
                 """
                     This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
@@ -322,7 +311,7 @@ class VideoProsessing(object):
                         
                         
                         if(name == 'unknown'):
-                            Stat.userUnknown(sock,status,opencvconfig,name,frame,font,imagename =self.imagename,imagePath=imagePath,left = left,right =right,bottom =bottom,top =top)
+                            Stat.userUnknown(sock,status,self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                             print("user is unknown")
                             logging.info("unknowns Here UwU!")
                             message.sendCapturedImageMessage("eeeep there is an unknown Person here",4123891615,'http://192.168.5.7:2000/unknown')
@@ -338,19 +327,19 @@ class VideoProsessing(object):
                             
                             if (status == 'Admin'):
                                 logging.info("got an Admin The name is"+str(name))
-                                Stat.userAdmin(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                                Stat.userAdmin(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                                 message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good",4123891615,'http://192.168.5.7:2000/admin')
                                 
                             if (status == 'User'):
                                 logging.info("got an User Human The name is"+str(name))
-                                Stat.userUser(sock,status,name,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                                Stat.userUser(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
 
                             if (status == 'Unwanted'):
                                 logging.info("got an Unwanted Human The name is"+str(name))
-                                Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,imagePath,left,right,bottom,top)
+                                Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,self.imagePath,left,right,bottom,top)
                             
                             if(faces >= 2):
-                                Stat.userGroup(sock,frame,font,self.imagename,imagePath,left,right,bottom,top)
+                                Stat.userGroup(sock,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                 
                             if(i == len(self.userList[i]) and faces):
                                 print("not going to incrament because I dont want outof bpunds")
@@ -365,5 +354,6 @@ class VideoProsessing(object):
                                 
                     
             if ord('q') == cv2.waitKey(10):
+                self.vs.release()
                 cv2.destroyAllWindows()
                 exit(0)
