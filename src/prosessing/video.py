@@ -187,17 +187,14 @@ class VideoProsessing(object):
         face_bounding_boxes = rec.face_locations(frame,model="cnn")
         return len(face_bounding_boxes)
 
-
-    def rtspRecive(self,q):
+    # recives RTSP camra Stream
+    def rtspRecive(self):
             
             # graps image to read
-            ret, frame = self.vs.read()
-            self.vs.cap(cv2.CAP_PROP_BUFFERSIZE, 2)
-
-            img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-
-            width = int(self.vs.get(3))   # float `width`
-            height = int(self.vs.get(4))  # float `height`
+            frame = self.vs.read()
+            
+            width = int(self.vs.cap.get(3))   # float `width`
+            height = int(self.vs.cap.get(4))  # float `height`
 
             # checks to see if frames are vaild not black or empty
 
@@ -275,8 +272,10 @@ class VideoProsessing(object):
         Knn.train(train_dir=self.imagePathusers,model_save_path=self.Modelpath, n_neighbors=2)
         print("Done Training Model.....")
         logging.info('Done Training Model....')
-        logging.info("Looking for faces.....")
+        
 
+        self.rtspRecive()
+        logging.info("Looking for faces.....")
         print("Looking for Faces...")
      
         i = 0

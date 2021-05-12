@@ -44,8 +44,8 @@ def userAdmin(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,
 
             saveImage(imagePath+"Admin/",
                         imagename, frame)
-            logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
-            print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            logging.info("Saved Image to"+ "  "+str(imagePath + "Admin/" +imagename + ".jpg"))
+            print("Saved Image to"+ "  "+str(imagePath + "Admin/" +imagename + ".jpg"))
             
 
 
@@ -98,8 +98,8 @@ def userUser(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,t
         # sends Image and saves image to disk
         saveImage(imagePath+"User/",imagename, frame)
 
-        logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
-        print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+        logging.info("Saved Image to"+ "  "+str(imagePath + "User/" +imagename + ".jpg"))
+        print("Saved Image to"+ "  "+str(imagePath + "User/" +imagename + ".jpg"))
     
     #
 
@@ -126,8 +126,8 @@ def userUnwanted(sock,status,name,frame,faces,font,imagename,imagePath,left,righ
             # sends Image and saves image to disk
             saveImage(imagePath+"Unwanted/",
                         imagename, frame)
-            logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
-            print("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+            logging.info("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
+            print("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
 # Handles unKnown User
 def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
 
@@ -185,5 +185,5 @@ def userGroup(sock,frame,font,imagePath,imagename,left,right,bottom,top):
                 # sends Image and saves image to disk
                 saveImage(imagePath + "Group/",
                             imagename, frame)
-                logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
+                logging.info("Saved Image to"+ "  "+str(imagePath + "Group/" +imagename + ".jpg"))
                     
