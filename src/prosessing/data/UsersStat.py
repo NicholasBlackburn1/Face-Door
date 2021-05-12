@@ -21,7 +21,7 @@ def saveImage(imagepath, imagename, frame):
 
 
 # this is for Handling User Admin Stats
-def userAdmin(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,top):
+def userAdmin(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
     
         print(status)
         # Draw a box around the face
@@ -51,7 +51,7 @@ def userAdmin(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,
 
  # User Grade Status
  # this is for Handling User Stats
-def userUser(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,top):
+def userUser(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
 
     # Draw a box around the face
     cv2.rectangle(frame, (left, top),
@@ -105,7 +105,7 @@ def userUser(sock,status,name,frame,font,imagename,imagePath,left,right,bottom,t
 
 
 # Handles Unwanted Usr Stats
-def userUnwanted(sock,status,name,frame,faces,font,imagename,imagePath,left,right,bottom,top):
+def userUnwanted(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
     
         cv2.rectangle(frame, (left, top),
                     (right, bottom), (0, 0, 255), 2)
@@ -129,7 +129,7 @@ def userUnwanted(sock,status,name,frame,faces,font,imagename,imagePath,left,righ
             logging.info("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
             print("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
 # Handles unKnown User
-def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
+def userUnknown(opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
 
         cv2.rectangle(frame, (left, top),
                     (right, bottom), (0, 0, 255), 2)
@@ -149,7 +149,7 @@ def userUnknown(sock,status,opencvconfig,name,frame,font,imagePath,imagename,lef
            
                         
 # User Groups 
-def userGroup(sock,frame,font,imagePath,imagename,left,right,bottom,top):
+def userGroup(frame,font,imagePath,imagename,left,right,bottom,top):
     
             cv2.rectangle(
                 frame, (left, top), (right,

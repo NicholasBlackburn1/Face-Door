@@ -226,9 +226,7 @@ class VideoProsessing(object):
         config_object = ConfigParser()
         config_object.read(str(pathlib.Path().absolute()) +
                            "/src/prosessing/"+"Config.ini")
-
-        current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
-
+                           
         logging.basicConfig(filename=self.configPath+self.logconfig['filename'] + datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
 
@@ -311,10 +309,9 @@ class VideoProsessing(object):
                         
                         
                         if(name == 'unknown'):
-                            Stat.userUnknown(sock,status,self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
+                            Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                             print("user is unknown")
                             logging.info("unknowns Here UwU!")
-
                             message.sendCapturedImageMessage("eeeep there is an unknown Person here",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
                         
                         else:
@@ -324,29 +321,27 @@ class VideoProsessing(object):
                             phone = userinfo.phoneNum
 
                             print(str(name) + "   "+ str(status))
-                            # this is for handling User Sections in a clean whay
-                            faces = self.getAmountofFaces(face_recognition, frame)
                             
                             if (status == 'Admin'):
                                 logging.info("got an Admin The name is"+str(name))
-                                Stat.userAdmin(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                                 message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
                                 
                             if (status == 'User'):
                                 logging.info("got an User Human The name is"+str(name))
-                                Stat.userUser(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                Stat.userUser(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                                 message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
 
                             if (status == 'Unwanted'):
                                 logging.info("got an Unwanted Human The name is"+str(name))
-                                Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                Stat.userUnwanted(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                                 message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
-
-                            if(faces > 1):
-                                Stat.userGroup(sock,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                 
+                            if(self.getAmountofFaces(face_recognition, frame) > 1):
+                                Stat.userGroup(frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                                 message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.7:2000/group',self.smsconfig['textbelt-key'])
                 
-                            if(i == len(self.userList[i]) and faces):
+                            if(i == len(self.userList[i]) and self.getAmountofFaces(face_recognition, frame)):
                                 print("not going to incrament because I dont want outof bpunds")
                                 logging.info("should not count up because it will through out of bounds")
                             else:
