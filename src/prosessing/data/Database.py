@@ -132,25 +132,25 @@ def getID(result_set, i):
 
 
 def getName(result_set, i):
-    id, useruuid, user, group, image, imageurl = result_set[i]
+    id, useruuid, user, group, image, imageurl,phoneNum = result_set[i]
     return user
 
 
 def getStatus(result_set, i):
-    id, useruuid, user, group, image, imageurl = result_set[i]
+    id, useruuid, user, group, image, imageurl,phoneNum = result_set[i]
     return group
 
 
 def getImageName(result_set, i):
-    id, useruuid,user, group, image, imageurl = result_set[i]
+    id, useruuid,user, group, image, imageurl,phoneNum = result_set[i]
     return image
 
 def getImageUrI(result_set, i):
-    id, useruuid, user, group, image, imageurl = result_set[i]
+    id, useruuid, user, group, image, imageurl,phoneNum = result_set[i]
     return imageurl
 
 def getUserUUID(result_set, i):
-    id, useruuid,user, group, image, imageurl = result_set[i]
+    id, useruuid,user, group, image, imageurl,phoneNum = result_set[i]
     return useruuid
 
 def getPhoneNum(result_set, i):

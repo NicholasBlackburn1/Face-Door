@@ -252,7 +252,6 @@ class VideoProsessing(object):
 
         self.sendProgramStatus(messgae="Starting Presetup",
                                sock=sock, logging=logging)
-
         # Updates Data in the Usable data list uwu
         self.UserDataList()
 
@@ -315,7 +314,8 @@ class VideoProsessing(object):
                             Stat.userUnknown(sock,status,self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                             print("user is unknown")
                             logging.info("unknowns Here UwU!")
-                            message.sendCapturedImageMessage("eeeep there is an unknown Person here",self.userlist[i][],'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
+
+                            message.sendCapturedImageMessage("eeeep there is an unknown Person here",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
                         
                         else:
                             userinfo = self.userList[i][name]
