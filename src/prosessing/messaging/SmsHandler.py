@@ -23,29 +23,34 @@ def checkEndpoint(phoneNum,apikey):
 # this is for handling sending all the messages UwU
 def _message(endpoint,apikey,phoneNum,message):
 
-    phone = str("'")+str(phoneNum)+str("'")
-    key = apikey
+    phone = str(phoneNum)
     msg = str(message)
+    apikey = str(apikey)
+    print("textbelt request:"+"   "+ phone+ "   "+ msg+ "  "+ apikey)
+
     resp = requests.post(endpoint, {
     'phone': phone,
     'message': msg,
-    'key': key,
+    'key': apikey,
     })
     logging.warn("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
-    print("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
+    print("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success'])+ "   "+"textid:"+str(resp.json()['textId']+"\n"))
   
     # if the custom endpoint fails, Use Default one
     if(resp.json()['success'] == False):
         logging.warn("Faild to send message via the first endpoint now sending it with the Default one")
-        phone = str("'")+str(phoneNum)+str("'")
-        key = str(apikey)
+        print("textbelt request:"+"   "+ phone+ "   "+ msg+ "  "+ apikey)
+
+        phone = str(phoneNum)
         msg = str(message)
-        resp = requests.post(default_endpoint, {
+        apikey =str(apikey)
+        resp = requests.post('https://textbelt.com/text', {
         'phone': phone,
         'message': msg,
-        'key': key,
+        'key': apikey,
         })
-        logging.info("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
+        print("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success'])+ "   "+ "error:"+"  "+str(resp.json()['error']))
+        logging.info("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success'])+ "   "+ "error:"+"  "+str(resp.json()['error']))
    
 
     
@@ -62,5 +67,6 @@ def sendMessage(message,phoneNum):
     _message(default_endpoint,'apikey',phoneNum,"[SECU-SERVE]"+str("  ")+str(message))
 
 
-def sendCapturedImageMessage(message,phoneNum,url):
-    _message(default_endpoint,'9922bca307918d04d792c1203234ee40a7bb393bfaGlsn8KKkjGL9Tp1b2zJZwJi',phoneNum,"[SECU-SERVE-CAPUTURED]"+str("  ")+str(message)+" "+str(url))
+def sendCapturedImageMessage(message,phoneNum,url,api):
+    _message(default_endpoint,apikey=api,phoneNum=phoneNum,message="[SECU-SERVE-CAPUTURED]"+str("  ")+str(message)+" "+str(url))
+

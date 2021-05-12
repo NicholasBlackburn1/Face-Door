@@ -64,8 +64,10 @@ class VideoProsessing(object):
     zmqconfig = config_object['ZMQ']
     opencvconfig = config_object['OPENCV']
     fileconfig = config_object['FILE']
-    current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
+    smsconfig =  config_object['SMS']
 
+    current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
+ 
     rootDirPath = fileconfig['rootDirPath']
     configPath = fileconfig['rootDirPath']+fileconfig['configPath']
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
@@ -192,7 +194,7 @@ class VideoProsessing(object):
             
             # graps image to read
             frame = self.vs.read()
-            
+
             width = int(self.vs.cap.get(3))   # float `width`
             height = int(self.vs.cap.get(4))  # float `height`
 
@@ -313,7 +315,7 @@ class VideoProsessing(object):
                             Stat.userUnknown(sock,status,self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                             print("user is unknown")
                             logging.info("unknowns Here UwU!")
-                            message.sendCapturedImageMessage("eeeep there is an unknown Person here",4123891615,'http://192.168.5.7:2000/unknown')
+                            message.sendCapturedImageMessage("eeeep there is an unknown Person here",4127604197,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
                         
                         else:
                             userinfo = self.userList[i][name]
@@ -327,18 +329,21 @@ class VideoProsessing(object):
                             if (status == 'Admin'):
                                 logging.info("got an Admin The name is"+str(name))
                                 Stat.userAdmin(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good",4123891615,'http://192.168.5.7:2000/admin')
+                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good",4127604197,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
                                 
                             if (status == 'User'):
                                 logging.info("got an User Human The name is"+str(name))
                                 Stat.userUser(sock,status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in",4127604197,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
 
                             if (status == 'Unwanted'):
                                 logging.info("got an Unwanted Human The name is"+str(name))
                                 Stat.userUnwanted(sock,status,name,frame,faces,font,self.imagename,self.imagePath,left,right,bottom,top)
-                            
-                            if(faces >= 2):
+                                message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!",4127604197,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
+
+                            if(faces > 1):
                                 Stat.userGroup(sock,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",4127604197,'http://192.168.5.7:2000/group',self.smsconfig['textbelt-key'])
                 
                             if(i == len(self.userList[i]) and faces):
                                 print("not going to incrament because I dont want outof bpunds")
