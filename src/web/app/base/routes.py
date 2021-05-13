@@ -50,7 +50,7 @@ import threading
 import time 
 import socket
 import logging
-
+import json
 from flask_wtf.file import FileField
 from configparser import ConfigParser
 # returns the zmq settings from the config.ini
@@ -187,38 +187,33 @@ TODO: Get People Seen and reconized to be Read and cal amout of people seen
 @blueprint.route("/", methods=["GET", "POST"])
 def index():
     people = None
+    totalpeople = None
     plate = None
     unrec = None
     rec = None
 
+    context = zmq.Context()
+    socket = context.socket(zmq.SUB)
+
+    print ("Collecting updates from Opencv server...")
+    socket.connect ("tcp://"+zmqconfig['ip']+":" % zmqconfig['port'])
+        
+    string = socket.recv()
     
-    
-   
+    if(string == "FaceAmount" and totalpeople == 0):
+        got = json.dumps(socket.recv_json())
+        totalpeople +=got
 
-    if(lifetime.query.get(0) is None):
-        people = 0
-    else:
-        people = int(lifetime.query.get(1))
-
-    if (lifetime.query.get(1) is None):
-        plate = 0
-    else: 
-        plate = int(lifetime.query.get(3)) 
-
-
-    if(lifetime.query.get(3) is None):
-        rec = 0
-    else:
-        rec = int(lifetime.query.get(4))
-
-    if(lifetime.query.get(4) is None):
-        unrec = 0
-    else:
-        unrec = int(lifetime.query.get(4))
+        print("Total faces seen are:"+ " "+str(totalpeople) )
+        
+        lifetime.query.filter_by(seenFaces=totalpeople).first()
+        lifetime = lifetime(**request.form)
+        db.session.add(lifetime)
+        db.session.commit()
 
     return render_template(
         "index.html",
-        lifetime_people= people,
+        lifetime_people= totalpeople,
         platestotal= plate,
         unknown = unrec,
         authorized = rec,

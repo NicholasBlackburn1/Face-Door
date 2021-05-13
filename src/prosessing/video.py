@@ -177,12 +177,6 @@ class VideoProsessing(object):
         sock.send_json({"amount": faceAmount})
         logging.info("[SOCKET Amount] Sent Face Amount")
 
-    # sends Life time Face ammount to subsecriber
-    def sendLifeTimeFacesAmount(self, sock, faceAmount):
-        logging.info("[SOCKET Life Time Amount] Sending Face Amount")
-        sock.send_string("LifeTimeFaceAmount")
-        sock.send_json({"faces": faceAmount})
-        logging.info("[SOCKET Life Time Amount] Sent Face Amount")
 
     # Get Amout Of Faces In Frame
     def getAmountofFaces(self, rec, frame):
@@ -216,6 +210,9 @@ class VideoProsessing(object):
     def ProcessFaceVideo(self):
         # Makes Folder Dir
         #`self.makefiledirs()
+        if( not os.path.exists(self.rootDirPath)):
+            logging.warn("creating Dirs")
+            self.makefiledirs()
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
@@ -321,16 +318,17 @@ class VideoProsessing(object):
                             phone = userinfo.phoneNum
 
                             print(str(name) + "   "+ str(status))
+                            self.sendCurrentSeenFacesAmount(sock,self.getAmountofFaces(face_recognition, frame)))
                             
                             if (status == 'Admin'):
                                 logging.info("got an Admin The name is"+str(name))
                                 Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
+                                message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
                                 
                             if (status == 'User'):
                                 logging.info("got an User Human The name is"+str(name))
                                 Stat.userUser(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
+                                message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
 
                             if (status == 'Unwanted'):
                                 logging.info("got an Unwanted Human The name is"+str(name))

@@ -101,24 +101,6 @@ def getAmountOfLifeEntrys():
 
 
 
-# this is for handling Setting The face count data
-def setLifetimeFaceCount(session,faceCount):
-    data = session.query.filter_by().first()
-    data.seenFaces = faceCount
-    session.add(data)
-    session.commit()
-    logging.info("Seaved Life time Face count")
-
-
-# this is for handling Setting The face count data
-def setLifetimePlateCount(session,plateCount):
-    data = session.query.filter_by().first()
-    data.seenPlates = plateCount
-    session.add(data)
-    session.commit()
-    logging.info("Seaved Life time Plate count")
-
-
 def getKey(result_set, i):
     print(result_set[i])
     return result_set[i]
