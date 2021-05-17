@@ -19,6 +19,7 @@ import logging
 import configparser
     # Import smtplib for the actual sending function
 import smtplib
+import cv2
 
 # And imghdr to find the types of our images
 import imghdr

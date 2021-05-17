@@ -14,7 +14,7 @@ import face_recognition
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 
-def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=False):
+def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree', verbose=True):
   
         X = []
         y = []
@@ -27,7 +27,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
             # Loop through each training image for the current person
             for img_path in image_files_in_folder(os.path.join(train_dir, class_dir)):
                 image = face_recognition.load_image_file(img_path)
-                face_bounding_boxes = face_recognition.face_locations(image, model="cnn",number_of_times_to_upsample=2)
+                face_bounding_boxes = face_recognition.face_locations(image, model="cnn",number_of_times_to_upsample=0)
 
                 if len(face_bounding_boxes) != 1:
                     # If there are no people (or too many people) in a training image, skip the image.

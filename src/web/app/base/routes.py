@@ -180,46 +180,113 @@ def not_found_error(error):
 def internal_error(error):
     return render_template("errors/500.html"), 500
 
+def getData(totalpeople):
+
+    context = zmq.Context()
+    socket = context.socket(zmq.SUB)
+
+    print ("Collecting updates from Opencv server...")
+    socket.connect ("tcp://"+str(zmqconfig['ip'])+":"+str(zmqconfig['port']))
+        
+    string = socket.recv()
+    
+    #
+    if(string == "FaceAmount"):
+        got = json.dumps(socket.recv_json())
+        print(got)
+        totalpeople +=got
+
+        print("Total faces seen are:"+ " "+str(totalpeople) )
+        return "None"
+    else:
+        return "None"
 
 '''
 TODO: Get People Seen and reconized to be Read and cal amout of people seen
 '''
 @blueprint.route("/", methods=["GET", "POST"])
 def index():
-    people = None
-    totalpeople = None
-    plate = None
-    unrec = None
-    rec = None
-
-    context = zmq.Context()
-    socket = context.socket(zmq.SUB)
-
-    print ("Collecting updates from Opencv server...")
-    socket.connect ("tcp://"+zmqconfig['ip']+":" % zmqconfig['port'])
-        
-    string = socket.recv()
+  
+   
+  
     
-    if(string == "FaceAmount" and totalpeople == 0):
-        got = json.dumps(socket.recv_json())
-        totalpeople +=got
+    face_from = RemoveFaceForm(request.form)
+    server_form = ServerSettings(request.form)
+    zmq_form = ZmqServerSettings(request.form)
+    phone_form = AlertPhoneNumberSettings(request.form)
+    
+    if "Remove" in request.form:
+        username = request.form['user']
+        group = request.form['group']
 
-        print("Total faces seen are:"+ " "+str(totalpeople) )
-        
-        lifetime.query.filter_by(seenFaces=totalpeople).first()
-        lifetime = lifetime(**request.form)
-        db.session.add(lifetime)
+        print(username)
+        print(group)
+
+        remove = Face.query.filter_by(user=username).one()
+        db.session.delete(remove)
         db.session.commit()
-
-    return render_template(
-        "index.html",
-        lifetime_people= totalpeople,
-        platestotal= plate,
-        unknown = unrec,
-        authorized = rec,
-        faceimg = "null"
+              
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "removedUser" )
         
-    )   
+    if "save" in request.form:
+        ipaddress = request.form['ipaddress']
+        port = request.form['portnumber']
+        
+        print(ipaddress)
+        print(port)
+        
+        #Get the configparser object
+       
+        #Get the configparser object
+        config_object = ConfigParser()
+        config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+
+        flasksettings = config_object['FLASK']
+        flasksettings['ip'] = ipaddress
+        flasksettings['port'] = port
+        
+        #Write changes back to file
+        with open(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini", 'w') as conf:
+            config_object.write(conf)
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "updated",version = versionconfig['number'] )
+        
+
+    if "zmqsave" in request.form:
+        
+        ipaddress = request.form['ipaddress']
+        port = request.form['portnumber']
+        print("ZMQ")
+        print(ipaddress)
+        print(port)
+        
+        #Get the configparser object
+        config_object = ConfigParser()
+        config_object.read(str(pathlib.Path().absolute())+"/src/web/"+"Config.ini")
+
+        zmqsettings = config_object['ZMQ']
+        zmqsettings['ip'] = ipaddress
+        zmqsettings['port'] = port
+
+    if "phonesave" in request.form:
+        phone = request.form['phonenumber']
+        usrname = request.form['name']
+        data = {    
+            "name": usrname,
+            "phonenum": phone,
+            }
+
+        #Write changes back to file
+        with open(fileconfig['rootDirPath']+fileconfig['configPath']+fileconfig['PhoneNumberStorage']+"PhoneNumber.json", 'w') as conf:
+            json.dump(data,conf)
+            
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, phoneForm = phone_form, msg = "addedphone",version = versionconfig['number'] )
+        
+        
+        
+
+    
+    return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form,  phoneForm = phone_form, version = versionconfig['number'], port_number= flaskconfig['port'], ip_address= flaskconfig['ip'])
+    
 
  
 
