@@ -64,9 +64,6 @@ try:
     config_object.read(str(pathlib.Path().absolute())+"/"+"Config.ini")
     zmqconfig = config_object['ZMQ']
     socket.connect ("tcp://"+zmqconfig['ip']+":%s" % zmqconfig['port'])
-
-    DEBUG = config('Production', default=True)
-    get_config_mode = 'Debug' if DEBUG else 'Production'
     # Load all possible configurations
     config_dict = {
         'Production': webconfig.ProductionConfig,
@@ -74,7 +71,7 @@ try:
     }
 
     # Load the configuration using the default values
-    app_config =config_dict[get_config_mode]
+    app_config =config_dict['Production']
 
 except KeyError:
     exit('Error: Invalid <config_mode>. Expected values [Debug, Production] ')
@@ -82,4 +79,4 @@ except KeyError:
 app = create_app( app_config ) 
 Migrate(app, db)
 
-app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)
+app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=False, threaded=True)

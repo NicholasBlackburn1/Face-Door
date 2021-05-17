@@ -276,7 +276,7 @@ class VideoProsessing(object):
      
         i = 0
         face_index =0
-        process_this_frame = 29
+        process_this_frame = 14
         status = None
         while 0 < 1:
             frame = self.vs.read()
@@ -284,7 +284,7 @@ class VideoProsessing(object):
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
             process_this_frame = process_this_frame + 1
-            if process_this_frame % 30 == 0:
+            if process_this_frame % 15 == 0:
                 predictions = Knn.predict(img, model_path=self.Modelpath)
             
                 """
@@ -311,7 +311,7 @@ class VideoProsessing(object):
                                 Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                                 print("user is unknown")
                                 logging.info("unknowns Here UwU!")
-                                self.sendCurrentSeenFacesAmount(sock,self.getAmountofFaces(face_recognition, frame))
+                              
                             else:
                                 userinfo = self.userList[i][name]
                                 status = userinfo.status
@@ -324,7 +324,6 @@ class VideoProsessing(object):
                             
                                 if (status == 'Admin'):
                                     logging.info("got an Admin The name is"+str(name))
-                                    self.sendCurrentSeenFacesAmount(sock,self.getAmountofFaces(face_recognition, frame))
                                     Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
                                 
                                     if(sent != True):
@@ -339,8 +338,6 @@ class VideoProsessing(object):
                                 if (status == 'Unwanted'):
                                     logging.info("got an Unwanted Human The name is"+str(name))
                                     Stat.userUnwanted(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                    self.sendCurrentSeenFacesAmount(sock,self.getAmountofFaces(face_recognition, frame))
-                                
                                     message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
                                     
                                 if(self.getAmountofFaces(face_recognition, frame) > 1):

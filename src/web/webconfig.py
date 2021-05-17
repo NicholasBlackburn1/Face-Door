@@ -46,10 +46,10 @@ class ProductionConfig(Config):
     )
 
 class DebugConfig(Config):
-    DEBUG = True
+    DEBUG = False
 
 # Load all possible configurations
 config_dict = {
     'Production': ProductionConfig,
-    'Debug'     : DebugConfig
+    'Debug'     : ProductionConfig
 }
