@@ -50,7 +50,7 @@ starlette==0.13.8
 supervisor==4.2.1
 toml==0.10.1
 tqdm==4.50.2
-urllib3==1.25.11
+urllib3==1.26.5
 uvicorn==0.12.2
 vidgear==0.1.9
 visitor==0.1.3
