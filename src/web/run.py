@@ -56,7 +56,7 @@ def Start():
     app = create_app( app_config ) 
     Migrate(app, db)
 
-    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)
+    app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=False, threaded=True)
 
 # WARNING: Don't run with debug turned on in production!
 try:
@@ -79,4 +79,4 @@ except KeyError:
 app = create_app( app_config ) 
 Migrate(app, db)
 
-app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=False, threaded=True)
+app.run(host=getFlaskConfig()['ip'], port=getFlaskConfig()['port'],debug=True, threaded=True)

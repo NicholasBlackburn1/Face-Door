@@ -46,6 +46,7 @@ import imutils
 import prosessing.data.UsersStat as Stat
 import prosessing.messaging.SmsHandler as message
 import prosessing.videoThread
+import Jetson.GPIO as GPIO
 
 class VideoProsessing(object):
 
@@ -208,7 +209,9 @@ class VideoProsessing(object):
     '''
     
     def ProcessFaceVideo(self):
-        # Makes Folder Dir
+        GPIO.setmode(GPIO.TEGRA_SOC)
+       
+                # Makes Folder Dir
         #`self.makefiledirs()
         if( not os.path.exists(self.rootDirPath)):
             logging.warn("creating Dirs")
@@ -286,7 +289,7 @@ class VideoProsessing(object):
             process_this_frame = process_this_frame + 1
             if process_this_frame % 15 == 0:
                 predictions = Knn.predict(img, model_path=self.Modelpath)
-            
+                
                 """
                     This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
                 """
@@ -305,12 +308,14 @@ class VideoProsessing(object):
 
                     
                     if(name != None):
-                            
+                            print(" UwU users in list"+str(self.userList[1]))
 
                             if(name == 'unknown' and status == None):
                                 Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                                 print("user is unknown")
                                 logging.info("unknowns Here UwU!")
+                                message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
+                                        
                               
                             else:
                                 userinfo = self.userList[i][name]
@@ -319,17 +324,12 @@ class VideoProsessing(object):
                                 phone = userinfo.phoneNum
 
                                 print(str(name) + "   "+ str(status))
-                        
-                                
-                            
+    
                                 if (status == 'Admin'):
                                     logging.info("got an Admin The name is"+str(name))
                                     Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                
-                                    if(sent != True):
-                                        message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
-                                        sent=True
-                                    
+                                    message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
+                                        
                                 if (status == 'User'):
                                     logging.info("got an User Human The name is"+str(name))
                                     Stat.userUser(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
@@ -347,13 +347,16 @@ class VideoProsessing(object):
                                 if(i == len(self.userList[i]) and self.getAmountofFaces(face_recognition, frame)):
                                     print("not going to incrament because I dont want outof bpunds")
                                     logging.info("should not count up because it will through out of bounds")
+                                   
+                            
+                                if(i <= len(self.userList[i])):
+                                    i +=1
+                                    print("counter:"+str(i))
+                                    print(str(self.userList[i]))
                                 else:
-                                    if(i >= len(self.userList[i])):
-                                        i +=1
-                                    else:
-                                        logging.info("not going to incrament because its equle")
-                                        print("not going to incrament because I dont want outof bpunds")
-
+                                    logging.info("not going to incrament because its equle")
+                                    print("not going to incrament because I dont want outof bpunds")
+                                    
                                     
                         
                 if ord('q') == cv2.waitKey(10):
