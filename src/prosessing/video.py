@@ -201,16 +201,12 @@ class VideoProsessing(object):
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
                 print(
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-        
-
 
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
     
     def ProcessFaceVideo(self):
-        GPIO.setmode(GPIO.TEGRA_SOC)
-       
                 # Makes Folder Dir
         #`self.makefiledirs()
         if( not os.path.exists(self.rootDirPath)):
@@ -276,13 +272,16 @@ class VideoProsessing(object):
         self.rtspRecive()
         logging.info("Looking for faces.....")
         print("Looking for Faces...")
+        
+        
+        print("List of all people:"+ str(self.userList))
      
         i = 0
         face_index =0
         process_this_frame = 14
         status = None
         while 0 < 1:
-            frame = self.vs.read()
+            frame = cv2.imread("/mnt/SecuServe/user/people/c64e89d0-b345-11eb-a061-00044beaf015/c64b036e-b345-11eb-a061-00044beaf015.jpg",cv2.IMREAD_COLOR)
 
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
@@ -303,13 +302,12 @@ class VideoProsessing(object):
                     right *= 2
                     bottom *= 2
                     left *= 2
-                    print(name)
+
                     
 
                     
                     if(name != None):
-                            print(" UwU users in list"+str(self.userList[1]))
-
+                           
                             if(name == 'unknown' and status == None):
                                 Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
                                 print("user is unknown")
@@ -318,46 +316,42 @@ class VideoProsessing(object):
                                         
                               
                             else:
-                                userinfo = self.userList[i][name]
-                                status = userinfo.status
-                                name = userinfo.user
-                                phone = userinfo.phoneNum
+                                if name in self.userList[i]:
+                                    userinfo = self.userList[i][name]
+                                    status = userinfo.status
+                                    name = userinfo.user
+                                    phone = userinfo.phoneNum
 
-                                print(str(name) + "   "+ str(status))
-    
-                                if (status == 'Admin'):
-                                    logging.info("got an Admin The name is"+str(name))
-                                    Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                    message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
+                                    print("User UUID:"+ str(userinfo)+ " "+ str(name) + "   "+ str(status))
+        
+                                    if (status == 'Admin'):
+                                        logging.info("got an Admin The name is"+str(name))
+                                        Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
+                                        message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/admin',self.smsconfig['textbelt-key'])
+                                            
+                                    if (status == 'User'):
+                                        logging.info("got an User Human The name is"+str(name))
+                                        Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
+                                        message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
+
+                                    if (status == 'Unwanted'):
+                                        logging.info("got an Unwanted Human The name is"+str(name))
+                                        Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
+                                        message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
                                         
-                                if (status == 'User'):
-                                    logging.info("got an User Human The name is"+str(name))
-                                    Stat.userUser(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                    message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),phone,'http://192.168.5.7:2000/user',self.smsconfig['textbelt-key'])
-
-                                if (status == 'Unwanted'):
-                                    logging.info("got an Unwanted Human The name is"+str(name))
-                                    Stat.userUnwanted(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                    message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.7:2000/unwanted',self.smsconfig['textbelt-key'])
+                                    if(self.getAmountofFaces(face_recognition, frame) > 1):
+                                        Stat.userGroup(frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
+                                        message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.7:2000/group',self.smsconfig['textbelt-key'])
+                        
+                                    if(i == len(self.userList[i]) and self.getAmountofFaces(face_recognition, frame)):
+                                        print("not going to incrament because I dont want outof bpunds")
+                                        logging.info("should not count up because it will through out of bounds")
                                     
-                                if(self.getAmountofFaces(face_recognition, frame) > 1):
-                                    Stat.userGroup(frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                    message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.7:2000/group',self.smsconfig['textbelt-key'])
-                    
-                                if(i == len(self.userList[i]) and self.getAmountofFaces(face_recognition, frame)):
-                                    print("not going to incrament because I dont want outof bpunds")
-                                    logging.info("should not count up because it will through out of bounds")
-                                   
-                            
-                                if(i <= len(self.userList[i])):
-                                    i +=1
-                                    print("counter:"+str(i))
-                                    print(str(self.userList[i]))
                                 else:
-                                    logging.info("not going to incrament because its equle")
-                                    print("not going to incrament because I dont want outof bpunds")
-                                    
-                                    
+                                    print("not in list continueing..."+ str(self.userList[i]))
+                                    i+=1
+                                   
+                                        
                         
                 if ord('q') == cv2.waitKey(10):
                     self.vs.release()

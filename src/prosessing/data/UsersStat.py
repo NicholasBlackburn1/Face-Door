@@ -81,17 +81,7 @@ def userUser(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
         (255, 255, 255),
         1,
     )
-    cv2.putText(
-        frame,
-        "L&R" + str(left) + "," + str(right),
-        (474, 450),
-        font,
-        0.5,
-        (255, 255, 255),
-        (255, 255, 255),
-        1,
-    )
-
+    
     # checks to see if image exsitis
     if(not os.path.exists(imagePath+"User/"+imagename+".jpg")):
 
@@ -111,12 +101,7 @@ def userUnwanted(status,name,frame,font,imagename,imagePath,left,right,bottom,to
                     (right, bottom), (0, 0, 255), 2)
         cv2.putText(frame, name, (left, top),
                     font, 0.5, (255, 255, 255), 1)
-        # Distance info
-        cv2.putText(frame, status, (0, 450),
-                    font, 0.5, (255, 255, 255), 1)
-        cv2.putText(frame, name, (0, 470), font,
-                    0.5, (255, 255, 255), 1)
-
+        
         logging.warning("not letting in" + name)
 
         # checks to see if image exsitis

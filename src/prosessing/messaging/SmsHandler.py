@@ -34,7 +34,7 @@ def _message(endpoint,apikey,phoneNum,message):
     'key': apikey,
     })
     logging.warn("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
-    print("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success'])+ "   "+"textid:"+str(resp.json()['textId']+"\n"))
+    print("Responce from Textbelt"+ "  "+ str(message)+" "+"Was Sent"+"  "+ str(resp.json()['success']))
   
     # if the custom endpoint fails, Use Default one
     if(resp.json()['success'] == False):
