@@ -233,8 +233,6 @@ class VideoProsessing(object):
         logging.info("connected to database Faces")
         logging.info("connecting to zmq")
 
-        
-        allthefaces = 0
 
 # inits Zmq Server
         ZMQURI = str("tcp://"+self.zmqconfig['ip']+":"+self.zmqconfig['port'])
@@ -273,16 +271,14 @@ class VideoProsessing(object):
         logging.info("Looking for faces.....")
         print("Looking for Faces...")
         
-        
-        print("List of all people:"+ str(self.userList))
      
         i = 0
         face_index =0
         process_this_frame = 14
         status = None
         while 0 < 1:
-            frame = cv2.imread("/mnt/SecuServe/user/people/c64e89d0-b345-11eb-a061-00044beaf015/c64b036e-b345-11eb-a061-00044beaf015.jpg",cv2.IMREAD_COLOR)
-
+            #frame = self.vs.read()
+            frame = cv2.imread("/mnt/SecuServe/user/people/0cbc2c06-cbb0-11eb-9f9b-00044beaf015/0cba1bdc-cbb0-11eb-9f9b-00044beaf015.jpg",cv2.IMREAD_COLOR)
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
             process_this_frame = process_this_frame + 1
@@ -294,6 +290,7 @@ class VideoProsessing(object):
                 """
                 font = cv2.FONT_HERSHEY_DUPLEX
                 sent = False
+                
                 # Display the results
                 for name,(top, right, bottom, left) in predictions:
                     
@@ -321,6 +318,9 @@ class VideoProsessing(object):
                                     status = userinfo.status
                                     name = userinfo.user
                                     phone = userinfo.phoneNum
+                                    
+                                    if phone == None or '0':
+                                        phone = 4123891615
 
                                     print("User UUID:"+ str(userinfo)+ " "+ str(name) + "   "+ str(status))
         
@@ -343,17 +343,14 @@ class VideoProsessing(object):
                                         Stat.userGroup(frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
                                         message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.7:2000/group',self.smsconfig['textbelt-key'])
                         
-                                    if(i == len(self.userList[i]) and self.getAmountofFaces(face_recognition, frame)):
-                                        print("not going to incrament because I dont want outof bpunds")
-                                        logging.info("should not count up because it will through out of bounds")
                                     
                                 else:
-                                    print("not in list continueing..."+ str(self.userList[i]))
+                                    
+                                    print(str(userinfo))
                                     i+=1
                                    
                                         
                         
                 if ord('q') == cv2.waitKey(10):
                     self.vs.release()
-                    cv2.destroyAllWindows()
                     exit(0)

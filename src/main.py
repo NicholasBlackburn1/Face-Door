@@ -72,5 +72,6 @@ def main():
 
     logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
 
-    cvVideo.VideoProsessing().ProcessFaceVideo()
+    cvVideo.VideoProsessing().ProcessFaceVideo() 
 main()
+
