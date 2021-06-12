@@ -359,7 +359,7 @@ def settings():
     face_from = RemoveFaceForm(request.form)
     server_form = ServerSettings(request.form)
     zmq_form = ZmqServerSettings(request.form)
-    phone_form = AlertPhoneNumberSettings(request.form)
+    
     
     if "Remove" in request.form:
         username = request.form['user']
@@ -413,19 +413,11 @@ def settings():
         zmqsettings['ip'] = ipaddress
         zmqsettings['port'] = port
 
-    if "phonesave" in request.form:
-        phone = request.form['phonenumber']
-        usrname = request.form['name']
-        data = {    
-            "name": usrname,
-            "phonenum": phone,
-            }
-
         #Write changes back to file
         with open(fileconfig['rootDirPath']+fileconfig['configPath']+fileconfig['PhoneNumberStorage']+"PhoneNumber.json", 'w') as conf:
             json.dump(data,conf)
             
-        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, phoneForm = phone_form, msg = "addedphone",version = versionconfig['number'] )
+        return render_template("settings.html",form = face_from, serverForm= server_form, zmqForm = zmq_form, msg = "addedphone",version = versionconfig['number'] )
         
         
         
