@@ -21,7 +21,7 @@ def saveImage(imagepath, imagename, frame):
 
 
 # this is for Handling User Admin Stats
-def userAdmin(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
+def userAdmin(status,name,frame,font,imagename,imagePath,left,right,bottom,top,framenum):
     
         print(status)
         # Draw a box around the face
@@ -39,6 +39,10 @@ def userAdmin(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
                     font, 0.5, (255, 255, 255), 1)
         cv2.putText(frame, name, (0, 470), font,
                     0.5, (255, 255, 255), 1)
+            
+        cv2.putText(frame, "Frame num" + str(framenum), (0, 480), font,
+                0.5, (255, 255, 255), 1)
+
         # sends Image and saves image to disk
         if(not os.path.exists(imagePath+"Admin/"+imagename+".jpg")):
 
@@ -51,7 +55,7 @@ def userAdmin(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
 
  # User Grade Status
  # this is for Handling User Stats
-def userUser(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
+def userUser(status,name,frame,font,imagename,imagePath,left,right,bottom,top,framenum):
 
     # Draw a box around the face
     cv2.rectangle(frame, (left, top),
@@ -69,6 +73,10 @@ def userUser(status,name,frame,font,imagename,imagePath,left,right,bottom,top):
                         450), font, 0.5, (255, 255, 255), 1
     )
     cv2.putText(frame, name, (0, 470), font,
+                0.5, (255, 255, 255), 1)
+
+    
+    cv2.putText(frame, "Frame num" + str(framenum), (0, 480), font,
                 0.5, (255, 255, 255), 1)
 
     # Distance info
@@ -114,17 +122,22 @@ def userUnwanted(status,name,frame,font,imagename,imagePath,left,right,bottom,to
             logging.info("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
             print("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
 # Handles unKnown User
-def userUnknown(opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top):
+def userUnknown(opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top,framenum):
 
         cv2.rectangle(frame, (left, top),
                     (right, bottom), (0, 0, 255), 2)
         cv2.putText(frame, name, (left, top),
                     font, 0.5, (255, 255, 255), 1)
+                
+        cv2.putText(frame, "Frame num" + str(framenum), (0, 480), font,
+                    0.5, (255, 255, 255), 1)
+
         # Distance info
         cv2.putText(frame, opencvconfig['unreconizedPerson'], (0, 450),
                     font, 0.5, (255, 255, 255), 1)
         cv2.putText(frame, name, (0, 470), font,
                     0.5, (255, 255, 255), 1)
+        
         logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
         # checks to see if image exsitis
         if(not os.path.exists(str(imagePath) + "unknown/" +str(imagename) + ".jpg")):

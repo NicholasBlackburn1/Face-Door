@@ -164,21 +164,6 @@ class VideoProsessing(object):
 
      # sends person name to subsecriber
 
-    # Sends Opencv Stats To Launces
-    def sendProgramStatus(self, messgae, sock, logging):
-        logging.info("[SOCKET Messgae]")
-        sock.send_string("StatusMessage")
-        sock.send_json({"message": str(messgae)})
-        logging.info("[SOCKET Messafe] s")
-
-        # sends Currenly Seen Faces to subsecriber
-    def sendCurrentSeenFacesAmount(self, sock, faceAmount):
-        logging.info("[SOCKET Amount] Sending Face Amount")
-        sock.send_string("FaceAmount")
-        sock.send_json({"amount": faceAmount})
-        logging.info("[SOCKET Amount] Sent Face Amount")
-
-
     # Get Amout Of Faces In Frame
     def getAmountofFaces(self, rec, frame):
         face_bounding_boxes = rec.face_locations(frame,model="cnn")
@@ -201,6 +186,18 @@ class VideoProsessing(object):
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
                 print(
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+                
+
+
+    def face_distance_to_conf(face_distance, face_match_threshold=0.6):
+        if face_distance > face_match_threshold:
+            range = (1.0 - face_match_threshold)
+            linear_val = (1.0 - face_distance) / (range * 2.0)
+            return linear_val
+        else:
+            range = face_match_threshold
+            linear_val = 1.0 - (face_distance / (range * 2.0))
+            return linear_val + ((1.0 - linear_val) * math.pow((linear_val - 0.5) * 2, 0.2))
 
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
@@ -242,14 +239,10 @@ class VideoProsessing(object):
         sock.bind(ZMQURI)
         logging.info("conneted to zmq")
 
-        self.sendProgramStatus(messgae="Starting Presetup",
-                               sock=sock, logging=logging)
+
         # Updates Data in the Usable data list uwu
         self.UserDataList()
 
-        # sends setup message and sets base image name to the current date mills and image storage path
-        self.sendProgramStatus(messgae="Started setup",
-                               sock=sock, logging=logging)
         logging.info("Setting up cv")
 
         # Downlaods all the Faces
@@ -259,8 +252,6 @@ class VideoProsessing(object):
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
         print("Training Model Going to take a while UwU..... ")
         logging.info('Training Model....')
-
-        self.sendProgramStatus(messgae="Training Models",sock=sock, logging=logging)
         
         Knn.train(train_dir=self.imagePathusers,model_save_path=self.Modelpath, n_neighbors=2)
         print("Done Training Model.....")
@@ -274,15 +265,16 @@ class VideoProsessing(object):
      
         i = 0
         face_index =0
-        process_this_frame = 14
+        process_this_frame = 29
         status = None
         while 0 < 1:
             frame = self.vs.read()
-            #frame = cv2.imread("/mnt/SecuServe/user/people/1c345dc0-cbb0-11eb-a4b2-00044beaf015/1c31ec84-cbb0-11eb-a4b2-00044beaf015 (1).jpg",cv2.IMREAD_COLOR)
             img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
             
             process_this_frame = process_this_frame + 1
-            if process_this_frame % 15 == 0:
+            
+            if process_this_frame % 30 == 0:
+                #print(process_this_frame)
                 predictions = Knn.predict(img, model_path=self.Modelpath)
                 
                 """
@@ -306,7 +298,7 @@ class VideoProsessing(object):
                     if(name != None):
                            
                             if(name == 'unknown' and status == None):
-                                Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top)
+                                Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top,framenum=process_this_frame)
                                 print("user is unknown")
                                 logging.info("unknowns Here UwU!")
                                 #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
@@ -327,21 +319,24 @@ class VideoProsessing(object):
                                     if (status == 'Admin'):
                                         logging.info("got an Admin The name is"+str(name))
                                         Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                        message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
+                                        #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
+                                        print("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name))
                                             
                                     if (status == 'User'):
                                         logging.info("got an User Human The name is"+str(name))
-                                        Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
-                                        message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),phone,'http://192.168.5.8:2000/user',self.smsconfig['textbelt-key'])
-
+                                        Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
+                                       # message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),phone,'http://192.168.5.8:2000/user',self.smsconfig['textbelt-key'])
+                                        print("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name))
                                     if (status == 'Unwanted'):
                                         logging.info("got an Unwanted Human The name is"+str(name))
-                                        Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
-                                        message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
+                                        Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
+                                        #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
+                                        print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
+                                              )
                                         
                                     if(self.getAmountofFaces(face_recognition, frame) > 1):
                                         Stat.userGroup(frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
-                                        message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
+                                        #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
                         
                                     
                                 else:
