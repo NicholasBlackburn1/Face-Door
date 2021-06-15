@@ -203,6 +203,9 @@ class VideoProsessing(object):
     '''
     
     def ProcessFaceVideo(self):
+        pipeline_start_setup = datetime.now()
+        # detecting pipe line start
+        logging.error("pipeline starting set up"+str(pipeline_start_setup))
         
         print(cv2.getBuildInformation())
         gc.enable()
@@ -250,7 +253,7 @@ class VideoProsessing(object):
         # Downlaods all the Faces
         self.downloadUserFaces(self.imagePathusers)
 
-     
+        logging.error("PipeLine Setup End time" str(datetime.now() - pipeline_start_setup))
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
         print("Training Model Going to take a while UwU..... ")
         logging.info('Training Model....')
