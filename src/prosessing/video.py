@@ -264,18 +264,17 @@ class VideoProsessing(object):
 
             
         # Camera Stream gst setup
-        gst_str = ("rtspsrc location={} latency={}  ! rtph264depay  ! nvv4l2decoder ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert ! video/x-raw,format=BGR ! appsink".format(str(self.opencvconfig['Stream_intro']+self.opencvconfig['Stream_ip']+":"+self.opencvconfig['Stream_port']), 20, 720, 480))  
-
+        gst_str = ("rtspsrc location={} latency={}  ! rtph264depay  ! nvv4l2decoder ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert !appsink".format(str(self.opencvconfig['Stream_intro']+self.opencvconfig['Stream_ip']+":"+self.opencvconfig['Stream_port']), 400, 720, 480))  
         logging.info("Looking for faces.....")
         print("Looking for Faces...")
         
      
         i = 0
         face_index =0
-        process_this_frame = 29
+        process_this_frame = 25
         status = None
      
-   
+        
         cap = videoThread.ThreadingClass(gst_str)
         while 0<1:
 
@@ -283,90 +282,104 @@ class VideoProsessing(object):
             
             if process_this_frame % 30 == 0:
                                    
-                
+            
                 frame = cap.read()
                 #print(cap.read().get(cv2. CV_CAP_PROP_FPS))
                 #frame = cv2.imread("/mnt/SecuServe/user/people/a93121a4-cc4b-11eb-b91f-00044beaf015/a924857a-cc4b-11eb-b91f-00044beaf015 (1).jpg",cv2.IMREAD_COLOR)
                 img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
+                predictions = Knn.predict(img, model_path=self.Modelpath,distance_threshold=0.5)
                     #print(process_this_frame)
-                predictions = Knn.predict(img, model_path=self.Modelpath,distance_threshold=0.6)
                 
                 """
                     This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
                 """
                 font = cv2.FONT_HERSHEY_DUPLEX
                 sent = False
-                
-                if(self.getAmountofFaces(face_recognition, frame) != 0):
-                        
+               
+
+               
+                # Display t he results
+                for name,(top, right, bottom, left) in predictions:
                     
-                    # Display the results
-                    for name,(top, right, bottom, left) in predictions:
-                        
-                            # Scale back up face locations since the frame we detected in was scaled to 1/4 size
-                        top *= 2
-                        right *= 2
-                        bottom *= 2
-                        left *= 2
-
-                        
-
-                        
-                        if(name != None):
-                            
-                                if(name == 'unknown' and status == None):
-                                    Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top,framenum=process_this_frame)
-                                # print("user is unknown")
-                                    logging.info("unknowns Here UwU!")
-                                    #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
-                                            
-                                
-                                else:
-                                    if name in self.userList[i]:
-                                        userinfo = self.userList[i][name]
-                                        status = userinfo.status
-                                        name = userinfo.user
-                                        phone = userinfo.phoneNum
-                                        
-                                        if phone == None or '0':
-                                            phone = 4123891615
-
-                                        print("User UUID:"+ str(userinfo)+ " "+ str(name) + "   "+ str(status))
-            
-                                        if (status == 'Admin'):
-                                            logging.info("got an Admin The name is"+str(name))
-                                            Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top)
-                                            #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
-                                        #  print("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name))
-                                                
-                                        if (status == 'User'):
-                                            logging.info("got an User Human The name is"+str(name))
-                                            Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
-                                        # message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),phone,'http://192.168.5.8:2000/user',self.smsconfig['textbelt-key'])
-                                        #  print("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name))
-                                        
-                                        if (status == 'Unwanted'):
-                                            logging.info("got an Unwanted Human The name is"+str(name))
-                                            Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
-                                            #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
-                                        ## print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
-                                            #)
-                                            
-                                        if(self.getAmountofFaces(face_recognition, frame) > 1):
-                                            Stat.userGroup(frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
-                                            #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
-                            
-                                        
-                                    else:
-                                        
-                                        print("not the correct obj in list"+ str(self.userList[i]))
-                                        i+=1
-                                   
-                else:
-                    #print("waiting for humans...")
+                        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+                    top *= 2
+                    right *= 2
+                    bottom *= 2
+                    left *= 2
                     print(process_this_frame)
-                    #gc.collect()                       
+                    print(name)
+                    
+               
+                    
+                    if(name != None):
                         
+                            if(name == 'unknown' and status == None):
+                                Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top,framenum=process_this_frame)
+                            # print("user is unknown")
+                                logging.info("unknowns Here UwU!")
+                                #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
+                                        
+                            
+                            else:
+                                if name in self.userList[i]:
+                                    userinfo = self.userList[i][name]
+                                    status = userinfo.status
+                                    name = userinfo.user
+                                    phone = userinfo.phoneNum
                                     
+                                    if phone == None:
+                                        phone = 4123891615
+
+                                    #print("User UUID:"+ str(userinfo)+ " "+ str(name) + "   "+ str(status))
+        
+                                    if (status == 'Admin'):
+                                        logging.info("got an Admin The name is"+str(name))
+                                        Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top,process_this_frame)
+                                        
+                                        #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
+                                        print("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name))
+                                        return
+                                            
+                                    if (status == 'User'):
+                                        logging.info("got an User Human The name is"+str(name))
+                                        Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
+                                        message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),4123891615,'http://192.168.5.8:2000/user',self.smsconfig['textbelt-key'])
+                                        print("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name))
+                                        return
+                                    
+                                    if (status == 'Unwanted'):
+                                        logging.info("got an Unwanted Human The name is"+str(name))
+                                        Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
+                                        #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
+                                    ## print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
+                                        #)
+                                        return
+                                        
+                                    if(self.getAmountofFaces(face_recognition, frame) > 1):
+                                        Stat.userGroup(frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
+                                        #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
+                                        return
+                                    
+                                else:
+                                   
+                                    print("not the correct obj in list"+ str(self.userList[i]))
+                                    #if(i >  self.userList[i]):
+                                     #   i+=1
+                                    i+=1
+                                    return
+                                
+                    else:
+                        return
+                            
+
+            else:
+                #print("waiting for humans...")
+                pass 
+               
+                
+                        
+        
+                    
+                                
                                             
                 
