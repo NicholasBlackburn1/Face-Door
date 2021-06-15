@@ -56,7 +56,7 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='ball_tree
         return knn_clf
         
 
-def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.5):
+def predict(X_frame, knn_clf=None, model_path=None, distance_threshold=0.4):
 
     if knn_clf is None and model_path is None:
         raise Exception("Must supply knn classifier either thourgh knn_clf or model_path")
