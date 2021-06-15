@@ -180,7 +180,7 @@ class VideoProsessing(object):
             if (width is 0 or height is 0):
                 self.watchdog +=1
                 logging.warn("cannot open Non exsting image")
-                logging.error(
+                print(
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
                 print(
                     Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
@@ -205,7 +205,7 @@ class VideoProsessing(object):
     def ProcessFaceVideo(self):
         pipeline_start_setup = datetime.now()
         # detecting pipe line start
-        logging.error("pipeline starting set up"+str(pipeline_start_setup))
+        
         
         print(cv2.getBuildInformation())
         gc.enable()
@@ -253,14 +253,18 @@ class VideoProsessing(object):
         # Downlaods all the Faces
         self.downloadUserFaces(self.imagePathusers)
 
-        logging.error("PipeLine Setup End time" str(datetime.now() - pipeline_start_setup))
+        print("PipeLine Setup End time"+str(datetime.now() - pipeline_start_setup))
         #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
+        pipeline_train_knn = datetime.now()
+        print("Starting Train Knn pipeline timer"+ str(datetime.now()))
         print("Training Model Going to take a while UwU..... ")
         logging.info('Training Model....')
         
         Knn.train(train_dir=self.imagePathusers,model_save_path=self.Modelpath, n_neighbors=2)
+        print("Done Train Knn pipeline timer"+ str(datetime.now() - pipeline_train_knn))
         print("Done Training Model.....")
         logging.info('Done Training Model....')
+        
         
         # cleans mess as we keep prosessing 
         gc.collect()      
@@ -276,16 +280,16 @@ class VideoProsessing(object):
         face_index =0
         process_this_frame = 25
         status = None
-     
+        pipeline_video_prossesing = datetime.now()
         
         cap = videoThread.ThreadingClass(gst_str)
+        face_processing_pipeline_timer = datetime.now()
         while 0<1:
-
             process_this_frame = process_this_frame + 1
             
             if process_this_frame % 30 == 0:
-                                   
-            
+               
+                
                 frame = cap.read()
                 #print(cap.read().get(cv2. CV_CAP_PROP_FPS))
                 #frame = cv2.imread("/mnt/SecuServe/user/people/a93121a4-cc4b-11eb-b91f-00044beaf015/a924857a-cc4b-11eb-b91f-00044beaf015 (1).jpg",cv2.IMREAD_COLOR)
@@ -298,12 +302,12 @@ class VideoProsessing(object):
                 """
                 font = cv2.FONT_HERSHEY_DUPLEX
                 sent = False
-               
-
+                
                
                 # Display t he results
                 for name,(top, right, bottom, left) in predictions:
                     
+               
                         # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                     top *= 2
                     right *= 2
@@ -312,7 +316,6 @@ class VideoProsessing(object):
                     print(process_this_frame)
                     print(name)
                     
-               
                     
                     if(name != None):
                         
@@ -321,7 +324,7 @@ class VideoProsessing(object):
                             # print("user is unknown")
                                 logging.info("unknowns Here UwU!")
                                 #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
-                                        
+                                print("stop face prossesing timer unknown"+ str(datetime.now()-face_processing_pipeline_timer))
                             
                             else:
                                 if name in self.userList[i]:
@@ -338,6 +341,7 @@ class VideoProsessing(object):
                                     if (status == 'Admin'):
                                         logging.info("got an Admin The name is"+str(name))
                                         Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top,process_this_frame)
+                                        print("Stping face prossesing timer in admin"+ str(datetime.now()-face_processing_pipeline_timer))
                                         
                                         #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
                                         print("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name))
@@ -348,11 +352,13 @@ class VideoProsessing(object):
                                         Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
                                         message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),4123891615,'http://192.168.5.8:2000/user',self.smsconfig['textbelt-key'])
                                         print("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name))
+                                        print("Stping face prossesing timer in user"+ str(datetime.now()-face_processing_pipeline_timer))
                                         return
                                     
                                     if (status == 'Unwanted'):
                                         logging.info("got an Unwanted Human The name is"+str(name))
                                         Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
+                                        print("Stping face prossesing timer in unwanted"+ str(datetime.now()-face_processing_pipeline_timer))
                                         #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
                                     ## print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
                                         #)
@@ -372,6 +378,8 @@ class VideoProsessing(object):
                                     return
                                 
                     else:
+                      
+                        print("Time For non Face processed frames"+ str(datetime.now()-face_processing_pipeline_timer))
                         return
                             
 
