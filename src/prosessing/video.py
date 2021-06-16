@@ -1,8 +1,6 @@
 """
 This is the main (Bulk) possessing done in my opencv Program
-TODO: Need to have a Gstreamer out to asmble an video stream Effecintly to allow user to view it live on web page hehe
-TODO: REMOVE ZMQ SOCKET DATA
-TODO: 
+TODO: Remove RecvRstp function and Implemnt Fram Size checks to main processing code
 """
 
 
@@ -48,8 +46,12 @@ import prosessing.messaging.SmsHandler as message
 import prosessing.videoThread as videoThread
 import Jetson.GPIO as GPIO
 import gc
+from contextlib import redirect_stdout
+from colorama import init, Fore, Back, Style
+import utils.textColors as console_log
 
-class VideoProsessing(object):  
+
+class VideoProsessing(object):
     watchdog = 0
     imagename = datetime.now().strftime("%Y_%m_%d-%I_%M_%S")
     os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
@@ -66,10 +68,10 @@ class VideoProsessing(object):
     zmqconfig = config_object['ZMQ']
     opencvconfig = config_object['OPENCV']
     fileconfig = config_object['FILE']
-    smsconfig =  config_object['SMS']
+    smsconfig = config_object['SMS']
 
     current_time = datetime.now().strftime("%Y_%m_%d-%I_%M_%S_%p_%s")
- 
+
     rootDirPath = fileconfig['rootDirPath']
     configPath = fileconfig['rootDirPath']+fileconfig['configPath']
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
@@ -78,11 +80,10 @@ class VideoProsessing(object):
 
     Modelpath = str(imagePathusers+'UwU.clf')
 
-
     userList = []
 
+    # Makes startup dirs
 
-    #Makes startup dirs
     def makefiledirs(self):
         logging.info("Creating Folder Dirs")
         Path(self.rootDirPath).mkdir(parents=True, exist_ok=True)
@@ -90,8 +91,6 @@ class VideoProsessing(object):
         Path(self.configPath).mkdir(parents=True, exist_ok=True)
         Path(self.plateImagePath).mkdir(parents=True, exist_ok=True)
         logging.info("Made Folder Dirs")
-
-
 
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
 
@@ -144,17 +143,16 @@ class VideoProsessing(object):
             userinfo = self.userList[index][db.getUserUUID(
                 db.getFaces(), index)]
 
-            print("Some Initerable data" + str(userinfo))
+         
 
             self.downloadFacesAndProssesThem(logging, self.userList[index][db.getUserUUID(
                 db.getFaces(), index)], imagePath+str(db.getUserUUID(db.getFaces(), index)))
-            logging.warn("downloaded"+str(index) + "out of " +
-                         str(db.getAmountOfEntrys()))
+            console_log.PipeLine_Data("downloaded"+str(index) + "out of " +str(db.getAmountOfEntrys()))
 
             index += 1
 
             if(index == db.getAmountOfEntrys()):
-                logging.info("Done Downloading Images UWU....")
+                console_log.Warning("Done Downloading Images UWU....")
                 return
 
                 # Add names of the ecodings to thw end of list
@@ -163,31 +161,29 @@ class VideoProsessing(object):
 
     # Get Amout Of Faces In Frame
     def getAmountofFaces(self, rec, frame):
-        face_bounding_boxes = rec.face_locations(frame,model="cnn")
+        face_bounding_boxes = rec.face_locations(frame, model="cnn")
         return len(face_bounding_boxes)
 
     # recives RTSP camra Stream
-    def rtspRecive(self,vs):
+    def rtspRecive(self, vs):
+
+        # graps image to read
+        frame = vs.read()
+
+        width = int(vs.cap.get(3))   # float `width`
+        height = int(vs.cap.get(4))  # float `height`
+
+        # checks to see if frames are vaild not black or empty
+
+        if (width is 0 or height is 0):
+            self.watchdog += 1
+            logging.warn("cannot open Non exsting image")
+            print(
+                Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
+            print(
+                Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
             
-            # graps image to read
-            frame = vs.read()
-
-            width = int(vs.cap.get(3))   # float `width`
-            height = int(vs.cap.get(4))  # float `height`
-
-            # checks to see if frames are vaild not black or empty
-
-            if (width is 0 or height is 0):
-                self.watchdog +=1
-                logging.warn("cannot open Non exsting image")
-                print(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-                print(
-                    Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-        
-                
-
-
+    # Face accurcy Calculation UwU
     def face_distance_to_conf(face_distance, face_match_threshold=0.6):
         if face_distance > face_match_threshold:
             range = (1.0 - face_match_threshold)
@@ -201,196 +197,196 @@ class VideoProsessing(object):
     '''
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
-    
+
     def ProcessFaceVideo(self):
+
+        init()
+
         pipeline_start_setup = datetime.now()
         # detecting pipe line start
-        
-        
-        print(cv2.getBuildInformation())
+
+        console_log.PipeLine_init(cv2.getBuildInformation())
+
         gc.enable()
-                # Makes Folder Dir
-        #`self.makefiledirs()
-        if( not os.path.exists(self.rootDirPath)):
-            logging.warn("creating Dirs")
+        # Makes Folder Dir
+        # `self.makefiledirs()
+        if(not os.path.exists(self.rootDirPath)):
+            console_log.Warning("creating Dirs")
             self.makefiledirs()
         # sets rtsp vsr in python
         os.environ["OPENCV_FFMPEG_CAPTURE_OPTIONS"] = "rtsp_transport;udp"
 
         # gets Config file
-        print("Example Config"+str(pathlib.Path().absolute()) +
-              "/src/prosessing/"+"Config.ini")
+        console_log.Debug("Example Config"+str(pathlib.Path().absolute()) +
+                          "/src/prosessing/"+"Config.ini")
         # Read config.ini file
         config_object = ConfigParser()
         config_object.read(str(pathlib.Path().absolute()) +
                            "/src/prosessing/"+"Config.ini")
-                           
+
+        """                
         logging.basicConfig(filename=self.configPath+self.logconfig['filename'] + datetime.now().strftime(
-            "%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
+            "%Y_%m_%d-%I_%M_%S_%p_%s")+".console_log", level=logging.DEBUG)
+        """
 
         # connects to database
         # Database connection handing
-        logging.info("Connecting to the Database Faces")
-        logging.debug(db.getFaces())
-        logging.info("connected to database Faces")
-        logging.info("connecting to zmq")
-
-
-# inits Zmq Server
-        ZMQURI = str("tcp://"+self.zmqconfig['ip']+":"+self.zmqconfig['port'])
-
-        ctx = zmq.Context()
-        sock = ctx.socket(zmq.PUB)
-        sock.bind(ZMQURI)
-        logging.info("conneted to zmq")
-
+        console_log.Warning("Connecting to the Database Faces")
+        console_log.PipeLine_Data(db.getFaces())
+        console_log.Warning("connected to database Faces")
 
         # Updates Data in the Usable data list uwu
         self.UserDataList()
 
-        logging.info("Setting up cv")
+        console_log.Warning("Setting up cv")
 
         # Downlaods all the Faces
         self.downloadUserFaces(self.imagePathusers)
 
-        print("PipeLine Setup End time"+str(datetime.now() - pipeline_start_setup))
-        #TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
-        pipeline_train_knn = datetime.now()
-        print("Starting Train Knn pipeline timer"+ str(datetime.now()))
-        print("Training Model Going to take a while UwU..... ")
-        logging.info('Training Model....')
-        
-        Knn.train(train_dir=self.imagePathusers,model_save_path=self.Modelpath, n_neighbors=2)
-        print("Done Train Knn pipeline timer"+ str(datetime.now() - pipeline_train_knn))
-        print("Done Training Model.....")
-        logging.info('Done Training Model....')
-        
-        
-        # cleans mess as we keep prosessing 
-        gc.collect()      
+        console_log.PipeLine_Ok(
+            "PipeLine Setup End time"+str(datetime.now() - pipeline_start_setup))
 
-            
+        # TODO: add check to see if there are new entrys in data compared to last run to see if need to run train new knn
+        pipeline_train_knn = datetime.now()
+
+        console_log.Warning("Training Model Going to take a while UwU..... ")
+        Knn.train(train_dir=self.imagePathusers,
+                  model_save_path=self.Modelpath, n_neighbors=2)
+        console_log.PipeLine_Ok(
+            "Done Train Knn pipeline timer" + str(datetime.now() - pipeline_train_knn))
+        console_log.Warning("Done Training Model.....")
+
+        # cleans mess as we keep prosessing
+        gc.collect()
+
         # Camera Stream gst setup
-        gst_str = ("rtspsrc location={} latency={}  ! rtph264depay  ! nvv4l2decoder ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert !appsink".format(str(self.opencvconfig['Stream_intro']+self.opencvconfig['Stream_ip']+":"+self.opencvconfig['Stream_port']), 400, 720, 480))  
-        logging.info("Looking for faces.....")
-        print("Looking for Faces...")
-        
-     
+        gst_str = ("rtspsrc location={} latency={}  ! rtph264depay  ! nvv4l2decoder ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert !appsink".format(
+            str(self.opencvconfig['Stream_intro']+self.opencvconfig['Stream_ip']+":"+self.opencvconfig['Stream_port']), 400, 720, 480))
+
+        console_log.Warning("Looking for Faces...")
+
         i = 0
-        face_index =0
+        face_index = 0
         process_this_frame = 25
         status = None
         pipeline_video_prossesing = datetime.now()
-        
+
         cap = videoThread.ThreadingClass(gst_str)
         face_processing_pipeline_timer = datetime.now()
-        while 0<1:
+        while 0 < 1:
             process_this_frame = process_this_frame + 1
-            
+
             if process_this_frame % 30 == 0:
-               
-                
+
                 frame = cap.read()
                 #print(cap.read().get(cv2. CV_CAP_PROP_FPS))
                 #frame = cv2.imread("/mnt/SecuServe/user/people/a93121a4-cc4b-11eb-b91f-00044beaf015/a924857a-cc4b-11eb-b91f-00044beaf015 (1).jpg",cv2.IMREAD_COLOR)
                 img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
-                predictions = Knn.predict(img, model_path=self.Modelpath,distance_threshold=0.5)
-                    #print(process_this_frame)
-                
+                predictions = Knn.predict(
+                    img, model_path=self.Modelpath, distance_threshold=0.5)
+                # print(process_this_frame)
+
                 """
                     This Section is Dedicated to dealing with user Seperatation via the User Stats data tag
                 """
                 font = cv2.FONT_HERSHEY_DUPLEX
                 sent = False
-                
-               
+
                 # Display t he results
-                for name,(top, right, bottom, left) in predictions:
-                    
-               
-                        # Scale back up face locations since the frame we detected in was scaled to 1/4 size
+                for name, (top, right, bottom, left) in predictions:
+
+                    # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                     top *= 2
                     right *= 2
                     bottom *= 2
                     left *= 2
                     print(process_this_frame)
                     print(name)
-                    
-                    
-                    if(name != None):
-                        
-                            if(name == 'unknown' and status == None):
-                                Stat.userUnknown(self.opencvconfig,name,frame,font,imagename =self.imagename,imagePath=self.imagePath,left = left,right =right,bottom =bottom,top =top,framenum=process_this_frame)
-                            # print("user is unknown")
-                                logging.info("unknowns Here UwU!")
-                                #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
-                                print("stop face prossesing timer unknown"+ str(datetime.now()-face_processing_pipeline_timer))
-                            
-                            else:
-                                if name in self.userList[i]:
-                                    userinfo = self.userList[i][name]
-                                    status = userinfo.status
-                                    name = userinfo.user
-                                    phone = userinfo.phoneNum
-                                    
-                                    if phone == None:
-                                        phone = 4123891615
 
-                                    #print("User UUID:"+ str(userinfo)+ " "+ str(name) + "   "+ str(status))
-        
-                                    if (status == 'Admin'):
-                                        logging.info("got an Admin The name is"+str(name))
-                                        Stat.userAdmin(status,name,frame,font,self.imagename,self.imagePath,left,right,bottom,top,process_this_frame)
-                                        print("Stping face prossesing timer in admin"+ str(datetime.now()-face_processing_pipeline_timer))
-                                        
-                                        #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
-                                        print("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name))
-                                        return
-                                            
-                                    if (status == 'User'):
-                                        logging.info("got an User Human The name is"+str(name))
-                                        Stat.userUser(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagePath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
-                                        message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name),4123891615,'http://192.168.5.8:2000/user',self.smsconfig['textbelt-key'])
-                                        print("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:"+ str(name))
-                                        print("Stping face prossesing timer in user"+ str(datetime.now()-face_processing_pipeline_timer))
-                                        return
-                                    
-                                    if (status == 'Unwanted'):
-                                        logging.info("got an Unwanted Human The name is"+str(name))
-                                        Stat.userUnwanted(status=status,name=name,frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top, framenum=process_this_frame)
-                                        print("Stping face prossesing timer in unwanted"+ str(datetime.now()-face_processing_pipeline_timer))
-                                        #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
-                                    ## print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
-                                        #)
-                                        return
-                                        
-                                    if(self.getAmountofFaces(face_recognition, frame) > 1):
-                                        Stat.userGroup(frame=frame,font=font,imagename=self.imagename,imagepath=self.imagePath,left=left,right=right,bottom=bottom,top=top)
-                                        #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
-                                        return
-                                    
-                                else:
-                                   
-                                    print("not the correct obj in list"+ str(self.userList[i]))
-                                    #if(i >  self.userList[i]):
-                                     #   i+=1
-                                    i+=1
+                    if(name != None):
+
+                        if(name == 'unknown' and status == None):
+                            Stat.userUnknown(self.opencvconfig, name, frame, font, imagename=self.imagename, imagePath=self.imagePath,
+                                             left=left, right=right, bottom=bottom, top=top, framenum=process_this_frame)
+                        # print("user is unknown")
+                            logging.info("unknowns Here UwU!")
+                            #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
+                            print(Fore.GREEN+"stop face prossesing timer unknown" +
+                                  str(datetime.now()-face_processing_pipeline_timer))
+                            print(Style.RESET_ALL)
+
+                        else:
+                            if name in self.userList[i]:
+                                userinfo = self.userList[i][name]
+                                status = userinfo.status
+                                name = userinfo.user
+                                phone = userinfo.phoneNum
+
+                                if phone == None:
+                                    phone = 4123891615
+
+                                #print("User UUID:"+ str(userinfo)+ " "+ str(name) + "   "+ str(status))
+
+                                if (status == 'Admin'):
+                                    logging.info(
+                                        "got an Admin The name is"+str(name))
+                                    Stat.userAdmin(status, name, frame, font, self.imagename,
+                                                   self.imagePath, left, right, bottom, top, process_this_frame)
+                                    console_log.PipeLine_Ok(
+                                        "Stping face prossesing timer in admin" + str(datetime.now()-face_processing_pipeline_timer))
+
+                                    #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
                                     return
-                                
+
+                                if (status == 'User'):
+                                    logging.info(
+                                        "got an User Human The name is"+str(name))
+                                    Stat.userUser(status=status, name=name, frame=frame, font=font, imagename=self.imagename,
+                                                  imagePath=self.imagePath, left=left, right=right, bottom=bottom, top=top, framenum=process_this_frame)
+                                    message.sendCapturedImageMessage("eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:" + str(
+                                        name), 4123891615, 'http://192.168.5.8:2000/user', self.smsconfig['textbelt-key'])
+                                    console_log.Warning(
+                                        "eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:" + str(name))
+                                    console_log.PipeLine_Ok(
+                                        "Stping face prossesing timer in user" + str(datetime.now()-face_processing_pipeline_timer))
+
+                                    return
+
+                                if (status == 'Unwanted'):
+                                    logging.info(
+                                        "got an Unwanted Human The name is"+str(name))
+                                    Stat.userUnwanted(status=status, name=name, frame=frame, font=font, imagename=self.imagename,
+                                                      imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top, framenum=process_this_frame)
+                                    console_log.PipeLine_Ok("Stping face prossesing timer in unwanted" + str(
+                                        datetime.now()-face_processing_pipeline_timer))
+
+                                    #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
+                                # print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
+                                    # )
+                                    return
+
+                                if(self.getAmountofFaces(face_recognition, frame) > 1):
+                                    Stat.userGroup(frame=frame, font=font, imagename=self.imagename,
+                                                   imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top)
+                                    #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
+                                    return
+
+                            else:
+
+                                console_log.Warning(
+                                    "not the correct obj in list" + str(self.userList[i]))
+                                # if(i >  self.userList[i]):
+                                #   i+=1
+                                i += 1
+                                return
+
                     else:
-                      
-                        print("Time For non Face processed frames"+ str(datetime.now()-face_processing_pipeline_timer))
+
+                        console_log.PipeLine_Ok(
+                            "Time For non Face processed frames" + str(datetime.now()-face_processing_pipeline_timer))
+
                         return
-                            
 
             else:
                 #print("waiting for humans...")
-                pass 
-               
-                
-                        
-        
-                    
-                                
-                                            
-                
+                pass
