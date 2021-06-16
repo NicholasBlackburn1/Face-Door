@@ -85,12 +85,12 @@ class VideoProsessing(object):
     # Makes startup dirs
 
     def makefiledirs(self):
-        logging.info("Creating Folder Dirs")
+        console_log.Warning("Creating Folder Dirs")
         Path(self.rootDirPath).mkdir(parents=True, exist_ok=True)
         Path(self.imagePathusers).mkdir(parents=True, exist_ok=True)
         Path(self.configPath).mkdir(parents=True, exist_ok=True)
         Path(self.plateImagePath).mkdir(parents=True, exist_ok=True)
-        logging.info("Made Folder Dirs")
+        console_log.Warning("Made Folder Dirs")
 
     # Encodes all the Nessiscary User info into Json String so it can be easly moved arround
 
@@ -112,24 +112,16 @@ class VideoProsessing(object):
 
             # Checks to see if i == the database amount hehe
             if(i == db.getAmountOfEntrys()):
-                logging.warn(
-                    "Amout of Entrys are in the array strings are"+str(db.getAmountOfEntrys()))
                 return
 
     # saves downloaded Image Converted to black and white
 
-    def downloadFacesAndProssesThem(self, logging, userData, filepath):
+    def downloadFacesAndProssesThem(self, userData, filepath):
 
         Path(filepath+"/").mkdir(parents=True, exist_ok=True)
-
-        print(" this is the data yaya" + str(userData))
-
+        
         if(not os.path.exists(filepath+userData.image+".jpg")):
             wget.download(userData.downloadUrl, str(filepath))
-            logging.info('Downloading ' +
-                         str(userData.image)+', this may take a while...')
-            logging.info("output file" +
-                         str(userData.image+"at" + filepath))
 
         # this function will load and prepare face encodes  for
     # Fully Downloades USer Images and Returns No data
@@ -145,9 +137,9 @@ class VideoProsessing(object):
 
          
 
-            self.downloadFacesAndProssesThem(logging, self.userList[index][db.getUserUUID(
+            self.downloadFacesAndProssesThem(self.userList[index][db.getUserUUID(
                 db.getFaces(), index)], imagePath+str(db.getUserUUID(db.getFaces(), index)))
-            console_log.PipeLine_Data("downloaded"+str(index) + "out of " +str(db.getAmountOfEntrys()))
+            console_log.PipeLine_Data("downloaded"+" "+str(index) +" out of " +str(db.getAmountOfEntrys()) + "\n")
 
             index += 1
 
@@ -314,9 +306,10 @@ class VideoProsessing(object):
                             print(Fore.GREEN+"stop face prossesing timer unknown" +
                                   str(datetime.now()-face_processing_pipeline_timer))
                             print(Style.RESET_ALL)
+                            self.watchdog +=1
 
                         else:
-                            if name in self.userList[i]:
+                            if name in self.userList[i] and self.watchdog > 10:
                                 userinfo = self.userList[i][name]
                                 status = userinfo.status
                                 name = userinfo.user
@@ -332,11 +325,10 @@ class VideoProsessing(object):
                                         "got an Admin The name is"+str(name))
                                     Stat.userAdmin(status, name, frame, font, self.imagename,
                                                    self.imagePath, left, right, bottom, top, process_this_frame)
-                                    console_log.PipeLine_Ok(
-                                        "Stping face prossesing timer in admin" + str(datetime.now()-face_processing_pipeline_timer))
-
-                                    #message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
-                                    return
+                                    message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
+                                    console_log.PipeLine_Ok("Stping face prossesing timer in admin" + str(datetime.now()-face_processing_pipeline_timer))
+                                    self.watchdog +=1
+                                    
 
                                 if (status == 'User'):
                                     logging.info(
@@ -349,8 +341,7 @@ class VideoProsessing(object):
                                         "eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:" + str(name))
                                     console_log.PipeLine_Ok(
                                         "Stping face prossesing timer in user" + str(datetime.now()-face_processing_pipeline_timer))
-
-                                    return
+                                    self.watchdog +=1
 
                                 if (status == 'Unwanted'):
                                     logging.info(
@@ -359,17 +350,18 @@ class VideoProsessing(object):
                                                       imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top, framenum=process_this_frame)
                                     console_log.PipeLine_Ok("Stping face prossesing timer in unwanted" + str(
                                         datetime.now()-face_processing_pipeline_timer))
-
+                                    self.watchdog +=1
                                     #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
                                 # print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
                                     # )
-                                    return
+                                    
 
                                 if(self.getAmountofFaces(face_recognition, frame) > 1):
-                                    Stat.userGroup(frame=frame, font=font, imagename=self.imagename,
-                                                   imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top)
+                                    Stat.userGroup(frame=frame, font=font, imagename=self.imagename, imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top)
+                                    console_log.PipeLine_Ok("Stping face prossesing timer in Group" + str(datetime.now()-face_processing_pipeline_timer))
                                     #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
-                                    return
+                                    
+                                    
 
                             else:
 
@@ -378,7 +370,7 @@ class VideoProsessing(object):
                                 # if(i >  self.userList[i]):
                                 #   i+=1
                                 i += 1
-                                return
+                                
 
                     else:
 

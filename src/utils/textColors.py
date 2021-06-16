@@ -34,7 +34,7 @@ def PipeLine_init(text):
     print(Style.RESET_ALL)
     return
 
-def PipeLine_data(text):
+def PipeLine_Data(text):
     print(Fore.LIGHTMAGENTA_EX + str(text))
     print(Style.RESET_ALL)
     return
