@@ -19,7 +19,6 @@ from tokenize import Double, String
 import json
 
 import cv2
-import numpy as np
 import os
 from datetime import datetime
 import time
@@ -44,9 +43,7 @@ import imutils
 import prosessing.data.UsersStat as Stat
 import prosessing.messaging.SmsHandler as message
 import prosessing.videoThread as videoThread
-import Jetson.GPIO as GPIO
 import gc
-from contextlib import redirect_stdout
 from colorama import init, Fore, Back, Style
 import utils.textColors as console_log
 
@@ -119,7 +116,7 @@ class VideoProsessing(object):
     def downloadFacesAndProssesThem(self, userData, filepath):
 
         Path(filepath+"/").mkdir(parents=True, exist_ok=True)
-        
+
         if(not os.path.exists(filepath+userData.image+".jpg")):
             wget.download(userData.downloadUrl, str(filepath))
 
@@ -135,11 +132,10 @@ class VideoProsessing(object):
             userinfo = self.userList[index][db.getUserUUID(
                 db.getFaces(), index)]
 
-         
-
             self.downloadFacesAndProssesThem(self.userList[index][db.getUserUUID(
                 db.getFaces(), index)], imagePath+str(db.getUserUUID(db.getFaces(), index)))
-            console_log.PipeLine_Data("downloaded"+" "+str(index) +" out of " +str(db.getAmountOfEntrys()) + "\n")
+            console_log.PipeLine_Data(
+                "downloaded"+" "+str(index) + " out of " + str(db.getAmountOfEntrys()) + "\n")
 
             index += 1
 
@@ -174,7 +170,7 @@ class VideoProsessing(object):
                 Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
             print(
                 Exception("Cannnot Due reconition on an Empty Frame *Sad UwU Noises*"))
-            
+
     # Face accurcy Calculation UwU
     def face_distance_to_conf(face_distance, face_match_threshold=0.6):
         if face_distance > face_match_threshold:
@@ -190,7 +186,7 @@ class VideoProsessing(object):
     This Function is the Bulk of the Openv Image Prossesing Code
     '''
 
-    def ProcessFaceVideo(self):
+    def setsUpPipeLine(self):
 
         init()
 
@@ -215,11 +211,6 @@ class VideoProsessing(object):
         config_object = ConfigParser()
         config_object.read(str(pathlib.Path().absolute()) +
                            "/src/prosessing/"+"Config.ini")
-
-        """                
-        logging.basicConfig(filename=self.configPath+self.logconfig['filename'] + datetime.now().strftime(
-            "%Y_%m_%d-%I_%M_%S_%p_%s")+".console_log", level=logging.DEBUG)
-        """
 
         # connects to database
         # Database connection handing
@@ -253,7 +244,7 @@ class VideoProsessing(object):
 
         # Camera Stream gst setup
         gst_str = ("rtspsrc location={} latency={}  ! rtph264depay  ! nvv4l2decoder ! nvvidconv ! video/x-raw, format=(string)BGRx ! videoconvert !appsink".format(
-            str(self.opencvconfig['Stream_intro']+self.opencvconfig['Stream_ip']+":"+self.opencvconfig['Stream_port']), 400, 720, 480))
+            str(self.opencvconfig['Stream_intro']+self.opencvconfig['Stream_ip']+":"+self.opencvconfig['Stream_port']), 0, 720, 480))
 
         console_log.Warning("Looking for Faces...")
 
@@ -264,8 +255,10 @@ class VideoProsessing(object):
         pipeline_video_prossesing = datetime.now()
 
         cap = videoThread.ThreadingClass(gst_str)
+        
         face_processing_pipeline_timer = datetime.now()
-        while 0 < 1:
+
+        while 1 >0:
             process_this_frame = process_this_frame + 1
 
             if process_this_frame % 30 == 0:
@@ -283,6 +276,7 @@ class VideoProsessing(object):
                 """
                 font = cv2.FONT_HERSHEY_DUPLEX
                 sent = False
+                
 
                 # Display t he results
                 for name, (top, right, bottom, left) in predictions:
@@ -292,7 +286,7 @@ class VideoProsessing(object):
                     right *= 2
                     bottom *= 2
                     left *= 2
-                    print(process_this_frame)
+                    print("frame at" + str(process_this_frame))
                     print(name)
 
                     if(name != None):
@@ -303,13 +297,16 @@ class VideoProsessing(object):
                         # print("user is unknown")
                             logging.info("unknowns Here UwU!")
                             #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
-                            print(Fore.GREEN+"stop face prossesing timer unknown" +
-                                  str(datetime.now()-face_processing_pipeline_timer))
-                            print(Style.RESET_ALL)
-                            self.watchdog +=1
+                            console_log.PipeLine_Ok("stop face prossesing timer unknown" +str(datetime.now()-face_processing_pipeline_timer))
+                            self.watchdog += 1
+                            
 
                         else:
-                            if name in self.userList[i] and self.watchdog > 10:
+                            if self.watchdog == 10:
+                                console_log.Error("Ending Program Watch Dog over ran!")
+                                break
+                            
+                            if name in self.userList[i]:
                                 userinfo = self.userList[i][name]
                                 status = userinfo.status
                                 name = userinfo.user
@@ -325,9 +322,11 @@ class VideoProsessing(object):
                                         "got an Admin The name is"+str(name))
                                     Stat.userAdmin(status, name, frame, font, self.imagename,
                                                    self.imagePath, left, right, bottom, top, process_this_frame)
-                                    message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/admin',self.smsconfig['textbelt-key'])
-                                    console_log.PipeLine_Ok("Stping face prossesing timer in admin" + str(datetime.now()-face_processing_pipeline_timer))
-                                    self.watchdog +=1
+                                    message.sendCapturedImageMessage("eeeep there is an Admin Person Be Good"+" " + "There Name is:" + str(
+                                        name), phone, 'http://192.168.5.8:2000/admin', self.smsconfig['textbelt-key'])
+                                    console_log.PipeLine_Ok(
+                                        "Stping face prossesing timer in admin" + str(datetime.now()-face_processing_pipeline_timer))
+                                    self.watchdog += 1
                                     
 
                                 if (status == 'User'):
@@ -341,7 +340,8 @@ class VideoProsessing(object):
                                         "eeeep there is an User They Might be evil so um let them in"+"  `"+"There Name is:" + str(name))
                                     console_log.PipeLine_Ok(
                                         "Stping face prossesing timer in user" + str(datetime.now()-face_processing_pipeline_timer))
-                                    self.watchdog +=1
+                                    self.watchdog += 1
+                                    
 
                                 if (status == 'Unwanted'):
                                     logging.info(
@@ -350,35 +350,37 @@ class VideoProsessing(object):
                                                       imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top, framenum=process_this_frame)
                                     console_log.PipeLine_Ok("Stping face prossesing timer in unwanted" + str(
                                         datetime.now()-face_processing_pipeline_timer))
-                                    self.watchdog +=1
+                                    self.watchdog += 1
                                     #message.sendCapturedImageMessage("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name),phone,'http://192.168.5.8:2000/unwanted',self.smsconfig['textbelt-key'])
                                 # print("eeeep there is an Unwanted Get them away from ME!"+" "+ "There Name is:"+ str(name)
                                     # )
-                                    
 
                                 if(self.getAmountofFaces(face_recognition, frame) > 1):
-                                    Stat.userGroup(frame=frame, font=font, imagename=self.imagename, imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top)
-                                    console_log.PipeLine_Ok("Stping face prossesing timer in Group" + str(datetime.now()-face_processing_pipeline_timer))
+                                    Stat.userGroup(frame=frame, font=font, imagename=self.imagename,
+                                                   imagepath=self.imagePath, left=left, right=right, bottom=bottom, top=top)
+                                    console_log.PipeLine_Ok(
+                                        "Stping face prossesing timer in Group" + str(datetime.now()-face_processing_pipeline_timer))
                                     #message.sendCapturedImageMessage("eeeep there is Gagle of Peope I dont know what to do",phone,'http://192.168.5.8:2000/group',self.smsconfig['textbelt-key'])
-                                    
-                                    
-
+                                
                             else:
 
                                 console_log.Warning(
                                     "not the correct obj in list" + str(self.userList[i]))
-                                # if(i >  self.userList[i]):
-                                #   i+=1
-                                i += 1
-                                
+                                if(name != userinfo.user):
+                                    i+=1
+                                else:
+                                    console_log.PipeLine_Ok("Users Name seen is "+str(name))
+                                    
 
                     else:
 
                         console_log.PipeLine_Ok(
                             "Time For non Face processed frames" + str(datetime.now()-face_processing_pipeline_timer))
 
-                        return
+
 
             else:
-                #print("waiting for humans...")
-                pass
+                if self.watchdog == 10:
+                    console_log.Error("Ending Program Watch Dog over ran!")
+                    break
+                
