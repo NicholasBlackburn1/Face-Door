@@ -8,8 +8,7 @@ import cv2, threading, queue
 class ThreadingClass:
   # initiate threading class
   def __init__(self, name):
-    self.cap = cv2.VideoCapture(name,cv2.CAP_GSTREAMER)
-    
+    self.cap = cv2.VideoCapture(name)
 	# define an empty queue and thread
     self.q = queue.Queue()
     t = threading.Thread(target=self._reader)

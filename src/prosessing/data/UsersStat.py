@@ -4,16 +4,15 @@ this file is for holding the user stats action
 import logging
 import os
 import cv2
-import utils.textColors as console_log
 
 
 
 
 def send_person_name(sock, name):
-    console_log.PipeLine_Ok("[SOCKET Name] Sending person seen name")
+    logging.info("[SOCKET Name] Sending person seen name")
     sock.send_string("NAME")
     sock.send_json({"name": name})
-    console_log.PipeLine_Ok("[SOCKET Name] Sent Person name")
+    logging.info("[SOCKET Name] Sent Person name")
 
 
 # saves owner images and sends Frame
@@ -49,7 +48,7 @@ def userAdmin(status,name,frame,font,imagename,imagePath,left,right,bottom,top,f
 
             saveImage(imagePath+"Admin/",
                         imagename, frame)
-            console_log.PipeLine_Ok("Saved Image to"+ "  "+str(imagePath + "Admin/" +imagename + ".jpg"))
+            logging.info("Saved Image to"+ "  "+str(imagePath + "Admin/" +imagename + ".jpg"))
             print("Saved Image to"+ "  "+str(imagePath + "Admin/" +imagename + ".jpg"))
             
 
@@ -97,8 +96,9 @@ def userUser(status,name,frame,font,imagename,imagePath,left,right,bottom,top,fr
         # sends Image and saves image to disk
         saveImage(imagePath+"User/",imagename, frame)
 
-        console_log.PipeLine_Ok("Saved Image to"+ "  "+str(imagePath + "User/" +imagename + ".jpg"))
-      
+        logging.info("Saved Image to"+ "  "+str(imagePath + "User/" +imagename + ".jpg"))
+        print("Saved Image to"+ "  "+str(imagePath + "User/" +imagename + ".jpg"))
+    
     #
 
 
@@ -110,7 +110,7 @@ def userUnwanted(status,name,frame,font,imagename,imagePath,left,right,bottom,to
         cv2.putText(frame, name, (left, top),
                     font, 0.5, (255, 255, 255), 1)
         
-        console_log.Warning("not letting in" + name)
+        logging.warning("not letting in" + name)
 
         # checks to see if image exsitis
         
@@ -119,8 +119,8 @@ def userUnwanted(status,name,frame,font,imagename,imagePath,left,right,bottom,to
             # sends Image and saves image to disk
             saveImage(imagePath+"Unwanted/",
                         imagename, frame)
-            console_log.PipeLine_Ok("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
-            
+            logging.info("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
+            print("Saved Image to"+ "  "+str(imagePath + "Unwanted/" +imagename + ".jpg"))
 # Handles unKnown User
 def userUnknown(opencvconfig,name,frame,font,imagePath,imagename,left,right,bottom,top,framenum):
 
@@ -137,11 +137,13 @@ def userUnknown(opencvconfig,name,frame,font,imagePath,imagename,left,right,bott
                     font, 0.5, (255, 255, 255), 1)
         cv2.putText(frame, name, (0, 470), font,
                     0.5, (255, 255, 255), 1)
+        
+        logging.info("Saved Image to"+ "  "+str(imagePath + "unknown/" +imagename + ".jpg"))
         # checks to see if image exsitis
         if(not os.path.exists(str(imagePath) + "unknown/" +str(imagename) + ".jpg")):
             # sends Image and saves image to disk
             saveImage(imagePath+"unknown/",imagename, frame)
-            console_log.PipeLine_Ok("Saved Image to"+ "  "+str(imagePath) + "unknown/" +str(imagename) + ".jpg")
+            print("Saved Image to"+ "  "+str(imagePath) + "unknown/" +str(imagename) + ".jpg")
            
                         
 # User Groups 
@@ -174,14 +176,12 @@ def userGroup(frame,font,imagePath,imagename,left,right,bottom,top):
                 1,
             )
 
-            console_log.Warning("Letting in group")
+            logging.warning("Letting in group")
 
             if(not os.path.exists(imagePath + "Group/" + imagename + ".jpg")):
 
                 # sends Image and saves image to disk
-                saveImage(imagePath + "Group/"+str(imagename) + ".jpg")
-                
-                console_log.PipeLine_Ok("Saved Image to"+ "  "+str(imagePath) + "Group/" +str(imagename) + ".jpg")
-                
-                
+                saveImage(imagePath + "Group/",
+                            imagename, frame)
+                logging.info("Saved Image to"+ "  "+str(imagePath + "Group/" +imagename + ".jpg"))
                     

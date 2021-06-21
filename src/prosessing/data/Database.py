@@ -7,8 +7,6 @@ import sqlalchemy as db
 import sqlalchemy.dialects.sqlite
 from configparser import ConfigParser
 from sqlalchemy.orm import sessionmaker
-import utils.textColors as console_log
-
 
 # Gets the Face Data from the Face data
 PATH = str(pathlib.Path().absolute())+"/src/prosessing/"+"Config.ini"
@@ -28,10 +26,12 @@ def getFaces():
     metadata = db.MetaData()
     faces = db.Table(database['table'], metadata,
                      autoload=True, autoload_with=engine)
+    logging.warn("got table...")
     query = db.select([faces])
+    logging.warn("got querying....")
     result_proxy = connection.execute(query)
     result_set = result_proxy.fetchall()
- 
+    logging.warn("got result returning")
     return(result_set)
 
 # Returns the LifeTime Table result set
@@ -49,12 +49,12 @@ def getLifetime():
     metadata = db.MetaData()
     faces = db.Table(database['Lifetable'], metadata,
                      autoload=True, autoload_with=engine)
-    console_log.Warning("got table...")
+    logging.warn("got table...")
     query = db.select([faces])
-    console_log.Warning("got querying....")
+    logging.warn("got querying....")
     result_proxy = connection.execute(query)
     result_set = result_proxy.fetchall()
-    console_log.Warning("got result returning")
+    logging.warn("got result returning")
     return(result_set)
 
 '''
@@ -94,7 +94,7 @@ def getAmountOfLifeEntrys():
     metadata = db.MetaData()
     faces = db.Table(database['lifetable'], metadata,
                      autoload=True, autoload_with=engine)
- 
+    print("The Amount of Entrys that are in the Table are" + str(session.query(faces).count()))
     return session
 
 

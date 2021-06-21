@@ -46,12 +46,32 @@ def main():
     wasStarted = False
     print("SecuServe Starting UwU!....\n")
 
-    print("===================================================\n")
-    print("+= Launcher Log UwU!  Heres My Output Down below =+\n")
-    print("===================================================\n")
+    print("path of config"+str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini\n")
+    # Reads Config
+    config_object = configparser.ConfigParser()
+    config_object.read(str(pathlib.Path().absolute()) +"/src/prosessing/"+"Config.ini")
+    #
 
-    print(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
+    # Pipes config file to python
+    logconfig = config_object['LOGGING']
+    fileconfig = config_object['FILE']
+    rootDirPath = fileconfig['rootDirPath']
+    configPath = fileconfig['rootDirPath']+fileconfig['configPath']
+    imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
+    imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
+    loggingPath = fileconfig['rootDirPath'] + fileconfig['loggingPath']
+    smsconfig = config_object['SMS']
 
-    cvVideo.VideoProsessing().setsUpPipeLine() 
+    logging.basicConfig(filename=loggingPath+logconfig['launcher'] + datetime.now(
+    ).strftime("%Y_%m_%d-%I_%M_%S_%p_%s")+".log", level=logging.DEBUG)
+    
+
+    logging.debug("===================================================\n")
+    logging.debug("+= Launcher Log UwU!  Heres My Output Down below =+\n")
+    logging.debug("===================================================\n")
+
+    logging.info(prefix + "Time to Begin setting up Miro service Treads! UwU\n")
+
+    cvVideo.VideoProsessing().ProcessFaceVideo() 
 main()
 
