@@ -49,5 +49,10 @@ This Project uses Computer Vision to Recognize authorized individuals and allow 
 
 
 5.  <span style="color:#FF0000">Death Red </span> this color is only used for Displaying when a unreconized person shows up
+
+## Profiling the Program 
+1. uses cprofle
+2. dumps profile to a file called text(insert number here).pstats
+3. uses gprof2dot to display image based call graph
 ## P.S 
 ### Please fork me and or help with development

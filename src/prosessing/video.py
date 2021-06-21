@@ -268,7 +268,7 @@ class VideoProsessing(object):
                 #frame = cv2.imread("/mnt/SecuServe/user/people/a93121a4-cc4b-11eb-b91f-00044beaf015/a924857a-cc4b-11eb-b91f-00044beaf015 (1).jpg",cv2.IMREAD_COLOR)
                 img = cv2.resize(frame, (0, 0), fx=0.5, fy=0.5)
                 predictions = Knn.predict(
-                    img, model_path=self.Modelpath, distance_threshold=0.5)
+                    img, model_path=self.Modelpath, distance_threshold=0.65)
                 # print(process_this_frame)
 
                 """
@@ -382,5 +382,6 @@ class VideoProsessing(object):
             else:
                 if self.watchdog == 10:
                     console_log.Error("Ending Program Watch Dog over ran!")
+                    cap.release()
                     break
                 
