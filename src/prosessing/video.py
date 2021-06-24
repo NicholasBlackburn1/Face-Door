@@ -49,6 +49,7 @@ import gc
 from contextlib import redirect_stdout
 from colorama import init, Fore, Back, Style
 import utils.textColors as console_log
+import sys
 
 
 class VideoProsessing(object):
@@ -77,10 +78,15 @@ class VideoProsessing(object):
     imagePath = fileconfig['rootDirPath'] + fileconfig['imagePath']
     imagePathusers = fileconfig['rootDirPath'] + fileconfig['imagePathusers']
     plateImagePath = fileconfig['rootDirPath'] + fileconfig['platePath']
+    loggingPath = fileconfig['rootDirPath'] + fileconfig['loggingPath']
 
     Modelpath = str(imagePathusers+'UwU.clf')
 
     userList = []
+    
+    logging.basicConfig(level=logging.INFO, format='%(message)s')
+    logger = logging.getLogger()
+    logger.addHandler(logging.FileHandler(str(loggingPath)+"Cv_PipeLine"+str(current_time)+".log", 'a'))
 
     # Makes startup dirs
 
@@ -99,7 +105,6 @@ class VideoProsessing(object):
 
         while True:
             # example Json string  [{"uuid":"Tesla", "name":2, "status":"New York",image:none, url:}]
-            print(str("Data index ")+str(i))
 
             # this is Where the Data gets Wrapped into am DataList with uuid First key
             local_data = {
@@ -191,10 +196,9 @@ class VideoProsessing(object):
     '''
 
     def ProcessFaceVideo(self):
-
         init()
         
-       
+        sys.stdout.write = logger.info
 
         pipeline_start_setup = datetime.now()
         # detecting pipe line start
@@ -372,9 +376,16 @@ class VideoProsessing(object):
 
                                 console_log.Warning(
                                     "not the correct obj in list" + str(self.userList[i]))
-                                # if(i >  self.userList[i]):
-                                #   i+=1
-                                i += 1
+                                # allows counter ro count up to the ammount in the database
+                                if(i >  self.userList.len()):
+                                    i+=1
+                                    
+                                # allows the countor to reset to zero 
+                                if(i == self.userList.len()):
+                                    i=0
+                                    
+                                    
+                                
                                 
 
                     else:
@@ -387,6 +398,7 @@ class VideoProsessing(object):
             else:
                 if self.watchdog == 10:
                     console_log.Error("Ending Program Watch Dog over ran!")
+                    
                     cap.release()
                     break
                 

@@ -26,12 +26,9 @@ def getFaces():
     metadata = db.MetaData()
     faces = db.Table(database['table'], metadata,
                      autoload=True, autoload_with=engine)
-    logging.warn("got table...")
     query = db.select([faces])
-    logging.warn("got querying....")
     result_proxy = connection.execute(query)
     result_set = result_proxy.fetchall()
-    logging.warn("got result returning")
     return(result_set)
 
 # Returns the LifeTime Table result set
@@ -49,12 +46,11 @@ def getLifetime():
     metadata = db.MetaData()
     faces = db.Table(database['Lifetable'], metadata,
                      autoload=True, autoload_with=engine)
-    logging.warn("got table...")
+    
     query = db.select([faces])
-    logging.warn("got querying....")
+  
     result_proxy = connection.execute(query)
     result_set = result_proxy.fetchall()
-    logging.warn("got result returning")
     return(result_set)
 
 '''
