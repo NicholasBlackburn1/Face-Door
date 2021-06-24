@@ -28,6 +28,7 @@ import imghdr
 from email.message import EmailMessage
 
 
+
 # Allows Micro- Serivces to Runn on sperate threads to enable easy managem
 #opencv_plate_thread=multiprocessing.Process(target=cvVideo.VideoProsessing().processPlate)
 #webserver_thread = multiprocessing.Process(target= web.run.Start)

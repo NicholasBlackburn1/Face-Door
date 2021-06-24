@@ -193,6 +193,8 @@ class VideoProsessing(object):
     def ProcessFaceVideo(self):
 
         init()
+        
+       
 
         pipeline_start_setup = datetime.now()
         # detecting pipe line start
@@ -220,7 +222,8 @@ class VideoProsessing(object):
         logging.basicConfig(filename=self.configPath+self.logconfig['filename'] + datetime.now().strftime(
             "%Y_%m_%d-%I_%M_%S_%p_%s")+".console_log", level=logging.DEBUG)
         """
-
+        console_log.Warning("is opencv opdemised"+str(cv2.useOptimized()))
+        
         # connects to database
         # Database connection handing
         console_log.Warning("Connecting to the Database Faces")
@@ -286,6 +289,8 @@ class VideoProsessing(object):
 
                 # Display t he results
                 for name, (top, right, bottom, left) in predictions:
+                    
+                    
 
                     # Scale back up face locations since the frame we detected in was scaled to 1/4 size
                     top *= 2
@@ -303,9 +308,9 @@ class VideoProsessing(object):
                         # print("user is unknown")
                             logging.info("unknowns Here UwU!")
                             #message.sendCapturedImageMessage("eeeep there is an unknown",4123891615,'http://192.168.5.7:2000/unknown',self.smsconfig['textbelt-key'])
-                            print(Fore.GREEN+"stop face prossesing timer unknown" +
+                            console_log.PipeLine_Ok("stop face prossesing timer unknown" +
                                   str(datetime.now()-face_processing_pipeline_timer))
-                            print(Style.RESET_ALL)
+                          
                             self.watchdog +=1
 
                         else:
