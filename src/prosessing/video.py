@@ -86,7 +86,7 @@ class VideoProsessing(object):
     
     logging.basicConfig(level=logging.INFO, format='%(message)s')
     logger = logging.getLogger()
-    logger.addHandler(logging.FileHandler(str(loggingPath)+"Cv_PipeLine"+str(current_time)+".log", 'a'))
+    logger.addHandler(logging.FileHandler(str(loggingPath)+"Cv_PipeLine"+str(current_time)+".uwu", 'a'))
 
     # Makes startup dirs
 
@@ -318,7 +318,7 @@ class VideoProsessing(object):
                             self.watchdog +=1
 
                         else:
-                            if name in self.userList[i] and self.watchdog > 10:
+                            if name in self.userList[i]:
                                 userinfo = self.userList[i][name]
                                 status = userinfo.status
                                 name = userinfo.user
@@ -377,11 +377,11 @@ class VideoProsessing(object):
                                 console_log.Warning(
                                     "not the correct obj in list" + str(self.userList[i]))
                                 # allows counter ro count up to the ammount in the database
-                                if(i >  self.userList.len()):
+                                if(i >  len(self.userList)):
                                     i+=1
                                     
                                 # allows the countor to reset to zero 
-                                if(i == self.userList.len()):
+                                if(i == len(self.userList)):
                                     i=0
                                     
                                     
