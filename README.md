@@ -1,8 +1,7 @@
-# SecuServe Security System
+# SecuServe Security System DEPRES because of reright
 
 **An Auto Unlocking Door written in python and opencv on an Pi**
 
-![example](https://cdn.discordapp.com/attachments/671837506651815956/778615885605765160/SecuServe_Logo_Design_1.png)
 
 ## What was my Inspiration for this project
 
