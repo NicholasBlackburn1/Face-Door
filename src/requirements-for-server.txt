@@ -30,7 +30,7 @@ msgpack-numpy==0.4.7.1
 mss==6.0.0
 multidict==4.7.6
 notify-run==0.0.13
-numpy==1.19.5
+numpy==1.22.0
 opencv-python==4.5.1.48
 pafy==0.5.5
 phue==1.1
